@@ -1,0 +1,8 @@
+const slug = {
+    sanpham: {
+
+    },
+    user:{
+        
+    }
+}
