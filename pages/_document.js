@@ -12,6 +12,8 @@ class MyDocument extends Document {
         <Head>
           <style>{`body { heigth: 100% }`}</style>
           <link rel='stylesheet' href='/static/css/nprogress.css' />
+          <link rel="icon"  href="/static/images/logo.png"></link>
+          <title>Quản lý nguồn thải</title>
         </Head>
         <body >
           <Main />

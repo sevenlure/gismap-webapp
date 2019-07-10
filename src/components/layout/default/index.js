@@ -1,39 +1,56 @@
 import React from 'react'
 import styled from 'styled-components'
-import { Layout, Menu } from 'antd'
+import { Layout, Menu, Breadcrumb } from 'antd'
 
 const { Header, Content, Footer } = Layout
+const { SubMenu } = Menu
 
 const LayoutWrapper = styled.div`
-    
-    
-
+  .ant-menu-submenu-selected {
+    background: #36cfc9;
+  }
+  .ant-menu-submenu-open {
+    color: #fff !important;
+  }
 `
 
 export default class AppWithLayout extends React.Component {
-    
   render() {
     const { children } = this.props
     return (
       <LayoutWrapper className="page-wrapper">
         <Layout>
-          <Header style={{  height: '46px', position: 'fixed', zIndex: 1, width: '100%' }}>
-            {/* <div className="logo" /> */}
-            <Menu theme="dark" mode="horizontal" defaultSelectedKeys={['2']} >
-              <Menu.Item key="1">nav 1</Menu.Item>
-              <Menu.Item key="2">nav 2</Menu.Item>
-              <Menu.Item key="3">nav 3</Menu.Item>
+          <div
+            style={{
+              position: 'fixed',
+              padding: '4px 0px 0px 16px',
+              background: '#fff',
+              width: '100%',
+              display: 'flex',
+              zIndex: 1,
+            }}
+          >
+            <img style={{ width: '30px', height: '30px', marginRight: '8px' }} src="/static/images/logo.png" />
+            <h2>Quản lý cơ sở dữ liệu Hồ Chí Minh</h2>
+          </div>
+          <Header style={{ height: '46px', position: 'fixed', zIndex: 1, width: '100%', top: '40px' }}>
+            <Menu theme="dark" mode="horizontal" defaultSelectedKeys={['2']}>
+              <Menu.Item key="1">Thông tin Cơ sở</Menu.Item>
+              <SubMenu key="sub2" title="Thông tin Môi trường">
+                <Menu.Item key="sub2_1">Option 5</Menu.Item>
+                <Menu.Item key="sub2_2">Option 6</Menu.Item>
+              </SubMenu>
+              <Menu.Item key="3">Báo cáo giám sát môi trường</Menu.Item>
+              <Menu.Item key="4">Báo cáo quản lý chất thải rắn</Menu.Item>
+              <Menu.Item key="5">Thanh tra/Kiểm tra</Menu.Item>
+              <Menu.Item key="6">Thu phí</Menu.Item>
             </Menu>
           </Header>
-          <Content style={{ padding: '0 50px', marginTop: 64 }}>
-            {/* <Breadcrumb style={{ margin: '16px 0' }}> */}
-              {/* <Breadcrumb.Item>Home</Breadcrumb.Item>
-              <Breadcrumb.Item>List</Breadcrumb.Item>
-              <Breadcrumb.Item>App</Breadcrumb.Item>
-            </Breadcrumb> */}
-            <div style={{ background: '#fff', 'display':'flex', 'flex':1 }}>
-            {children}
-            </div>
+          <Content style={{ padding: '0 32px', heigth: '1', marginTop: 86 }}>
+            <Breadcrumb style={{ margin: '16px 0' }}>
+            <Breadcrumb.Item>Báo cáo đánh giá tác động môi trường</Breadcrumb.Item>
+            </Breadcrumb>
+            <div style={{ background: '#fff', display: 'flex', flex: 1 }}>{children}</div>
           </Content>
           <Footer style={{ textAlign: 'center' }}>Ant Design ©2018 Created by Ant UED</Footer>
         </Layout>
