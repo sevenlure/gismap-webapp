@@ -1,33 +1,41 @@
 import React from 'react'
-import redirect from 'src/lib/redirect'
-import { get as _get} from 'lodash'
-import slug from 'src/routes'
+import PropTypes from 'prop-types'
+import { connect } from 'react-redux'
+import { get as _get } from 'lodash'
+// import redirect from 'src/lib/redirect'
+// import slug from 'src/routes'
 
-
-const hocProtectLogin = Component => {
-
-  return class hocProtectLogin extends React.Component {
-    
-     static getInitialProps (appContext) {
-        const { AuthStore } = appContext.reduxStore.getState()
-        const isAuthenticated = _get(AuthStore,'isAuthenticated',false)
-
-      if (!isAuthenticated) {
-        if (!process.browser) {
-          redirect(appContext, slug.login)
-        } else {
-          redirect({}, slug.login)
-        }
-      }
-      let appProps = !Component.getInitialProps
-        ? {}
-        :  Component.getInitialProps(appContext)
-      return appProps
+const hocProtectLoginTemp = Component => {
+  class hocProtectLogin extends React.Component {
+    static async getInitialProps(appContext) {
+      let appProps = !Component.getInitialProps ? {} : await Component.getInitialProps(appContext)
+      return { ...appProps }
     }
-    render () {
+
+    static propTypes = {
+      isAuthenticated: PropTypes.bool
+    }
+
+    componentDidMount() {
+      // console.log(this.props, 'isAutheted')
+      const { isAuthenticated } = this.props
+      console.log(isAuthenticated, 'isAutheted')
+
+      // if (!isAuthenticated) {
+      //   redirect({}, slug.login)
+      // }
+    }
+
+    render() {
       return <Component {...this.props} />
     }
   }
+
+  const mapStateToProps = state => ({
+    isAuthenticated: _get(state, 'AuthStore.isAuthenticated')
+  })
+
+  return connect(mapStateToProps)(hocProtectLogin)
 }
 
-export default hocProtectLogin
+export default hocProtectLoginTemp

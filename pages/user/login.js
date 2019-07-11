@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import { Form, Input, Icon, Button, Layout } from 'antd'
 import styled from 'styled-components'
 import Clearfix from 'src/components/elements/clearfix'
@@ -6,10 +7,12 @@ import authApi from 'src/api/authApi'
 import { connect } from 'react-redux'
 
 import { userLogin } from 'src/redux/actions/authAction'
+import { updateUserInfo } from 'src/redux/actions/gereralAction'
 
 import { get as _get } from 'lodash'
 import Router from 'next/router'
 import slug from 'src/routes'
+import Link from 'next/link'
 
 const { Footer } = Layout
 
@@ -33,10 +36,11 @@ const Center = styled.div`
 `
 
 const mapStateToProps = state => ({
-  // a: state.menu
+  isAuthenticated: _get(state, 'AuthStore.isAuthenticated')
 })
 const mapDispatchToProps = {
-  userLogin
+  userLogin,
+  updateUserInfo
 }
 
 @connect(
@@ -44,33 +48,40 @@ const mapDispatchToProps = {
   mapDispatchToProps
 )
 @Form.create()
-export default class Login extends React.Component {
-  state = {
-    isLoading: false
+class Login extends React.Component {
+  constructor(props) {
+    super(props)
+    this.state = {
+      isLoading: false
+    }
   }
-  componentDidMount() {
-    console.log('fdsaf',sss)
-    
+
+  static propTypes = {
+    isAuthenticated: PropTypes.bool,
+    form: PropTypes.object.isRequired,
+    userLogin: PropTypes.func.isRequired,
+    updateUserInfo: PropTypes.func.isRequired
   }
 
   hanldeSubmit = () => {
-    this.props.form.validateFields(async (errors, values) => {
+    this.props.form.validateFields((errors, values) => {
       if (!errors) {
         this.setState({
           isLoading: true
         })
 
-        setTimeout(() => {
+        setTimeout(async () => {
           authApi
             .login(values)
             .then(res => {
               // console.log("API",data)
               this.props.userLogin(_get(res, 'data', null))
+              this.props.updateUserInfo(_get(res, 'data', null))
               Router.replace(slug.basic)
-              console.log(this.props)
+              // console.log(this.props)
             })
             .catch(e => {
-              const { response } = e
+              // const { response } = e
               console.log('catch', e)
             })
             .finally(() => {
@@ -86,6 +97,7 @@ export default class Login extends React.Component {
   }
 
   render() {
+    // console.log(this.props, 'acc')
     const { getFieldDecorator } = this.props.form
 
     return (
@@ -151,11 +163,22 @@ export default class Login extends React.Component {
                 )}
               </Form.Item>
               <Clearfix height={8} />
-              <Button loading={this.state.isLoading} type='primary' block onClick={this.hanldeSubmit}>
-                Login
-              </Button>
+              <Form.Item>
+                <Button
+                  loading={this.state.isLoading}
+                  type='primary'
+                  htmlType='submit'
+                  block
+                  className='login-form-button'
+                  onClick={this.hanldeSubmit}
+                >
+                  Login
+                </Button>
+              </Form.Item>
             </Container>
-
+            <Link href={slug.basic}>
+              <a>ABC</a>
+            </Link>
             <Footer style={{ textAlign: 'center' }}>App ©2019 Created by VietAn Software</Footer>
           </CardCenter>
         </Layout>
@@ -163,3 +186,4 @@ export default class Login extends React.Component {
     )
   }
 }
+export default Login

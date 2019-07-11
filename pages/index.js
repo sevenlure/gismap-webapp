@@ -1,29 +1,22 @@
 import React from 'react'
-import Examples from 'src/components/elements/examples'
-import { Form, Input, Icon, Button, Layout } from 'antd'
-
-import {get as _get} from 'lodash'
+import { Button } from 'antd'
 import hocProtectLogin from 'src/hoc/is-authenticated'
-import Router from 'next/router'
-import Link from 'next/link';
+// import { connect } from 'react-redux'
+// import { get as _get } from 'lodash'
 
-
-
+// c
+// @connect(state => ({
+//   isAuthenticated: _get(state, 'AuthStore.isAuthenticated')
+// }))
 @hocProtectLogin
-export default class Index extends React.Component {
-
-  componentDidMount() {
-  }
+class Index extends React.Component {
+  componentDidMount() {}
   render() {
     return (
       <div>
-        <Link href="/test">
-          <a>aaaa</a>
-        </Link>
-        <Button>
-          abc
-        </Button>
+        <Button>abc</Button>
       </div>
     )
   }
 }
+export default Index

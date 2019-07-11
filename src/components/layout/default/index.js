@@ -60,7 +60,7 @@ export default class AppWithLayout extends React.Component {
             <Breadcrumb style={{ margin: '16px 0' }}>
               <Breadcrumb.Item>Báo cáo đánh giá tác động môi trường</Breadcrumb.Item>
             </Breadcrumb>
-            <div style={{ background: '#fff', display: 'flex', flex: 1, padding: '16px 16px', 'min-height': '75vh' }}>
+            <div style={{ background: '#fff', display: 'flex', flex: 1, padding: '16px 16px', minHeight: '75vh' }}>
               {children}
             </div>
           </Content>
