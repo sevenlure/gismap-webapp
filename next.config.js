@@ -5,16 +5,25 @@ const fs = require('fs')
 const path = require('path')
 
 // Where your antd-custom.less file lives
-const themeVariables = lessToJS(
-  fs.readFileSync(path.resolve(__dirname, './assets/antd-custom.less'), 'utf8')
-)
+const themeVariables = lessToJS(fs.readFileSync(path.resolve(__dirname, './assets/antd-custom.less'), 'utf8'))
 
 module.exports = withLess({
   lessLoaderOptions: {
     javascriptEnabled: true,
-    modifyVars: themeVariables, // make your antd custom effective
+    modifyVars: themeVariables // make your antd custom effective
   },
-  webpack: (config, { isServer }) => {
+  webpack: (config, { isServer, dev }) => {
+    if (dev) {
+      config.module.rules.push({
+        test: /\.js$/,
+        exclude: /node_modules/,
+        loader: 'eslint-loader',
+        options: {
+          // eslint options (if necessary)
+        }
+      })
+    }
+
     if (isServer) {
       const antStyles = /antd\/.*?\/style.*?/
       const origExternals = [...config.externals]
@@ -27,17 +36,17 @@ module.exports = withLess({
             callback()
           }
         },
-        ...(typeof origExternals[0] === 'function' ? [] : origExternals),
+        ...(typeof origExternals[0] === 'function' ? [] : origExternals)
       ]
 
       config.module.rules.unshift({
         test: antStyles,
-        use: 'null-loader',
+        use: 'null-loader'
       })
     }
     return config
   },
-  // env:{
-  //   customKey: 'ABC'
-  // }
+  env: {
+    HOST_API: 'http://prtr.southeastasia.cloudapp.azure.com:3105/'
+  }
 })

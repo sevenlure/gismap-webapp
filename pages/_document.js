@@ -1,9 +1,9 @@
-import Document, { Html, Head, Main, NextScript } from 'next/document';
+import Document, { Html, Head, Main, NextScript } from 'next/document'
 import { ServerStyleSheet } from 'styled-components'
 
-
+/* eslint-disable */
 class MyDocument extends Document {
-  static async getInitialProps (ctx) {
+  static async getInitialProps(ctx) {
     const sheet = new ServerStyleSheet()
     const originalRenderPage = ctx.renderPage
 
@@ -34,15 +34,15 @@ class MyDocument extends Document {
         <Head>
           <style>{`body { heigth: 100% }`}</style>
           <link rel='stylesheet' href='/static/css/nprogress.css' />
-          <link rel="icon"  href="/static/images/logo.png"></link>
+          <link rel='icon' href='/static/images/logo.png'></link>
         </Head>
-        <body >
+        <body>
           <Main />
           <NextScript />
         </body>
       </Html>
-    );
+    )
   }
 }
 
-export default MyDocument;
+export default MyDocument

@@ -1,0 +1,31 @@
+root: true 
+
+env: # https://eslint.org/docs/user-guide/configuring#specifying-environments
+  es6: true
+  browser: true
+  commonjs: true
+  node: true
+
+plugins:
+  - react
+  - prettier
+
+extends: 
+  - eslint:recommended
+  - plugin:prettier/recommended
+  - plugin:react/recommended
+
+###--------------------------------------------
+
+rules: # https://eslint.org/docs/rules/
+  "prettier/prettier": "warn"
+  # "quotes": 2
+
+
+overrides:
+  - files:
+    - "*.js"
+    - "*.jsx"
+    parser: "babel-eslint"
+    parserOptions:
+      sourceType: module

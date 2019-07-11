@@ -1,44 +1,29 @@
 import React from 'react'
-import {
-  Form,
-  Select,
-  InputNumber,
-  DatePicker,
-  Switch,
-  Slider,
-  Button
-} from 'antd'
-import ButtonElement from 'src/components/elements/button'
 import Examples from 'src/components/elements/examples'
-import { connect } from 'react-redux'
-import { startClock, serverRenderClock } from 'src/redux/actions/timeAction'
+import { Form, Input, Icon, Button, Layout } from 'antd'
+
+import {get as _get} from 'lodash'
+import hocProtectLogin from 'src/hoc/is-authenticated'
+import Router from 'next/router'
+import Link from 'next/link';
 
 
 
-const FormItem = Form.Item
-const Option = Select.Option
+@hocProtectLogin
+export default class Index extends React.Component {
 
-@connect()
-export default class Index extends React.Component{
-  static getInitialProps ({ reduxStore, req }) {
-    const isServer = !!req
-    reduxStore.dispatch(serverRenderClock(isServer))
-
-    return {}
+  componentDidMount() {
   }
-
-  componentDidMount () {
-    const { dispatch } = this.props
-    this.timer = startClock(dispatch)
-  }
-  render(){
-    return(
-      <div style={{ marginTop: 100 }}>
+  render() {
+    return (
       <div>
-        <Examples/>
+        <Link href="/test">
+          <a>aaaa</a>
+        </Link>
+        <Button>
+          abc
+        </Button>
       </div>
-    </div>
-  )
+    )
   }
 }
-
