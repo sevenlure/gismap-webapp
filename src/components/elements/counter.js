@@ -27,7 +27,6 @@ export default class Counter extends Component {
   }
 
   render () {
-    console.log(this.props,"count")
     const { count } = this.props
     
     return (
