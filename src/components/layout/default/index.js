@@ -18,6 +18,12 @@ const LayoutWrapper = styled.div`
 export default class AppWithLayout extends React.Component {
   render() {
     const { children } = this.props
+
+    // TODO 
+    return (
+      children
+    )
+
     return (
       <LayoutWrapper className="page-wrapper">
         <Head>
