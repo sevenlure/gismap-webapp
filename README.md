@@ -7,7 +7,7 @@
 Download the example:
 
 ```bash
-curl git clone git@gitlab.com:qlnt-hcm/web-app.git
+git clone git@gitlab.com:qlnt-hcm/web-app.git
 cd web-ap
 ```
 
