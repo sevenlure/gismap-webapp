@@ -1,6 +1,8 @@
 import React from 'react'
 import App, { Container } from 'next/app'
+import { PageTransition } from 'next-page-transitions'
 import AppWithLayout from 'src/components/layout/default'
+import { Button, Icon } from 'antd'
 import withReduxStore from '../src/lib/with-redux-store'
 import { Provider } from 'react-redux'
 import { persistStore } from 'redux-persist'
@@ -8,6 +10,27 @@ import { PersistGate } from 'redux-persist/integration/react'
 
 const SLUG_NOT_HAVE_LAYOUT = ['/user/login']
 
+const Loader = () => {
+  return (
+    <div
+      style={{
+        top: '50%',
+        left: '50%',
+        position: 'absolute',
+        transform: 'translate(-50%, -50%)'
+      }}
+    >
+      <Icon
+        style={{
+          fontSize: 100,
+          color: '#52c41a'
+        }}
+        type='setting'
+        spin={true}
+      />
+    </div>
+  )
+}
 class MyApp extends App {
   static async getInitialProps({ Component, ctx }) {
     let pageProps = {}
@@ -30,16 +53,36 @@ class MyApp extends App {
     return (
       <Container>
         <Provider store={reduxStore}>
-          <PersistGate loading={<div>Loader</div>} persistor={this.persistor}>
+          <PersistGate loading={<Loader />} persistor={this.persistor}>
             {isNotHaveLayout ? (
-              <Component {...pageProps} />
+              <PageTransition timeout={500} classNames='page-transition'>
+                <Component {...pageProps} />
+              </PageTransition>
             ) : (
               <AppWithLayout>
-                <Component {...pageProps} />
+                <PageTransition timeout={500} classNames='page-transition'>
+                  <Component {...pageProps} />
+                </PageTransition>
               </AppWithLayout>
             )}
           </PersistGate>
         </Provider>
+        <style jsx global>{`
+          .page-transition-enter {
+            opacity: 0;
+          }
+          .page-transition-enter-active {
+            opacity: 1;
+            transition: opacity 500ms;
+          }
+          .page-transition-exit {
+            opacity: 1;
+          }
+          .page-transition-exit-active {
+            opacity: 0;
+            transition: opacity 500ms;
+          }
+        `}</style>
       </Container>
     )
   }
