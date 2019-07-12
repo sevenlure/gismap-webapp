@@ -17,9 +17,6 @@ extends:
 
 ###--------------------------------------------
 
-rules: # https://eslint.org/docs/rules/
-  "prettier/prettier": "warn"
-  # "quotes": 2
 
 
 overrides:

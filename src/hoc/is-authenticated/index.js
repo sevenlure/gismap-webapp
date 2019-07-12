@@ -1,9 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { connect } from 'react-redux'
-import { get as _get } from 'lodash'
-// import redirect from 'src/lib/redirect'
-// import slug from 'src/routes'
+import Router from 'next/router'
+import slug from 'src/routes'
 
 const hocProtectLoginTemp = Component => {
   class hocProtectLogin extends React.Component {
@@ -15,27 +13,27 @@ const hocProtectLoginTemp = Component => {
     static propTypes = {
       isAuthenticated: PropTypes.bool
     }
+    state = {
+      isLoaded: false
+    }
 
-    componentDidMount() {
-      // console.log(this.props, 'isAutheted')
+    UNSAFE_componentWillMount() {
       const { isAuthenticated } = this.props
-      console.log(isAuthenticated, 'isAutheted')
-
-      // if (!isAuthenticated) {
-      //   redirect({}, slug.login)
-      // }
+      if (!isAuthenticated) {
+        // console.log(isAuthenticated, 'isAuthenticated')
+        Router.replace(slug.login)
+      } else {
+        this.setState({
+          isLoaded: true
+        })
+      }
     }
 
     render() {
-      return <Component {...this.props} />
+      return this.state.isLoaded ? <Component {...this.props} /> : null
     }
   }
-
-  const mapStateToProps = state => ({
-    isAuthenticated: _get(state, 'AuthStore.isAuthenticated')
-  })
-
-  return connect(mapStateToProps)(hocProtectLogin)
+  return hocProtectLogin
 }
 
 export default hocProtectLoginTemp

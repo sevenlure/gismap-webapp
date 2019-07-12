@@ -30,7 +30,7 @@ class MyApp extends App {
     return (
       <Container>
         <Provider store={reduxStore}>
-          <PersistGate loading={<Component {...pageProps} />} persistor={this.persistor}>
+          <PersistGate loading={<div>Loader</div>} persistor={this.persistor}>
             {isNotHaveLayout ? (
               <Component {...pageProps} />
             ) : (

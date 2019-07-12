@@ -7,12 +7,11 @@ import authApi from 'src/api/authApi'
 import { connect } from 'react-redux'
 
 import { userLogin } from 'src/redux/actions/authAction'
-import { updateUserInfo } from 'src/redux/actions/gereralAction'
+import { updateUserInfo } from 'src/redux/actions/generalAction.js'
 
 import { get as _get } from 'lodash'
 import Router from 'next/router'
 import slug from 'src/routes'
-import Link from 'next/link'
 
 const { Footer } = Layout
 
@@ -176,9 +175,6 @@ class Login extends React.Component {
                 </Button>
               </Form.Item>
             </Container>
-            <Link href={slug.basic}>
-              <a>ABC</a>
-            </Link>
             <Footer style={{ textAlign: 'center' }}>App ©2019 Created by VietAn Software</Footer>
           </CardCenter>
         </Layout>

@@ -2,8 +2,6 @@ import React from 'react'
 import styled from 'styled-components'
 import { Button } from 'antd'
 import Clearfix from 'src/components/elements/clearfix'
-// import { get as _get } from 'lodash'
-import hocProtectLogin from 'src/hoc/is-authenticated'
 
 const ErrorWrapper = styled.div`
   display: flex;
@@ -12,7 +10,7 @@ const ErrorWrapper = styled.div`
   flex-direction: column;
   align-items: center;
 `
-@hocProtectLogin
+
 class Error extends React.Component {
   render() {
     return (
@@ -35,5 +33,4 @@ class Error extends React.Component {
     )
   }
 }
-
 export default Error

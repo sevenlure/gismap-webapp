@@ -1,5 +1,5 @@
 import update from 'react-addons-update'
-import { UPDATE_GENERAL_USER_INFO } from '../actions/gereralAction'
+import { UPDATE_GENERAL_USER_INFO, CLEAR_GENERAL_USER_INFO } from '../actions/generalAction'
 
 const InitialState = {
   userInfo: null
@@ -12,6 +12,9 @@ export default (state = InitialState, action) => {
       return update(state, {
         userInfo: { $set: action.payload }
       })
+    }
+    case CLEAR_GENERAL_USER_INFO: {
+      return InitialState
     }
     default:
       return state

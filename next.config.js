@@ -16,10 +16,10 @@ module.exports = withLess({
     if (dev) {
       config.module.rules.push({
         test: /\.js$/,
-        exclude: /node_modules/,
+        exclude:  ['/node_modules/', '/.next/'],
         loader: 'eslint-loader',
         options: {
-          // eslint options (if necessary)
+          emitWarning: true,
         }
       })
     }
