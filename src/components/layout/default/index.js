@@ -35,7 +35,7 @@ const LayoutWrapper = styled.div`
   }
 )
 @hocProtectLogin
-class AppWithLayout extends React.Component {
+class AppWithLayout extends React.PureComponent {
   static propTypes = {
     children: PropTypes.node,
     FirstName: PropTypes.string,
@@ -44,25 +44,11 @@ class AppWithLayout extends React.Component {
     clearUserInfo: PropTypes.func,
     isAuthenticated: PropTypes.bool
   }
-  // state = {
-  //   isLoaded: false
-  // }
 
-  // UNSAFE_componentWillMount() {
-  //   const { isAuthenticated } = this.props
-
-  //   if (!isAuthenticated) {
-  //     console.log(isAuthenticated, 'isAuthenticated')
-  //     Router.replace(slug.login)
-  //   } else {
-  //     this.setState({
-  //       isLoaded: true
-  //     })
-  //   }
-  // }
-
+  hanldeChangeMenu = slugValue => {
+    Router.replace(slugValue)
+  }
   render() {
-    console.log('render')
     const { children, FirstName, LastName } = this.props
     return (
       <LayoutWrapper className='page-wrapper'>
@@ -100,7 +86,9 @@ class AppWithLayout extends React.Component {
           </div>
           <Header style={{ height: '46px', position: 'fixed', zIndex: 1, width: '100%', top: '40px' }}>
             <Menu theme='dark' mode='horizontal' defaultSelectedKeys={['1']}>
-              <Menu.Item key='1'>Thông tin Cơ sở</Menu.Item>
+              <Menu.Item key='1' onClick={() => this.hanldeChangeMenu(slug.basic)}>
+                Thông tin Cơ sở
+              </Menu.Item>
               <SubMenu key='sub2' title='Thông tin Môi trường'>
                 <Menu.Item key='sub2_1'>Option 5</Menu.Item>
                 <Menu.Item key='sub2_2'>Option 6</Menu.Item>
@@ -109,7 +97,10 @@ class AppWithLayout extends React.Component {
               <Menu.Item key='4'>Báo cáo quản lý chất thải rắn</Menu.Item>
               <Menu.Item key='5'>Thanh tra/Kiểm tra</Menu.Item>
               <Menu.Item key='6'>Thu phí</Menu.Item>
-              <Menu.Item key='7'>Quản lý</Menu.Item>
+
+              <Menu.Item key='7' onClick={() => this.hanldeChangeMenu('/manager')}>
+                Quản lý
+              </Menu.Item>
             </Menu>
           </Header>
           <Content style={{ padding: '0 32px', heigth: '1', marginTop: 86 }}>
