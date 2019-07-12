@@ -1,5 +1,5 @@
-import { combineReducers } from 'redux';
-import timeReducer from './timeReducer'
+import { combineReducers } from 'redux'
+import authReducer from './authReducer'
+import gereralReducer from './generalReducer'
 
-
-export default combineReducers({ timeReducer });
+export default combineReducers({ AuthStore: authReducer, GeneralStore: gereralReducer })

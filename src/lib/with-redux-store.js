@@ -1,6 +1,6 @@
 import React from 'react'
 import { initializeStore } from '../redux'
-
+/* eslint-disable */
 const isServer = typeof window === 'undefined'
 const __NEXT_REDUX_STORE__ = '__NEXT_REDUX_STORE__'
 

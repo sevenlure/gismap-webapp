@@ -1,8 +1,6 @@
 const slug = {
-    sanpham: {
-
-    },
-    user:{
-        
-    }
+  basic: '/',
+  login: '/user/login'
 }
+
+export default slug
