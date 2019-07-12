@@ -1,0 +1,3 @@
+[submodule "shared"]
+	path = shared
+	url = git@gitlab.com:qlnt-hcm/shared.git
