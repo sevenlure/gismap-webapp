@@ -8,7 +8,7 @@ import rootReducer from './reducers'
 const persistConfig = {
   key: 'root',
   storage,
-  whitelist: ['AuthStore', 'GeneralStore'] // place to select which state you want to persist
+  blacklist: ['GeneralStore']
 }
 const persistedReducer = persistReducer(persistConfig, rootReducer)
 

@@ -2,7 +2,7 @@ import React from 'react'
 import App, { Container } from 'next/app'
 import { PageTransition } from 'next-page-transitions'
 import AppWithLayout from 'src/components/layout/default'
-import { Button, Icon } from 'antd'
+import { Icon } from 'antd'
 import withReduxStore from '../src/lib/with-redux-store'
 import { Provider } from 'react-redux'
 import { persistStore } from 'redux-persist'
@@ -31,6 +31,7 @@ const Loader = () => {
     </div>
   )
 }
+
 class MyApp extends App {
   static async getInitialProps({ Component, ctx }) {
     let pageProps = {}
@@ -55,34 +56,18 @@ class MyApp extends App {
         <Provider store={reduxStore}>
           <PersistGate loading={<Loader />} persistor={this.persistor}>
             {isNotHaveLayout ? (
-              <PageTransition timeout={500} classNames='page-transition'>
+              <PageTransition timeout={300} classNames='page-transition'>
                 <Component {...pageProps} />
               </PageTransition>
             ) : (
               <AppWithLayout>
-                <PageTransition timeout={500} classNames='page-transition'>
+                <PageTransition timeout={300} classNames='page-transition'>
                   <Component {...pageProps} />
                 </PageTransition>
               </AppWithLayout>
             )}
           </PersistGate>
         </Provider>
-        <style jsx global>{`
-          .page-transition-enter {
-            opacity: 0;
-          }
-          .page-transition-enter-active {
-            opacity: 1;
-            transition: opacity 500ms;
-          }
-          .page-transition-exit {
-            opacity: 1;
-          }
-          .page-transition-exit-active {
-            opacity: 0;
-            transition: opacity 500ms;
-          }
-        `}</style>
       </Container>
     )
   }

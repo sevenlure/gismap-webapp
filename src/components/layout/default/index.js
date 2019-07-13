@@ -5,7 +5,19 @@ import styled from 'styled-components'
 import { Layout, Menu, Breadcrumb } from 'antd'
 import { connect } from 'react-redux'
 import { userLogout } from 'src/redux/actions/authAction'
-import { clearUserInfo } from 'src/redux/actions/generalAction.js'
+import {
+  clearUserInfo,
+  getDanhMucProvie,
+  getDanhMucCoSoCapPhep,
+  getDanhMucCoQuanThamQuyenQuanLy,
+  getDanhMucDacTrungNuocThai,
+  getDanhMucKhuCongNghiep,
+  getDanhMucNganhNghe,
+  getDanhMucNguonTiepNhan,
+  getDanhMucTinhTrangHoatDong,
+  setDanhMucIsLoaded,
+  setDanhMucIsLoading
+} from 'src/redux/actions/generalAction.js'
 import { get as _get } from 'lodash'
 import Router from 'next/router'
 import slug from 'src/routes'
@@ -27,11 +39,22 @@ const LayoutWrapper = styled.div`
   state => ({
     FirstName: _get(state, 'GeneralStore.userInfo.FirstName', ''),
     LastName: _get(state, 'GeneralStore.userInfo.LastName', ''),
-    isAuthenticated: _get(state, 'AuthStore.isAuthenticated')
+    isAuthenticated: _get(state, 'AuthStore.isAuthenticated'),
+    token: _get(state, 'AuthStore.token')
   }),
   {
     userLogout,
-    clearUserInfo
+    clearUserInfo,
+    getDanhMucProvie,
+    getDanhMucCoSoCapPhep,
+    getDanhMucCoQuanThamQuyenQuanLy,
+    getDanhMucDacTrungNuocThai,
+    getDanhMucKhuCongNghiep,
+    getDanhMucNganhNghe,
+    getDanhMucNguonTiepNhan,
+    getDanhMucTinhTrangHoatDong,
+    setDanhMucIsLoaded,
+    setDanhMucIsLoading
   }
 )
 @hocProtectLogin
@@ -42,16 +65,43 @@ class AppWithLayout extends React.PureComponent {
     LastName: PropTypes.string,
     userLogout: PropTypes.func,
     clearUserInfo: PropTypes.func,
-    isAuthenticated: PropTypes.bool
+    isAuthenticated: PropTypes.bool,
+    getDanhMucProvie: PropTypes.func,
+    getDanhMucCoSoCapPhep: PropTypes.func,
+    getDanhMucCoQuanThamQuyenQuanLy: PropTypes.func,
+    getDanhMucDacTrungNuocThai: PropTypes.func,
+    getDanhMucKhuCongNghiep: PropTypes.func,
+    getDanhMucNganhNghe: PropTypes.func,
+    getDanhMucNguonTiepNhan: PropTypes.func,
+    getDanhMucTinhTrangHoatDong: PropTypes.func,
+    setDanhMucIsLoaded: PropTypes.func,
+    setDanhMucIsLoading: PropTypes.func
   }
 
+  componentDidMount = () => {
+    // console.log('UNSAFE_componentWillMount')
+    this.props.setDanhMucIsLoading()
+    Promise.all([
+      this.props.getDanhMucProvie(),
+      this.props.getDanhMucCoSoCapPhep(),
+      this.props.getDanhMucCoQuanThamQuyenQuanLy(),
+      this.props.getDanhMucDacTrungNuocThai(),
+      this.props.getDanhMucKhuCongNghiep(),
+      this.props.getDanhMucNganhNghe(),
+      this.props.getDanhMucNguonTiepNhan(),
+      this.props.getDanhMucTinhTrangHoatDong()
+    ]).then(() => {
+      this.props.setDanhMucIsLoaded()
+    })
+  }
   hanldeChangeMenu = slugValue => {
     Router.replace(slugValue)
   }
+
   render() {
     const { children, FirstName, LastName } = this.props
     return (
-      <LayoutWrapper className='page-wrapper'>
+      <LayoutWrapper>
         <Head>
           <title>Quản lý nguồn thải</title>
         </Head>

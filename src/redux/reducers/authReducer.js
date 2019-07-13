@@ -7,7 +7,7 @@ const InitialState = {
 }
 
 // REDUCERS
-export default (state = InitialState, action) => {
+const authReducer = (state = InitialState, action) => {
   switch (action.type) {
     case LOGIN_USER_INFO: {
       const { token } = action.payload
@@ -23,3 +23,5 @@ export default (state = InitialState, action) => {
       return state
   }
 }
+
+export default authReducer

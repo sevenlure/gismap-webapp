@@ -47,6 +47,7 @@ module.exports = withLess({
     return config
   },
   env: {
+    // NODE_ENV: 'dev',
     HOST_API: 'http://prtr.southeastasia.cloudapp.azure.com:3105/'
   }
 })

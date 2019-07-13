@@ -2,6 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import Router from 'next/router'
 import slug from 'src/routes'
+import { setAuthorizationforHeader } from 'src/constant/funcAixos.js'
 
 const hocProtectLoginTemp = Component => {
   class hocProtectLogin extends React.Component {
@@ -11,18 +12,20 @@ const hocProtectLoginTemp = Component => {
     }
 
     static propTypes = {
-      isAuthenticated: PropTypes.bool
+      isAuthenticated: PropTypes.bool,
+      token: PropTypes.string
     }
     state = {
       isLoaded: false
     }
 
-    UNSAFE_componentWillMount() {
-      const { isAuthenticated } = this.props
+    componentDidMount() {
+      const { isAuthenticated, token } = this.props
       if (!isAuthenticated) {
-        // console.log(isAuthenticated, 'isAuthenticated')
+        console.log(isAuthenticated, 'isAuthenticated')
         Router.replace(slug.login)
       } else {
+        setAuthorizationforHeader(token)
         this.setState({
           isLoaded: true
         })

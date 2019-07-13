@@ -1,4 +1,24 @@
-.page-wrapper{
-    display: flex;
-    min-height: 100vh;
+.page-wrapper {
+  display: flex;
+  min-height: 100vh;
+}
+
+ /* NOTE  dung để chỉnh PageTransition */
+.page-transition-enter {
+  opacity: 0;
+}
+.page-transition-enter-active {
+  opacity: 1;
+  transition: opacity 500ms;
+}
+.page-transition-exit {
+  opacity: 1;
+}
+.page-transition-exit-active {
+  opacity: 0;
+  transition: opacity 500ms;
+}
+
+.pop-height-400, .pop-height-400  .ant-cascader-menu {
+  height: 400px !important;
 }
