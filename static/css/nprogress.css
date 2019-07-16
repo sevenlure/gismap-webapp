@@ -13,7 +13,7 @@
 }
 .page-transition-exit {
   opacity: 1;
-}
+
 .page-transition-exit-active {
   opacity: 0;
   transition: opacity 500ms;
@@ -22,3 +22,5 @@
 .pop-height-400, .pop-height-400  .ant-cascader-menu {
   height: 400px !important;
 }
+
+

@@ -35,6 +35,17 @@ const LayoutWrapper = styled.div`
   }
 `
 
+const ChildrenContainer = styled.div`
+  background: rgb(255, 255, 255);
+  display: flex;
+  flex: 1 1 0%;
+  padding: 16px;
+  min-height: 75vh;
+  > * {
+    width: 100%;
+  }
+`
+
 @connect(
   state => ({
     FirstName: _get(state, 'GeneralStore.userInfo.FirstName', ''),
@@ -157,9 +168,7 @@ class AppWithLayout extends React.PureComponent {
             <Breadcrumb style={{ margin: '16px 0' }}>
               <Breadcrumb.Item>Báo cáo đánh giá tác động môi trường</Breadcrumb.Item>
             </Breadcrumb>
-            <div style={{ background: '#fff', display: 'flex', flex: 1, padding: '16px 16px', minHeight: '75vh' }}>
-              {children}
-            </div>
+            <ChildrenContainer>{children}</ChildrenContainer>
           </Content>
           <Footer style={{ textAlign: 'center' }}>Ant Design ©2018 Created by Ant UED</Footer>
         </Layout>

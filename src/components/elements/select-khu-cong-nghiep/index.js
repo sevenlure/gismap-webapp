@@ -14,10 +14,10 @@ const ElementWrapper = styled.div`
 const PICK_LIST = ['_id', 'Name']
 
 @connect(state => ({
-  initialOptions: _get(state, 'GeneralStore.danhMuc.CoQuanCapPhep', []),
+  initialOptions: _get(state, 'GeneralStore.danhMuc.KhuCumCongNghiep', []),
   danhMucIsLoaded: _get(state, 'GeneralStore.danhMucIsLoaded', false)
 }))
-class SelectCoQuanCapPhep extends React.PureComponent {
+class SelectKhuCongNghiep extends React.PureComponent {
   static propTypes = {
     initialOptions: PropTypes.array,
     danhMucIsLoaded: PropTypes.bool,
@@ -82,4 +82,4 @@ class SelectCoQuanCapPhep extends React.PureComponent {
     )
   }
 }
-export default SelectCoQuanCapPhep
+export default SelectKhuCongNghiep
