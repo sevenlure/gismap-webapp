@@ -15,6 +15,9 @@ extends:
   - plugin:prettier/recommended
   - plugin:react/recommended
 
+rules:
+  react/display-name: [0]
+
 ###--------------------------------------------
 
 

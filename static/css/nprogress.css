@@ -13,6 +13,7 @@
 }
 .page-transition-exit {
   opacity: 1;
+}
 
 .page-transition-exit-active {
   opacity: 0;

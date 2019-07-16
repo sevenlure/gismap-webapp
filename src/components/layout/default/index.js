@@ -170,7 +170,9 @@ class AppWithLayout extends React.PureComponent {
             </Breadcrumb>
             <ChildrenContainer>{children}</ChildrenContainer>
           </Content>
-          <Footer style={{ textAlign: 'center' }}>Ant Design ©2018 Created by Ant UED</Footer>
+          <Footer style={{ textAlign: 'center' }}>
+            Waste Source Management System ©2019 Created by VietAn-Software
+          </Footer>
         </Layout>
       </LayoutWrapper>
     )
