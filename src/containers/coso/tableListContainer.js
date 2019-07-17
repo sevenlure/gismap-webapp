@@ -57,9 +57,16 @@ const columns = [
 @withLogicTable({ apiGetList: getList })
 class TableListContainer extends React.Component {
   static propTypes = {
-    isLoading: PropTypes.bool.isRequired,
     dataSource: PropTypes.array.isRequired,
+    getRef: PropTypes.func,
+    isLoading: PropTypes.bool.isRequired,
+    onChangeSearch: PropTypes.func.isRequired,
     pagination: PropTypes.object.isRequired
+  }
+
+  componentDidMount() {
+    console.log('getRef', 'componentDidMount', this.props.getRef)
+    if (this.props.getRef) this.props.getRef(this)
   }
 
   render() {

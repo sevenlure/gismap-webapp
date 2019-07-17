@@ -59,6 +59,7 @@ class SelectNganhNghe extends React.PureComponent {
       <ElementWrapper>
         <Spin spinning={!this.state.isLoaded}>
           <Select
+            allowClear
             showSearch
             style={{ width: '100%' }}
             value={this.state.value}

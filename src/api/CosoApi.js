@@ -2,11 +2,12 @@ import fetch from './fetch'
 
 const SLUG = '/coso'
 
-export function getList({ page, pageSize }) {
+export function getList({ page, pageSize, ...querySearch }) {
   return fetch.get(`${SLUG}`, {
     params: {
       page,
-      pageSize
+      pageSize,
+      ...querySearch
     }
   })
 }

@@ -8,14 +8,16 @@ const withLogic = ({ apiGetList, pageSize = 10 }) => WrappedComponent => {
       pagination: {
         pageSize,
         page: 1
-      }
+      },
+      querySearch: {}
     }
 
     fetchData = async () => {
-      const { pagination } = this.state
+      const { pagination, querySearch } = this.state
       const response = await apiGetList({
         page: pagination.page,
-        pageSize: pagination.pageSize
+        pageSize: pagination.pageSize,
+        ...querySearch
       })
       if (response.status === 200) {
         const { list, pagination } = response.data
@@ -51,6 +53,23 @@ const withLogic = ({ apiGetList, pageSize = 10 }) => WrappedComponent => {
       )
     }
 
+    onChangeSearch = async querySearch => {
+      this.setState(
+        {
+          isLoading: true,
+          pagination: {
+            ...this.state.pagination,
+            page: 1,
+            current: 1
+          },
+          querySearch: querySearch
+        },
+        () => {
+          this.fetchData()
+        }
+      )
+    }
+
     async componentDidMount() {
       this.fetchData()
     }
@@ -65,6 +84,8 @@ const withLogic = ({ apiGetList, pageSize = 10 }) => WrappedComponent => {
               onChange: this.onPageChange
             }}
             isLoading={this.state.isLoading}
+            onChangeSearch={this.onChangeSearch}
+            {...this.props}
           ></WrappedComponent>
         </React.Fragment>
       )
