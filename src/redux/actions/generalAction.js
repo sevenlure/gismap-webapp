@@ -16,7 +16,7 @@ export const GET_GENERAL_DANHMUC_NGUON_TIEP_NHAN = 'GENERAL/GET_GENERAL_DANHMUC_
 export const GET_GENERAL_DANHMUC_TINH_TRANG_HOAT_DONG = 'GENERAL/GET_GENERAL_DANHMUC_TINH_TRANG_HOAT_DONG'
 export const SET_GENERAL_DANHMUC_IS_LOADED = 'GENERAL/SET_GENERAL_DANHMUC_IS_LOADED'
 
-// MARK  ACTIONS cho user info
+/* #region  ACTIONS cho user info  */
 export function updateUserInfo(data) {
   return dispatch => {
     dispatch({ type: UPDATE_GENERAL_USER_INFO, payload: _pick(data, ['Email', 'FirstName', 'LastName']) })
@@ -27,8 +27,9 @@ export function clearUserInfo() {
     dispatch({ type: CLEAR_GENERAL_USER_INFO })
   }
 }
+/* #endregion */
 
-// MARK  ACTIONS Danh mục
+/* #region  ACTIONS Danh mục */
 export function setDanhMucIsLoaded() {
   return dispatch => {
     dispatch({ type: SET_GENERAL_DANHMUC_IS_LOADED, payload: true })
@@ -139,8 +140,9 @@ export function getDanhMucTinhTrangHoatDong() {
     }
     const res = await getListByKeyDanhMuc(query)
     if (res.data) {
-      // console.log('data', res)
       dispatch({ type: GET_GENERAL_DANHMUC_TINH_TRANG_HOAT_DONG, payload: res.data })
     }
   }
 }
+/* #endregion */
+

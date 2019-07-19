@@ -1,7 +1,7 @@
 import React from 'react'
 import App, { Container } from 'next/app'
 import { PageTransition } from 'next-page-transitions'
-import AppWithLayout from 'src/components/layout/default'
+import AppWithLayout from 'src/layout/default'
 import { Icon } from 'antd'
 import withReduxStore from '../src/lib/with-redux-store'
 import { Provider } from 'react-redux'
@@ -40,8 +40,7 @@ class MyApp extends App {
     }
 
     let isNotHaveLayout = SLUG_NOT_HAVE_LAYOUT.includes(ctx.pathname)
-
-    return { pageProps, isNotHaveLayout }
+    return { pageProps, isNotHaveLayout, pathname: ctx.pathname }
   }
 
   componentDidMount() {
@@ -55,7 +54,7 @@ class MyApp extends App {
   }
 
   render() {
-    const { Component, pageProps, reduxStore, isNotHaveLayout } = this.props
+    const { Component, pageProps, reduxStore, isNotHaveLayout, pathname } = this.props
     return (
       <Container>
         <Provider store={reduxStore}>
@@ -65,7 +64,7 @@ class MyApp extends App {
                 <Component {...pageProps} />
               </PageTransition>
             ) : (
-              <AppWithLayout>
+              <AppWithLayout pathname={pathname}>
                 <PageTransition timeout={300} classNames='page-transition'>
                   <Component {...pageProps} />
                 </PageTransition>

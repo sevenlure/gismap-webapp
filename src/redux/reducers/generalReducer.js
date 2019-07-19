@@ -35,6 +35,7 @@ const InitialState = {
 // REDUCERS
 const generalReducer = (state = InitialState, action) => {
   switch (action.type) {
+    /* #region  userInfo */
     case UPDATE_GENERAL_USER_INFO: {
       return update(state, {
         userInfo: { $set: action.payload }
@@ -43,7 +44,8 @@ const generalReducer = (state = InitialState, action) => {
     case CLEAR_GENERAL_USER_INFO: {
       return InitialState
     }
-    // NOTE  danh muc
+    /* #endregion */
+    /* #region  Danh muc */
     case SET_GENERAL_DANHMUC_IS_LOADED: {
       return update(state, {
         danhMucIsLoaded: { $set: action.payload }
@@ -89,6 +91,7 @@ const generalReducer = (state = InitialState, action) => {
         danhMuc: { [DANH_MUC.TINH_TRANG_HOAT_DONG]: { $set: action.payload } }
       })
     }
+    /* #endregion */
     default:
       return state
   }

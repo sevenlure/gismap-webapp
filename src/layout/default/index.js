@@ -51,7 +51,8 @@ const ChildrenContainer = styled.div`
     FirstName: _get(state, 'GeneralStore.userInfo.FirstName', ''),
     LastName: _get(state, 'GeneralStore.userInfo.LastName', ''),
     isAuthenticated: _get(state, 'AuthStore.isAuthenticated'),
-    token: _get(state, 'AuthStore.token')
+    token: _get(state, 'AuthStore.token'),
+    menuSelected: _get(state, 'GeneralStore.menuSelected')
   }),
   {
     userLogout,
@@ -71,22 +72,23 @@ const ChildrenContainer = styled.div`
 @hocProtectLogin
 class AppWithLayout extends React.PureComponent {
   static propTypes = {
-    children: PropTypes.node,
     FirstName: PropTypes.string,
     LastName: PropTypes.string,
-    userLogout: PropTypes.func,
+    children: PropTypes.node,
     clearUserInfo: PropTypes.func,
-    isAuthenticated: PropTypes.bool,
-    getDanhMucProvie: PropTypes.func,
-    getDanhMucCoSoCapPhep: PropTypes.func,
     getDanhMucCoQuanThamQuyenQuanLy: PropTypes.func,
+    getDanhMucCoSoCapPhep: PropTypes.func,
     getDanhMucDacTrungNuocThai: PropTypes.func,
     getDanhMucKhuCongNghiep: PropTypes.func,
     getDanhMucNganhNghe: PropTypes.func,
     getDanhMucNguonTiepNhan: PropTypes.func,
+    getDanhMucProvie: PropTypes.func,
     getDanhMucTinhTrangHoatDong: PropTypes.func,
+    isAuthenticated: PropTypes.bool,
+    pathname: PropTypes.string,
     setDanhMucIsLoaded: PropTypes.func,
-    setDanhMucIsLoading: PropTypes.func
+    setDanhMucIsLoading: PropTypes.func,
+    userLogout: PropTypes.func
   }
 
   componentDidMount = () => {
@@ -105,11 +107,30 @@ class AppWithLayout extends React.PureComponent {
       this.props.setDanhMucIsLoaded()
     })
   }
-  hanldeChangeMenu = slugValue => {
-    Router.push(slugValue)
+  hanldeChangeMenu = ({ key }) => {
+    if (key === slug.coso.base) Router.push(slug.basic)
+    else Router.push(key)
+  }
+
+  getPathForMenu(path) {
+    let result = ''
+
+    let tampArr = path.split('/')
+
+    if (path.includes('ttmoitruong')) {
+      result = '/' + tampArr[1] + '/' + tampArr[2]
+    } else result = '/' + tampArr[1]
+
+    return result
   }
 
   render() {
+    let pathMenu = ''
+    if (this.props.pathname === slug.coso.list) pathMenu = slug.coso.base
+    else pathMenu = this.getPathForMenu(this.props.pathname)
+
+    console.log('pathMenu', pathMenu)
+
     const { children, FirstName, LastName } = this.props
     return (
       <LayoutWrapper>
@@ -146,22 +167,24 @@ class AppWithLayout extends React.PureComponent {
             </div>
           </div>
           <Header style={{ height: '46px', position: 'fixed', zIndex: 1, width: '100%', top: '40px' }}>
-            <Menu theme='dark' mode='horizontal' defaultSelectedKeys={['1']}>
-              <Menu.Item key='1' onClick={() => this.hanldeChangeMenu(slug.basic)}>
-                Thông tin Cơ sở
-              </Menu.Item>
-              <SubMenu key='sub2' title='Thông tin Môi trường'>
-                <Menu.Item key='sub2_1'>Option 5</Menu.Item>
-                <Menu.Item key='sub2_2'>Option 6</Menu.Item>
+            <Menu
+              theme='dark'
+              mode='horizontal'
+              defaultSelectedKeys={[slug.basic]}
+              selectedKeys={[pathMenu]}
+              onClick={this.hanldeChangeMenu}
+            >
+              <Menu.Item key={slug.coso.base}>Thông tin Cơ sở</Menu.Item>
+              <SubMenu key={slug.ttmoitruong.base} title='Thông tin Môi trường'>
+                <Menu.Item key={slug.ttmoitruong.menu1.base}>Option 5</Menu.Item>
+                <Menu.Item key={slug.ttmoitruong.menu2.base}>Option 6</Menu.Item>
               </SubMenu>
-              <Menu.Item key='3'>Báo cáo giám sát môi trường</Menu.Item>
-              <Menu.Item key='4'>Báo cáo quản lý chất thải rắn</Menu.Item>
-              <Menu.Item key='5'>Thanh tra/Kiểm tra</Menu.Item>
-              <Menu.Item key='6'>Thu phí</Menu.Item>
+              <Menu.Item key={slug.bcgiamsatmoitruong.base}>Báo cáo giám sát môi trường</Menu.Item>
+              <Menu.Item key='/4'>Báo cáo quản lý chất thải rắn</Menu.Item>
+              <Menu.Item key='/5'>Thanh tra/Kiểm tra</Menu.Item>
+              <Menu.Item key='/6'>Thu phí</Menu.Item>
 
-              <Menu.Item key='7' onClick={() => this.hanldeChangeMenu('/manager')}>
-                Quản lý
-              </Menu.Item>
+              <Menu.Item key={slug.manager.base}>Quản lý</Menu.Item>
             </Menu>
           </Header>
           <Content style={{ padding: '0 32px', heigth: '1', marginTop: 86 }}>
