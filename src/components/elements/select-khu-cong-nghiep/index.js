@@ -21,13 +21,14 @@ class SelectKhuCongNghiep extends React.PureComponent {
   static propTypes = {
     initialOptions: PropTypes.array,
     danhMucIsLoaded: PropTypes.bool,
-    onChange: PropTypes.func
+    onChange: PropTypes.func,
+    value: PropTypes.any
   }
 
   state = {
     options: null,
     isLoaded: false,
-    value: []
+    value: null
   }
 
   initialData = () => {
@@ -44,6 +45,8 @@ class SelectKhuCongNghiep extends React.PureComponent {
   }
 
   UNSAFE_componentWillReceiveProps(nextProps) {
+    if (nextProps.value && nextProps.value !== this.state.value) this.setState({ value: nextProps.value })
+
     if (nextProps.danhMucIsLoaded) this.initialData()
   }
 

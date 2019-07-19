@@ -106,7 +106,7 @@ class AppWithLayout extends React.PureComponent {
     })
   }
   hanldeChangeMenu = slugValue => {
-    Router.replace(slugValue)
+    Router.push(slugValue)
   }
 
   render() {

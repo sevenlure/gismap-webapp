@@ -1,6 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { Form, Input, Icon, Button, Layout } from 'antd'
+import { Form, Input, Icon, Button, Layout, message } from 'antd'
 import styled from 'styled-components'
 import Clearfix from 'src/components/elements/clearfix'
 import authApi from 'src/api/authApi'
@@ -75,7 +75,9 @@ class Login extends React.Component {
             .then(res => {
               // console.log("API",data)
               this.props.userLogin(_get(res, 'data', null))
-              this.props.updateUserInfo(_get(res, 'data', null))
+              const userInfo = _get(res, 'data', null)
+              this.props.updateUserInfo(userInfo)
+              message.success(`Welcome ${userInfo.FirstName} ${userInfo.LastName}`)
               Router.replace(slug.basic)
               // console.log(this.props)
             })

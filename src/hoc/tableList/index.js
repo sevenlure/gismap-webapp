@@ -36,6 +36,12 @@ const withLogic = ({ apiGetList, pageSize = 10 }) => WrappedComponent => {
       }
     }
 
+    reloadTable = async () => {
+      this.setState({ isLoading: true }, () => {
+        this.fetchData()
+      })
+    }
+
     onPageChange = async (page, pageSize) => {
       this.setState(
         {
@@ -85,6 +91,7 @@ const withLogic = ({ apiGetList, pageSize = 10 }) => WrappedComponent => {
             }}
             isLoading={this.state.isLoading}
             onChangeSearch={this.onChangeSearch}
+            reloadTable={this.reloadTable}
             {...this.props}
           ></WrappedComponent>
         </React.Fragment>

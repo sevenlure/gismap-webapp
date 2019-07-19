@@ -44,6 +44,11 @@ class MyApp extends App {
     return { pageProps, isNotHaveLayout }
   }
 
+  componentDidMount() {
+    // MARK  hạn chế Modal Alert authen nhìu lần
+    window.isAlertAuthen = false
+  }
+
   constructor(props) {
     super(props)
     this.persistor = persistStore(props.reduxStore)

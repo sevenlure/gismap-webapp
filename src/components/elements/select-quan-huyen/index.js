@@ -19,7 +19,8 @@ class SelectQuanHuyen extends React.PureComponent {
   static propTypes = {
     initialOptions: PropTypes.array,
     danhMucIsLoaded: PropTypes.bool,
-    onChange: PropTypes.func
+    onChange: PropTypes.func,
+    value: PropTypes.any
   }
 
   state = {
@@ -61,6 +62,9 @@ class SelectQuanHuyen extends React.PureComponent {
 
   // ValueSelected
   UNSAFE_componentWillReceiveProps(nextProps) {
+    const val = _get(nextProps, 'value.ValueSelected')
+    if (val !== this.state.value) this.setState({ value: val })
+
     if (nextProps.danhMucIsLoaded) this.initialData()
   }
 

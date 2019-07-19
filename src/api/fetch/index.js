@@ -2,7 +2,7 @@ import axios from 'axios'
 import { message, Modal } from 'antd'
 import Router from 'next/router'
 import slug from 'src/routes'
-
+import error_500 from './error_500'
 //QLNY-API
 // const fetch = axios.create({
 //   baseURL: process.env.HOST_API,
@@ -19,7 +19,7 @@ import slug from 'src/routes'
 //       title: 'Quyền hạn',
 //       content: 'Hết phiên làm việc, Vui lòng đăng nhập lại!',
 //       onOk() {
-//         Router.replace(slug.login)
+//         Router.push(slug.login)
 //       }
 //     })
 //     break
@@ -52,6 +52,9 @@ fetch.interceptors.response.use(
       const { status, data } = error.response
       switch (status) {
         case 401: {
+          // MARK  hạn chế Modal Alert authen nhìu lần
+          if (window.isAlertAuthen) break
+          window.isAlertAuthen = true
           const title = 'Chứng thực'
           switch (data.code) {
             case 'InvalidCredentials': {
@@ -59,6 +62,7 @@ fetch.interceptors.response.use(
                 title: title,
                 content: 'Chữ ký không hợp lệ!!',
                 onOk() {
+                  window.isAlertAuthen = false
                   Router.replace(slug.login)
                 }
               })
@@ -69,6 +73,7 @@ fetch.interceptors.response.use(
                 title: title,
                 content: 'Hết phiên làm việc, Vui lòng đăng nhập lại',
                 onOk() {
+                  window.isAlertAuthen = false
                   Router.replace(slug.login)
                 }
               })
@@ -79,6 +84,10 @@ fetch.interceptors.response.use(
               break
             }
           }
+          break
+        }
+        case 500: {
+          error_500(error)
           break
         }
         default:

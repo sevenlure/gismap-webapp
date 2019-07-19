@@ -29,3 +29,6 @@ overrides:
     parser: "babel-eslint"
     parserOptions:
       sourceType: module
+      ecmaVersion: 2015
+      ecmaFeatures:
+        legacyDecorators: true
