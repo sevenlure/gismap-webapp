@@ -3,7 +3,7 @@ import React from 'react'
 const withLogic = ({ apiGetList, pageSize = 10 }) => WrappedComponent => {
   return class ComponentWithLogic extends React.Component {
     state = {
-      isLoading: false,
+      isLoading: true,
       dataSource: [],
       pagination: {
         pageSize,
