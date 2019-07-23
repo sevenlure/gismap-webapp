@@ -3,7 +3,7 @@
   min-height: 100vh;
 }
 
- /* NOTE  dung để chỉnh PageTransition */
+/* NOTE  dung để chỉnh PageTransition */
 .page-transition-enter {
   opacity: 0;
 }
@@ -20,8 +20,11 @@
   transition: opacity 500ms;
 }
 
-.pop-height-400, .pop-height-400  .ant-cascader-menu {
+.pop-height-400,
+.pop-height-400 .ant-cascader-menu {
   height: 400px !important;
 }
 
-
+.pop-height-400 .ant-select-dropdown-menu {
+  max-height: 400px !important;
+}

@@ -176,7 +176,7 @@ class AppWithLayout extends React.PureComponent {
             >
               <Menu.Item key={slug.coso.base}>Thông tin Cơ sở</Menu.Item>
               <SubMenu key={slug.ttmoitruong.base} title='Thông tin Môi trường'>
-                <Menu.Item key={slug.ttmoitruong.menu1.base}>Option 5</Menu.Item>
+                <Menu.Item key={slug.ttmoitruong.tacdongmoitruong.base}>Báo cáo đánh giá tác động môi trường</Menu.Item>
                 <Menu.Item key={slug.ttmoitruong.menu2.base}>Option 6</Menu.Item>
               </SubMenu>
               <Menu.Item key={slug.bcgiamsatmoitruong.base}>Báo cáo giám sát môi trường</Menu.Item>

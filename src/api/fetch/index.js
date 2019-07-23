@@ -3,6 +3,7 @@ import { message, Modal } from 'antd'
 import Router from 'next/router'
 import slug from 'src/routes'
 import error_500 from './error_500'
+import error_415 from './error_415'
 //QLNY-API
 // const fetch = axios.create({
 //   baseURL: process.env.HOST_API,
@@ -84,6 +85,10 @@ fetch.interceptors.response.use(
               break
             }
           }
+          break
+        }
+        case 415: {
+          error_415(error)
           break
         }
         case 500: {

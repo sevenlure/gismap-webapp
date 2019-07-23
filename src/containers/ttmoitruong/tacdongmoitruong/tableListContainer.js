@@ -3,9 +3,12 @@ import PropTypes from 'prop-types'
 import { Table, Icon, Popconfirm, message } from 'antd'
 import { COLOR, ICON_SIZE } from 'src/constant/theme'
 import withLogicTable from 'src/hoc/tableList'
-import { deleteById, getList } from 'src/api/CosoApi'
+import { deleteById, getList } from 'src/api/ttmoitruong/tacdongmoitruongApi'
 import Link from 'next/link'
 import slug from 'src/routes'
+import { DATETIME_FORMAT } from 'src/config/format'
+import moment from 'moment'
+import { get } from 'lodash'
 
 @withLogicTable({ apiGetList: getList })
 class TableListContainer extends React.Component {
@@ -43,35 +46,37 @@ class TableListContainer extends React.Component {
       )
     },
     {
-      title: 'Giấy phép DKKD',
-      dataIndex: 'SoGiayPhep_DKKD',
-      key: 'SoGiayPhep_DKKD'
+      title: 'Số quyết định phê duyệt',
+      dataIndex: 'TacDongMoiTruong.SoQuyenDinhPheDuyet',
+      key: 'SoQuyenDinhPheDuyet'
     },
 
     {
-      title: 'Khu/Cụm Công Nghiệp',
-      dataIndex: 'KhuCumCongNghiep.Name',
-      key: 'KhuCumCongNghiep'
+      title: 'Cơ quan cấp',
+      dataIndex: 'CoQuanCapPhep.Name',
+      key: 'CoQuanCapPhep'
     },
     {
-      title: 'Quận Huyện',
-      dataIndex: 'DiaChi.QuanHuyen.Name',
-      key: 'QuanHuyen'
+      title: 'Ngày phê duyệt',
+      dataIndex: 'TacDongMoiTruong.NgayPheDuyet',
+      key: 'NgayPheDuyet',
+      render: field => {
+        if (field) return moment(field).format(DATETIME_FORMAT)
+        else return ''
+      }
+    },
+
+    {
+      title: 'Xác nhận hoàn thành',
+      dataIndex: 'TacDongMoiTruong.XacNhanHoanThanh',
+      key: 'XacNhanHoanThanh',
+      render: field => (field ? 'Có' : 'Không')
     },
     {
-      title: 'Phuờng Xã',
-      dataIndex: 'DiaChi.PhuongXa.Name',
-      key: 'PhuongXa'
-    },
-    {
-      title: 'Ngành Nghề',
-      dataIndex: 'NganhNghe.Name',
-      key: 'NganhNghe'
-    },
-    {
-      title: 'Thẩm Quyền Quản lý',
-      dataIndex: 'CoQuanThamQuyenQuanLy.Name',
-      key: 'CoQuanThamQuyenQuanLy'
+      title: 'Số luợng tập tin',
+      dataIndex: 'TacDongMoiTruong.TapTinDinhKem',
+      key: 'TapTinDinhKem',
+      render: field => (field ? field.length : 0)
     },
     {
       title: '',
@@ -84,7 +89,7 @@ class TableListContainer extends React.Component {
             title='Bạn chắc chắc muốn xoá?'
             placement='left'
             onConfirm={() => {
-              this.handleDelete(record._id)
+              this.handleDelete(get(record, 'TacDongMoiTruong._id'))
             }}
           >
             <Icon style={{ color: COLOR.RED, fontSize: ICON_SIZE.LARGE }} type='delete' />

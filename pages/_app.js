@@ -60,12 +60,12 @@ class MyApp extends App {
         <Provider store={reduxStore}>
           <PersistGate loading={<Loader />} persistor={this.persistor}>
             {isNotHaveLayout ? (
-              <PageTransition timeout={300} classNames='page-transition'>
+              <PageTransition timeout={200} classNames='page-transition'>
                 <Component {...pageProps} />
               </PageTransition>
             ) : (
               <AppWithLayout pathname={pathname}>
-                <PageTransition timeout={300} classNames='page-transition'>
+                <PageTransition timeout={200} classNames='page-transition'>
                   <Component {...pageProps} />
                 </PageTransition>
               </AppWithLayout>

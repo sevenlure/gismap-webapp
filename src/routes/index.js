@@ -5,13 +5,16 @@ const slug = {
   coso: {
     base: '/coso',
     list: '/',
+    create: '/coso/create',
     edit: '/coso/[_id]'
   },
   ttmoitruong: {
     base: '/ttmoitruong',
 
-    menu1: {
-      base: '/ttmoitruong/menu1'
+    tacdongmoitruong: {
+      base: '/ttmoitruong/tacdongmoitruong',
+      list: '/ttmoitruong/tacdongmoitruong',
+      create: '/ttmoitruong/tacdongmoitruong/create'
     },
     menu2: {
       base: '/ttmoitruong/menu2'

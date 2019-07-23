@@ -1,26 +1,26 @@
 import React from 'react'
+import TacdongmoitruongForm from 'src/containers/ttmoitruong/tacdongmoitruong/form'
 import { Button, Affix, message } from 'antd'
-import { create as postCreateCoso } from 'src/api/CosoApi'
-import CosoForm from 'src/containers/coso/form'
-import Router from 'next/router'
+import { create as postCreateTacDongMoiTruong } from 'src/api/ttmoitruong/tacdongmoitruongApi'
 import slug from 'src/routes'
+import Router from 'next/router'
 
-export default class CosoCreate extends React.Component {
+export default class TacdongmoitruongCreate extends React.Component {
   state = {
     isLoading: false
   }
 
   handleSubmit = async () => {
-    const dataForm = await this.CosoForm.getFormData()
+    const dataForm = await this.TacdongmoitruongForm.getFormData()
     const { err, values } = dataForm
     if (err) {
       this.setState({ isLoading: false })
       return
     }
-    postCreateCoso(values)
+    postCreateTacDongMoiTruong(values)
       .then(() => {
         message.success('Thêm mới thành công')
-        Router.push(slug.coso.list)
+        Router.push(slug.ttmoitruong.tacdongmoitruong.list)
       })
       .catch(() => {
         this.setState({ isLoading: false })
@@ -30,7 +30,7 @@ export default class CosoCreate extends React.Component {
   render() {
     return (
       <div>
-        <CosoForm getRef={ref => (this.CosoForm = ref)} />
+        <TacdongmoitruongForm getRef={ref => (this.TacdongmoitruongForm = ref)} />
         <Affix offsetBottom={20}>
           <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
             <Button
