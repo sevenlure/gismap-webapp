@@ -40,7 +40,10 @@ class TableListContainer extends React.Component {
       dataIndex: 'Ten',
       key: 'Ten',
       render: (text, record) => (
-        <Link href={slug.coso.edit} as={`${slug.coso.base}/${record._id}`}>
+        <Link
+          href={slug.ttmoitruong.tacdongmoitruong.edit}
+          as={`${slug.ttmoitruong.tacdongmoitruong.base}/${get(record, 'TacDongMoiTruong._id')}`}
+        >
           <a style={{ color: COLOR.TITLE, textDecoration: 'underline' }}>{text}</a>
         </Link>
       )

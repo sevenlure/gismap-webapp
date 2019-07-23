@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { Upload, message, Button, Icon, Modal, Form, Input } from 'antd'
-import { get as _get, map as _map, remove as _remove } from 'lodash'
+import { get as _get, map as _map, remove as _remove, isEqual as _isEqual } from 'lodash'
 import { connect } from 'react-redux'
 import { uploadAttachment } from 'src/api/AttachmentApi'
 import { HOST_ATTACHMENT } from 'src/config/host'
@@ -28,11 +28,13 @@ export default class UploadAttachment extends React.PureComponent {
   static propTypes = {
     form: PropTypes.object.isRequired,
     keyUpload: PropTypes.string.isRequired,
+    onChange: PropTypes.func,
     token: PropTypes.string.isRequired,
-    onChange: PropTypes.func
+    value: PropTypes.array,
+    cbDeleteFile: PropTypes.func
   }
-
-  state = { visible: false, file: null, isLoading: false, fileSavedList: [] }
+  //isInitSetValue de xu ly luc edit form
+  state = { isInitSetValue: false, visible: false, file: null, isLoading: false, fileSavedList: [] }
 
   showModal = () => {
     this.props.form.resetFields()
@@ -46,6 +48,17 @@ export default class UploadAttachment extends React.PureComponent {
       visible: false,
       file: null
     })
+  }
+
+  UNSAFE_componentWillReceiveProps(nextProps) {
+    const isDiff = !_isEqual(this.props.value, nextProps.value)
+    if (isDiff && !this.state.isInitSetValue) {
+      this.setState({ fileSavedList: nextProps.value, isInitSetValue: true })
+    }
+
+    // if (nextProps.value && nextProps.value !== this.state.value) this.setState({ value: nextProps.value })
+
+    // if (nextProps.danhMucIsLoaded) this.initialData()
   }
 
   handleOk = () => {
@@ -64,13 +77,15 @@ export default class UploadAttachment extends React.PureComponent {
             }
             this.setState(
               {
+                isInitSetValue: true,
                 fileSavedList: [...this.state.fileSavedList, fileSaved],
                 isLoading: false,
                 visible: false
               },
               () => {
                 if (this.props.onChange) {
-                  this.props.onChange(_map(this.state.fileSavedList, '_id'))
+                  // this.props.onChange(_map(this.state.fileSavedList, '_id'))
+                  this.props.onChange(this.state.fileSavedList)
                 }
               }
             )
@@ -95,6 +110,7 @@ export default class UploadAttachment extends React.PureComponent {
             dataSource={this.state.fileSavedList}
             cbDeleteFile={_id => {
               _remove(this.state.fileSavedList, item => item._id === _id)
+              if(this.props.cbDeleteFile) this.props.cbDeleteFile(_id)
               this.forceUpdate()
             }}
           />

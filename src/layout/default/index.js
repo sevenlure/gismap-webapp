@@ -218,14 +218,15 @@ class BoxAnimate extends React.Component {
   }
 
   state = {
-    focus: 'enter'
+    focus: 'enter',
+    dataBreadcrumbArr: []
   }
   UNSAFE_componentWillReceiveProps(nextProps) {
     const isDiff = !_isEqual(this.props.breadcrumbArr, nextProps.breadcrumbArr)
     if (isDiff) {
       this.setState({ focus: 'exit' }, () => {
         setTimeout(() => {
-          this.setState({ focus: 'enter' })
+          this.setState({ focus: 'enter', dataBreadcrumbArr: nextProps.breadcrumbArr })
         }, 400)
       })
     }
@@ -234,7 +235,7 @@ class BoxAnimate extends React.Component {
     return (
       <Box pose={this.state.focus}>
         <Breadcrumb style={{ margin: '16px 0' }}>
-          {this.props.breadcrumbArr.map(item => {
+          {this.state.dataBreadcrumbArr.map(item => {
             return <Breadcrumb.Item key={item}>{item}</Breadcrumb.Item>
           })}
         </Breadcrumb>

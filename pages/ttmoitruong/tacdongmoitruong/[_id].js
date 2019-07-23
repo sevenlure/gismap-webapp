@@ -1,12 +1,12 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { getById, updateById } from 'src/api/CosoApi'
+import { getById, updateById } from 'src/api/ttmoitruong/tacdongmoitruongApi'
 import { Button, Affix, message, Spin } from 'antd'
-import CosoForm from 'src/containers/coso/form'
 import Router from 'next/router'
 import slug, { breadcrumb } from 'src/routes'
 import { connect } from 'react-redux'
 import { setBreadCrumb } from 'src/redux/actions/generalAction'
+import TacdongmoitruongForm from 'src/containers/ttmoitruong/tacdongmoitruong/form'
 
 @connect(
   null,
@@ -14,7 +14,7 @@ import { setBreadCrumb } from 'src/redux/actions/generalAction'
     setBreadCrumb
   }
 )
-class CosoEdit extends React.Component {
+class TacdongmoitruongEdit extends React.Component {
   static propTypes = {
     _id: PropTypes.string,
     setBreadCrumb: PropTypes.any
@@ -32,13 +32,12 @@ class CosoEdit extends React.Component {
   }
 
   async componentDidMount() {
-    this.props.setBreadCrumb(breadcrumb[slug.coso.edit])
+    this.props.setBreadCrumb(breadcrumb[slug.ttmoitruong.tacdongmoitruong.edit])
 
     getById(this.props._id)
       .then(response => {
         const { data } = response
-        // const { data } = response
-        this.CosoForm.tranformData2Form(data)
+        this.TacdongmoitruongForm.tranformData2Form(data)
       })
       .finally(() => {
         this.setState({
@@ -48,7 +47,7 @@ class CosoEdit extends React.Component {
   }
 
   handleSubmit = async () => {
-    const dataForm = await this.CosoForm.getFormData()
+    const dataForm = await this.TacdongmoitruongForm.getFormData()
     const { err, values } = dataForm
     if (err) {
       this.setState({ isLoading: false })
@@ -57,18 +56,19 @@ class CosoEdit extends React.Component {
     updateById(this.props._id, values)
       .then(() => {
         message.success('Cập nhật thành công')
-        Router.push(slug.coso.list)
+        Router.push(slug.ttmoitruong.tacdongmoitruong.list)
       })
       .catch(() => {
         this.setState({ isLoading: false })
       })
+    // this.setState({ isLoading: false })
   }
 
   render() {
     return (
       <div>
         <Spin spinning={!this.state.isLoadedForm}>
-          <CosoForm getRef={ref => (this.CosoForm = ref)} />
+          <TacdongmoitruongForm getRef={ref => (this.TacdongmoitruongForm = ref)} />
           <Affix offsetBottom={20}>
             <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
               <Button
@@ -97,4 +97,4 @@ class CosoEdit extends React.Component {
   }
 }
 
-export default CosoEdit
+export default TacdongmoitruongEdit

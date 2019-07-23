@@ -95,8 +95,10 @@ fetch.interceptors.response.use(
           error_500(error)
           break
         }
-        default:
-          message.error(error.response.message)
+        default: {
+          const messErr = error.response.message || data.message
+          message.error(messErr)
+        }
       }
     } else if (error.request) {
       Modal.error({
