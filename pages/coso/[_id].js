@@ -4,11 +4,20 @@ import { getById, updateById } from 'src/api/CosoApi'
 import { Button, Affix, message, Spin } from 'antd'
 import CosoForm from 'src/containers/coso/form'
 import Router from 'next/router'
-import slug from 'src/routes'
+import slug, { breadcrumb } from 'src/routes'
+import { connect } from 'react-redux'
+import { setBreadCrumb } from 'src/redux/actions/generalAction'
 
+@connect(
+  null,
+  {
+    setBreadCrumb
+  }
+)
 class CosoCreate extends React.Component {
   static propTypes = {
-    _id: PropTypes.string
+    _id: PropTypes.string,
+    setBreadCrumb: PropTypes.any
   }
 
   static getInitialProps = ({ query }) => {
@@ -23,6 +32,8 @@ class CosoCreate extends React.Component {
   }
 
   async componentDidMount() {
+    this.props.setBreadCrumb(breadcrumb[slug.coso.edit])
+
     getById(this.props._id)
       .then(response => {
         const { data } = response

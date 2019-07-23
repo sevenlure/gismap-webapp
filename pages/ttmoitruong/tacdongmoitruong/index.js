@@ -1,13 +1,29 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import SearchContainer from 'src/containers/searchContainer'
 import TableListContainer from 'src/containers/ttmoitruong/tacdongmoitruong/tableListContainer'
 import { get, pick, pickBy, identity } from 'lodash'
 import Link from 'next/link'
 import { Icon } from 'antd'
 import Clearfix from 'src/components/elements/clearfix'
-import slug from 'src/routes'
+import { setBreadCrumb } from 'src/redux/actions/generalAction'
+import slug, { breadcrumb } from 'src/routes'
+import { connect } from 'react-redux'
 
+@connect(
+  null,
+  {
+    setBreadCrumb
+  }
+)
 class Index extends React.Component {
+  static propTypes = {
+    setBreadCrumb: PropTypes.any
+  }
+
+  componentDidMount() {
+    this.props.setBreadCrumb(breadcrumb[slug.ttmoitruong.tacdongmoitruong.list])
+  }
   onClickSearch = values => {
     const onChangeSearch = get(this.TableList, 'props.onChangeSearch')
     if (onChangeSearch) {

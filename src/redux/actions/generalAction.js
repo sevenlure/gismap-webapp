@@ -16,6 +16,9 @@ export const GET_GENERAL_DANHMUC_NGUON_TIEP_NHAN = 'GENERAL/GET_GENERAL_DANHMUC_
 export const GET_GENERAL_DANHMUC_TINH_TRANG_HOAT_DONG = 'GENERAL/GET_GENERAL_DANHMUC_TINH_TRANG_HOAT_DONG'
 export const SET_GENERAL_DANHMUC_IS_LOADED = 'GENERAL/SET_GENERAL_DANHMUC_IS_LOADED'
 
+// NOTE  Quản lý các store menu & breadcrumb
+export const SET_BREADCRUMB = 'GENERAL/SET_BREADCRUMB'
+
 /* #region  ACTIONS cho user info  */
 export function updateUserInfo(data) {
   return dispatch => {
@@ -142,6 +145,15 @@ export function getDanhMucTinhTrangHoatDong() {
     if (res.data) {
       dispatch({ type: GET_GENERAL_DANHMUC_TINH_TRANG_HOAT_DONG, payload: res.data })
     }
+  }
+}
+/* #endregion */
+
+/* #region  ACTIONS cho menu & breadcrumb */
+export function setBreadCrumb(breadcrumbArr) {
+  return dispatch => {
+    const payload = Array.isArray(breadcrumbArr) ? breadcrumbArr : []
+    dispatch({ type: SET_BREADCRUMB, payload })
   }
 }
 /* #endregion */

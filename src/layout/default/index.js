@@ -22,6 +22,8 @@ import { get as _get } from 'lodash'
 import Router from 'next/router'
 import slug from 'src/routes'
 import hocProtectLogin from 'src/hoc/is-authenticated'
+import posed from 'react-pose'
+import { isEqual as _isEqual } from 'lodash'
 
 const { Header, Content, Footer } = Layout
 const { SubMenu } = Menu
@@ -52,7 +54,8 @@ const ChildrenContainer = styled.div`
     LastName: _get(state, 'GeneralStore.userInfo.LastName', ''),
     isAuthenticated: _get(state, 'AuthStore.isAuthenticated'),
     token: _get(state, 'AuthStore.token'),
-    menuSelected: _get(state, 'GeneralStore.menuSelected')
+    menuSelected: _get(state, 'GeneralStore.menuSelected'),
+    breadcrumbArr: _get(state, 'GeneralStore.breadcrumb')
   }),
   {
     userLogout,
@@ -88,7 +91,8 @@ class AppWithLayout extends React.PureComponent {
     pathname: PropTypes.string,
     setDanhMucIsLoaded: PropTypes.func,
     setDanhMucIsLoading: PropTypes.func,
-    userLogout: PropTypes.func
+    userLogout: PropTypes.func,
+    breadcrumbArr: PropTypes.array.isRequired
   }
 
   componentDidMount = () => {
@@ -188,9 +192,8 @@ class AppWithLayout extends React.PureComponent {
             </Menu>
           </Header>
           <Content style={{ padding: '0 32px', heigth: '1', marginTop: 86 }}>
-            <Breadcrumb style={{ margin: '16px 0' }}>
-              <Breadcrumb.Item>Báo cáo đánh giá tác động môi trường</Breadcrumb.Item>
-            </Breadcrumb>
+            <BoxAnimate breadcrumbArr={this.props.breadcrumbArr} />
+
             <ChildrenContainer>{children}</ChildrenContainer>
           </Content>
           <Footer style={{ textAlign: 'center' }}>
@@ -203,3 +206,39 @@ class AppWithLayout extends React.PureComponent {
 }
 
 export default AppWithLayout
+
+const Box = posed.div({
+  enter: { x: 0, opacity: 1, transition: { duration: 200 } },
+  exit: { x: -100, opacity: 0, transition: { duration: 200 } }
+})
+
+class BoxAnimate extends React.Component {
+  static propTypes = {
+    breadcrumbArr: PropTypes.array.isRequired
+  }
+
+  state = {
+    focus: 'enter'
+  }
+  UNSAFE_componentWillReceiveProps(nextProps) {
+    const isDiff = !_isEqual(this.props.breadcrumbArr, nextProps.breadcrumbArr)
+    if (isDiff) {
+      this.setState({ focus: 'exit' }, () => {
+        setTimeout(() => {
+          this.setState({ focus: 'enter' })
+        }, 400)
+      })
+    }
+  }
+  render() {
+    return (
+      <Box pose={this.state.focus}>
+        <Breadcrumb style={{ margin: '16px 0' }}>
+          {this.props.breadcrumbArr.map(item => {
+            return <Breadcrumb.Item key={item}>{item}</Breadcrumb.Item>
+          })}
+        </Breadcrumb>
+      </Box>
+    )
+  }
+}

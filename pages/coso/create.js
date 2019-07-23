@@ -1,11 +1,28 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import { Button, Affix, message } from 'antd'
+import { connect } from 'react-redux'
+import { setBreadCrumb } from 'src/redux/actions/generalAction'
 import { create as postCreateCoso } from 'src/api/CosoApi'
 import CosoForm from 'src/containers/coso/form'
 import Router from 'next/router'
-import slug from 'src/routes'
+import slug, { breadcrumb } from 'src/routes'
 
+@connect(
+  null,
+  {
+    setBreadCrumb
+  }
+)
 export default class CosoCreate extends React.Component {
+  static propTypes = {
+    setBreadCrumb: PropTypes.any
+  }
+  
+  componentDidMount(){
+    this.props.setBreadCrumb(breadcrumb[slug.coso.create])
+  }
+
   state = {
     isLoading: false
   }

@@ -10,7 +10,8 @@ import {
   GET_GENERAL_DANHMUC_KHU_CUM_CONG_NGHIEP,
   GET_GENERAL_DANHMUC_NGANH_NGHE,
   GET_GENERAL_DANHMUC_NGUON_TIEP_NHAN,
-  GET_GENERAL_DANHMUC_TINH_TRANG_HOAT_DONG
+  GET_GENERAL_DANHMUC_TINH_TRANG_HOAT_DONG,
+  SET_BREADCRUMB
 } from '../actions/generalAction'
 import { DANH_MUC } from '../../../shared/constant/danhmuc'
 
@@ -29,7 +30,8 @@ const InitialState = {
     [DANH_MUC.NGUON_TIEP_NHAN]: null,
     [DANH_MUC.TINH_TRANG_HOAT_DONG]: null
   },
-  danhMucIsLoaded: false
+  danhMucIsLoaded: false,
+  breadcrumb: ['']
 }
 
 // REDUCERS
@@ -92,6 +94,14 @@ const generalReducer = (state = InitialState, action) => {
       })
     }
     /* #endregion */
+
+    /* #region  menu & breadcrumb */
+    case SET_BREADCRUMB: {
+      return update(state, {
+        breadcrumb: { $set: action.payload }
+      })
+    }
+    /* #endregion */
     default:
       return state
   }
@@ -100,7 +110,7 @@ const generalReducer = (state = InitialState, action) => {
 const generalPersistConfig = {
   key: 'GeneralStore',
   storage: storage,
-  blacklist: ['danhMuc', 'danhMucIsLoaded']
+  blacklist: ['danhMuc', 'danhMucIsLoaded', 'breadcrumb']
 }
 
 export default persistReducer(generalPersistConfig, generalReducer)

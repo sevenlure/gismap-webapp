@@ -1,13 +1,30 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import TacdongmoitruongForm from 'src/containers/ttmoitruong/tacdongmoitruong/form'
 import { Button, Affix, message } from 'antd'
 import { create as postCreateTacDongMoiTruong } from 'src/api/ttmoitruong/tacdongmoitruongApi'
-import slug from 'src/routes'
 import Router from 'next/router'
+import slug, { breadcrumb } from 'src/routes'
+import { connect } from 'react-redux'
+import { setBreadCrumb } from 'src/redux/actions/generalAction'
 
+@connect(
+  null,
+  {
+    setBreadCrumb
+  }
+)
 export default class TacdongmoitruongCreate extends React.Component {
+  static propTypes = {
+    setBreadCrumb: PropTypes.any
+  }
+
   state = {
     isLoading: false
+  }
+
+  componentDidMount() {
+    this.props.setBreadCrumb(breadcrumb[slug.ttmoitruong.tacdongmoitruong.create])
   }
 
   handleSubmit = async () => {
