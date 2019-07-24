@@ -19,7 +19,6 @@ const ContainerCustomRow = styled.div`
     margin-bottom: 0px;
   }
 `
-
 const keyFieldOfForm = [
   'Coso',
   'SoQuyenDinhPheDuyet',
@@ -31,7 +30,7 @@ const keyFieldOfForm = [
 ]
 
 @Form.create()
-export default class TacdongmoitruongForm extends React.Component {
+export default class KehoachbaovemoitruongForm extends React.Component {
   static propTypes = {
     form: PropTypes.object.isRequired,
     getRef: PropTypes.func
@@ -146,7 +145,7 @@ export default class TacdongmoitruongForm extends React.Component {
                 {getFieldDecorator('TapTinDinhKem', {})(
                   <UploadAttachment
                     cbDeleteFile={this.handleCacheAttachDeleted}
-                    keyUpload={ATTACHMENT_TYPE.TAC_DONG_MOI_TRUONG}
+                    keyUpload={ATTACHMENT_TYPE.KE_HOACH_BAO_VE_MOI_TRUONG}
                   />
                 )}
               </Form.Item>

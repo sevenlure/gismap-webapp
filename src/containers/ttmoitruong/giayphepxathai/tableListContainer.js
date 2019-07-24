@@ -3,11 +3,9 @@ import PropTypes from 'prop-types'
 import { Table, Icon, Popconfirm, message } from 'antd'
 import { COLOR, ICON_SIZE } from 'src/constant/theme'
 import withLogicTable from 'src/hoc/tableList'
-import { deleteById, getList } from 'src/api/ttmoitruong/tacdongmoitruongApi'
+import { deleteById, getList } from 'src/api/ttmoitruong/giayphepxathaiApi'
 import Link from 'next/link'
 import slug from 'src/routes'
-import { DATETIME_FORMAT } from 'src/config/format'
-import moment from 'moment'
 import { get } from 'lodash'
 
 @withLogicTable({ apiGetList: getList })
@@ -41,43 +39,42 @@ class TableListContainer extends React.Component {
       key: 'Ten',
       render: (text, record) => (
         <Link
-          href={slug.ttmoitruong.tacdongmoitruong.edit}
-          as={`${slug.ttmoitruong.tacdongmoitruong.base}/${get(record, 'TacDongMoiTruong._id')}`}
+          href={slug.ttmoitruong.giayphepxathai.edit}
+          as={`${slug.ttmoitruong.giayphepxathai.base}/${get(record, 'GiayPhepXaThai._id')}`}
         >
           <a style={{ color: COLOR.TITLE, textDecoration: 'underline' }}>{text}</a>
         </Link>
       )
     },
     {
-      title: 'Số quyết định phê duyệt',
-      dataIndex: 'TacDongMoiTruong.SoQuyenDinhPheDuyet',
-      key: 'SoQuyenDinhPheDuyet'
+      title: 'Số giấy phép',
+      dataIndex: 'GiayPhepXaThai.SoGiayPhep',
+      key: 'SoGiayPhep'
     },
 
     {
-      title: 'Cơ quan cấp',
-      dataIndex: 'TacDongMoiTruong.CoQuanCapPhep.Name',
+      title: 'Cơ quan cấp phép',
+      dataIndex: 'GiayPhepXaThai.CoQuanCapPhep.Name',
       key: 'CoQuanCapPhep'
     },
     {
-      title: 'Ngày phê duyệt',
-      dataIndex: 'TacDongMoiTruong.NgayPheDuyet',
-      key: 'NgayPheDuyet',
-      render: field => {
-        if (field) return moment(field).format(DATETIME_FORMAT)
-        else return ''
-      }
+      title: 'Công suất thiết kế',
+      dataIndex: 'GiayPhepXaThai.CongSuatThietKe',
+      key: 'CongSuatThietKe'
     },
-
     {
-      title: 'Xác nhận hoàn thành',
-      dataIndex: 'TacDongMoiTruong.XacNhanHoanThanh',
-      key: 'XacNhanHoanThanh',
-      render: field => (field ? 'Có' : 'Không')
+      title: 'Lưu luợng cấp phép',
+      dataIndex: 'GiayPhepXaThai.LuuLuongCapPhep',
+      key: 'LuuLuongCapPhep'
+    },
+    {
+      title: 'Đặc trưng nuớc thải',
+      dataIndex: 'GiayPhepXaThai.DacTrungNuocThai.Name',
+      key: 'DacTrungNuocThai'
     },
     {
       title: 'Số luợng tập tin',
-      dataIndex: 'TacDongMoiTruong.TapTinDinhKem',
+      dataIndex: 'GiayPhepXaThai.TapTinDinhKem',
       key: 'TapTinDinhKem',
       render: field => (field ? field.length : 0)
     },
@@ -92,7 +89,7 @@ class TableListContainer extends React.Component {
             title='Bạn chắc chắc muốn xoá?'
             placement='left'
             onConfirm={() => {
-              this.handleDelete(get(record, 'TacDongMoiTruong._id'))
+              this.handleDelete(get(record, 'GiayPhepXaThai._id'))
             }}
           >
             <Icon style={{ color: COLOR.RED, fontSize: ICON_SIZE.LARGE }} type='delete' />
@@ -106,7 +103,7 @@ class TableListContainer extends React.Component {
     return (
       <Table
         rowKey={record => {
-          return record.TacDongMoiTruong._id
+          return record.GiayPhepXaThai._id
         }}
         bordered
         columns={this.columns}

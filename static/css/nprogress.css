@@ -20,11 +20,11 @@
   transition: opacity 500ms;
 }
 
-.pop-height-400,
 .pop-height-400 .ant-cascader-menu {
   height: 400px !important;
 }
 
+.pop-height-400,
 .pop-height-400 .ant-select-dropdown-menu {
   max-height: 400px !important;
 }

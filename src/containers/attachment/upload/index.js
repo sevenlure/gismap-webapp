@@ -53,7 +53,15 @@ export default class UploadAttachment extends React.PureComponent {
   UNSAFE_componentWillReceiveProps(nextProps) {
     const isDiff = !_isEqual(this.props.value, nextProps.value)
     if (isDiff && !this.state.isInitSetValue) {
-      this.setState({ fileSavedList: nextProps.value, isInitSetValue: true })
+      const fileSavedList = nextProps.value.map(item => {
+        return {
+          _id: item._id,
+          Title: item.Title,
+          GhiChu: item.GhiChu,
+          url: HOST_ATTACHMENT + item.RelativePathWithFileName + '?token=' + this.props.token
+        }
+      })
+      this.setState({ fileSavedList, isInitSetValue: true })
     }
 
     // if (nextProps.value && nextProps.value !== this.state.value) this.setState({ value: nextProps.value })
@@ -110,7 +118,7 @@ export default class UploadAttachment extends React.PureComponent {
             dataSource={this.state.fileSavedList}
             cbDeleteFile={_id => {
               _remove(this.state.fileSavedList, item => item._id === _id)
-              if(this.props.cbDeleteFile) this.props.cbDeleteFile(_id)
+              if (this.props.cbDeleteFile) this.props.cbDeleteFile(_id)
               this.forceUpdate()
             }}
           />

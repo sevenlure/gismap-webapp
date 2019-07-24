@@ -45,7 +45,7 @@ class MyApp extends App {
 
   componentDidMount() {
     // MARK  hạn chế Modal Alert authen nhìu lần
-    window.isAlertAuthen = false
+    window.isAlertModalErr = false
   }
 
   constructor(props) {

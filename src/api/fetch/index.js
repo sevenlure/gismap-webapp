@@ -42,6 +42,19 @@ const fetch = axios.create({
   // headers: {'X-Custom-Header': 'foobar'}
 })
 
+// funct alert Mess
+export const alertMess = opts => {
+  if (window.isAlertModalErr) return
+  window.isAlertModalErr = true
+  Modal.error({
+    ...opts,
+    onOk: () => {
+      if (opts.onOk) opts.onOk()
+      window.isAlertModalErr = false
+    }
+  })
+}
+
 // Add a response interceptor
 fetch.interceptors.response.use(
   function(response) {
@@ -53,28 +66,23 @@ fetch.interceptors.response.use(
       const { status, data } = error.response
       switch (status) {
         case 401: {
-          // MARK  hạn chế Modal Alert authen nhìu lần
-          if (window.isAlertAuthen) break
-          window.isAlertAuthen = true
           const title = 'Chứng thực'
           switch (data.code) {
             case 'InvalidCredentials': {
-              Modal.error({
+              alertMess({
                 title: title,
                 content: 'Chữ ký không hợp lệ!!',
                 onOk() {
-                  window.isAlertAuthen = false
                   Router.replace(slug.login)
                 }
               })
               break
             }
             case 'Unauthorized': {
-              Modal.error({
+              alertMess({
                 title: title,
                 content: 'Hết phiên làm việc, Vui lòng đăng nhập lại',
                 onOk() {
-                  window.isAlertAuthen = false
                   Router.replace(slug.login)
                 }
               })
@@ -101,7 +109,7 @@ fetch.interceptors.response.use(
         }
       }
     } else if (error.request) {
-      Modal.error({
+      alertMess({
         title: 'Network',
         content: 'Vui lòng kiểm tra lại hệ thống mạng của máy và server'
       })

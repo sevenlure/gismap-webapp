@@ -24,6 +24,7 @@ import slug from 'src/routes'
 import hocProtectLogin from 'src/hoc/is-authenticated'
 import posed from 'react-pose'
 import { isEqual as _isEqual } from 'lodash'
+import Link from 'next/link'
 
 const { Header, Content, Footer } = Layout
 const { SubMenu } = Menu
@@ -180,8 +181,9 @@ class AppWithLayout extends React.PureComponent {
             >
               <Menu.Item key={slug.coso.base}>Thông tin Cơ sở</Menu.Item>
               <SubMenu key={slug.ttmoitruong.base} title='Thông tin Môi trường'>
-                <Menu.Item key={slug.ttmoitruong.tacdongmoitruong.base}>Báo cáo đánh giá tác động môi trường</Menu.Item>
-                <Menu.Item key={slug.ttmoitruong.menu2.base}>Option 6</Menu.Item>
+                <Menu.Item key={slug.ttmoitruong.tacdongmoitruong.list}>Báo cáo đánh giá tác động môi trường</Menu.Item>
+                <Menu.Item key={slug.ttmoitruong.kehoachbaovemoitruong.list}>Kế hoạch bảo vệ môi truờng</Menu.Item>
+                <Menu.Item key={slug.ttmoitruong.giayphepxathai.list}>Giấy phép xả thải</Menu.Item>
               </SubMenu>
               <Menu.Item key={slug.bcgiamsatmoitruong.base}>Báo cáo giám sát môi trường</Menu.Item>
               <Menu.Item key='/4'>Báo cáo quản lý chất thải rắn</Menu.Item>
@@ -192,7 +194,7 @@ class AppWithLayout extends React.PureComponent {
             </Menu>
           </Header>
           <Content style={{ padding: '0 32px', heigth: '1', marginTop: 86 }}>
-            <BoxAnimate breadcrumbArr={this.props.breadcrumbArr} />
+            <BoxAnimateBreadcrumb breadcrumbArr={this.props.breadcrumbArr} />
 
             <ChildrenContainer>{children}</ChildrenContainer>
           </Content>
@@ -212,7 +214,12 @@ const Box = posed.div({
   exit: { x: -100, opacity: 0, transition: { duration: 200 } }
 })
 
-class BoxAnimate extends React.Component {
+const LastBread = styled.span`
+  color: rgba(0, 0, 0, 0.85);
+  font-weight: 500;
+  font-size: 1.17em;
+`
+class BoxAnimateBreadcrumb extends React.Component {
   static propTypes = {
     breadcrumbArr: PropTypes.array.isRequired
   }
@@ -221,22 +228,54 @@ class BoxAnimate extends React.Component {
     focus: 'enter',
     dataBreadcrumbArr: []
   }
-  UNSAFE_componentWillReceiveProps(nextProps) {
-    const isDiff = !_isEqual(this.props.breadcrumbArr, nextProps.breadcrumbArr)
+
+  // UNSAFE_componentWillReceiveProps(nextProps) {
+  //   const isDiff = !_isEqual(this.props.breadcrumbArr, nextProps.breadcrumbArr)
+  //   if (isDiff) {
+  //     this.setState({ focus: 'exit' }, () => {
+  //       setTimeout(() => {
+  //         this.setState({ focus: 'enter', dataBreadcrumbArr: nextProps.breadcrumbArr })
+  //       }, 400)
+  //     })
+  //   }
+  // }
+
+  static getDerivedStateFromProps(nextProps, prevState) {
+    const isDiff = !_isEqual(prevState.dataBreadcrumbArr, nextProps.breadcrumbArr)
     if (isDiff) {
-      this.setState({ focus: 'exit' }, () => {
-        setTimeout(() => {
-          this.setState({ focus: 'enter', dataBreadcrumbArr: nextProps.breadcrumbArr })
-        }, 400)
-      })
+      return { focus: 'exit' }
+    } else return null
+  }
+
+  // eslint-disable-next-line
+  componentDidUpdate(prevProps, prevState, snapshot) {
+    if (this.state.focus === 'exit') {
+      setTimeout(() => {
+        this.setState({ focus: 'enter', dataBreadcrumbArr: this.props.breadcrumbArr })
+      }, 400)
     }
   }
+
   render() {
     return (
       <Box pose={this.state.focus}>
         <Breadcrumb style={{ margin: '16px 0' }}>
-          {this.state.dataBreadcrumbArr.map(item => {
-            return <Breadcrumb.Item key={item}>{item}</Breadcrumb.Item>
+          {this.state.dataBreadcrumbArr.map((item, index) => {
+            const isLast = index === this.state.dataBreadcrumbArr.length - 1
+            if (!isLast)
+              return (
+                <Breadcrumb.Item key={index}>
+                  <Link href={item.slug}>
+                    <a>{item.name}</a>
+                  </Link>
+                </Breadcrumb.Item>
+              )
+            else
+              return (
+                <Breadcrumb.Item key={index}>
+                  <LastBread>{item.name}</LastBread>
+                </Breadcrumb.Item>
+              )
           })}
         </Breadcrumb>
       </Box>

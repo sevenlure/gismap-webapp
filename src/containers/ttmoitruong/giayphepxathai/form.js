@@ -2,10 +2,12 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import styled from 'styled-components'
 import { ATTACHMENT_TYPE } from 'shared/constant/attachment'
-import { Form, Row, Col, Input, DatePicker, Radio } from 'antd'
+import { Form, Row, Col, Input, DatePicker, InputNumber } from 'antd'
 import SelectCoso from 'src/components/elements/select-coso'
 import UploadAttachment from 'src/containers/attachment/upload'
 import SelectCoQuanCapPhep from 'src/components/elements/select-co-quan-cap-phep'
+import SelectDacTrungNuocThai from 'src/components/elements/select-dac-trung-nuoc-thai'
+import SelectNguonTiepNhan from 'src/components/elements/select-nguon-tiep-nhan'
 import { get, pick, map } from 'lodash'
 import moment from 'moment'
 
@@ -19,19 +21,22 @@ const ContainerCustomRow = styled.div`
     margin-bottom: 0px;
   }
 `
-
 const keyFieldOfForm = [
   'Coso',
-  'SoQuyenDinhPheDuyet',
+  'SoGiayPhep',
   'CoQuanCapPhep',
-  'NgayPheDuyet',
-  'XacNhanHoanThanh',
+  'NgayCapPhep',
+  'CongSuatThietKe',
+  'LuuLuongCapPhep',
+  'DacTrungNuocThai',
+  'TieuChuanApDung',
+  'NguonTiepNhan',
   'TapTinDinhKem',
   'TapTinDeleted' // notuse when setData2Form
 ]
 
 @Form.create()
-export default class TacdongmoitruongForm extends React.Component {
+export default class KehoachbaovemoitruongForm extends React.Component {
   static propTypes = {
     form: PropTypes.object.isRequired,
     getRef: PropTypes.func
@@ -49,10 +54,12 @@ export default class TacdongmoitruongForm extends React.Component {
     let result = {
       ...data,
       Coso: get(data, 'Coso._id'),
-      CoQuanCapPhep: get(data, 'CoQuanCapPhep._id')
+      CoQuanCapPhep: get(data, 'CoQuanCapPhep._id'),
+      DacTrungNuocThai: get(data, 'DacTrungNuocThai._id'),
+      NguonTiepNhan: get(data, 'NguonTiepNhan._id')
     }
-    const NgayPheDuyet = get(data, 'NgayPheDuyet')
-    if (NgayPheDuyet) result.NgayPheDuyet = moment(NgayPheDuyet)
+    const NgayCapPhep = get(data, 'NgayCapPhep')
+    if (NgayCapPhep) result.NgayCapPhep = moment(NgayCapPhep)
     this.props.form.setFieldsValue(pick(result, keyFieldOfForm))
   }
 
@@ -97,8 +104,8 @@ export default class TacdongmoitruongForm extends React.Component {
           </Row>
           <Row gutter={12}>
             <Col xs={24}>
-              <Form.Item label='Số quyết định phê duyệt'>
-                {getFieldDecorator('SoQuyenDinhPheDuyet', {
+              <Form.Item label='Số giấy phép'>
+                {getFieldDecorator('SoGiayPhep', {
                   rules: [{ required: true, message: 'Field is required' }]
                 })(<Input />)}
               </Form.Item>
@@ -106,13 +113,13 @@ export default class TacdongmoitruongForm extends React.Component {
           </Row>
           <Row gutter={12}>
             <Col xs={12}>
-              <Form.Item label='Cơ quan cấp'>
+              <Form.Item label='Cơ quan cấp phép'>
                 {getFieldDecorator('CoQuanCapPhep', {})(<SelectCoQuanCapPhep />)}
               </Form.Item>
             </Col>
             <Col xs={12}>
-              <Form.Item label='Ngày phê duyệt'>
-                {getFieldDecorator('NgayPheDuyet', {
+              <Form.Item label='Ngày cấp phép'>
+                {getFieldDecorator('NgayCapPhep', {
                   getValueFromEvent: val => {
                     if (!val) return null
                     else return val.toDate()
@@ -128,25 +135,43 @@ export default class TacdongmoitruongForm extends React.Component {
 
           <Row gutter={12}>
             <Col xs={12}>
-              <Form.Item label='Xác nhận hoàn thành'>
-                {getFieldDecorator('XacNhanHoanThanh', {
-                  initialValue: false
-                })(
-                  <Radio.Group>
-                    <Radio value={true}>Có</Radio>
-                    <Radio value={false}>Không</Radio>
-                  </Radio.Group>
-                )}
+              <Form.Item label='Công suất thiết kế HTXL NT'>
+                {getFieldDecorator('CongSuatThietKe', {})(<InputNumber style={{ width: '100%' }} />)}
+              </Form.Item>
+            </Col>
+            <Col xs={12}>
+              <Form.Item label='Lưu lượng cấp phép'>
+                {getFieldDecorator('LuuLuongCapPhep', {})(<InputNumber style={{ width: '100%' }} />)}
               </Form.Item>
             </Col>
           </Row>
+
+          <Row gutter={12}>
+            <Col xs={12}>
+              <Form.Item label='Đặc trưng nuớc thải'>
+                {getFieldDecorator('DacTrungNuocThai', {})(<SelectDacTrungNuocThai />)}
+              </Form.Item>
+            </Col>
+            <Col xs={12}>
+              <Form.Item label='Tiêu chuẩn áp dụng'>{getFieldDecorator('TieuChuanApDung', {})(<Input />)}</Form.Item>
+            </Col>
+          </Row>
+
+          <Row gutter={12}>
+            <Col xs={12}>
+              <Form.Item label='Nguồn tiếp nhận'>
+                {getFieldDecorator('NguonTiepNhan', {})(<SelectNguonTiepNhan />)}
+              </Form.Item>
+            </Col>
+          </Row>
+
           <Row gutter={12}>
             <Col xs={24}>
               <Form.Item label='Attachment'>
                 {getFieldDecorator('TapTinDinhKem', {})(
                   <UploadAttachment
                     cbDeleteFile={this.handleCacheAttachDeleted}
-                    keyUpload={ATTACHMENT_TYPE.TAC_DONG_MOI_TRUONG}
+                    keyUpload={ATTACHMENT_TYPE.GIAY_PHEP_XA_THAI}
                   />
                 )}
               </Form.Item>

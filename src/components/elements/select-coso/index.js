@@ -13,7 +13,7 @@ const ElementWrapper = styled.div`
 
 const LoadingContainer = () => (
   <div
-    style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', justifyItems: 'cener', minHeight: 300 }}
+    style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', justifyItems: 'cener', minHeight: 134 }} //height 134 == voi emty
   >
     <Spin size='large' />
   </div>
@@ -77,7 +77,6 @@ class SelectKhuCongNghiep extends React.Component {
   debounceSearch = _debounce(this.handleSearch, 400)
 
   render() {
-    console.log('render Again')
     return (
       <ElementWrapper>
         <Spin spinning={!this.state.isLoaded}>
