@@ -2,7 +2,7 @@ import React from 'react'
 import styled from 'styled-components'
 import PropTypes from 'prop-types'
 import { Select, Spin, Empty } from 'antd'
-import { map as _map, debounce as _debounce } from 'lodash'
+import { map as _map, debounce as _debounce, isObject, get as _get } from 'lodash'
 import { getList } from 'src/api/CosoApi'
 
 const { Option } = Select
@@ -21,18 +21,24 @@ const LoadingContainer = () => (
 
 // const PICK_LIST = ['_id', 'Ten']
 
-class SelectKhuCongNghiep extends React.Component {
+// NOTE  Cơ sở đặc thù là search remote server nên khi edit cần _id và Name
+class SelectCoso extends React.Component {
   static propTypes = {
     initialOptions: PropTypes.array,
     danhMucIsLoaded: PropTypes.bool,
     onChange: PropTypes.func,
-    value: PropTypes.any
+    value: PropTypes.any,
+    isDisabled: PropTypes.bool
+  }
+
+  static defaultProps = {
+    isDisabled: false
   }
 
   state = {
     options: [],
     isLoaded: false,
-    value: null,
+    value: undefined,
     isLoadingSearch: false
   }
 
@@ -49,7 +55,11 @@ class SelectKhuCongNghiep extends React.Component {
   }
 
   UNSAFE_componentWillReceiveProps(nextProps) {
-    if (nextProps.value && nextProps.value !== this.state.value) this.setState({ value: nextProps.value })
+    if (nextProps.value && nextProps.value !== this.state.value) {
+      if (isObject(nextProps.value))
+        this.setState({ value: { key: _get(nextProps, 'value._id'), label: _get(nextProps, 'value.Ten') } })
+      else this.setState({ value: { key: nextProps.value } })
+    }
   }
 
   shouldComponentUpdate(nextProps, nextState) {
@@ -61,7 +71,7 @@ class SelectKhuCongNghiep extends React.Component {
     this.setState({
       value: value
     })
-    if (this.props.onChange) this.props.onChange(value)
+    if (this.props.onChange) this.props.onChange(value.key)
   }
 
   handleSearch = value => {
@@ -82,6 +92,8 @@ class SelectKhuCongNghiep extends React.Component {
         <Spin spinning={!this.state.isLoaded}>
           <Select
             showSearch
+            labelInValue
+            disabled={this.props.isDisabled}
             defaultActiveFirstOption={false}
             showArrow={false}
             notFoundContent={
@@ -111,4 +123,4 @@ class SelectKhuCongNghiep extends React.Component {
     )
   }
 }
-export default SelectKhuCongNghiep
+export default SelectCoso

@@ -4,6 +4,9 @@ const lessToJS = require('less-vars-to-js')
 const fs = require('fs')
 const path = require('path')
 
+// const env = require("./env.json")
+const env = process.env.isDev ? require('./.env/dev.json') : require('./.env/production.json')
+
 // Where your antd-custom.less file lives
 const themeVariables = lessToJS(fs.readFileSync(path.resolve(__dirname, './assets/antd-custom.less'), 'utf8'))
 
@@ -16,10 +19,10 @@ module.exports = withLess({
     if (dev) {
       config.module.rules.push({
         test: /\.js$/,
-        exclude:  ['/node_modules/', '/.next/'],
+        exclude: ['/node_modules/', '/.next/'],
         loader: 'eslint-loader',
         options: {
-          emitWarning: true,
+          emitWarning: true
         }
       })
     }
@@ -47,8 +50,6 @@ module.exports = withLess({
     return config
   },
   env: {
-    // NODE_ENV: 'dev',
-    HOST_API: 'http://prtr.southeastasia.cloudapp.azure.com:3105/',
-    HOST_API: 'http://localhost:3105/'
+    HOST_API: env.HOST_API
   }
 })

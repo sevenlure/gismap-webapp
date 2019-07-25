@@ -1,6 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { getById, updateById } from 'src'
+import { getById, updateById } from 'src/api/ttmoitruong/kehoachbaovemoitruongApi'
 import { Button, Affix, message, Spin } from 'antd'
 import Router from 'next/router'
 import slug, { breadcrumb } from 'src/routes'
@@ -67,7 +67,7 @@ export default class KeHoachBaoVeMoiTruongEdit extends React.Component {
     return (
       <div>
         <Spin spinning={!this.state.isLoadedForm}>
-          <KehoachbaovemoitruongForm getRef={ref => (this.KehoachbaovemoitruongForm = ref)} />
+          <KehoachbaovemoitruongForm isEdit getRef={ref => (this.KehoachbaovemoitruongForm = ref)} />
           <Affix offsetBottom={20}>
             <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
               <Button

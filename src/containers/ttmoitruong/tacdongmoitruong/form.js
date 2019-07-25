@@ -34,7 +34,8 @@ const keyFieldOfForm = [
 export default class TacdongmoitruongForm extends React.Component {
   static propTypes = {
     form: PropTypes.object.isRequired,
-    getRef: PropTypes.func
+    getRef: PropTypes.func,
+    isEdit: PropTypes.bool
   }
 
   state = {
@@ -91,7 +92,7 @@ export default class TacdongmoitruongForm extends React.Component {
               <Form.Item label='Cơ sở'>
                 {getFieldDecorator('Coso', {
                   rules: [{ required: true, message: 'Field is required' }]
-                })(<SelectCoso />)}
+                })(<SelectCoso isDisabled={this.props.isEdit} />)}
               </Form.Item>
             </Col>
           </Row>

@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { Upload, message, Button, Icon, Modal, Form, Input } from 'antd'
-import { get as _get, map as _map, remove as _remove, isEqual as _isEqual } from 'lodash'
+import { get as _get, remove as _remove, isEqual as _isEqual } from 'lodash'
 import { connect } from 'react-redux'
 import { uploadAttachment } from 'src/api/AttachmentApi'
 import { HOST_ATTACHMENT } from 'src/config/host'
@@ -118,6 +118,7 @@ export default class UploadAttachment extends React.PureComponent {
             dataSource={this.state.fileSavedList}
             cbDeleteFile={_id => {
               _remove(this.state.fileSavedList, item => item._id === _id)
+              if (this.props.onChange) this.props.onChange(this.state.fileSavedList)
               if (this.props.cbDeleteFile) this.props.cbDeleteFile(_id)
               this.forceUpdate()
             }}

@@ -39,7 +39,8 @@ const keyFieldOfForm = [
 export default class KehoachbaovemoitruongForm extends React.Component {
   static propTypes = {
     form: PropTypes.object.isRequired,
-    getRef: PropTypes.func
+    getRef: PropTypes.func,
+    isEdit: PropTypes.bool
   }
 
   state = {
@@ -53,7 +54,7 @@ export default class KehoachbaovemoitruongForm extends React.Component {
   tranformData2Form = data => {
     let result = {
       ...data,
-      Coso: get(data, 'Coso._id'),
+      // Coso: get(data, 'Coso._id'),
       CoQuanCapPhep: get(data, 'CoQuanCapPhep._id'),
       DacTrungNuocThai: get(data, 'DacTrungNuocThai._id'),
       NguonTiepNhan: get(data, 'NguonTiepNhan._id')
@@ -98,7 +99,7 @@ export default class KehoachbaovemoitruongForm extends React.Component {
               <Form.Item label='Cơ sở'>
                 {getFieldDecorator('Coso', {
                   rules: [{ required: true, message: 'Field is required' }]
-                })(<SelectCoso />)}
+                })(<SelectCoso isDisabled={this.props.isEdit} />)}
               </Form.Item>
             </Col>
           </Row>

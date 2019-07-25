@@ -2,7 +2,7 @@
   "name": "with-ant-design-less",
   "version": "1.0.0",
   "scripts": {
-    "dev": "next",
+    "dev": "isDev=true next",
     "build": "next build",
     "start": "next start"
   },

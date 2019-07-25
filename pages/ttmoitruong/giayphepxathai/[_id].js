@@ -1,12 +1,12 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { getById, updateById } from 'src/api/ttmoitruong/tacdongmoitruongApi'
+import { getById, updateById } from 'src/api/ttmoitruong/giayphepxathaiApi'
 import { Button, Affix, message, Spin } from 'antd'
 import Router from 'next/router'
 import slug, { breadcrumb } from 'src/routes'
 import { connect } from 'react-redux'
 import { setBreadCrumb } from 'src/redux/actions/generalAction'
-import TacdongmoitruongForm from 'src/containers/ttmoitruong/tacdongmoitruong/form'
+import GiayPhepXaThaiForm from 'src/containers/ttmoitruong/giayphepxathai/form'
 
 @connect(
   null,
@@ -14,7 +14,7 @@ import TacdongmoitruongForm from 'src/containers/ttmoitruong/tacdongmoitruong/fo
     setBreadCrumb
   }
 )
-export default class TacdongmoitruongEdit extends React.Component {
+export default class GiayPhepXaThaiEdit extends React.Component {
   static propTypes = {
     _id: PropTypes.string,
     setBreadCrumb: PropTypes.any
@@ -32,12 +32,12 @@ export default class TacdongmoitruongEdit extends React.Component {
   }
 
   async componentDidMount() {
-    this.props.setBreadCrumb(breadcrumb[slug.ttmoitruong.tacdongmoitruong.edit])
+    this.props.setBreadCrumb(breadcrumb[slug.ttmoitruong.giayphepxathai.edit])
 
     getById(this.props._id)
       .then(response => {
         const { data } = response
-        this.TacdongmoitruongForm.tranformData2Form(data)
+        this.GiayPhepXaThaiForm.tranformData2Form(data)
       })
       .finally(() => {
         this.setState({
@@ -47,7 +47,7 @@ export default class TacdongmoitruongEdit extends React.Component {
   }
 
   handleSubmit = async () => {
-    const dataForm = await this.TacdongmoitruongForm.getFormData()
+    const dataForm = await this.GiayPhepXaThaiForm.getFormData()
     const { err, values } = dataForm
     if (err) {
       this.setState({ isLoading: false })
@@ -56,7 +56,7 @@ export default class TacdongmoitruongEdit extends React.Component {
     updateById(this.props._id, values)
       .then(() => {
         message.success('Cập nhật thành công')
-        Router.push(slug.ttmoitruong.tacdongmoitruong.list)
+        Router.push(slug.ttmoitruong.giayphepxathai.list)
       })
       .catch(() => {
         this.setState({ isLoading: false })
@@ -67,7 +67,7 @@ export default class TacdongmoitruongEdit extends React.Component {
     return (
       <div>
         <Spin spinning={!this.state.isLoadedForm}>
-          <TacdongmoitruongForm isEdit getRef={ref => (this.TacdongmoitruongForm = ref)} />
+          <GiayPhepXaThaiForm isEdit getRef={ref => (this.GiayPhepXaThaiForm = ref)} />
           <Affix offsetBottom={20}>
             <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
               <Button
