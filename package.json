@@ -4,7 +4,7 @@
   "scripts": {
     "dev": "isDev=true next",
     "build": "next build",
-    "start": "next start",
+    "start": "next start -p 3100",
     "withPm2": "pm2 start --name QLNT-HCM-WEB npm -- start"
   },
   "dependencies": {
