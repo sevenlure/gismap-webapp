@@ -64,7 +64,7 @@ fetch.interceptors.response.use(
   function(error) {
     // NOTE https://github.com/axios/axios tai liệu tham khảo
     if (error.response) {
-      const { status, data } = error.response
+      const { status, data, message } = error.response
       switch (status) {
         case 401: {
           const title = 'Chứng thực'
@@ -82,7 +82,7 @@ fetch.interceptors.response.use(
             case 'Unauthorized': {
               alertMess({
                 title: title,
-                content: 'Hết phiên làm việc, Vui lòng đăng nhập lại',
+                content: message || data.message, //'Hết phiên làm việc, Vui lòng đăng nhập lại',
                 onOk() {
                   Router.replace(slug.login)
                 }
