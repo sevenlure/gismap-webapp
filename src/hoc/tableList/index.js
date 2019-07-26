@@ -7,7 +7,8 @@ const withLogic = ({ apiGetList, pageSize = 10 }) => WrappedComponent => {
       dataSource: [],
       pagination: {
         pageSize,
-        page: 1
+        page: 1,
+        showTotal: (total, range) => `Showing ${range[0]} to ${range[1]} of ${total} Results`
       },
       querySearch: {}
     }
@@ -76,6 +77,16 @@ const withLogic = ({ apiGetList, pageSize = 10 }) => WrappedComponent => {
       )
     }
 
+    columnStt = {
+      title: 'STT',
+      dataIndex: 'STT',
+      key: 'STT',
+      render: (text, record, index) => {
+        const { page, pageSize } = this.state.pagination
+        return (page - 1) * pageSize + index + 1
+      }
+    }
+
     async componentDidMount() {
       this.fetchData()
     }
@@ -92,6 +103,7 @@ const withLogic = ({ apiGetList, pageSize = 10 }) => WrappedComponent => {
             isLoading={this.state.isLoading}
             onChangeSearch={this.onChangeSearch}
             reloadTable={this.reloadTable}
+            columnStt={this.columnStt}
             {...this.props}
           ></WrappedComponent>
         </React.Fragment>

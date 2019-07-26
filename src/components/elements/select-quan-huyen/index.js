@@ -89,6 +89,7 @@ class SelectQuanHuyen extends React.PureComponent {
       <ElementWrapper>
         <Spin spinning={!this.state.isLoaded}>
           <Cascader
+            changeOnSelect
             allowClear
             value={this.state.value}
             style={{ width: '100%' }}

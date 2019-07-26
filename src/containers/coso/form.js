@@ -273,9 +273,7 @@ export default class CosoForm extends React.Component {
             </Row>
             <Row gutter={12}>
               <Col xs={12}>
-                <Form.Item label='Công suất sản phẩm'>
-                  {getFieldDecorator('CongSuatSanXuat', {})(<InputNumber min={0} style={{ width: '100%' }} />)}
-                </Form.Item>
+                <Form.Item label='Công suất sản phẩm'>{getFieldDecorator('CongSuatSanXuat', {})(<Input />)}</Form.Item>
               </Col>
               <Col xs={12}>
                 <Form.Item label='Diện tích (m²)'>

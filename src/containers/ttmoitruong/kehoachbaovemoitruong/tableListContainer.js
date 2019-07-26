@@ -18,7 +18,8 @@ class TableListContainer extends React.Component {
     isLoading: PropTypes.bool.isRequired,
     onChangeSearch: PropTypes.func.isRequired,
     pagination: PropTypes.object.isRequired,
-    reloadTable: PropTypes.func.isRequired
+    reloadTable: PropTypes.func.isRequired,
+    columnStt: PropTypes.object
   }
 
   componentDidMount() {
@@ -114,7 +115,7 @@ class TableListContainer extends React.Component {
           return record.KeHoachBaoVeMoiTruong._id
         }}
         bordered
-        columns={this.columns}
+        columns={[this.props.columnStt, ...this.columns]}
         loading={this.props.isLoading}
         dataSource={this.props.dataSource}
         pagination={this.props.pagination}
