@@ -94,7 +94,7 @@ export default class CosoForm extends React.Component {
       CoQuanCapPhep: get(data, 'CoQuanCapPhep._id'),
       KhuCumCongNghiep: get(data, 'KhuCumCongNghiep._id'),
       CoQuanThamQuyenQuanLy: get(data, 'CoQuanThamQuyenQuanLy._id'),
-      DiaChi: get(data, 'DiaChi.ValueSelected'),
+      DiaChi: get(data, 'DiaChi'),
       DiaChiChiTiet: get(data, 'DiaChi.ChiTiet'),
       // MARK  conver all Date field will below
       NgayCapPhep: undefined,
@@ -159,7 +159,7 @@ export default class CosoForm extends React.Component {
             </Row>
             <Row gutter={12}>
               <Col xs={12}>
-                <Form.Item label='Số giấy phép ĐKKD'>
+                <Form.Item label='Giấy ĐKKD/GP Đầu tư'>
                   {getFieldDecorator('SoGiayPhep_DKKD', { rules: [{ required: true, message: 'Field is required' }] })(
                     <Input />
                   )}
@@ -175,8 +175,8 @@ export default class CosoForm extends React.Component {
                   <Input
                     disabled={true}
                     value={
-                      getFieldValue('MaChiNhanh')
-                        ? getFieldValue('SoGiayPhep_DKKD') + `.${getFieldValue('MaChiNhanh')}`
+                      getFieldValue('DiaChi')
+                        ? getFieldValue('SoGiayPhep_DKKD') + `.${get(getFieldValue('DiaChi'), 'QuanHuyen.KeyExtra')}`
                         : getFieldValue('SoGiayPhep_DKKD')
                     }
                   />
@@ -273,7 +273,7 @@ export default class CosoForm extends React.Component {
             </Row>
             <Row gutter={12}>
               <Col xs={12}>
-                <Form.Item label='Công suất (m³/ ngày)'>
+                <Form.Item label='Công suất sản phẩm'>
                   {getFieldDecorator('CongSuatSanXuat', {})(<InputNumber min={0} style={{ width: '100%' }} />)}
                 </Form.Item>
               </Col>

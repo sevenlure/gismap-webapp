@@ -80,7 +80,7 @@ class SelectQuanHuyen extends React.PureComponent {
       value: value
     })
     if (this.props.onChange) this.props.onChange(result)
-    console.log(result, 'result')
+    console.log('result QuanHuyen', result)
   }
   render() {
     // console.log(this.props, 'render:')
