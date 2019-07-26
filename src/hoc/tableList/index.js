@@ -15,26 +15,47 @@ const withLogic = ({ apiGetList, pageSize = 10 }) => WrappedComponent => {
 
     fetchData = async () => {
       const { pagination, querySearch } = this.state
-      const response = await apiGetList({
+      // const response = await apiGetList({
+      //   page: pagination.page,
+      //   pageSize: pagination.pageSize,
+      //   ...querySearch
+      // })
+      // if (response.status === 200) {
+      //   const { list, pagination } = response.data
+      //   this.setState({
+      //     isLoading: false,
+      //     dataSource: list,
+      //     pagination: {
+      //       ...pagination,
+      //       current: pagination.page
+      //     }
+      //   })
+      // } else {
+      //   this.setState({
+      //     isLoading: false
+      //   })
+      // }
+      apiGetList({
         page: pagination.page,
         pageSize: pagination.pageSize,
         ...querySearch
       })
-      if (response.status === 200) {
-        const { list, pagination } = response.data
-        this.setState({
-          isLoading: false,
-          dataSource: list,
-          pagination: {
-            ...pagination,
-            current: pagination.page
-          }
+        .then(response => {
+          const { list, pagination } = response.data
+          this.setState({
+            isLoading: false,
+            dataSource: list,
+            pagination: {
+              ...pagination,
+              current: pagination.page
+            }
+          })
         })
-      } else {
-        this.setState({
-          isLoading: false
+        .catch(() => {
+          this.setState({
+            isLoading: false
+          })
         })
-      }
     }
 
     reloadTable = async () => {
