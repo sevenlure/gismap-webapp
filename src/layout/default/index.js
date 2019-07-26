@@ -184,6 +184,13 @@ class AppWithLayout extends React.PureComponent {
                 <Menu.Item key={slug.ttmoitruong.tacdongmoitruong.list}>Báo cáo đánh giá tác động môi trường</Menu.Item>
                 <Menu.Item key={slug.ttmoitruong.kehoachbaovemoitruong.list}>Kế hoạch bảo vệ môi truờng</Menu.Item>
                 <Menu.Item key={slug.ttmoitruong.giayphepxathai.list}>Giấy phép xả thải</Menu.Item>
+                <Menu.Item key={slug.ttmoitruong.khaithacnuocduoidat.list}>
+                  Hiện trạng khai thác nuớc duới đất
+                </Menu.Item>
+                <Menu.Item key={slug.ttmoitruong.khaithacnuocmat.list}>Hiện trạng khai thác nuớc mặt</Menu.Item>
+                <Menu.Item key={slug.ttmoitruong.xulynuocthai.list}>Hệ thống xử lý nuớc thải</Menu.Item>
+                <Menu.Item key={slug.ttmoitruong.xulykhithai.list}>Hệ thống xử lý khí thải</Menu.Item>
+                <Menu.Item key={slug.ttmoitruong.sochunguonthai.list}>Sổ chủ nguồn thải</Menu.Item>
               </SubMenu>
               <Menu.Item key={slug.bcgiamsatmoitruong.base}>Báo cáo giám sát môi trường</Menu.Item>
               <Menu.Item key='/4'>Báo cáo quản lý chất thải rắn</Menu.Item>

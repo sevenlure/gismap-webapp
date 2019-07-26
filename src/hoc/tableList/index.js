@@ -1,6 +1,6 @@
 import React from 'react'
 
-const withLogic = ({ apiGetList, pageSize = 10 }) => WrappedComponent => {
+const withLogic = ({ apiGetList, pageSize = 20 }) => WrappedComponent => {
   return class ComponentWithLogic extends React.Component {
     state = {
       isLoading: true,
@@ -101,6 +101,8 @@ const withLogic = ({ apiGetList, pageSize = 10 }) => WrappedComponent => {
     columnStt = {
       title: 'STT',
       dataIndex: 'STT',
+      align: 'center',
+      // className: 'item-text-center',
       key: 'STT',
       render: (text, record, index) => {
         const { page, pageSize } = this.state.pagination

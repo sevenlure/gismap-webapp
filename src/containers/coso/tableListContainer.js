@@ -37,6 +37,7 @@ class TableListContainer extends React.Component {
       title: 'Tên cơ sở',
       dataIndex: 'Ten',
       key: 'Ten',
+      width: '25%',
       render: (text, record) => (
         <Link href={slug.coso.edit} as={`${slug.coso.base}/${record._id}`}>
           <a style={{ color: COLOR.TITLE, textDecoration: 'underline' }}>{text}</a>
@@ -44,7 +45,7 @@ class TableListContainer extends React.Component {
       )
     },
     {
-      title: 'Giấy phép DKKD',
+      title: 'ĐKKD/GP',
       dataIndex: 'SoGiayPhep_DKKD',
       key: 'SoGiayPhep_DKKD'
     },
@@ -67,7 +68,8 @@ class TableListContainer extends React.Component {
     {
       title: 'Ngành Nghề',
       dataIndex: 'NganhNghe.Name',
-      key: 'NganhNghe'
+      key: 'NganhNghe',
+      width: '15%'
     },
     {
       title: 'Thẩm Quyền Quản lý',
@@ -104,6 +106,9 @@ class TableListContainer extends React.Component {
     return (
       <Table
         rowKey='_id'
+        size='middle'
+        className='fontSize12'
+        scroll={{ x: 900 }}
         bordered
         columns={[this.props.columnStt, ...this.columns]}
         loading={this.props.isLoading}

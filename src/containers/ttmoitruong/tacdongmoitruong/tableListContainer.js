@@ -6,7 +6,7 @@ import withLogicTable from 'src/hoc/tableList'
 import { deleteById, getList } from 'src/api/ttmoitruong/tacdongmoitruongApi'
 import Link from 'next/link'
 import slug from 'src/routes'
-import { DATETIME_FORMAT } from 'src/config/format'
+import { DATE_FORMAT } from 'src/config/format'
 import moment from 'moment'
 import { get } from 'lodash'
 
@@ -40,6 +40,7 @@ class TableListContainer extends React.Component {
       title: 'Tên cơ sở',
       dataIndex: 'Ten',
       key: 'Ten',
+      width: '25%',
       render: (text, record) => (
         <Link
           href={slug.ttmoitruong.tacdongmoitruong.edit}
@@ -65,7 +66,7 @@ class TableListContainer extends React.Component {
       dataIndex: 'TacDongMoiTruong.NgayPheDuyet',
       key: 'NgayPheDuyet',
       render: field => {
-        if (field) return moment(field).format(DATETIME_FORMAT)
+        if (field) return moment(field).format(DATE_FORMAT)
         else return ''
       }
     },

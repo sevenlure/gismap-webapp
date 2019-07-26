@@ -40,6 +40,7 @@ class TableListContainer extends React.Component {
       title: 'Tên cơ sở',
       dataIndex: 'Ten',
       key: 'Ten',
+      width: '25%',
       render: (text, record) => (
         <Link
           href={slug.ttmoitruong.kehoachbaovemoitruong.edit}

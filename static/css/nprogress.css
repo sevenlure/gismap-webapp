@@ -2,6 +2,9 @@
   display: flex;
   min-height: 100vh;
 }
+.fontSize12, .fontSize12 tr > td span, .fontSize12 tr > td a, .fontSize12 tr > td {
+  font-size: 12px;
+}
 
 /* NOTE  dung để chỉnh PageTransition */
 .page-transition-enter {
@@ -29,12 +32,12 @@
   max-height: 400px !important;
 }
 
-/* NOTE  dung để canh trai Pagination text total */
+/* NOTE  custom css về table */
 ul.ant-pagination.ant-table-pagination {
   width: 100%;
   text-align: right;
 }
 
-li.ant-pagination-total-text{
+li.ant-pagination-total-text {
   float: left;
 }
