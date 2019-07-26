@@ -42,20 +42,20 @@ class SearchContainer extends React.PureComponent {
         <ContainerCustomRow style={{ display: 'flex' }}>
           <div style={{ flex: 1 }}>
             <Row gutter={12}>
-              <Col xs={6}>
+              <Col xs={24} sm={12} lg={6}>
                 <Form.Item label='Quận Huyện/Phuờng Xã'>
                   {getFieldDecorator('DiaChi', {})(<SelectQuanHuyen />)}
                 </Form.Item>
               </Col>
-              <Col xs={6}>
+              <Col xs={24} sm={12} lg={6}>
                 <Form.Item label='Ngành Nghề'>{getFieldDecorator('NganhNghe', {})(<SelectNganhNghe />)}</Form.Item>
               </Col>
-              <Col xs={6}>
+              <Col xs={24} sm={12} lg={6}>
                 <Form.Item label='Trong KCN/Ngoài KCN'>
                   {getFieldDecorator('KhuCumCongNghiep', {})(<SelectKhuCongNghiep />)}
                 </Form.Item>
               </Col>
-              <Col xs={6}>
+              <Col xs={24} sm={12} lg={6}>
                 <Form.Item label='Thẩm quyền quản lý'>
                   {getFieldDecorator('CoQuanThamQuyenQuanLy', {})(<SelectCoQuanThamQuyenQuanLy />)}
                 </Form.Item>
@@ -70,7 +70,7 @@ class SearchContainer extends React.PureComponent {
           <div style={{ width: 120, marginLeft: 12 }}>
             <Row gutter={12}>
               <Col xs={24}>
-                <Form.Item colon={false} label=' '>
+                <Form.Item colon={false} label={<span>&nbsp;</span>}>
                   <Button type='primary' block icon='download'>
                     Xuất Excel
                   </Button>
@@ -79,7 +79,7 @@ class SearchContainer extends React.PureComponent {
             </Row>
             <Row gutter={12}>
               <Col xs={24}>
-                <Form.Item colon={false} label=' '>
+                <Form.Item colon={false} label={<span>&nbsp;</span>}>
                   <Button
                     type='primary'
                     block
