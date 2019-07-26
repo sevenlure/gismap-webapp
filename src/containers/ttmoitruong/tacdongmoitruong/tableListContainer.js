@@ -82,6 +82,11 @@ class TableListContainer extends React.Component {
       render: field => (field ? field.length : 0)
     },
     {
+      title: 'Cập nhật bởi',
+      dataIndex: 'TacDongMoiTruong.UpdatedBy',
+      key: 'UpdatedBy'
+    },
+    {
       title: '',
       key: 'action',
       width: 100,

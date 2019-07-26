@@ -74,6 +74,11 @@ class TableListContainer extends React.Component {
       key: 'CoQuanThamQuyenQuanLy'
     },
     {
+      title: 'Cập nhật bởi',
+      dataIndex: 'UpdatedBy',
+      key: 'UpdatedBy'
+    },
+    {
       title: '',
       key: 'action',
       width: 100,
