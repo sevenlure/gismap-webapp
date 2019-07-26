@@ -49,7 +49,7 @@ export default class TacdongmoitruongForm extends React.Component {
   tranformData2Form = data => {
     let result = {
       ...data,
-      Coso: get(data, 'Coso._id'),
+      // Coso: get(data, 'Coso._id'), // MARK  Coso can _id va Name 
       CoQuanCapPhep: get(data, 'CoQuanCapPhep._id')
     }
     const NgayPheDuyet = get(data, 'NgayPheDuyet')
