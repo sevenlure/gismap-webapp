@@ -1,4 +1,4 @@
-import { pick as _pick } from 'lodash'
+import { pick as _pick } from 'lodash-es'
 import { getListByKeyDanhMuc } from 'src/api/DanhMucApi'
 import { DANH_MUC } from '../../../shared/constant/danhmuc'
 // NOTE  Quản lý các store của danh mục

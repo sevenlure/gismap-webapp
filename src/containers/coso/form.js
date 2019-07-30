@@ -9,7 +9,7 @@ import SelectCoQuanCapPhep from 'src/components/elements/select-co-quan-cap-phep
 import SelectKhuCumCongNghiep from 'src/components/elements/select-khu-cong-nghiep'
 import SelectThamQuyenQuanLy from 'src/components/elements/select-tham-quyen-quan-ly'
 import SelectTinhTrangHoatDong from 'src/components/elements/select-tinh-trang-hoat-dong'
-import { get, pick } from 'lodash'
+import { get, pick } from 'lodash-es'
 import moment from 'moment'
 
 const ContainerCustomRow = styled.div`

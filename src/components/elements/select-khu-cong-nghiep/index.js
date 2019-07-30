@@ -2,7 +2,7 @@ import React from 'react'
 import styled from 'styled-components'
 import PropTypes from 'prop-types'
 import { Select, Spin } from 'antd'
-import { get as _get, map as _map, pick as _pick } from 'lodash'
+import { get as _get, map as _map, pick as _pick } from 'lodash-es'
 import { connect } from 'react-redux'
 
 const { Option } = Select

@@ -8,7 +8,7 @@ import UploadAttachment from 'src/containers/attachment/upload'
 import SelectCoQuanCapPhep from 'src/components/elements/select-co-quan-cap-phep'
 import SelectDacTrungNuocThai from 'src/components/elements/select-dac-trung-nuoc-thai'
 import SelectNguonTiepNhan from 'src/components/elements/select-nguon-tiep-nhan'
-import { get, pick, map } from 'lodash'
+import { get, pick, map } from 'lodash-es'
 import moment from 'moment'
 
 const ContainerCustomRow = styled.div`

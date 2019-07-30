@@ -9,7 +9,7 @@ import { connect } from 'react-redux'
 import { userLogin } from 'src/redux/actions/authAction'
 import { updateUserInfo } from 'src/redux/actions/generalAction.js'
 
-import { get as _get } from 'lodash'
+import { get as _get } from 'lodash-es'
 import Router from 'next/router'
 import slug from 'src/routes'
 

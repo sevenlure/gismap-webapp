@@ -6,7 +6,7 @@ import { Form, Row, Col, Input, DatePicker, Radio } from 'antd'
 import SelectCoso from 'src/components/elements/select-coso'
 import UploadAttachment from 'src/containers/attachment/upload'
 import SelectCoQuanCapPhep from 'src/components/elements/select-co-quan-cap-phep'
-import { get, pick, map } from 'lodash'
+import { get, pick, map } from 'lodash-es'
 import moment from 'moment'
 
 const ContainerCustomRow = styled.div`

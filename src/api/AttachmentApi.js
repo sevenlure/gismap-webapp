@@ -1,5 +1,5 @@
 import fetch from './fetch'
-import { mapKeys } from 'lodash'
+import { mapKeys } from 'lodash-es'
 
 const SLUG = '/attachment'
 

@@ -2,7 +2,7 @@ import React from 'react'
 import styled from 'styled-components'
 import PropTypes from 'prop-types'
 import { Select, Spin, Empty } from 'antd'
-import { map as _map, debounce as _debounce, isObject, get as _get } from 'lodash'
+import { map as _map, debounce as _debounce, isObject, get as _get } from 'lodash-es'
 import { getList } from 'src/api/CosoApi'
 
 const { Option } = Select

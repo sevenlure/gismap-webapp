@@ -6,7 +6,7 @@ import withLogicTable from 'src/hoc/tableList'
 import { deleteById, getList } from 'src/api/ttmoitruong/giayphepxathaiApi'
 import Link from 'next/link'
 import slug from 'src/routes'
-import { get } from 'lodash'
+import { get } from 'lodash-es'
 
 @withLogicTable({ apiGetList: getList })
 class TableListContainer extends React.Component {

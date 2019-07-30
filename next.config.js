@@ -1,5 +1,7 @@
 /* eslint-disable */
+const withPlugins = require('next-compose-plugins')
 const withLess = require('@zeit/next-less')
+const withTM = require('next-transpile-modules')
 const lessToJS = require('less-vars-to-js')
 const fs = require('fs')
 const path = require('path')
@@ -10,11 +12,7 @@ const env = process.env.isDev ? require('./.env/dev.json') : require('./.env/pro
 // Where your antd-custom.less file lives
 const themeVariables = lessToJS(fs.readFileSync(path.resolve(__dirname, './assets/antd-custom.less'), 'utf8'))
 
-module.exports = withLess({
-  lessLoaderOptions: {
-    javascriptEnabled: true,
-    modifyVars: themeVariables // make your antd custom effective
-  },
+const nextConfig = {
   webpack: (config, { isServer, dev }) => {
     if (dev) {
       config.module.rules.push({
@@ -52,4 +50,21 @@ module.exports = withLess({
   env: {
     HOST_API: env.HOST_API
   }
-})
+}
+
+module.exports = withPlugins(
+  // MARK  multi plugin nextjs
+  [
+    [
+      withLess,
+      {
+        lessLoaderOptions: {
+          javascriptEnabled: true,
+          modifyVars: themeVariables // make your antd custom effective
+        }
+      }
+    ],
+    [withTM, { transpileModules: ['lodash-es'] }]
+  ],
+  nextConfig
+)

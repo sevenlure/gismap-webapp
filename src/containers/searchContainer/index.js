@@ -6,7 +6,7 @@ import SelectQuanHuyen from 'src/components/elements/select-quan-huyen'
 import SelectNganhNghe from 'src/components/elements/select-nganh-nghe'
 import SelectKhuCongNghiep from 'src/components/elements/select-khu-cong-nghiep'
 import SelectCoQuanThamQuyenQuanLy from 'src/components/elements/select-tham-quyen-quan-ly'
-import { throttle } from 'lodash'
+import { throttle } from 'lodash-es'
 
 const ContainerCustomRow = styled.div`
   display: flex;

@@ -18,12 +18,12 @@ import {
   setDanhMucIsLoaded,
   setDanhMucIsLoading
 } from 'src/redux/actions/generalAction.js'
-import { get as _get } from 'lodash'
+import { get as _get } from 'lodash-es'
 import Router from 'next/router'
 import slug from 'src/routes'
 import hocProtectLogin from 'src/hoc/is-authenticated'
 import posed from 'react-pose'
-import { isEqual as _isEqual } from 'lodash'
+import { isEqual as _isEqual } from 'lodash-es'
 import Link from 'next/link'
 
 const { Header, Content, Footer } = Layout

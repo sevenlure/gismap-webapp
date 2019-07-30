@@ -8,7 +8,7 @@ import Link from 'next/link'
 import slug from 'src/routes'
 import { DATE_FORMAT } from 'src/config/format'
 import moment from 'moment'
-import { get } from 'lodash'
+import { get } from 'lodash-es'
 
 @withLogicTable({ apiGetList: getList })
 class TableListContainer extends React.Component {

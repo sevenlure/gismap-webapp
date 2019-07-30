@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { Upload, message, Button, Icon, Modal, Form, Input } from 'antd'
-import { get as _get, remove as _remove, isEqual as _isEqual } from 'lodash'
+import { get as _get, remove as _remove, isEqual as _isEqual } from 'lodash-es'
 import { connect } from 'react-redux'
 import { uploadAttachment } from 'src/api/AttachmentApi'
 import { HOST_ATTACHMENT } from 'src/config/host'
