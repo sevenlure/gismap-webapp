@@ -48,6 +48,7 @@ const nextConfig = {
     return config
   },
   env: {
+    isDev: env.isDev,
     HOST_API: env.HOST_API
   }
 }

@@ -13,5 +13,12 @@ const persistConfig = {
 const persistedReducer = persistReducer(persistConfig, rootReducer)
 
 export function initializeStore() {
-  return createStore(persistedReducer, undefined, composeWithDevTools(applyMiddleware(thunkMiddleware)))
+  let storeEnhance = applyMiddleware(thunkMiddleware)
+
+  if (process.env.isDev) {
+    // MARK gắn devTool vao
+    storeEnhance = composeWithDevTools(storeEnhance)
+  }
+
+  return createStore(persistedReducer, undefined, storeEnhance)
 }
