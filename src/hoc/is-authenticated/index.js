@@ -6,10 +6,12 @@ import { setAuthorizationforHeader } from 'src/constant/funcAixos.js'
 
 const hocProtectLoginTemp = Component => {
   class hocProtectLogin extends React.Component {
-    static async getInitialProps(appContext) {
-      let appProps = !Component.getInitialProps ? {} : await Component.getInitialProps(appContext)
-      return { ...appProps }
-    }
+    // FIXED  không cần hàm getInitialProps nữa
+    // static async getInitialProps(appContext) {
+    //   console.log('hocProtectLogin')
+    //   let appProps = !Component.getInitialProps ? {} : await Component.getInitialProps(appContext)
+    //   return { ...appProps }
+    // }
 
     static propTypes = {
       isAuthenticated: PropTypes.bool,

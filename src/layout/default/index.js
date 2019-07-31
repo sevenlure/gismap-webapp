@@ -97,7 +97,7 @@ class AppWithLayout extends React.Component {
   }
 
   componentDidMount = () => {
-    console.log("componentDidMount Layout")
+    console.log('componentDidMount Layout')
     this.props.setDanhMucIsLoading()
     Promise.all([
       this.props.getDanhMucProvie(),

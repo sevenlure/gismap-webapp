@@ -1,15 +1,13 @@
 import React from 'react'
 import App, { Container } from 'next/app'
 import { PageTransition } from 'next-page-transitions'
-import AppWithLayout from 'src/layout/default'
 import { Icon } from 'antd'
-import withReduxStore, { getOrCreateStore } from '../src/lib/with-redux-store'
+import { getOrCreateStore } from '../src/lib/with-redux-store'
 import { Provider } from 'react-redux'
 import { persistStore } from 'redux-persist'
 import { PersistGate } from 'redux-persist/integration/react'
 
 const reduxStore = getOrCreateStore()
-const SLUG_NOT_HAVE_LAYOUT = ['/user/login']
 
 const Loader = () => {
   return (
@@ -41,6 +39,7 @@ class MyApp extends App {
     this.persistor = persistStore(reduxStore)
   }
 
+  // FIXED  không cần hàm getInitialProps nữa
   // static async getInitialProps({ Component, ctx }) {
   //   let pageProps = {}
   //   if (Component.getInitialProps) {
@@ -57,27 +56,11 @@ class MyApp extends App {
   }
 
   render() {
-    // const { Component, pageProps, reduxStore, isNotHaveLayout, pathname } = this.props
     const { Component, pageProps, router } = this.props
-
-    // pathname = router.pathname
-    console.log('this.props', this.props)
     return (
       <Container>
         <Provider store={reduxStore}>
           <PersistGate loading={<Loader />} persistor={this.persistor}>
-            {/* {isNotHaveLayout ? (
-              <PageTransition timeout={200} classNames='page-transition'>
-                <Component {...pageProps} />
-              </PageTransition>
-            ) : (
-              <AppWithLayout pathname={pathname}>
-                <PageTransition timeout={200} classNames='page-transition'>
-                  <Component {...pageProps} />
-                </PageTransition>
-              </AppWithLayout>
-            )} */}
-
             <Component.Layout pathname={router.pathname}>
               <PageTransition timeout={200} classNames='page-transition'>
                 <Component {...pageProps} />
