@@ -5,6 +5,8 @@ const withTM = require('next-transpile-modules')
 const lessToJS = require('less-vars-to-js')
 const fs = require('fs')
 const path = require('path')
+const CompressionPlugin = require('compression-webpack-plugin')
+const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin')
 
 // const env = require("./env.json")
 const env = process.env.isDev ? require('./.env/dev.json') : require('./.env/production.json')
@@ -45,6 +47,14 @@ const nextConfig = {
         use: 'null-loader'
       })
     }
+
+    if (config.mode === 'production') {
+      if (Array.isArray(config.optimization.minimizer)) {
+        config.optimization.minimizer.push(new OptimizeCSSAssetsPlugin({}))
+      }
+    }
+    config.plugins.push(new CompressionPlugin())
+
     return config
   },
   env: {
