@@ -63,6 +63,16 @@ class Login extends React.Component {
     updateUserInfo: PropTypes.func.isRequired
   }
 
+  componentDidMount() {
+    if (this.props.isAuthenticated) Router.push(slug.basic)
+  }
+
+  UNSAFE_componentWillReceiveProps(nextProps) {
+    if (this.props.isAuthenticated || nextProps.isAuthenticated) {
+      Router.push(slug.basic)
+    }
+  }
+
   hanldeSubmit = () => {
     this.props.form.validateFields((errors, values) => {
       if (!errors) {
@@ -79,8 +89,15 @@ class Login extends React.Component {
               const userInfo = _get(res, 'data', null)
               this.props.updateUserInfo(userInfo)
               message.success(`Welcome ${userInfo.FirstName} ${userInfo.LastName}`)
-              Router.replace(slug.basic)
-              // console.log(this.props)
+              const tamp = window.location.href
+              Router.push(slug.basic)
+              // check khi Router.push k0 lam viec
+              setTimeout(() => {
+                if (tamp === window.location.href) {
+                  console.log('hahah', tamp)
+                  window.location.href = slug.basic
+                }
+              }, 500)
             })
             .catch(e => {
               // const { response } = e
