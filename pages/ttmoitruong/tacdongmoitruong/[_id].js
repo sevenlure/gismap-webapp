@@ -7,6 +7,7 @@ import slug, { breadcrumb } from 'src/routes'
 import { connect } from 'react-redux'
 import { setBreadCrumb } from 'src/redux/actions/generalAction'
 import TacdongmoitruongForm from 'src/containers/ttmoitruong/tacdongmoitruong/form'
+import DefaultLayout from 'src/layout/default'
 
 @connect(
   null,
@@ -14,7 +15,7 @@ import TacdongmoitruongForm from 'src/containers/ttmoitruong/tacdongmoitruong/fo
     setBreadCrumb
   }
 )
-export default class TacdongmoitruongEdit extends React.Component {
+class TacdongmoitruongEdit extends React.Component {
   static propTypes = {
     _id: PropTypes.string,
     setBreadCrumb: PropTypes.any
@@ -95,3 +96,6 @@ export default class TacdongmoitruongEdit extends React.Component {
     )
   }
 }
+
+TacdongmoitruongEdit.Layout = DefaultLayout
+export default TacdongmoitruongEdit

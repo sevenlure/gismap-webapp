@@ -9,6 +9,7 @@ import Clearfix from 'src/components/elements/clearfix'
 import { setBreadCrumb } from 'src/redux/actions/generalAction'
 import slug, { breadcrumb } from 'src/routes'
 import { connect } from 'react-redux'
+import DefaultLayout from 'src/layout/default'
 
 @connect(
   null,
@@ -52,4 +53,5 @@ class Index extends React.Component {
     )
   }
 }
+Index.Layout = DefaultLayout
 export default Index

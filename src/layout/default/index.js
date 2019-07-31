@@ -74,7 +74,7 @@ const ChildrenContainer = styled.div`
   }
 )
 @hocProtectLogin
-class AppWithLayout extends React.PureComponent {
+class AppWithLayout extends React.Component {
   static propTypes = {
     FirstName: PropTypes.string,
     LastName: PropTypes.string,
@@ -97,7 +97,7 @@ class AppWithLayout extends React.PureComponent {
   }
 
   componentDidMount = () => {
-    // console.log('UNSAFE_componentWillMount')
+    console.log("componentDidMount Layout")
     this.props.setDanhMucIsLoading()
     Promise.all([
       this.props.getDanhMucProvie(),

@@ -3,11 +3,12 @@ import App, { Container } from 'next/app'
 import { PageTransition } from 'next-page-transitions'
 import AppWithLayout from 'src/layout/default'
 import { Icon } from 'antd'
-import withReduxStore from '../src/lib/with-redux-store'
+import withReduxStore, { getOrCreateStore } from '../src/lib/with-redux-store'
 import { Provider } from 'react-redux'
 import { persistStore } from 'redux-persist'
 import { PersistGate } from 'redux-persist/integration/react'
 
+const reduxStore = getOrCreateStore()
 const SLUG_NOT_HAVE_LAYOUT = ['/user/login']
 
 const Loader = () => {
@@ -33,33 +34,39 @@ const Loader = () => {
 }
 
 class MyApp extends App {
-  static async getInitialProps({ Component, ctx }) {
-    let pageProps = {}
-    if (Component.getInitialProps) {
-      pageProps = await Component.getInitialProps(ctx)
-    }
-
-    let isNotHaveLayout = SLUG_NOT_HAVE_LAYOUT.includes(ctx.pathname)
-    return { pageProps, isNotHaveLayout, pathname: ctx.pathname }
+  constructor(props) {
+    super(props)
+    // this.persistor = persistStore(props.reduxStore)
+    this.reduxStore = reduxStore
+    this.persistor = persistStore(reduxStore)
   }
+
+  // static async getInitialProps({ Component, ctx }) {
+  //   let pageProps = {}
+  //   if (Component.getInitialProps) {
+  //     pageProps = await Component.getInitialProps(ctx)
+  //   }
+
+  //   let isNotHaveLayout = SLUG_NOT_HAVE_LAYOUT.includes(ctx.pathname)
+  //   return { pageProps, isNotHaveLayout, pathname: ctx.pathname }
+  // }
 
   componentDidMount() {
     // MARK  hạn chế Modal Alert authen nhìu lần
     window.isAlertModalErr = false
   }
 
-  constructor(props) {
-    super(props)
-    this.persistor = persistStore(props.reduxStore)
-  }
-
   render() {
-    const { Component, pageProps, reduxStore, isNotHaveLayout, pathname } = this.props
+    // const { Component, pageProps, reduxStore, isNotHaveLayout, pathname } = this.props
+    const { Component, pageProps, router } = this.props
+
+    // pathname = router.pathname
+    console.log('this.props', this.props)
     return (
       <Container>
         <Provider store={reduxStore}>
           <PersistGate loading={<Loader />} persistor={this.persistor}>
-            {isNotHaveLayout ? (
+            {/* {isNotHaveLayout ? (
               <PageTransition timeout={200} classNames='page-transition'>
                 <Component {...pageProps} />
               </PageTransition>
@@ -69,7 +76,13 @@ class MyApp extends App {
                   <Component {...pageProps} />
                 </PageTransition>
               </AppWithLayout>
-            )}
+            )} */}
+
+            <Component.Layout pathname={router.pathname}>
+              <PageTransition timeout={200} classNames='page-transition'>
+                <Component {...pageProps} />
+              </PageTransition>
+            </Component.Layout>
           </PersistGate>
         </Provider>
       </Container>
@@ -77,4 +90,4 @@ class MyApp extends App {
   }
 }
 
-export default withReduxStore(MyApp)
+export default MyApp

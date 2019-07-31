@@ -7,6 +7,7 @@ import Router from 'next/router'
 import slug, { breadcrumb } from 'src/routes'
 import { connect } from 'react-redux'
 import { setBreadCrumb } from 'src/redux/actions/generalAction'
+import DefaultLayout from 'src/layout/default'
 
 @connect(
   null,
@@ -14,7 +15,7 @@ import { setBreadCrumb } from 'src/redux/actions/generalAction'
     setBreadCrumb
   }
 )
-export default class TacdongmoitruongCreate extends React.Component {
+class TacdongmoitruongCreate extends React.Component {
   static propTypes = {
     setBreadCrumb: PropTypes.any
   }
@@ -74,3 +75,6 @@ export default class TacdongmoitruongCreate extends React.Component {
     )
   }
 }
+
+TacdongmoitruongCreate.Layout = DefaultLayout
+export default TacdongmoitruongCreate

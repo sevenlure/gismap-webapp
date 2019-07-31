@@ -7,6 +7,7 @@ import slug, { breadcrumb } from 'src/routes'
 import { connect } from 'react-redux'
 import { setBreadCrumb } from 'src/redux/actions/generalAction'
 import GiayPhepXaThaiForm from 'src/containers/ttmoitruong/giayphepxathai/form'
+import DefaultLayout from 'src/layout/default'
 
 @connect(
   null,
@@ -14,7 +15,7 @@ import GiayPhepXaThaiForm from 'src/containers/ttmoitruong/giayphepxathai/form'
     setBreadCrumb
   }
 )
-export default class GiayPhepXaThaiEdit extends React.Component {
+class GiayPhepXaThaiEdit extends React.Component {
   static propTypes = {
     _id: PropTypes.string,
     setBreadCrumb: PropTypes.any
@@ -95,3 +96,6 @@ export default class GiayPhepXaThaiEdit extends React.Component {
     )
   }
 }
+
+GiayPhepXaThaiEdit.Layout = DefaultLayout
+export default GiayPhepXaThaiEdit

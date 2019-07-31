@@ -7,6 +7,7 @@ import Router from 'next/router'
 import slug, { breadcrumb } from 'src/routes'
 import { connect } from 'react-redux'
 import { setBreadCrumb } from 'src/redux/actions/generalAction'
+import DefaultLayout from 'src/layout/default'
 
 @connect(
   null,
@@ -97,4 +98,5 @@ class CosoEdit extends React.Component {
   }
 }
 
+CosoEdit.Layout = DefaultLayout
 export default CosoEdit

@@ -7,6 +7,7 @@ import { create as postCreateCoso } from 'src/api/CosoApi'
 import CosoForm from 'src/containers/coso/form'
 import Router from 'next/router'
 import slug, { breadcrumb } from 'src/routes'
+import DefaultLayout from 'src/layout/default'
 
 @connect(
   null,
@@ -14,12 +15,12 @@ import slug, { breadcrumb } from 'src/routes'
     setBreadCrumb
   }
 )
-export default class CosoCreate extends React.Component {
+class CosoCreate extends React.Component {
   static propTypes = {
     setBreadCrumb: PropTypes.any
   }
-  
-  componentDidMount(){
+
+  componentDidMount() {
     this.props.setBreadCrumb(breadcrumb[slug.coso.create])
   }
 
@@ -74,3 +75,5 @@ export default class CosoCreate extends React.Component {
     )
   }
 }
+CosoCreate.Layout = DefaultLayout
+export default CosoCreate

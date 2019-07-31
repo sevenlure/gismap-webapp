@@ -9,6 +9,7 @@ import Link from 'next/link'
 import { Icon } from 'antd'
 import Clearfix from 'src/components/elements/clearfix'
 import slug, { breadcrumb } from 'src/routes'
+import DefaultLayout from 'src/layout/default'
 
 @connect(
   null,
@@ -52,4 +53,6 @@ class Index extends React.Component {
     )
   }
 }
+
+Index.Layout = DefaultLayout
 export default Index

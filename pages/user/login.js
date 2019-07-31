@@ -12,6 +12,7 @@ import { updateUserInfo } from 'src/redux/actions/generalAction.js'
 import { get as _get } from 'lodash-es'
 import Router from 'next/router'
 import slug from 'src/routes'
+import EmptyLayout from 'src/layout/empty'
 
 const { Footer } = Layout
 
@@ -184,4 +185,5 @@ class Login extends React.Component {
     )
   }
 }
+Login.Layout = EmptyLayout
 export default Login
