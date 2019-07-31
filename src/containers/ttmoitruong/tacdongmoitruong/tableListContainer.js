@@ -115,6 +115,9 @@ class TableListContainer extends React.Component {
         rowKey={record => {
           return record.TacDongMoiTruong._id
         }}
+        size='middle'
+        className='fontSize12'
+        scroll={{ x: 900 }}
         bordered
         columns={[this.props.columnStt, ...this.columns]}
         loading={this.props.isLoading}

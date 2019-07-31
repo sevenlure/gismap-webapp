@@ -1,1 +1,1 @@
-export const HOST_ATTACHMENT = 'http://localhost:3105/'
+export const HOST_ATTACHMENT = process.env.HOST_ATTACHMENT

@@ -61,6 +61,7 @@ class MyApp extends App {
       <Container>
         <Provider store={reduxStore}>
           <PersistGate loading={<Loader />} persistor={this.persistor}>
+            {/* eslint-disable-next-line */}
             <Component.Layout pathname={router.pathname}>
               <PageTransition timeout={200} classNames='page-transition'>
                 <Component {...pageProps} />

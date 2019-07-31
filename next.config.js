@@ -59,7 +59,8 @@ const nextConfig = {
   },
   env: {
     isDev: env.isDev,
-    HOST_API: env.HOST_API
+    HOST_API: env.HOST_API,
+    HOST_ATTACHMENT: env.HOST_ATTACHMENT
   }
 }
 

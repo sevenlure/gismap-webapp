@@ -1,3 +1,4 @@
 {
-  "HOST_API": "http://prtr.southeastasia.cloudapp.azure.com:3105/"
+  "HOST_API": "http://prtr.southeastasia.cloudapp.azure.com:3105/",
+  "HOST_ATTACHMENT": "http://prtr.southeastasia.cloudapp.azure.com:3105/"
 }
