@@ -53,20 +53,21 @@ class MyApp extends App {
   componentDidMount() {
     // MARK  hạn chế Modal Alert authen nhìu lần
     window.isAlertModalErr = false
+    window.dispatch = this.reduxStore.dispatch
   }
 
   render() {
     const { Component, pageProps, router } = this.props
+    const Layout = Component.Layout
     return (
       <Container>
         <Provider store={reduxStore}>
           <PersistGate loading={<Loader />} persistor={this.persistor}>
-            {/* eslint-disable-next-line */}
-            <Component.Layout pathname={router.pathname}>
+            <Layout pathname={router.pathname}>
               <PageTransition timeout={200} classNames='page-transition'>
                 <Component {...pageProps} />
               </PageTransition>
-            </Component.Layout>
+            </Layout>
           </PersistGate>
         </Provider>
       </Container>

@@ -1,9 +1,10 @@
 import axios from 'axios'
-import { message, Modal } from 'antd'
+import { message as messageAnt, Modal } from 'antd'
 import Router from 'next/router'
 import slug from 'src/routes'
 import error_500 from './error_500'
 import error_415 from './error_415'
+import { userLogout } from 'src/redux/actions/authAction'
 
 //QLNY-API
 // const fetch = axios.create({
@@ -27,7 +28,7 @@ import error_415 from './error_415'
 //     break
 //   }
 //   default:
-//     message.error(dataJson.message)
+//     messageAnt.error(dataJson.message)
 // }
 //       }
 //       // Do whatever you want to transform the data
@@ -74,6 +75,7 @@ fetch.interceptors.response.use(
                 title: title,
                 content: 'Chữ ký không hợp lệ!!',
                 onOk() {
+                  window.dispatch(userLogout())
                   Router.replace(slug.login)
                 }
               })
@@ -84,13 +86,14 @@ fetch.interceptors.response.use(
                 title: title,
                 content: message || data.message, //'Hết phiên làm việc, Vui lòng đăng nhập lại',
                 onOk() {
-                  Router.replace(slug.login)
+                  window.dispatch(userLogout())
+                  Router.push(slug.login)
                 }
               })
               break
             }
             default: {
-              message.error(error.response.message)
+              messageAnt.error(error.response.message)
               break
             }
           }
@@ -106,7 +109,7 @@ fetch.interceptors.response.use(
         }
         default: {
           const messErr = error.response.message || data.message
-          message.error(messErr)
+          messageAnt.error(messErr)
         }
       }
     } else if (error.request) {
@@ -116,7 +119,7 @@ fetch.interceptors.response.use(
       })
       // console.log(error.request)
     } else {
-      message.error(error.response.message)
+      messageAnt.error(error.response.message)
     }
     return Promise.reject(error)
   }

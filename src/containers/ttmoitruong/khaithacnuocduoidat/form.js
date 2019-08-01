@@ -2,7 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import styled from 'styled-components'
 import { ATTACHMENT_TYPE } from 'shared/constant/attachment'
-import { Form, Row, Col, Input, DatePicker, Radio } from 'antd'
+import { Form, Row, Col, Input, DatePicker, InputNumber } from 'antd'
 import SelectCoso from 'src/components/elements/select-coso'
 import UploadAttachment from 'src/containers/attachment/upload'
 import SelectCoQuanCapPhep from 'src/components/elements/select-co-quan-cap-phep'
@@ -19,19 +19,23 @@ const ContainerCustomRow = styled.div`
     margin-bottom: 0px;
   }
 `
-
 const keyFieldOfForm = [
   'Coso',
-  'SoQuyenDinhPheDuyet',
+  'SoGiayPhep',
   'CoQuanCapPhep',
-  'NgayPheDuyet',
-  'XacNhanHoanThanh',
+  'NgayCapPhep',
+  'SoGieng',
+  'LuuLuong',
+  'NamBatDauKhaiThac',
+  'NgayHetHan',
+  'TangKhaiThac',
+  'GhiChu',
   'TapTinDinhKem',
   'TapTinDeleted' // notuse when setData2Form
 ]
 
 @Form.create()
-export default class TacdongmoitruongForm extends React.Component {
+export default class KhaiThacNuocDuoiDatForm extends React.Component {
   static propTypes = {
     form: PropTypes.object.isRequired,
     getRef: PropTypes.func,
@@ -52,8 +56,6 @@ export default class TacdongmoitruongForm extends React.Component {
       // Coso: get(data, 'Coso._id'), // MARK  Coso can _id va Name
       CoQuanCapPhep: get(data, 'CoQuanCapPhep._id')
     }
-    const NgayPheDuyet = get(data, 'NgayPheDuyet')
-    if (NgayPheDuyet) result.NgayPheDuyet = moment(NgayPheDuyet)
     this.props.form.setFieldsValue(pick(result, keyFieldOfForm))
   }
 
@@ -98,8 +100,8 @@ export default class TacdongmoitruongForm extends React.Component {
           </Row>
           <Row gutter={12}>
             <Col xs={24}>
-              <Form.Item label='Số quyết định phê duyệt'>
-                {getFieldDecorator('SoQuyenDinhPheDuyet', {
+              <Form.Item label='Số giấy phép'>
+                {getFieldDecorator('SoGiayPhep', {
                   rules: [{ required: true, message: 'Field is required' }]
                 })(<Input />)}
               </Form.Item>
@@ -107,13 +109,13 @@ export default class TacdongmoitruongForm extends React.Component {
           </Row>
           <Row gutter={12}>
             <Col xs={12}>
-              <Form.Item label='Cơ quan cấp'>
+              <Form.Item label='Cơ quan cấp phép'>
                 {getFieldDecorator('CoQuanCapPhep', {})(<SelectCoQuanCapPhep />)}
               </Form.Item>
             </Col>
             <Col xs={12}>
-              <Form.Item label='Ngày phê duyệt'>
-                {getFieldDecorator('NgayPheDuyet', {
+              <Form.Item label='Ngày cấp phép'>
+                {getFieldDecorator('NgayCapPhep', {
                   getValueFromEvent: val => {
                     if (!val) return null
                     else return val.toDate()
@@ -129,25 +131,64 @@ export default class TacdongmoitruongForm extends React.Component {
 
           <Row gutter={12}>
             <Col xs={12}>
-              <Form.Item label='Xác nhận hoàn thành'>
-                {getFieldDecorator('XacNhanHoanThanh', {
-                  initialValue: false
-                })(
-                  <Radio.Group>
-                    <Radio value={true}>Có</Radio>
-                    <Radio value={false}>Không</Radio>
-                  </Radio.Group>
-                )}
+              <Form.Item label='Số giếng'>
+                {getFieldDecorator('SoGieng', {})(<InputNumber min={0} style={{ width: '100%' }} />)}
+              </Form.Item>
+            </Col>
+            <Col xs={12}>
+              <Form.Item label='Lưu luợng'>
+                {getFieldDecorator('LuuLuong', {})(<InputNumber min={0} style={{ width: '100%' }} />)}
               </Form.Item>
             </Col>
           </Row>
+
+          <Row gutter={12}>
+            <Col xs={12}>
+              <Form.Item label='Năm bắt đầu khai thác'>
+                {getFieldDecorator('NamBatDauKhaiThac', {})(
+                  <InputNumber min={1970} max={2100} style={{ width: '100%' }} />
+                )}
+              </Form.Item>
+            </Col>
+            <Col xs={12}>
+              <Form.Item label='Ngày hết hạn'>
+                {getFieldDecorator('NgayHetHan', {
+                  getValueFromEvent: val => {
+                    if (!val) return null
+                    else return val.toDate()
+                  },
+                  getValueProps: val => {
+                    if (!val) return null
+                    else return { value: moment(val) }
+                  }
+                })(<DatePicker style={{ width: '100%' }} />)}
+              </Form.Item>
+            </Col>
+          </Row>
+
+          <Row gutter={12}>
+            <Col xs={12}>
+              <Form.Item label='Tầng khai thác'>
+                {getFieldDecorator('TangKhaiThac', {})(<InputNumber min={0} style={{ width: '100%' }} />)}
+              </Form.Item>
+            </Col>
+          </Row>
+
+          <Row gutter={12}>
+            <Col xs={24}>
+              <Form.Item label='Ghi chú'>
+                {getFieldDecorator('GhiChu', {})(<Input.TextArea autosize={{ minRows: 3, maxRows: 6 }} />)}
+              </Form.Item>
+            </Col>
+          </Row>
+
           <Row gutter={12}>
             <Col xs={24}>
               <Form.Item label='Attachment'>
                 {getFieldDecorator('TapTinDinhKem', {})(
                   <UploadAttachment
                     cbDeleteFile={this.handleCacheAttachDeleted}
-                    keyUpload={ATTACHMENT_TYPE.TAC_DONG_MOI_TRUONG}
+                    keyUpload={ATTACHMENT_TYPE.KHAI_THAC_NUOC_DUOI_DAT}
                   />
                 )}
               </Form.Item>

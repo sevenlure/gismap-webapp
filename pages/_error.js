@@ -2,6 +2,9 @@ import React from 'react'
 import styled from 'styled-components'
 import { Button } from 'antd'
 import Clearfix from 'src/components/elements/clearfix'
+import EmptyLayout from 'src/layout/empty'
+import Router from 'next/router'
+import slug from 'src/routes'
 
 const ErrorWrapper = styled.div`
   display: flex;
@@ -9,6 +12,7 @@ const ErrorWrapper = styled.div`
   justify-content: center;
   flex-direction: column;
   align-items: center;
+  min-height: 100vh;
 `
 
 class Error extends React.Component {
@@ -27,10 +31,18 @@ class Error extends React.Component {
         </div>
         <Clearfix height={8} />
         <div>
-          <Button type='primary'> Về trang chủ</Button>
+          <Button
+            type='primary'
+            onClick={() => {
+              Router.push(slug.basic)
+            }}
+          >
+            Về trang chủ
+          </Button>
         </div>
       </ErrorWrapper>
     )
   }
 }
+Error.Layout = EmptyLayout
 export default Error

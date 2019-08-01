@@ -6,7 +6,7 @@ import Clearfix from 'src/components/elements/clearfix'
 import authApi from 'src/api/authApi'
 import { connect } from 'react-redux'
 
-import { userLogin } from 'src/redux/actions/authAction'
+import { userLogin, userLogout } from 'src/redux/actions/authAction'
 import { updateUserInfo } from 'src/redux/actions/generalAction.js'
 
 import { get as _get } from 'lodash-es'
@@ -40,7 +40,8 @@ const mapStateToProps = state => ({
 })
 const mapDispatchToProps = {
   userLogin,
-  updateUserInfo
+  updateUserInfo,
+  userLogout
 }
 
 @connect(
@@ -60,17 +61,12 @@ class Login extends React.Component {
     isAuthenticated: PropTypes.bool,
     form: PropTypes.object.isRequired,
     userLogin: PropTypes.func.isRequired,
-    updateUserInfo: PropTypes.func.isRequired
+    updateUserInfo: PropTypes.func.isRequired,
+    userLogout: PropTypes.func.isRequired
   }
 
   componentDidMount() {
     if (this.props.isAuthenticated) Router.push(slug.basic)
-  }
-
-  UNSAFE_componentWillReceiveProps(nextProps) {
-    if (this.props.isAuthenticated || nextProps.isAuthenticated) {
-      Router.push(slug.basic)
-    }
   }
 
   hanldeSubmit = () => {
@@ -91,10 +87,10 @@ class Login extends React.Component {
               message.success(`Welcome ${userInfo.FirstName} ${userInfo.LastName}`)
               const tamp = window.location.href
               Router.push(slug.basic)
+              window.shouldLogout = false
               // check khi Router.push k0 lam viec
               setTimeout(() => {
                 if (tamp === window.location.href) {
-                  console.log('hahah', tamp)
                   window.location.href = slug.basic
                 }
               }, 500)

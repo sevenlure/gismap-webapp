@@ -1,14 +1,14 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import SearchContainer from 'src/containers/searchContainer'
-import TableListContainer from 'src/containers/coso/tableListContainer'
-import { connect } from 'react-redux'
-import { setBreadCrumb } from 'src/redux/actions/generalAction'
+import TableListContainer from 'src/containers/ttmoitruong/khaithacnuocduoidat/tableListContainer'
 import { get, pick, pickBy, identity } from 'lodash-es'
 import Link from 'next/link'
 import { Icon } from 'antd'
 import Clearfix from 'src/components/elements/clearfix'
+import { setBreadCrumb } from 'src/redux/actions/generalAction'
 import slug, { breadcrumb } from 'src/routes'
+import { connect } from 'react-redux'
 import DefaultLayout from 'src/layout/default'
 
 @connect(
@@ -23,7 +23,7 @@ class Index extends React.Component {
   }
 
   componentDidMount() {
-    this.props.setBreadCrumb(breadcrumb[slug.coso.list])
+    this.props.setBreadCrumb(breadcrumb[slug.ttmoitruong.khaithacnuocduoidat.list])
   }
 
   onClickSearch = values => {
@@ -41,7 +41,7 @@ class Index extends React.Component {
   render() {
     return (
       <div>
-        <Link href={slug.coso.create}>
+        <Link href={slug.ttmoitruong.khaithacnuocduoidat.create}>
           <a style={{ fontSize: 20 }}>
             <Icon type='plus-circle' /> Thêm mới
           </a>
@@ -53,6 +53,5 @@ class Index extends React.Component {
     )
   }
 }
-
 Index.Layout = DefaultLayout
 export default Index

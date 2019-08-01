@@ -1,4 +1,4 @@
-import { message, Modal } from 'antd'
+import { message as messageAnt, Modal } from 'antd'
 
 export default error => {
   const { data } = error.response
@@ -15,7 +15,7 @@ export default error => {
 
     default: {
       const messErr = error.response.message || data.message
-      message.error(messErr)
+      messageAnt.error(messErr)
       break
     }
   }

@@ -91,10 +91,9 @@ class TableListContainer extends React.Component {
     {
       title: '',
       key: 'action',
-      width: 100,
+      width: 50,
       render: (text, record) => (
         <div style={{ display: 'flex', justifyContent: 'space-around' }}>
-          <Icon style={{ color: COLOR.PRIMARY, fontSize: ICON_SIZE.LARGE }} type='eye' />
           <Popconfirm
             title='Bạn chắc chắc muốn xoá?'
             placement='left'
