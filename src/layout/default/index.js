@@ -19,7 +19,7 @@ import {
   setDanhMucIsLoading
 } from 'src/redux/actions/generalAction.js'
 import { get as _get } from 'lodash-es'
-import Router from 'next/router'
+import Router, { withRouter } from 'next/router'
 import slug from 'src/routes'
 import hocProtectLogin from 'src/hoc/is-authenticated'
 import posed from 'react-pose'
@@ -89,7 +89,7 @@ class AppWithLayout extends React.Component {
     getDanhMucProvie: PropTypes.func,
     getDanhMucTinhTrangHoatDong: PropTypes.func,
     isAuthenticated: PropTypes.bool,
-    pathname: PropTypes.string,
+    router: PropTypes.any,
     setDanhMucIsLoaded: PropTypes.func,
     setDanhMucIsLoading: PropTypes.func,
     userLogout: PropTypes.func,
@@ -131,8 +131,9 @@ class AppWithLayout extends React.Component {
 
   render() {
     let pathMenu = ''
-    if (this.props.pathname === slug.coso.list) pathMenu = slug.coso.base
-    else pathMenu = this.getPathForMenu(this.props.pathname)
+    const pathname = this.props.router.pathname
+    if (pathname === slug.coso.list) pathMenu = slug.coso.base
+    else pathMenu = this.getPathForMenu(pathname)
 
     console.log('pathMenu', pathMenu)
 
@@ -214,7 +215,7 @@ class AppWithLayout extends React.Component {
   }
 }
 
-export default AppWithLayout
+export default withRouter(AppWithLayout)
 
 const Box = posed.div({
   enter: { x: 0, opacity: 1, transition: { duration: 200 } },

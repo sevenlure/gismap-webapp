@@ -1,35 +1,37 @@
 import React from 'react'
 import App, { Container } from 'next/app'
 import { PageTransition } from 'next-page-transitions'
-import { Icon } from 'antd'
+// import { Icon } from 'antd'
 import { getOrCreateStore } from '../src/lib/with-redux-store'
 import { Provider } from 'react-redux'
 import { persistStore } from 'redux-persist'
 import { PersistGate } from 'redux-persist/integration/react'
+import Loader from 'src/components/loading-screen'
+import 'src/less/nprogress.less'
 
 const reduxStore = getOrCreateStore()
 
-const Loader = () => {
-  return (
-    <div
-      style={{
-        top: '50%',
-        left: '50%',
-        position: 'absolute',
-        transform: 'translate(-50%, -50%)'
-      }}
-    >
-      <Icon
-        style={{
-          fontSize: 100,
-          color: '#52c41a'
-        }}
-        type='setting'
-        spin={true}
-      />
-    </div>
-  )
-}
+// const Loader = () => {
+//   return (
+//     <div
+//       style={{
+//         top: '50%',
+//         left: '50%',
+//         position: 'absolute',
+//         transform: 'translate(-50%, -50%)'
+//       }}
+//     >
+//       <Icon
+//         style={{
+//           fontSize: 100,
+//           color: '#52c41a'
+//         }}
+//         type='setting'
+//         spin={true}
+//       />
+//     </div>
+//   )
+// }
 
 class MyApp extends App {
   constructor(props) {
@@ -57,13 +59,13 @@ class MyApp extends App {
   }
 
   render() {
-    const { Component, pageProps, router } = this.props
+    const { Component, pageProps } = this.props
     const Layout = Component.Layout
     return (
       <Container>
         <Provider store={reduxStore}>
           <PersistGate loading={<Loader />} persistor={this.persistor}>
-            <Layout pathname={router.pathname}>
+            <Layout>
               <PageTransition timeout={200} classNames='page-transition'>
                 <Component {...pageProps} />
               </PageTransition>

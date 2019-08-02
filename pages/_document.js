@@ -33,7 +33,7 @@ class MyDocument extends Document {
       <Html>
         <Head>
           <style>{`body { heigth: 100% }`}</style>
-          <link rel='stylesheet' href='/static/css/nprogress.css' />
+          {/* <link rel='stylesheet' href='/static/css/nprogress.css' /> */}
           <link rel='icon' href='/static/images/logo.png'></link>
         </Head>
         <body>
