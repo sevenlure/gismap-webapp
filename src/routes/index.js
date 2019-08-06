@@ -46,18 +46,18 @@ const slug = {
       edit: '/ttmoitruong/khaithacnuocmat/[_id]'
     },
 
-    xulynuocthai: {
-      base: '/ttmoitruong/xulynuocthai',
-      list: '/ttmoitruong/xulynuocthai',
-      create: '/ttmoitruong/xulynuocthai/create',
-      edit: '/ttmoitruong/xulynuocthai/[_id]'
+    htxulynuocthai: {
+      base: '/ttmoitruong/htxulynuocthai',
+      list: '/ttmoitruong/htxulynuocthai',
+      create: '/ttmoitruong/htxulynuocthai/create',
+      edit: '/ttmoitruong/htxulynuocthai/[_id]'
     },
 
-    xulykhithai: {
-      base: '/ttmoitruong/xulykhithai',
-      list: '/ttmoitruong/xulykhithai',
-      create: '/ttmoitruong/xulykhithai/create',
-      edit: '/ttmoitruong/xulykhithai/[_id]'
+    htxulykhithai: {
+      base: '/ttmoitruong/htxulykhithai',
+      list: '/ttmoitruong/htxulykhithai',
+      create: '/ttmoitruong/htxulykhithai/create',
+      edit: '/ttmoitruong/htxulykhithai/[_id]'
     },
 
     sochunguonthai: {
@@ -134,23 +134,23 @@ export const breadcrumb = {
     { name: 'Cập nhật' }
   ],
   //Hệ thống xử lý nuớc thải
-  [slug.ttmoitruong.xulynuocthai.list]: [{ name: 'Hệ thống xử lý nuớc thải' }],
-  [slug.ttmoitruong.xulynuocthai.create]: [
-    { name: 'Hệ thống xử lý nuớc thải', slug: slug.ttmoitruong.xulynuocthai.list },
+  [slug.ttmoitruong.htxulynuocthai.list]: [{ name: 'Hệ thống xử lý nuớc thải' }],
+  [slug.ttmoitruong.htxulynuocthai.create]: [
+    { name: 'Hệ thống xử lý nuớc thải', slug: slug.ttmoitruong.htxulynuocthai.list },
     { name: 'Thêm mới' }
   ],
-  [slug.ttmoitruong.xulynuocthai.edit]: [
-    { name: 'Hệ thống xử lý nuớc thải', slug: slug.ttmoitruong.xulynuocthai.list },
+  [slug.ttmoitruong.htxulynuocthai.edit]: [
+    { name: 'Hệ thống xử lý nuớc thải', slug: slug.ttmoitruong.htxulynuocthai.list },
     { name: 'Cập nhật' }
   ],
   //Hệ thống xử lý khí thải
-  [slug.ttmoitruong.xulykhithai.list]: [{ name: 'Hệ thống xử lý khí thải' }],
-  [slug.ttmoitruong.xulykhithai.create]: [
-    { name: 'Hệ thống xử lý khí thải', slug: slug.ttmoitruong.xulykhithai.list },
+  [slug.ttmoitruong.htxulykhithai.list]: [{ name: 'Hệ thống xử lý khí thải' }],
+  [slug.ttmoitruong.htxulykhithai.create]: [
+    { name: 'Hệ thống xử lý khí thải', slug: slug.ttmoitruong.htxulykhithai.list },
     { name: 'Thêm mới' }
   ],
-  [slug.ttmoitruong.xulykhithai.edit]: [
-    { name: 'Hệ thống xử lý khí thải', slug: slug.ttmoitruong.xulykhithai.list },
+  [slug.ttmoitruong.htxulykhithai.edit]: [
+    { name: 'Hệ thống xử lý khí thải', slug: slug.ttmoitruong.htxulykhithai.list },
     { name: 'Cập nhật' }
   ],
   //Sổ chủ nguồn thải
