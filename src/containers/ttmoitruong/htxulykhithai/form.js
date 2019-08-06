@@ -1,13 +1,9 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import styled from 'styled-components'
-import { ATTACHMENT_TYPE } from 'shared/constant/attachment'
-import { Form, Row, Col, Input, DatePicker, InputNumber } from 'antd'
+import { Form, Row, Col, InputNumber } from 'antd'
 import SelectCoso from 'src/components/elements/select-coso'
-import UploadAttachment from 'src/containers/attachment/upload'
-import SelectCoQuanCapPhep from 'src/components/elements/select-co-quan-cap-phep'
-import { get, pick, map } from 'lodash-es'
-import moment from 'moment'
+import { pick } from 'lodash-es'
 
 const ContainerCustomRow = styled.div`
   .ant-col.ant-form-item-label,
