@@ -101,7 +101,7 @@ class TableListContainer extends React.Component {
               this.handleDelete(get(record, 'TacDongMoiTruong._id'))
             }}
           >
-            <Icon title={'haha'} style={{ color: COLOR.RED, fontSize: ICON_SIZE.LARGE }} type='delete' />
+            <Icon title={'Xóa'} style={{ color: COLOR.RED, fontSize: ICON_SIZE.LARGE }} type='delete' />
           </Popconfirm>
         </div>
       )

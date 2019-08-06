@@ -1,8 +1,6 @@
 import React from 'react'
-import PropTypes from 'prop-types'
-import styled from 'styled-components'
 
-export default class componentName extends React.Component {
+export default class LoadingScreen extends React.Component {
   render() {
     return (
       <div className='container-loader'>

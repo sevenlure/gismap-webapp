@@ -4,7 +4,7 @@ import { Table, Popconfirm, message } from 'antd'
 import Icon from 'src/components/elements/icon-with-tooltip'
 import { COLOR, ICON_SIZE } from 'src/constant/theme'
 import withLogicTable from 'src/hoc/tableList'
-import { deleteById, getList } from 'src/api/ttmoitruong/khaithacnuocduoidatApi'
+import { deleteById, getList } from 'src/api/ttmoitruong/khaithacnuocmatApi'
 import Link from 'next/link'
 import slug from 'src/routes'
 import { get } from 'lodash-es'
@@ -42,8 +42,8 @@ class TableListContainer extends React.Component {
       width: '25%',
       render: (text, record) => (
         <Link
-          href={slug.ttmoitruong.khaithacnuocduoidat.edit}
-          as={`${slug.ttmoitruong.khaithacnuocduoidat.base}/${get(record, 'KhaiThacNuocDuoiDat._id')}`}
+          href={slug.ttmoitruong.khaithacnuocmat.edit}
+          as={`${slug.ttmoitruong.khaithacnuocmat.base}/${get(record, 'KhaiThacNuocMat._id')}`}
         >
           <a style={{ color: COLOR.TITLE, textDecoration: 'underline' }}>{text}</a>
         </Link>
@@ -51,39 +51,34 @@ class TableListContainer extends React.Component {
     },
     {
       title: 'Số giấy phép',
-      dataIndex: 'KhaiThacNuocDuoiDat.SoGiayPhep',
+      dataIndex: 'KhaiThacNuocMat.SoGiayPhep',
       key: 'SoGiayPhep'
     },
 
     {
       title: 'Cơ quan cấp phép',
-      dataIndex: 'KhaiThacNuocDuoiDat.CoQuanCapPhep.Name',
+      dataIndex: 'KhaiThacNuocMat.CoQuanCapPhep.Name',
       key: 'CoQuanCapPhep'
     },
     {
-      title: 'Số Giếng',
-      dataIndex: 'KhaiThacNuocDuoiDat.SoGieng',
-      key: 'SoGieng'
-    },
-    {
       title: 'Lưu luợng',
-      dataIndex: 'KhaiThacNuocDuoiDat.LuuLuong',
+      dataIndex: 'KhaiThacNuocMat.LuuLuong',
       key: 'LuuLuong'
     },
     {
-      title: 'Năm bắt đầu khai thác',
-      dataIndex: 'KhaiThacNuocDuoiDat.NamBatDauKhaiThac',
-      key: 'NamBatDauKhaiThac'
+      title: 'Nguồn khai thác',
+      dataIndex: 'KhaiThacNuocMat.NguonKhaiThac',
+      key: 'NguonKhaiThac'
     },
     {
       title: 'Số luợng tập tin',
-      dataIndex: 'KhaiThacNuocDuoiDat.TapTinDinhKem',
+      dataIndex: 'KhaiThacNuocMat.TapTinDinhKem',
       key: 'TapTinDinhKem',
       render: field => (field ? field.length : 0)
     },
     {
       title: 'Cập nhật bởi',
-      dataIndex: 'KhaiThacNuocDuoiDat.UpdatedBy',
+      dataIndex: 'KhaiThacNuocMat.UpdatedBy',
       key: 'UpdatedBy'
     },
     {
@@ -96,7 +91,7 @@ class TableListContainer extends React.Component {
             title='Bạn chắc chắc muốn xoá?'
             placement='left'
             onConfirm={() => {
-              this.handleDelete(get(record, 'KhaiThacNuocDuoiDat._id'))
+              this.handleDelete(get(record, 'KhaiThacNuocMat._id'))
             }}
           >
             <Icon title={'Xóa'} style={{ color: COLOR.RED, fontSize: ICON_SIZE.LARGE }} type='delete' />
@@ -110,7 +105,7 @@ class TableListContainer extends React.Component {
     return (
       <Table
         rowKey={record => {
-          return record.KhaiThacNuocDuoiDat._id
+          return record.KhaiThacNuocMat._id
         }}
         size='middle'
         className='fontSize12'
