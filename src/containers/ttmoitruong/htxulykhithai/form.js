@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import styled from 'styled-components'
-import { Form, Row, Col, Input, InputNumber } from 'antd'
+import { Form, Row, Col, InputNumber } from 'antd'
 import SelectCoso from 'src/components/elements/select-coso'
 import { pick } from 'lodash-es'
 
@@ -15,10 +15,10 @@ const ContainerCustomRow = styled.div`
     margin-bottom: 0px;
   }
 `
-const keyFieldOfForm = ['Coso', 'CongSuatTheoDTM', 'LuuVucXaThai']
+const keyFieldOfForm = ['Coso', 'CongSuatLoHoi']
 
 @Form.create()
-export default class HTXuLyNuocThaiForm extends React.Component {
+export default class HTXuLyKhiThaiForm extends React.Component {
   static propTypes = {
     form: PropTypes.object.isRequired,
     getRef: PropTypes.func,
@@ -74,16 +74,11 @@ export default class HTXuLyNuocThaiForm extends React.Component {
           </Row>
           <Row gutter={12}>
             <Col xs={24}>
-              <Form.Item label='Công suất theo ĐTM'>
-                {getFieldDecorator('CongSuatTheoDTM', {
+              <Form.Item label='Công suất lò hơi (tấn/ngày đêm)'>
+                {getFieldDecorator('CongSuatLoHoi', {
                   rules: [{ required: true, message: 'Field is required' }]
                 })(<InputNumber min={0} style={{ width: '100%' }} />)}
               </Form.Item>
-            </Col>
-          </Row>
-          <Row gutter={12}>
-            <Col xs={24}>
-              <Form.Item label='Lưu vực xả thải'>{getFieldDecorator('LuuVucXaThai', {})(<Input />)}</Form.Item>
             </Col>
           </Row>
         </ContainerCustomRow>
