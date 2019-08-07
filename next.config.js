@@ -48,7 +48,7 @@ const nextConfig = {
       })
     }
 
-    if (!isServer) {
+    if (!isServer && !dev) {
       config.optimization.splitChunks.cacheGroups.commons.minChunks = 2;
     }
 
