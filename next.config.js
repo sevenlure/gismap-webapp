@@ -48,10 +48,15 @@ const nextConfig = {
       })
     }
 
+    if (!isServer) {
+      config.optimization.splitChunks.cacheGroups.commons.minChunks = 2;
+    }
+
     if (config.mode === 'production') {
       if (Array.isArray(config.optimization.minimizer)) {
         config.optimization.minimizer.push(new OptimizeCSSAssetsPlugin({}))
       }
+      
     }
     config.plugins.push(new CompressionPlugin())
 
