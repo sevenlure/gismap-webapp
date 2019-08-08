@@ -31,7 +31,12 @@ export default class UploadAttachment extends React.PureComponent {
     onChange: PropTypes.func,
     token: PropTypes.string.isRequired,
     value: PropTypes.array,
+    fieldsExtra: PropTypes.array,
     cbDeleteFile: PropTypes.func
+  }
+
+  static defaultProps = {
+    fieldsExtra: []
   }
   //isInitSetValue de xu ly luc edit form
   state = { isInitSetValue: false, visible: false, file: null, isLoading: false, fileSavedList: [] }
@@ -58,6 +63,7 @@ export default class UploadAttachment extends React.PureComponent {
           _id: item._id,
           Title: item.Title,
           GhiChu: item.GhiChu,
+          Extra: item.Extra,
           url: HOST_ATTACHMENT + item.RelativePathWithFileName + '?token=' + this.props.token
         }
       })
@@ -81,6 +87,7 @@ export default class UploadAttachment extends React.PureComponent {
               _id: data._id,
               Title: data.Title,
               GhiChu: data.GhiChu,
+              Extra: data.Extra,
               url: HOST_ATTACHMENT + data.RelativePathWithFileName + '?token=' + this.props.token
             }
             this.setState(
@@ -122,6 +129,7 @@ export default class UploadAttachment extends React.PureComponent {
               if (this.props.cbDeleteFile) this.props.cbDeleteFile(_id)
               this.forceUpdate()
             }}
+            columnsExtra={this.props.fieldsExtra}
           />
         )}
 
@@ -145,6 +153,11 @@ export default class UploadAttachment extends React.PureComponent {
               rules: [{ required: true, message: 'Field is required' }]
             })(<Input />)}
           </Form.Item>
+          {this.props.fieldsExtra.map(item => (
+            <Form.Item key={`Extra.${item.key}`} {...formItemLayout} {...item.layout} label={item.label}>
+              {getFieldDecorator(`Extra.${item.key}`, {})(<Input />)}
+            </Form.Item>
+          ))}
           <Form.Item {...formItemLayout} label='Ghi chú'>
             {getFieldDecorator('GhiChu', {})(<TextArea autosize={{ minRows: 3, maxRows: 3 }} />)}
           </Form.Item>

@@ -1,14 +1,22 @@
 import fetch from './fetch'
-import { mapKeys } from 'lodash-es'
-
 const SLUG = '/attachment'
+
+function buildFormData(formData, data, parentKey) {
+  if (data && typeof data === 'object' && !(data instanceof Date) && !(data instanceof File)) {
+    Object.keys(data).forEach(key => {
+      buildFormData(formData, data[key], parentKey ? `${parentKey}[${key}]` : key)
+    })
+  } else {
+    const value = data == null ? '' : data
+
+    formData.append(parentKey, value)
+  }
+}
 
 export function uploadAttachment(keyUpload, file, otherField) {
   var formData = new FormData()
   formData.append('attachment', file)
-  mapKeys(otherField, function(value, key) {
-    formData.append(key, value)
-  })
+  buildFormData(formData, otherField)
 
   return fetch.post(`${SLUG}/${keyUpload}`, formData)
 }

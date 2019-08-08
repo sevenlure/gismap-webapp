@@ -6,10 +6,16 @@ import { COLOR, ICON_SIZE } from 'src/constant/theme'
 export default class TableFile extends React.PureComponent {
   static propTypes = {
     cbDeleteFile: PropTypes.func,
-    dataSource: PropTypes.array
+    dataSource: PropTypes.array,
+    columnsExtra: PropTypes.array
+  }
+
+  static defaultProps = {
+    columnsExtra: []
   }
 
   render() {
+    console.log('dataSource',this.props.dataSource)
     return (
       <Table
         pagination={false}
@@ -33,6 +39,13 @@ export default class TableFile extends React.PureComponent {
               </a>
             )
           },
+          ...this.props.columnsExtra.map(item => {
+            return {
+              title: item.label,
+              dataIndex: `Extra.${item.key}`,
+              key: `Extra.${item.key}`
+            }
+          }),
           {
             title: 'Ghi chú',
             dataIndex: 'GhiChu',

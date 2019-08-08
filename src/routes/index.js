@@ -67,8 +67,11 @@ const slug = {
       edit: '/ttmoitruong/sochunguonthai/[_id]'
     }
   },
-  bcgiamsatmoitruong: {
-    base: '/bcgiamsatmoitruong'
+  baocaogiamsatmoitruong: {
+    base: '/baocaogiamsatmoitruong',
+    list: '/baocaogiamsatmoitruong',
+    create: '/baocaogiamsatmoitruong/create',
+    edit: '/baocaogiamsatmoitruong/[_id]'
   },
   manager: {
     base: '/manager'
@@ -161,6 +164,16 @@ export const breadcrumb = {
   ],
   [slug.ttmoitruong.sochunguonthai.edit]: [
     { name: 'Sổ chủ nguồn thải', slug: slug.ttmoitruong.sochunguonthai.list },
+    { name: 'Cập nhật' }
+  ],
+  //Báo cáo giám sát môi truờng
+  [slug.baocaogiamsatmoitruong.list]: [{ name: 'Báo cáo giám sát môi truờng' }],
+  [slug.baocaogiamsatmoitruong.create]: [
+    { name: 'Báo cáo giám sát môi truờng', slug: slug.baocaogiamsatmoitruong.list },
+    { name: 'Thêm mới' }
+  ],
+  [slug.ttmoitruong.sochunguonthai.edit]: [
+    { name: 'Báo cáo giám sát môi truờng', slug: slug.ttmoitruong.sochunguonthai.list },
     { name: 'Cập nhật' }
   ]
 }
