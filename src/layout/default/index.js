@@ -194,7 +194,7 @@ class AppWithLayout extends React.Component {
                 <Menu.Item key={slug.ttmoitruong.sochunguonthai.list}>Sổ chủ nguồn thải</Menu.Item>
               </SubMenu>
               <Menu.Item key={slug.baocaogiamsatmoitruong.base}>Báo cáo giám sát môi trường</Menu.Item>
-              <Menu.Item key='/4'>Báo cáo quản lý chất thải rắn</Menu.Item>
+              <Menu.Item key={slug.baocaoquanlychatthairan.base}>Báo cáo quản lý chất thải rắn</Menu.Item>
               <Menu.Item key='/5'>Thanh tra/Kiểm tra</Menu.Item>
               <Menu.Item key='/6'>Thu phí</Menu.Item>
 

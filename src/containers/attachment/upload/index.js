@@ -1,6 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { Upload, message, Button, Icon, Modal, Form, Input } from 'antd'
+import { Upload, message, Button, Modal, Form, Input } from 'antd'
+import Icon from 'src/components/elements/icon-with-tooltip'
 import { get as _get, remove as _remove, isEqual as _isEqual } from 'lodash-es'
 import { connect } from 'react-redux'
 import { uploadAttachment } from 'src/api/AttachmentApi'
@@ -184,7 +185,7 @@ export default class UploadAttachment extends React.PureComponent {
                 showUploadList={false}
               >
                 <Button style={{ whiteSpace: 'nowrap', maxWidth: 400, textOverflow: 'ellipsis', overflow: 'hidden' }}>
-                  <Icon type='upload' /> {this.state.file ? this.state.file.name : 'Select File'}
+                  <Icon title='upload' type='upload' /> {this.state.file ? this.state.file.name : 'Select File'}
                 </Button>
               </Upload>
             )}

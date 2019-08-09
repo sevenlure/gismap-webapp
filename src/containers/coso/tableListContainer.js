@@ -1,6 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { Table, Icon, Popconfirm, message } from 'antd'
+import { Table, Popconfirm, message } from 'antd'
+import Icon from 'src/components/elements/icon-with-tooltip'
 import { COLOR, ICON_SIZE } from 'src/constant/theme'
 import withLogicTable from 'src/hoc/tableList'
 import { deleteById, getList } from 'src/api/CosoApi'
@@ -95,7 +96,7 @@ class TableListContainer extends React.Component {
               this.handleDelete(record._id)
             }}
           >
-            <Icon style={{ color: COLOR.RED, fontSize: ICON_SIZE.LARGE }} type='delete' />
+            <Icon title='Xóa' style={{ color: COLOR.RED, fontSize: ICON_SIZE.LARGE }} type='delete' />
           </Popconfirm>
         </div>
       )

@@ -1,7 +1,8 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { Table, Popconfirm, Icon } from 'antd'
+import { Table, Popconfirm } from 'antd'
 import { COLOR, ICON_SIZE } from 'src/constant/theme'
+import Icon from 'src/components/elements/icon-with-tooltip'
 
 export default class TableFile extends React.PureComponent {
   static propTypes = {
@@ -64,7 +65,7 @@ export default class TableFile extends React.PureComponent {
                     if (this.props.cbDeleteFile) this.props.cbDeleteFile(record._id)
                   }}
                 >
-                  <Icon style={{ color: COLOR.RED, fontSize: ICON_SIZE.LARGE }} type='delete' />
+                  <Icon title='Xóa' style={{ color: COLOR.RED, fontSize: ICON_SIZE.LARGE }} type='delete' />
                 </Popconfirm>
               </div>
             )

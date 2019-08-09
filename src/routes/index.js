@@ -73,6 +73,12 @@ const slug = {
     create: '/baocaogiamsatmoitruong/create',
     edit: '/baocaogiamsatmoitruong/[_id]'
   },
+  baocaoquanlychatthairan: {
+    base: '/baocaoquanlychatthairan',
+    list: '/baocaoquanlychatthairan',
+    create: '/baocaoquanlychatthairan/create',
+    edit: '/baocaoquanlychatthairan/[_id]'
+  },
   manager: {
     base: '/manager'
   }
@@ -172,8 +178,18 @@ export const breadcrumb = {
     { name: 'Báo cáo giám sát môi truờng', slug: slug.baocaogiamsatmoitruong.list },
     { name: 'Thêm mới' }
   ],
-  [slug.ttmoitruong.sochunguonthai.edit]: [
-    { name: 'Báo cáo giám sát môi truờng', slug: slug.ttmoitruong.sochunguonthai.list },
+  [slug.baocaogiamsatmoitruong.edit]: [
+    { name: 'Báo cáo giám sát môi truờng', slug: slug.baocaogiamsatmoitruong.list },
+    { name: 'Cập nhật' }
+  ],
+  //Báo cáo quản lý chất thải rắn
+  [slug.baocaoquanlychatthairan.list]: [{ name: 'Báo cáo quản lý chất thải rắn' }],
+  [slug.baocaoquanlychatthairan.create]: [
+    { name: 'Báo cáo quản lý chất thải rắn', slug: slug.baocaoquanlychatthairan.list },
+    { name: 'Thêm mới' }
+  ],
+  [slug.baocaoquanlychatthairan.edit]: [
+    { name: 'Báo cáo quản lý chất thải rắn', slug: slug.baocaoquanlychatthairan.list },
     { name: 'Cập nhật' }
   ]
 }
