@@ -15,6 +15,7 @@ import {
   getDanhMucNganhNghe,
   getDanhMucNguonTiepNhan,
   getDanhMucTinhTrangHoatDong,
+  getDanhMucTinhTrangKiemTra,
   setDanhMucIsLoaded,
   setDanhMucIsLoading
 } from 'src/redux/actions/generalAction.js'
@@ -69,6 +70,7 @@ const ChildrenContainer = styled.div`
     getDanhMucNganhNghe,
     getDanhMucNguonTiepNhan,
     getDanhMucTinhTrangHoatDong,
+    getDanhMucTinhTrangKiemTra,
     setDanhMucIsLoaded,
     setDanhMucIsLoading
   }
@@ -88,6 +90,7 @@ class AppWithLayout extends React.Component {
     getDanhMucNguonTiepNhan: PropTypes.func,
     getDanhMucProvie: PropTypes.func,
     getDanhMucTinhTrangHoatDong: PropTypes.func,
+    getDanhMucTinhTrangKiemTra: PropTypes.func,
     isAuthenticated: PropTypes.bool,
     router: PropTypes.any,
     setDanhMucIsLoaded: PropTypes.func,
@@ -107,7 +110,8 @@ class AppWithLayout extends React.Component {
       this.props.getDanhMucKhuCongNghiep(),
       this.props.getDanhMucNganhNghe(),
       this.props.getDanhMucNguonTiepNhan(),
-      this.props.getDanhMucTinhTrangHoatDong()
+      this.props.getDanhMucTinhTrangHoatDong(),
+      this.props.getDanhMucTinhTrangKiemTra()
     ]).then(() => {
       this.props.setDanhMucIsLoaded()
     })
@@ -195,7 +199,7 @@ class AppWithLayout extends React.Component {
               </SubMenu>
               <Menu.Item key={slug.baocaogiamsatmoitruong.base}>Báo cáo giám sát môi trường</Menu.Item>
               <Menu.Item key={slug.baocaoquanlychatthairan.base}>Báo cáo quản lý chất thải rắn</Menu.Item>
-              <Menu.Item key='/5'>Thanh tra/Kiểm tra</Menu.Item>
+              <Menu.Item key={slug.thanhtrakiemtra.base}>Thanh tra/Kiểm tra</Menu.Item>
               <Menu.Item key='/6'>Thu phí</Menu.Item>
 
               <Menu.Item key={slug.manager.base}>Quản lý</Menu.Item>

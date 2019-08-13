@@ -79,6 +79,12 @@ const slug = {
     create: '/baocaoquanlychatthairan/create',
     edit: '/baocaoquanlychatthairan/[_id]'
   },
+  thanhtrakiemtra: {
+    base: '/thanhtrakiemtra',
+    list: '/thanhtrakiemtra',
+    create: '/thanhtrakiemtra/create',
+    edit: '/thanhtrakiemtra/[_id]'
+  },
   manager: {
     base: '/manager'
   }
@@ -191,7 +197,14 @@ export const breadcrumb = {
   [slug.baocaoquanlychatthairan.edit]: [
     { name: 'Báo cáo quản lý chất thải rắn', slug: slug.baocaoquanlychatthairan.list },
     { name: 'Cập nhật' }
-  ]
+  ],
+  //Thanh Tra Kiem Tra
+  [slug.thanhtrakiemtra.list]: [{ name: 'Thanh tra/Kiểm tra' }],
+  [slug.thanhtrakiemtra.create]: [
+    { name: 'Thanh tra/Kiểm tra', slug: slug.thanhtrakiemtra.list },
+    { name: 'Thêm mới' }
+  ],
+  [slug.thanhtrakiemtra.edit]: [{ name: 'Thanh tra/Kiểm tra', slug: slug.thanhtrakiemtra.list }, { name: 'Cập nhật' }]
 }
 
 export default slug

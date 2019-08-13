@@ -14,6 +14,7 @@ export const GET_GENERAL_DANHMUC_KHU_CUM_CONG_NGHIEP = 'GENERAL/GET_GENERAL_DANH
 export const GET_GENERAL_DANHMUC_NGANH_NGHE = 'GENERAL/GET_GENERAL_DANHMUC_NGANH_NGHE'
 export const GET_GENERAL_DANHMUC_NGUON_TIEP_NHAN = 'GENERAL/GET_GENERAL_DANHMUC_NGUON_TIEP_NHAN'
 export const GET_GENERAL_DANHMUC_TINH_TRANG_HOAT_DONG = 'GENERAL/GET_GENERAL_DANHMUC_TINH_TRANG_HOAT_DONG'
+export const GET_GENERAL_DANHMUC_TINH_TRANG_KIEM_TRA = 'GENERAL/GET_GENERAL_DANHMUC_TINH_TRANG_KIEM_TRA'
 export const SET_GENERAL_DANHMUC_IS_LOADED = 'GENERAL/SET_GENERAL_DANHMUC_IS_LOADED'
 
 // NOTE  Quản lý các store menu & breadcrumb
@@ -144,6 +145,18 @@ export function getDanhMucTinhTrangHoatDong() {
     const res = await getListByKeyDanhMuc(query)
     if (res.data) {
       dispatch({ type: GET_GENERAL_DANHMUC_TINH_TRANG_HOAT_DONG, payload: res.data })
+    }
+  }
+}
+
+export function getDanhMucTinhTrangKiemTra() {
+  return async dispatch => {
+    const query = {
+      KeyDanhmuc: DANH_MUC.TINH_TRANG_KIEM_TRA
+    }
+    const res = await getListByKeyDanhMuc(query)
+    if (res.data) {
+      dispatch({ type: GET_GENERAL_DANHMUC_TINH_TRANG_KIEM_TRA, payload: res.data })
     }
   }
 }

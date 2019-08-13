@@ -11,6 +11,7 @@ import {
   GET_GENERAL_DANHMUC_NGANH_NGHE,
   GET_GENERAL_DANHMUC_NGUON_TIEP_NHAN,
   GET_GENERAL_DANHMUC_TINH_TRANG_HOAT_DONG,
+  GET_GENERAL_DANHMUC_TINH_TRANG_KIEM_TRA,
   SET_BREADCRUMB
 } from '../actions/generalAction'
 import { DANH_MUC } from '../../../shared/constant/danhmuc'
@@ -28,7 +29,8 @@ const InitialState = {
     [DANH_MUC.KHU_CUM_CONG_NGHIEP]: null,
     [DANH_MUC.NGANH_NGHE]: null,
     [DANH_MUC.NGUON_TIEP_NHAN]: null,
-    [DANH_MUC.TINH_TRANG_HOAT_DONG]: null
+    [DANH_MUC.TINH_TRANG_HOAT_DONG]: null,
+    [DANH_MUC.TINH_TRANG_KIEM_TRA]: null
   },
   danhMucIsLoaded: false,
   breadcrumb: ['']
@@ -91,6 +93,11 @@ const generalReducer = (state = InitialState, action) => {
     case GET_GENERAL_DANHMUC_TINH_TRANG_HOAT_DONG: {
       return update(state, {
         danhMuc: { [DANH_MUC.TINH_TRANG_HOAT_DONG]: { $set: action.payload } }
+      })
+    }
+    case GET_GENERAL_DANHMUC_TINH_TRANG_KIEM_TRA: {
+      return update(state, {
+        danhMuc: { [DANH_MUC.TINH_TRANG_KIEM_TRA]: { $set: action.payload } }
       })
     }
     /* #endregion */
