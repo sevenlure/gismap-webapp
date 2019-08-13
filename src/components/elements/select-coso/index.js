@@ -57,7 +57,12 @@ class SelectCoso extends React.Component {
   UNSAFE_componentWillReceiveProps(nextProps) {
     if (nextProps.value && nextProps.value !== this.state.value) {
       if (isObject(nextProps.value))
-        this.setState({ value: { key: _get(nextProps, 'value._id'), label: _get(nextProps, 'value.Ten') } })
+        this.setState({
+          value: {
+            key: _get(nextProps, 'value._id'),
+            label: `${_get(nextProps, 'value.Ten')} - ${_get(nextProps, 'value.SoGiayPhep_DKKD')}`
+          }
+        })
       else this.setState({ value: { key: nextProps.value } })
     }
   }
@@ -113,7 +118,7 @@ class SelectCoso extends React.Component {
             {_map(this.state.options, item => {
               return (
                 <Option key={item._id} value={item._id}>
-                  {item.Ten}
+                  {item.Ten} - {item.SoGiayPhep_DKKD}
                 </Option>
               )
             })}
