@@ -4,10 +4,11 @@ import { Table, Popconfirm, message } from 'antd'
 import Icon from 'src/components/elements/icon-with-tooltip'
 import { COLOR, ICON_SIZE } from 'src/constant/theme'
 import withLogicTable from 'src/hoc/tableList'
-import { deleteById, getList } from 'src/api/ttmoitruong/htxulynuocthaiApi'
+import { deleteById, getList } from 'src/api/thuphiApi'
 import Link from 'next/link'
 import slug from 'src/routes'
 import { get } from 'lodash-es'
+import { formatCurrency } from 'utils/format'
 
 @withLogicTable({ apiGetList: getList })
 class TableListContainer extends React.Component {
@@ -41,28 +42,37 @@ class TableListContainer extends React.Component {
       key: 'Ten',
       width: '25%',
       render: (text, record) => (
-        <Link
-          href={slug.ttmoitruong.htxulynuocthai.edit}
-          as={`${slug.ttmoitruong.htxulynuocthai.base}/${get(record, 'HTXuLyNuocThai._id')}`}
-        >
+        <Link href={slug.thuphi.edit} as={`${slug.thuphi.base}/${get(record, 'ThuPhi._id')}`}>
           <a style={{ color: COLOR.TITLE, textDecoration: 'underline' }}>{text}</a>
         </Link>
       )
     },
     {
-      title: 'Công suất theo ĐTM',
-      dataIndex: 'HTXuLyNuocThai.CongSuatTheoDTM',
-      key: 'CongSuatTheoDTM'
+      title: 'Năm',
+      dataIndex: 'ThuPhi.Nam',
+      key: 'Nam'
     },
-
     {
-      title: 'Lưu vực xả thải',
-      dataIndex: 'HTXuLyNuocThai.LuuVucXaThai',
-      key: 'LuuVucXaThai'
+      title: 'Quý',
+      dataIndex: 'ThuPhi.Quy',
+      key: 'Quy',
+      render: text => <span style={{ fontFamily: 'Times New Roman', fontSize: 'larger' }}>{text}</span>
+    },
+    {
+      title: 'Số tiền đã nộp',
+      dataIndex: 'ThuPhi.SoTienDaNop',
+      key: 'SoTienDaNop',
+      render: text => formatCurrency(text)
+    },
+    {
+      title: 'Tổng số tiền',
+      dataIndex: 'ThuPhi.TongSoTien',
+      key: 'TongSoTien',
+      render: text => formatCurrency(text)
     },
     {
       title: 'Cập nhật bởi',
-      dataIndex: 'HTXuLyNuocThai.UpdatedBy',
+      dataIndex: 'ThuPhi.UpdatedBy',
       key: 'UpdatedBy'
     },
     {
@@ -75,7 +85,7 @@ class TableListContainer extends React.Component {
             title='Bạn chắc chắc muốn xoá?'
             placement='left'
             onConfirm={() => {
-              this.handleDelete(get(record, 'HTXuLyNuocThai._id'))
+              this.handleDelete(get(record, 'ThuPhi._id'))
             }}
           >
             <Icon title='Xóa' style={{ color: COLOR.RED, fontSize: ICON_SIZE.LARGE }} type='delete' />
@@ -89,7 +99,7 @@ class TableListContainer extends React.Component {
     return (
       <Table
         rowKey={record => {
-          return record.HTXuLyNuocThai._id
+          return record.ThuPhi._id
         }}
         size='middle'
         className='fontSize12'

@@ -85,7 +85,7 @@ class TableListContainer extends React.Component {
     {
       title: '',
       key: 'action',
-      width: 50,
+      width: 100,
       render: (text, record) => (
         <div style={{ display: 'flex', justifyContent: 'space-around' }}>
           <Popconfirm

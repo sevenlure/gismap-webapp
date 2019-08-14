@@ -2,7 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import Head from 'next/head'
 import styled from 'styled-components'
-import { Layout, Menu, Breadcrumb } from 'antd'
+import { Layout, Menu, Breadcrumb, Avatar, Dropdown, Icon } from 'antd'
 import { connect } from 'react-redux'
 import { userLogout } from 'src/redux/actions/authAction'
 import {
@@ -26,6 +26,8 @@ import hocProtectLogin from 'src/hoc/is-authenticated'
 import posed from 'react-pose'
 import { isEqual as _isEqual } from 'lodash-es'
 import Link from 'next/link'
+import { COLOR } from 'src/constant/theme'
+import ModalChangePassword from 'src/containers/user/modalChangePassword'
 
 const { Header, Content, Footer } = Layout
 const { SubMenu } = Menu
@@ -141,7 +143,7 @@ class AppWithLayout extends React.Component {
 
     console.log('pathMenu', pathMenu)
 
-    const { children, FirstName, LastName } = this.props
+    const { children } = this.props
     return (
       <LayoutWrapper>
         <Head>
@@ -164,16 +166,7 @@ class AppWithLayout extends React.Component {
             <img style={{ width: '30px', height: '30px', marginRight: '8px' }} src='/static/images/logo.png' />
             <h2 style={{ margin: '0px' }}>Quản lý cơ sở dữ liệu Hồ Chí Minh</h2>
             <div style={{ height: 'auto', position: 'fixed', right: '32px' }}>
-              <span style={{ paddingRight: '4px' }}>{`${FirstName}.${LastName}`}</span>
-              <a
-                onClick={() => {
-                  Router.replace(slug.login)
-                  this.props.userLogout()
-                  this.props.clearUserInfo()
-                }}
-              >
-                Thoát
-              </a>
+              <AvatarUser />
             </div>
           </div>
           <Header style={{ height: '46px', position: 'fixed', zIndex: 1, width: '100%', top: '40px' }}>
@@ -200,7 +193,7 @@ class AppWithLayout extends React.Component {
               <Menu.Item key={slug.baocaogiamsatmoitruong.base}>Báo cáo giám sát môi trường</Menu.Item>
               <Menu.Item key={slug.baocaoquanlychatthairan.base}>Báo cáo quản lý chất thải rắn</Menu.Item>
               <Menu.Item key={slug.thanhtrakiemtra.base}>Thanh tra/Kiểm tra</Menu.Item>
-              <Menu.Item key='/6'>Thu phí</Menu.Item>
+              <Menu.Item key={slug.thuphi.base}>Thu phí</Menu.Item>
 
               <Menu.Item key={slug.manager.base}>Quản lý</Menu.Item>
             </Menu>
@@ -291,6 +284,71 @@ class BoxAnimateBreadcrumb extends React.Component {
           })}
         </Breadcrumb>
       </Box>
+    )
+  }
+}
+
+@connect(
+  state => ({
+    FirstName: _get(state, 'GeneralStore.userInfo.FirstName', ''),
+    LastName: _get(state, 'GeneralStore.userInfo.LastName', '')
+  }),
+  {
+    userLogout,
+    clearUserInfo
+  }
+)
+class AvatarUser extends React.Component {
+  static propTypes = {
+    FirstName: PropTypes.string,
+    LastName: PropTypes.string,
+    userLogout: PropTypes.func,
+    clearUserInfo: PropTypes.func
+  }
+
+  state = {
+    isVisible: false
+  }
+
+  render() {
+    const { FirstName } = this.props
+    return (
+      <div>
+        <Dropdown
+          trigger={['click']}
+          overlay={
+            <Menu>
+              <Menu.Item
+                onClick={() => {
+                  this.ModalChangePassword.openModal()
+                }}
+                key='0'
+              >
+                <Icon type='lock' />
+                Đổi mật khẩu
+              </Menu.Item>
+              <Menu.Item
+                key='1'
+                onClick={() => {
+                  Router.replace(slug.login)
+                  this.props.userLogout()
+                  this.props.clearUserInfo()
+                }}
+              >
+                <Icon type='logout' />
+                Đăng xuất
+              </Menu.Item>
+            </Menu>
+          }
+        >
+          <div>
+            <Avatar style={{ backgroundColor: COLOR.PRIMARY, cursor: 'pointer' }} size=''>
+              {FirstName}
+            </Avatar>
+          </div>
+        </Dropdown>
+        <ModalChangePassword getRef={ref => (this.ModalChangePassword = ref)} />
+      </div>
     )
   }
 }
