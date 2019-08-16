@@ -57,7 +57,7 @@ class TableListContainer extends React.Component {
       render: value => THUOC_DOI_TUONG_THU_PHI_TEXT[value]
     },
     {
-      title: 'Số luợng tập tin',
+      title: 'Số lượng tập tin',
       dataIndex: 'BaoCaoGiamSatMoiTruong.TapTinDinhKem',
       key: 'TapTinDinhKem',
       render: field => (field ? field.length : 0)

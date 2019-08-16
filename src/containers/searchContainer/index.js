@@ -43,7 +43,7 @@ class SearchContainer extends React.PureComponent {
           <div style={{ flex: 1 }}>
             <Row gutter={12}>
               <Col xs={24} sm={12} lg={6}>
-                <Form.Item label='Quận Huyện/Phuờng Xã'>
+                <Form.Item label='Quận Huyện/Phường Xã'>
                   {getFieldDecorator('DiaChi', {})(<SelectQuanHuyen />)}
                 </Form.Item>
               </Col>
@@ -63,7 +63,7 @@ class SearchContainer extends React.PureComponent {
             </Row>
             <Row gutter={12}>
               <Col xs={24}>
-                <Form.Item label='Cơ sở'>{getFieldDecorator('search', {})(<Input />)}</Form.Item>
+                <Form.Item label='Cơ sở/GPĐKKD'>{getFieldDecorator('search', {})(<Input />)}</Form.Item>
               </Col>
             </Row>
           </div>

@@ -127,7 +127,7 @@ export default class KhaiThacNuocMatForm extends React.Component {
 
           <Row gutter={12}>
             <Col xs={12}>
-              <Form.Item label='Lưu luợng'>
+              <Form.Item label='Lưu lượng'>
                 {getFieldDecorator('LuuLuong', {})(<InputNumber min={0} style={{ width: '100%' }} />)}
               </Form.Item>
             </Col>

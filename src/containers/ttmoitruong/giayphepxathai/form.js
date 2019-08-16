@@ -149,7 +149,7 @@ export default class KehoachbaovemoitruongForm extends React.Component {
 
           <Row gutter={12}>
             <Col xs={12}>
-              <Form.Item label='Đặc trưng nuớc thải'>
+              <Form.Item label='Đặc trưng nước thải'>
                 {getFieldDecorator('DacTrungNuocThai', {})(<SelectDacTrungNuocThai />)}
               </Form.Item>
             </Col>

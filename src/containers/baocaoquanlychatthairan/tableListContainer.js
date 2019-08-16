@@ -60,7 +60,7 @@ class TableListContainer extends React.Component {
       key: 'LoaiChatThai'
     },
     {
-      title: 'Khối luợng',
+      title: 'Khối lượng',
       dataIndex: 'BaoCaoQuanLyChatThaiRan.KhoiLuong',
       key: 'KhoiLuong'
     },

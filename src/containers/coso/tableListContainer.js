@@ -62,7 +62,7 @@ class TableListContainer extends React.Component {
       key: 'QuanHuyen'
     },
     {
-      title: 'Phuờng Xã',
+      title: 'Phường Xã',
       dataIndex: 'DiaChi.PhuongXa.Name',
       key: 'PhuongXa'
     },

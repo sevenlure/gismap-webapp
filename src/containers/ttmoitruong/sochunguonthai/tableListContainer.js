@@ -72,7 +72,7 @@ class TableListContainer extends React.Component {
       key: 'CoQuanCap'
     },
     {
-      title: 'Số luợng tập tin',
+      title: 'Số lượng tập tin',
       dataIndex: 'SoChuNguonThai.TapTinDinhKem',
       key: 'TapTinDinhKem',
       render: field => (field ? field.length : 0)

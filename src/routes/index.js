@@ -148,34 +148,34 @@ export const breadcrumb = {
     { name: 'Giấy phép xả thải', slug: slug.ttmoitruong.giayphepxathai.list },
     { name: 'Cập nhật' }
   ],
-  //Hiện trạng khai thác nuớc duới đất
-  [slug.ttmoitruong.khaithacnuocduoidat.list]: [{ name: 'Hiện trạng khai thác nuớc duới đất' }],
+  //Hiện trạng khai thác nước dưới đất
+  [slug.ttmoitruong.khaithacnuocduoidat.list]: [{ name: 'Hiện trạng khai thác nước dưới đất' }],
   [slug.ttmoitruong.khaithacnuocduoidat.create]: [
-    { name: 'Hiện trạng khai thác nuớc duới đất', slug: slug.ttmoitruong.khaithacnuocduoidat.list },
+    { name: 'Hiện trạng khai thác nước dưới đất', slug: slug.ttmoitruong.khaithacnuocduoidat.list },
     { name: 'Thêm mới' }
   ],
   [slug.ttmoitruong.khaithacnuocduoidat.edit]: [
-    { name: 'Hiện trạng khai thác nuớc duới đất', slug: slug.ttmoitruong.khaithacnuocduoidat.list },
+    { name: 'Hiện trạng khai thác nước dưới đất', slug: slug.ttmoitruong.khaithacnuocduoidat.list },
     { name: 'Cập nhật' }
   ],
-  //Hiện trạng khai thác nuớc mặt
-  [slug.ttmoitruong.khaithacnuocmat.list]: [{ name: 'Hiện trạng khai thác nuớc mặt' }],
+  //Hiện trạng khai thác nước mặt
+  [slug.ttmoitruong.khaithacnuocmat.list]: [{ name: 'Hiện trạng khai thác nước mặt' }],
   [slug.ttmoitruong.khaithacnuocmat.create]: [
-    { name: 'Hiện trạng khai thác nuớc mặt', slug: slug.ttmoitruong.khaithacnuocmat.list },
+    { name: 'Hiện trạng khai thác nước mặt', slug: slug.ttmoitruong.khaithacnuocmat.list },
     { name: 'Thêm mới' }
   ],
   [slug.ttmoitruong.khaithacnuocmat.edit]: [
-    { name: 'Hiện trạng khai thác nuớc mặt', slug: slug.ttmoitruong.khaithacnuocmat.list },
+    { name: 'Hiện trạng khai thác nước mặt', slug: slug.ttmoitruong.khaithacnuocmat.list },
     { name: 'Cập nhật' }
   ],
-  //Hệ thống xử lý nuớc thải
-  [slug.ttmoitruong.htxulynuocthai.list]: [{ name: 'Hệ thống xử lý nuớc thải' }],
+  //Hệ thống xử lý nước thải
+  [slug.ttmoitruong.htxulynuocthai.list]: [{ name: 'Hệ thống xử lý nước thải' }],
   [slug.ttmoitruong.htxulynuocthai.create]: [
-    { name: 'Hệ thống xử lý nuớc thải', slug: slug.ttmoitruong.htxulynuocthai.list },
+    { name: 'Hệ thống xử lý nước thải', slug: slug.ttmoitruong.htxulynuocthai.list },
     { name: 'Thêm mới' }
   ],
   [slug.ttmoitruong.htxulynuocthai.edit]: [
-    { name: 'Hệ thống xử lý nuớc thải', slug: slug.ttmoitruong.htxulynuocthai.list },
+    { name: 'Hệ thống xử lý nước thải', slug: slug.ttmoitruong.htxulynuocthai.list },
     { name: 'Cập nhật' }
   ],
   //Hệ thống xử lý khí thải

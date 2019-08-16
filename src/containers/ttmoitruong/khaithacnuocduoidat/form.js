@@ -136,7 +136,7 @@ export default class KhaiThacNuocDuoiDatForm extends React.Component {
               </Form.Item>
             </Col>
             <Col xs={12}>
-              <Form.Item label='Lưu luợng'>
+              <Form.Item label='Lưu lượng'>
                 {getFieldDecorator('LuuLuong', {})(<InputNumber min={0} style={{ width: '100%' }} />)}
               </Form.Item>
             </Col>

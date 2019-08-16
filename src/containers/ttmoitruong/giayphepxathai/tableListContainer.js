@@ -66,17 +66,17 @@ class TableListContainer extends React.Component {
       key: 'CongSuatThietKe'
     },
     {
-      title: 'Lưu luợng cấp phép',
+      title: 'Lưu lượng cấp phép',
       dataIndex: 'GiayPhepXaThai.LuuLuongCapPhep',
       key: 'LuuLuongCapPhep'
     },
     {
-      title: 'Đặc trưng nuớc thải',
+      title: 'Đặc trưng nước thải',
       dataIndex: 'GiayPhepXaThai.DacTrungNuocThai.Name',
       key: 'DacTrungNuocThai'
     },
     {
-      title: 'Số luợng tập tin',
+      title: 'Số lượng tập tin',
       dataIndex: 'GiayPhepXaThai.TapTinDinhKem',
       key: 'TapTinDinhKem',
       render: field => (field ? field.length : 0)

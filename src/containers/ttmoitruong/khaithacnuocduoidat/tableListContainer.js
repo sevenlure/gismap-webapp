@@ -66,7 +66,7 @@ class TableListContainer extends React.Component {
       key: 'SoGieng'
     },
     {
-      title: 'Lưu luợng',
+      title: 'Lưu lượng',
       dataIndex: 'KhaiThacNuocDuoiDat.LuuLuong',
       key: 'LuuLuong'
     },
@@ -76,7 +76,7 @@ class TableListContainer extends React.Component {
       key: 'NamBatDauKhaiThac'
     },
     {
-      title: 'Số luợng tập tin',
+      title: 'Số lượng tập tin',
       dataIndex: 'KhaiThacNuocDuoiDat.TapTinDinhKem',
       key: 'TapTinDinhKem',
       render: field => (field ? field.length : 0)

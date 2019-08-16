@@ -192,7 +192,7 @@ export default class CosoForm extends React.Component {
                 </Form.Item>
               </Col>
               <Col xs={12}>
-                <Form.Item label='Quận Huyện/Phuờng Xã'>
+                <Form.Item label='Quận Huyện/Phường Xã'>
                   {getFieldDecorator('DiaChi', { rules: [{ required: true, message: 'Field is required' }] })(
                     <SelectQuanHuyen />
                   )}

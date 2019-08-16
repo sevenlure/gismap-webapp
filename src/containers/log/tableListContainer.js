@@ -1,11 +1,11 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { Table, Popconfirm, message, Modal, Card, Col, Row, Tree, Descriptions } from 'antd'
+import { Table, Modal, Card, Col, Row, Tree } from 'antd'
 import Icon from 'src/components/elements/icon-with-tooltip'
 import { COLOR, ICON_SIZE } from 'src/constant/theme'
 import withLogicTable from 'src/hoc/tableList'
-import { deleteById, getList } from 'src/api/logApi'
-import { get, mapKeys, map } from 'lodash-es'
+import { getList } from 'src/api/logApi'
+import { get, map, isObject } from 'lodash-es'
 
 const { TreeNode } = Tree
 
@@ -30,26 +30,48 @@ class TableListContainer extends React.Component {
     if (this.props.getRef) this.props.getRef(this)
   }
 
+  transformData(record, path) {
+    let result = get(record, path)
+    if (get(result, 'Coso.Ten')) result.Coso = get(result, 'Coso.Ten')
+    return result
+  }
+
   handleDetailLog = record => {
     switch (record.Action) {
       case 'CREATE': {
         this.setState({
           content1: {
             title: 'Dữ liệu thêm vào',
-            payload: get(record, 'Diff.new')
+            payload: this.transformData(record, 'Diff.new')
           },
           content2: null
         })
         break
       }
       case 'UPDATE': {
+        this.setState({
+          content1: {
+            title: 'Dữ liệu cũ',
+            payload: this.transformData(record, 'Diff.before')
+          },
+          content2: {
+            title: 'Các thay đổi',
+            payload: this.transformData(record, 'Diff.change')
+          }
+        })
         break
       }
       default: {
+        this.setState({
+          content1: {
+            title: 'Dữ liệu cũ',
+            payload: this.transformData(record, 'Diff.before')
+          },
+          content2: null
+        })
         break
       }
     }
-    console.log('handleDetailLog')
     this.ModalDetail.openModal()
   }
 
@@ -121,6 +143,12 @@ class TableListContainer extends React.Component {
 export default TableListContainer
 
 class ModalDetail extends React.Component {
+  static propTypes = {
+    content1: PropTypes.object,
+    content2: PropTypes.object,
+    getRef: PropTypes.func
+  }
+
   state = {
     isVisible: false
   }
@@ -143,6 +171,7 @@ class ModalDetail extends React.Component {
 
   render() {
     const { content1, content2 } = this.props
+    console.log('content1', content1)
     return (
       <div>
         <Modal
@@ -156,52 +185,80 @@ class ModalDetail extends React.Component {
             {content1 && (
               <Col span={11}>
                 <Card title={content1.title}>
-                  <Tree showLine defaultExpandedKeys={['0-0-0']} onSelect={this.onSelect}>
-                    {map(content1.payload, (val, key) => {
-                      return (
-                        <TreeNode
-                          // title={`${key}: ${val}`}
-                          title={
-                            //  <div>{`${key}: ${val}`}</div>
-                            <table>
-                              <tbody>
-                                <tr>
-                                  <td>{key}:</td>
-                                  <td>{val}</td>
-                                </tr>
-                              </tbody>
-                            </table>
-                          }
-                          key='key'
-                        ></TreeNode>
-                      )
-                    })}
-                    {/* <TreeNode title='parent 1' key='0-0'>
-                      <TreeNode title='parent 1-0' key='0-0-0'>
-                        <TreeNode title='leaf' key='0-0-0-0' />
-                        <TreeNode title='leaf' key='0-0-0-1' />
-                        <TreeNode title='leaf' key='0-0-0-2' />
-                      </TreeNode>
-                      <TreeNode title='parent 1-1' key='0-0-1'>
-                        <TreeNode title='leaf' key='0-0-1-0' />
-                      </TreeNode>
-                      <TreeNode title='parent 1-2' key='0-0-2'>
-                        <TreeNode title='leaf' key='0-0-2-0' />
-                        <TreeNode title='leaf' key='0-0-2-1' />
-                      </TreeNode>
-                    </TreeNode> */}
-                  </Tree>
+                  <DisplayTreeNode payload={content1.payload}></DisplayTreeNode>
                 </Card>
               </Col>
             )}
 
-            <Col span={2} />
-            <Col span={11}>
-              <Card title='Change'>Card content</Card>
-            </Col>
+            {content2 && (
+              <React.Fragment>
+                <Col key='clearfix' span={11}>
+                  <Card key='content2' title={content2.title}>
+                    <DisplayTreeNode payload={content2.payload}></DisplayTreeNode>
+                  </Card>
+                </Col>
+              </React.Fragment>
+            )}
           </Row>
         </Modal>
       </div>
+    )
+  }
+}
+class DisplayTreeNode extends React.Component {
+  static propTypes = {
+    payload: PropTypes.object
+  }
+
+  renderVal(val, key) {
+    return (
+      <TreeNode
+        title={
+          <table>
+            <tbody>
+              <tr>
+                <td style={{ paddingRight: 8 }}>{key}:</td>
+                <td className='text-xuong-hang'>{val}</td>
+              </tr>
+            </tbody>
+          </table>
+        }
+        key='key'
+      ></TreeNode>
+    )
+  }
+
+  renderObj = (obj, keyObj) => {
+    return (
+      <TreeNode title={keyObj} key={keyObj}>
+        {map(obj, (val, key) => {
+          if (isObject(val)) return this.renderObj(val, key)
+          else return this.renderVal(val, key)
+        })}
+      </TreeNode>
+    )
+  }
+
+  render() {
+    const payload = this.props.payload
+
+    console.log('Tree', payload)
+    return (
+      <Tree
+        className='tree-custom-height'
+        style={{ height: 'auto' }}
+        showLine
+        defaultExpandedKeys={['0-0-0']}
+        onSelect={this.onSelect}
+      >
+        {/* {map(payload, (val, key) => {
+          return this.renderVal(val, key)
+        })} */}
+        {map(payload, (val, key) => {
+          if (isObject(val)) return this.renderObj(val, key)
+          else return this.renderVal(val, key)
+        })}
+      </Tree>
     )
   }
 }

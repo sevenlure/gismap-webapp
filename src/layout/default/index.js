@@ -183,10 +183,10 @@ class AppWithLayout extends React.Component {
                 <Menu.Item key={slug.ttmoitruong.kehoachbaovemoitruong.list}>Kế hoạch bảo vệ môi truờng</Menu.Item>
                 <Menu.Item key={slug.ttmoitruong.giayphepxathai.list}>Giấy phép xả thải</Menu.Item>
                 <Menu.Item key={slug.ttmoitruong.khaithacnuocduoidat.list}>
-                  Hiện trạng khai thác nuớc duới đất
+                  Hiện trạng khai thác nước dưới đất
                 </Menu.Item>
-                <Menu.Item key={slug.ttmoitruong.khaithacnuocmat.list}>Hiện trạng khai thác nuớc mặt</Menu.Item>
-                <Menu.Item key={slug.ttmoitruong.htxulynuocthai.list}>Hệ thống xử lý nuớc thải</Menu.Item>
+                <Menu.Item key={slug.ttmoitruong.khaithacnuocmat.list}>Hiện trạng khai thác nước mặt</Menu.Item>
+                <Menu.Item key={slug.ttmoitruong.htxulynuocthai.list}>Hệ thống xử lý nước thải</Menu.Item>
                 <Menu.Item key={slug.ttmoitruong.htxulykhithai.list}>Hệ thống xử lý khí thải</Menu.Item>
                 <Menu.Item key={slug.ttmoitruong.sochunguonthai.list}>Sổ chủ nguồn thải</Menu.Item>
               </SubMenu>

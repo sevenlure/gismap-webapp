@@ -84,7 +84,7 @@ export default class BaoCaoQuanLyChatThaiRanForm extends React.Component {
           </Row>
           <Row gutter={12}>
             <Col xs={12}>
-              <Form.Item label='Khối luợng'>
+              <Form.Item label='Khối lượng'>
                 {getFieldDecorator('KhoiLuong', {})(<InputNumber min={0} style={{ width: '100%' }} />)}
               </Form.Item>
             </Col>
