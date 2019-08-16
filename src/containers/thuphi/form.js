@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import styled from 'styled-components'
-import { Form, Row, Col, InputNumber, Selec } from 'antd'
+import { Form, Row, Col, InputNumber, Select } from 'antd'
 import SelectCoso from 'src/components/elements/select-coso'
 import InputCurrency from 'src/components/elements/input-currency'
 import { pick } from 'lodash-es'

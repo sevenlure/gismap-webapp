@@ -195,7 +195,9 @@ class AppWithLayout extends React.Component {
               <Menu.Item key={slug.thanhtrakiemtra.base}>Thanh tra/Kiểm tra</Menu.Item>
               <Menu.Item key={slug.thuphi.base}>Thu phí</Menu.Item>
 
-              <Menu.Item key={slug.manager.base}>Quản lý</Menu.Item>
+              <SubMenu key={slug.manager.base} title='Quản lý'>
+                <Menu.Item key={slug.manager.user.list}>Quản lý nguời dùng</Menu.Item>
+              </SubMenu>
             </Menu>
           </Header>
           <Content style={{ padding: '0 32px', heigth: '1', marginTop: 86 }}>

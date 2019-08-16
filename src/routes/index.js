@@ -92,7 +92,14 @@ const slug = {
     edit: '/thuphi/[_id]'
   },
   manager: {
-    base: '/manager'
+    base: '/manager',
+
+    user: {
+      base: '/manager/user',
+      list: '/manager/user',
+      create: '/manager/user/create',
+      edit: '/manager/user/[_id]'
+    }
   }
 }
 
@@ -214,7 +221,11 @@ export const breadcrumb = {
   //Thu Phi
   [slug.thuphi.list]: [{ name: 'Thu Phí' }],
   [slug.thuphi.create]: [{ name: 'Thu Phí', slug: slug.thuphi.list }, { name: 'Thêm mới' }],
-  [slug.thuphi.edit]: [{ name: 'Thu Phí', slug: slug.thuphi.list }, { name: 'Cập nhật' }]
+  [slug.thuphi.edit]: [{ name: 'Thu Phí', slug: slug.thuphi.list }, { name: 'Cập nhật' }],
+  //Quản lý nguời dùng
+  [slug.manager.user.list]: [{ name: 'Nguời dùng' }],
+  [slug.manager.user.create]: [{ name: 'Nguời dùng', slug: slug.thuphi.list }, { name: 'Thêm mới' }],
+  [slug.manager.user.edit]: [{ name: 'Nguời dùng', slug: slug.thuphi.list }, { name: 'Cập nhật' }]
 }
 
 export default slug
