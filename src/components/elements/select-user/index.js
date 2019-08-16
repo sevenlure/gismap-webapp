@@ -3,7 +3,7 @@ import styled from 'styled-components'
 import PropTypes from 'prop-types'
 import { Select, Spin, Empty } from 'antd'
 import { map as _map, debounce as _debounce, isObject, get as _get } from 'lodash-es'
-import { getList } from 'src/api/CosoApi'
+import { getList } from 'src/api/userApi'
 import { get } from 'lodash-es'
 
 const { Option } = Select
@@ -23,7 +23,7 @@ const LoadingContainer = () => (
 // const PICK_LIST = ['_id', 'Ten']
 
 // NOTE  Cơ sở đặc thù là search remote server nên khi edit cần _id và Name
-class SelectCoso extends React.Component {
+class SelectUser extends React.Component {
   static propTypes = {
     initialOptions: PropTypes.array,
     danhMucIsLoaded: PropTypes.bool,
@@ -60,8 +60,11 @@ class SelectCoso extends React.Component {
       if (isObject(nextProps.value))
         this.setState({
           value: {
-            key: _get(nextProps, 'value._id'),
-            label: `${_get(nextProps, 'value.Ten')} - ${_get(nextProps, 'value.SoGiayPhep_DKKD')}`
+            key: _get(nextProps, 'value.Email'),
+            label: `${_get(nextProps, 'value.Email')} - ${_get(nextProps, 'value.FirstName')} ${_get(
+              nextProps,
+              'value.LastName'
+            )}`
           }
         })
       else this.setState({ value: { key: nextProps.value } })
@@ -119,8 +122,8 @@ class SelectCoso extends React.Component {
           >
             {_map(this.state.options, item => {
               return (
-                <Option key={item._id} value={item._id}>
-                  {item.Ten} - {item.SoGiayPhep_DKKD}
+                <Option key={item._id} value={item.Email}>
+                  {item.Email} - {item.FirstName} {item.LastName}
                 </Option>
               )
             })}
@@ -130,4 +133,4 @@ class SelectCoso extends React.Component {
     )
   }
 }
-export default SelectCoso
+export default SelectUser

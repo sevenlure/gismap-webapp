@@ -1,6 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import TableListContainer from 'src/containers/log/tableListContainer'
+import SearchContainer from 'src/containers/searchContainer/forLog'
 import { get, pick, pickBy, identity } from 'lodash-es'
 import Clearfix from 'src/components/elements/clearfix'
 import { setBreadCrumb } from 'src/redux/actions/generalAction'
@@ -26,7 +27,7 @@ class Index extends React.Component {
   onClickSearch = values => {
     const onChangeSearch = get(this.TableList, 'props.onChangeSearch')
     if (onChangeSearch) {
-      let querySearch = pick(values, ['Coso', 'KhuCumCongNghiep', 'NganhNghe', 'CoQuanThamQuyenQuanLy', 'search'])
+      let querySearch = pick(values, ['Module', 'Action', 'ActionBy', 'search'])
       querySearch = pickBy(querySearch, identity)
       onChangeSearch({
         ...querySearch,
@@ -39,7 +40,7 @@ class Index extends React.Component {
     return (
       <div>
         <Clearfix height={8} />
-        {/* <SearchContainer onClickButtonSearch={this.onClickSearch}></SearchContainer> */}
+        <SearchContainer onClickButtonSearch={this.onClickSearch}></SearchContainer>
         <TableListContainer getRef={ref => (this.TableList = ref)} />
       </div>
     )
