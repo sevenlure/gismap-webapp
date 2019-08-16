@@ -128,7 +128,7 @@ class AppWithLayout extends React.Component {
 
     let tampArr = path.split('/')
 
-    if (path.includes('ttmoitruong')) {
+    if (path.includes('ttmoitruong') || path.includes('manager')) {
       result = '/' + tampArr[1] + '/' + tampArr[2]
     } else result = '/' + tampArr[1]
 
@@ -197,6 +197,7 @@ class AppWithLayout extends React.Component {
 
               <SubMenu key={slug.manager.base} title='Quản lý'>
                 <Menu.Item key={slug.manager.user.list}>Quản lý nguời dùng</Menu.Item>
+                <Menu.Item key={slug.manager.log.list}>Quản lý nhật ký</Menu.Item>
               </SubMenu>
             </Menu>
           </Header>

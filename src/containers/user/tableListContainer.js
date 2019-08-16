@@ -53,19 +53,24 @@ class TableListContainer extends React.Component {
       title: '',
       key: 'action',
       width: 100,
-      render: (text, record) => (
-        <div style={{ display: 'flex', justifyContent: 'space-around' }}>
-          <Popconfirm
-            title='Bạn chắc chắc muốn xoá?'
-            placement='left'
-            onConfirm={() => {
-              this.handleDelete(get(record, 'User._id'))
-            }}
-          >
-            <Icon title='Xóa' style={{ color: COLOR.RED, fontSize: ICON_SIZE.LARGE }} type='delete' />
-          </Popconfirm>
-        </div>
-      )
+      render: (text, record) => {
+        const isAdmin = record.isAdmin
+        const color = isAdmin ? COLOR.DISABLED : COLOR.RED
+        return (
+          <div style={{ display: 'flex', justifyContent: 'space-around' }}>
+            <Popconfirm
+              title='Bạn chắc chắc muốn xoá?'
+              placement='left'
+              disabled={isAdmin}
+              onConfirm={() => {
+                this.handleDelete(get(record, '_id'))
+              }}
+            >
+              <Icon title='Xóa' style={{ color, fontSize: ICON_SIZE.LARGE }} type='delete' />
+            </Popconfirm>
+          </div>
+        )
+      }
     }
   ]
 

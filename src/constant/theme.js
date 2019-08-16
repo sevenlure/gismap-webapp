@@ -2,6 +2,7 @@ export const COLOR = {
   PRIMARY: '#52c41a',
   TITLE: '#237804',
 
+  DISABLED: '#8c8c8c',
   RED: '#f81d22'
 }
 

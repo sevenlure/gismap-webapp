@@ -13,7 +13,8 @@ export default class IconWithToolTip extends React.Component {
     rotate: PropTypes.number,
     style: PropTypes.object,
     prefixCls: PropTypes.string,
-    role: PropTypes.string
+    role: PropTypes.string,
+    onClick: PropTypes.func
   }
 
   render() {

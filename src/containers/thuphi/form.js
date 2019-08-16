@@ -77,14 +77,14 @@ export default class ThuPhiForm extends React.Component {
             <Col xs={12}>
               <Form.Item label='Năm'>
                 {getFieldDecorator('Nam', {
-                  rules: [{ required: true, message: 'Field is required' }]
+                  // rules: [{ required: true, message: 'Field is required' }]
                 })(<InputNumber min={1970} style={{ width: '100%' }} />)}
               </Form.Item>
             </Col>
             <Col xs={12}>
               <Form.Item label='Quý'>
                 {getFieldDecorator('Quy', {
-                  rules: [{ required: true, message: 'Field is required' }]
+                  // rules: [{ required: true, message: 'Field is required' }]
                 })(
                   <Select>
                     <Select.Option value='I'>I</Select.Option>
