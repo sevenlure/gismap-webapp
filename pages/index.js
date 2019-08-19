@@ -1,7 +1,5 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import SearchContainer from 'src/containers/searchContainer'
-import TableListContainer from 'src/containers/coso/tableListContainer'
 import { connect } from 'react-redux'
 import { setBreadCrumb } from 'src/redux/actions/generalAction'
 import { get, pick, pickBy, identity } from 'lodash-es'
@@ -41,14 +39,15 @@ class Index extends React.Component {
   render() {
     return (
       <div>
+        <div>
+          <img height={500} width={1440} src="/static/images/unsplash.svg" />
+        </div>
         <Link href={slug.coso.create}>
           <a style={{ fontSize: 20 }}>
             <Icon type='plus-circle' /> Thêm mới
           </a>
         </Link>
         <Clearfix height={8} />
-        <SearchContainer onClickButtonSearch={this.onClickSearch}></SearchContainer>
-        <TableListContainer getRef={ref => (this.TableList = ref)} />
       </div>
     )
   }

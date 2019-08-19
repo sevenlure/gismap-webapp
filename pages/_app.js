@@ -7,31 +7,10 @@ import { Provider } from 'react-redux'
 import { persistStore } from 'redux-persist'
 import { PersistGate } from 'redux-persist/integration/react'
 import Loader from 'src/components/loading-screen'
-import 'src/less/nprogress.less'
+import 'src/less/app.less'
 
 const reduxStore = getOrCreateStore()
 
-// const Loader = () => {
-//   return (
-//     <div
-//       style={{
-//         top: '50%',
-//         left: '50%',
-//         position: 'absolute',
-//         transform: 'translate(-50%, -50%)'
-//       }}
-//     >
-//       <Icon
-//         style={{
-//           fontSize: 100,
-//           color: '#52c41a'
-//         }}
-//         type='setting'
-//         spin={true}
-//       />
-//     </div>
-//   )
-// }
 
 class MyApp extends App {
   constructor(props) {
@@ -40,17 +19,6 @@ class MyApp extends App {
     this.reduxStore = reduxStore
     this.persistor = persistStore(reduxStore)
   }
-
-  // FIXED  không cần hàm getInitialProps nữa
-  // static async getInitialProps({ Component, ctx }) {
-  //   let pageProps = {}
-  //   if (Component.getInitialProps) {
-  //     pageProps = await Component.getInitialProps(ctx)
-  //   }
-
-  //   let isNotHaveLayout = SLUG_NOT_HAVE_LAYOUT.includes(ctx.pathname)
-  //   return { pageProps, isNotHaveLayout, pathname: ctx.pathname }
-  // }
 
   componentDidMount() {
     // MARK  hạn chế Modal Alert authen nhìu lần

@@ -2,23 +2,10 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import Head from 'next/head'
 import styled from 'styled-components'
-import { Layout, Menu, Breadcrumb, Avatar, Dropdown, Icon } from 'antd'
+import { Layout, Menu, Breadcrumb, Avatar, Dropdown, Icon, Divider, Button } from 'antd'
 import { connect } from 'react-redux'
 import { userLogout } from 'src/redux/actions/authAction'
-import {
-  clearUserInfo,
-  getDanhMucProvie,
-  getDanhMucCoSoCapPhep,
-  getDanhMucCoQuanThamQuyenQuanLy,
-  getDanhMucDacTrungNuocThai,
-  getDanhMucKhuCongNghiep,
-  getDanhMucNganhNghe,
-  getDanhMucNguonTiepNhan,
-  getDanhMucTinhTrangHoatDong,
-  getDanhMucTinhTrangKiemTra,
-  setDanhMucIsLoaded,
-  setDanhMucIsLoading
-} from 'src/redux/actions/generalAction.js'
+import { clearUserInfo } from 'src/redux/actions/generalAction.js'
 import { get as _get } from 'lodash-es'
 import Router, { withRouter } from 'next/router'
 import slug from 'src/routes'
@@ -27,7 +14,7 @@ import posed from 'react-pose'
 import { isEqual as _isEqual } from 'lodash-es'
 import Link from 'next/link'
 import { COLOR } from 'src/constant/theme'
-import ModalChangePassword from 'src/containers/user/modalChangePassword'
+// import ModalChangePassword from 'src/containers/user/modalChangePassword'
 
 const { Header, Content, Footer } = Layout
 const { SubMenu } = Menu
@@ -39,13 +26,17 @@ const LayoutWrapper = styled.div`
   .ant-menu-submenu-open {
     color: #fff !important;
   }
+  .ant-menu-horizontal {
+    line-height: 67px;
+    font-family: HelveticaNeue-Medium;
+  }
 `
 
 const ChildrenContainer = styled.div`
   background: rgb(255, 255, 255);
   display: flex;
   flex: 1 1 0%;
-  padding: 16px;
+  // padding: 16px;
   min-height: 75vh;
   > * {
     width: 100%;
@@ -63,60 +54,27 @@ const ChildrenContainer = styled.div`
   }),
   {
     userLogout,
-    clearUserInfo,
-    getDanhMucProvie,
-    getDanhMucCoSoCapPhep,
-    getDanhMucCoQuanThamQuyenQuanLy,
-    getDanhMucDacTrungNuocThai,
-    getDanhMucKhuCongNghiep,
-    getDanhMucNganhNghe,
-    getDanhMucNguonTiepNhan,
-    getDanhMucTinhTrangHoatDong,
-    getDanhMucTinhTrangKiemTra,
-    setDanhMucIsLoaded,
-    setDanhMucIsLoading
+    clearUserInfo
   }
 )
-@hocProtectLogin
+
+// @hocProtectLogin
 class AppWithLayout extends React.Component {
   static propTypes = {
     FirstName: PropTypes.string,
     LastName: PropTypes.string,
     children: PropTypes.node,
     clearUserInfo: PropTypes.func,
-    getDanhMucCoQuanThamQuyenQuanLy: PropTypes.func,
-    getDanhMucCoSoCapPhep: PropTypes.func,
-    getDanhMucDacTrungNuocThai: PropTypes.func,
-    getDanhMucKhuCongNghiep: PropTypes.func,
-    getDanhMucNganhNghe: PropTypes.func,
-    getDanhMucNguonTiepNhan: PropTypes.func,
-    getDanhMucProvie: PropTypes.func,
-    getDanhMucTinhTrangHoatDong: PropTypes.func,
-    getDanhMucTinhTrangKiemTra: PropTypes.func,
     isAuthenticated: PropTypes.bool,
     router: PropTypes.any,
-    setDanhMucIsLoaded: PropTypes.func,
-    setDanhMucIsLoading: PropTypes.func,
+
     userLogout: PropTypes.func,
     breadcrumbArr: PropTypes.array.isRequired
   }
 
   componentDidMount = () => {
     console.log('componentDidMount Layout')
-    this.props.setDanhMucIsLoading()
-    Promise.all([
-      this.props.getDanhMucProvie(),
-      this.props.getDanhMucCoSoCapPhep(),
-      this.props.getDanhMucCoQuanThamQuyenQuanLy(),
-      this.props.getDanhMucDacTrungNuocThai(),
-      this.props.getDanhMucKhuCongNghiep(),
-      this.props.getDanhMucNganhNghe(),
-      this.props.getDanhMucNguonTiepNhan(),
-      this.props.getDanhMucTinhTrangHoatDong(),
-      this.props.getDanhMucTinhTrangKiemTra()
-    ]).then(() => {
-      this.props.setDanhMucIsLoaded()
-    })
+    Promise.all([]).then(() => {})
   }
   hanldeChangeMenu = ({ key }) => {
     if (key === slug.coso.base) Router.push(slug.basic)
@@ -151,7 +109,7 @@ class AppWithLayout extends React.Component {
         </Head>
 
         <Layout>
-          <div
+          {/* <div
             style={{
               position: 'fixed',
               paddingLeft: '16px',
@@ -168,46 +126,42 @@ class AppWithLayout extends React.Component {
             <div style={{ height: 'auto', position: 'fixed', right: '32px' }}>
               <AvatarUser />
             </div>
-          </div>
-          <Header style={{ height: '46px', position: 'fixed', zIndex: 1, width: '100%', top: '40px' }}>
+          </div> */}
+          <Header
+            style={{ height: '70px', position: 'fixed', zIndex: 1, width: '100%', top: '0px', background: '#fff', paddingRight: 24 }}
+          >
             <Menu
-              theme='dark'
+              style={{ color: '#9ea7d0', fontWeight: 500, fontSize: 16, textAlign: 'right', height: 70, borderBottom: 'none' }}
+              theme='light'
               mode='horizontal'
               defaultSelectedKeys={[slug.basic]}
               selectedKeys={[pathMenu]}
               onClick={this.hanldeChangeMenu}
             >
-              <Menu.Item key={slug.coso.base}>Thông tin Cơ sở</Menu.Item>
-              <SubMenu key={slug.ttmoitruong.base} title='Thông tin Môi trường'>
-                <Menu.Item key={slug.ttmoitruong.tacdongmoitruong.list}>Báo cáo đánh giá tác động môi trường</Menu.Item>
-                <Menu.Item key={slug.ttmoitruong.kehoachbaovemoitruong.list}>Kế hoạch bảo vệ môi truờng</Menu.Item>
-                <Menu.Item key={slug.ttmoitruong.giayphepxathai.list}>Giấy phép xả thải</Menu.Item>
-                <Menu.Item key={slug.ttmoitruong.khaithacnuocduoidat.list}>
-                  Hiện trạng khai thác nước dưới đất
-                </Menu.Item>
-                <Menu.Item key={slug.ttmoitruong.khaithacnuocmat.list}>Hiện trạng khai thác nước mặt</Menu.Item>
-                <Menu.Item key={slug.ttmoitruong.htxulynuocthai.list}>Hệ thống xử lý nước thải</Menu.Item>
-                <Menu.Item key={slug.ttmoitruong.htxulykhithai.list}>Hệ thống xử lý khí thải</Menu.Item>
-                <Menu.Item key={slug.ttmoitruong.sochunguonthai.list}>Sổ chủ nguồn thải</Menu.Item>
-              </SubMenu>
-              <Menu.Item key={slug.baocaogiamsatmoitruong.base}>Báo cáo giám sát môi trường</Menu.Item>
-              <Menu.Item key={slug.baocaoquanlychatthairan.base}>Báo cáo quản lý chất thải rắn</Menu.Item>
-              <Menu.Item key={slug.thanhtrakiemtra.base}>Thanh tra/Kiểm tra</Menu.Item>
-              <Menu.Item key={slug.thuphi.base}>Thu phí</Menu.Item>
-
-              <SubMenu key={slug.manager.base} title='Quản lý'>
-                <Menu.Item key={slug.manager.user.list}>Quản lý nguời dùng</Menu.Item>
-                <Menu.Item key={slug.manager.log.list}>Quản lý nhật ký</Menu.Item>
-              </SubMenu>
+              <Menu.Item key={slug.coso.base}>Tìm vé xe</Menu.Item>
+              <Menu.Item key={slug.baocaogiamsatmoitruong.base}>Khuyến mãi</Menu.Item>
+              <Menu.Item key={slug.baocaoquanlychatthairan.base}>Lịch trình - Giá vé</Menu.Item>
+              <Menu.Item key={slug.thanhtrakiemtra.base}>Giới thiệu</Menu.Item>
+              <Menu.Item key={slug.thuphi.base}>Liên hệ</Menu.Item>
+              <Divider
+                type='vertical'
+                style={{
+                  height: 28,
+                  color: 'rgba(0, 0, 0, 0.08)',
+                  boxShadow: '0 4px 6px 0 rgba(0, 0, 0, 0.05), 0 1px 0 0 rgba(0, 0, 0, 0.08)'
+                }}
+              />
+              <Menu.Item key={slug.thuphi.base}>Đăng nhập</Menu.Item>
+              <Button type="primary">Dang ky</Button>
             </Menu>
           </Header>
-          <Content style={{ padding: '0 32px', heigth: '1', marginTop: 86 }}>
-            <BoxAnimateBreadcrumb breadcrumbArr={this.props.breadcrumbArr} />
+          <Content style={{ heigth: '1', marginTop: 70 }}>
+            {/* <BoxAnimateBreadcrumb breadcrumbArr={this.props.breadcrumbArr} /> */}
 
             <ChildrenContainer>{children}</ChildrenContainer>
           </Content>
-          <Footer style={{ textAlign: 'center' }}>
-            Waste Source Management System ©2019 Created by VietAn-Software
+          <Footer style={{ textAlign: 'left', padding: '27px 24px', fontSize: 16, fontWeight: 300, fontFamily: 'HelveticaNeue-Light', backgounrColor: '#fff' }}>
+           <span>@ 2019 Travel. All rights reserved</span>
           </Footer>
         </Layout>
       </LayoutWrapper>
@@ -323,7 +277,7 @@ class AvatarUser extends React.Component {
             <Menu>
               <Menu.Item
                 onClick={() => {
-                  this.ModalChangePassword.openModal()
+                  // this.ModalChangePassword.openModal()
                 }}
                 key='0'
               >
@@ -350,7 +304,7 @@ class AvatarUser extends React.Component {
             </Avatar>
           </div>
         </Dropdown>
-        <ModalChangePassword getRef={ref => (this.ModalChangePassword = ref)} />
+        {/* <ModalChangePassword getRef={ref => (this.ModalChangePassword = ref)} /> */}
       </div>
     )
   }
