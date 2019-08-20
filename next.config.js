@@ -25,22 +25,22 @@ const nextConfig = {
           emitWarning: true
         }
       })
-      config.module.rules.push({
-        test: /\.svg(\?v=\d+\.\d+\.\d+)?$/,
-        use: [
-          {
-            loader: 'babel-loader'
-          },
-          {
-            loader: '@svgr/webpack',
-            options: {
-              babel: false,
-              icon: true
-            }
-          }
-        ]
-      })
     }
+    config.module.rules.push({
+      test: /\.svg(\?v=\d+\.\d+\.\d+)?$/,
+      use: [
+        {
+          loader: 'babel-loader'
+        },
+        {
+          loader: '@svgr/webpack',
+          options: {
+            babel: false,
+            icon: true
+          }
+        }
+      ]
+    })
 
     if (isServer) {
       const antStyles = /antd\/.*?\/style.*?/
@@ -64,7 +64,7 @@ const nextConfig = {
     }
 
     if (!isServer && !dev) {
-      config.optimization.splitChunks.cacheGroups.commons.minChunks = 2
+      config.optimization.splitChunks.cacheGroups.commons.minChunks = 1
     }
 
     if (config.mode === 'production') {

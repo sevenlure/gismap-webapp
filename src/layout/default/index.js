@@ -105,7 +105,7 @@ class AppWithLayout extends React.Component {
     return (
       <LayoutWrapper>
         <Head>
-          <title>Quản lý nguồn thải</title>
+          <title>Travel</title>
         </Head>
 
         <Layout>
