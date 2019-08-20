@@ -128,10 +128,25 @@ class AppWithLayout extends React.Component {
             </div>
           </div> */}
           <Header
-            style={{ height: '70px', position: 'fixed', zIndex: 1, width: '100%', top: '0px', background: '#fff', paddingRight: 24 }}
+            style={{
+              height: '70px',
+              position: 'fixed',
+              zIndex: 1,
+              width: '100%',
+              top: '0px',
+              background: '#fff',
+              paddingRight: 24
+            }}
           >
             <Menu
-              style={{ color: '#9ea7d0', fontWeight: 500, fontSize: 16, textAlign: 'right', height: 70, borderBottom: 'none' }}
+              style={{
+                color: '#9ea7d0',
+                fontWeight: 500,
+                fontSize: 16,
+                textAlign: 'right',
+                height: 70,
+                borderBottom: 'none'
+              }}
               theme='light'
               mode='horizontal'
               defaultSelectedKeys={[slug.basic]}
@@ -152,16 +167,25 @@ class AppWithLayout extends React.Component {
                 }}
               />
               <Menu.Item key={slug.thuphi.base}>Đăng nhập</Menu.Item>
-              <Button type="primary">Dang ky</Button>
+              <Button type='primary'>Đăng ký</Button>
             </Menu>
           </Header>
-          <Content style={{ heigth: '1', marginTop: 70 }}>
+          <Content>
             {/* <BoxAnimateBreadcrumb breadcrumbArr={this.props.breadcrumbArr} /> */}
 
             <ChildrenContainer>{children}</ChildrenContainer>
           </Content>
-          <Footer style={{ textAlign: 'left', padding: '27px 24px', fontSize: 16, fontWeight: 300, fontFamily: 'HelveticaNeue-Light', backgounrColor: '#fff' }}>
-           <span>@ 2019 Travel. All rights reserved</span>
+          <Footer
+            style={{
+              textAlign: 'left',
+              padding: '27px 24px',
+              fontSize: 16,
+              fontWeight: 300,
+              fontFamily: 'HelveticaNeue-Light',
+              backgounrColor: '#fff'
+            }}
+          >
+            <span>@ 2019 Travel. All rights reserved</span>
           </Footer>
         </Layout>
       </LayoutWrapper>

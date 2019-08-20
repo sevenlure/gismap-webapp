@@ -1,9 +1,5 @@
 import update from 'react-addons-update'
-import {
-  UPDATE_GENERAL_USER_INFO,
-  CLEAR_GENERAL_USER_INFO,
-  SET_BREADCRUMB
-} from '../actions/generalAction'
+import { UPDATE_GENERAL_USER_INFO, CLEAR_GENERAL_USER_INFO, SET_BREADCRUMB } from '../actions/generalAction'
 
 import storage from 'redux-persist/lib/storage'
 import { persistReducer } from 'redux-persist'
