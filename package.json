@@ -8,9 +8,11 @@
     "withPm2": "pm2 start --name QLNT-HCM-WEB npm -- start"
   },
   "dependencies": {
+    "@svgr/webpack": "^4.3.2",
     "@zeit/next-less": "^1.0.1",
     "antd": "^3.5.4",
     "axios": "^0.19.0",
+    "babel-loader": "^8.0.6",
     "babel-plugin-import": "^1.7.0",
     "compression": "^1.7.4",
     "compression-webpack-plugin": "^3.0.0",

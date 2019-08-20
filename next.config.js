@@ -25,6 +25,21 @@ const nextConfig = {
           emitWarning: true
         }
       })
+      config.module.rules.push({
+        test: /\.svg(\?v=\d+\.\d+\.\d+)?$/,
+        use: [
+          {
+            loader: 'babel-loader'
+          },
+          {
+            loader: '@svgr/webpack',
+            options: {
+              babel: false,
+              icon: true
+            }
+          }
+        ]
+      })
     }
 
     if (isServer) {
@@ -49,14 +64,13 @@ const nextConfig = {
     }
 
     if (!isServer && !dev) {
-      config.optimization.splitChunks.cacheGroups.commons.minChunks = 2;
+      config.optimization.splitChunks.cacheGroups.commons.minChunks = 2
     }
 
     if (config.mode === 'production') {
       if (Array.isArray(config.optimization.minimizer)) {
         config.optimization.minimizer.push(new OptimizeCSSAssetsPlugin({}))
       }
-      
     }
     config.plugins.push(new CompressionPlugin())
 
