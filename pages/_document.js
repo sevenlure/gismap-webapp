@@ -34,7 +34,7 @@ class MyDocument extends Document {
         <Head>
           <style>{`body { heigth: 100% }`}</style>
           {/* <link rel='stylesheet' href='/static/css/nprogress.css' /> */}
-          <link rel='icon' href='/static/images/logo.png'></link>
+          {/* <link rel='icon' href='/static/images/logo.png'></link> */}
         </Head>
         <body style={{ fontFamily: 'HelveticaNeue', color: '#4c4c4c', fontSize: '16px', fontWeight: '300' }}>
           <Main />
