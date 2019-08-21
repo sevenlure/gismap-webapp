@@ -156,9 +156,9 @@ class Index extends React.Component {
     setBreadCrumb: PropTypes.any
   }
 
-  componentDidMount = () => {
-    this.props.setBreadCrumb(breadcrumb[slug.coso.list])
-  }
+  // componentDidMount = () => {
+  //   this.props.setBreadCrumb(breadcrumb[slug.coso.list])
+  // }
 
   onClickSearch = values => {
     const onChangeSearch = get(this.TableList, 'props.onChangeSearch')
@@ -173,7 +173,7 @@ class Index extends React.Component {
   }
 
   render() {
-    console.log(this.props.windowWidth, 'windowWidth')
+    // console.log(this.props.windowWidth, 'windowWidth')
     return (
       <WrapperIndex windowWidth={this.props.windowWidth}>
         <div className='search'>
