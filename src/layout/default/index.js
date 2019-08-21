@@ -2,24 +2,37 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import Head from 'next/head'
 import styled from 'styled-components'
-import { Layout, Menu, Breadcrumb, Avatar, Dropdown, Icon, Divider, Button } from 'antd'
+import { Layout, Menu, Icon, Divider, Button, Drawer } from 'antd'
 import { connect } from 'react-redux'
 import { userLogout } from 'src/redux/actions/authAction'
 import { clearUserInfo } from 'src/redux/actions/generalAction.js'
 import { get as _get } from 'lodash-es'
 import Router, { withRouter } from 'next/router'
 import slug from 'src/routes'
-// import hocProtectLogin from 'src/hoc/is-authenticated'
-import posed from 'react-pose'
-import { isEqual as _isEqual } from 'lodash-es'
-import Link from 'next/link'
-import { COLOR } from 'src/constant/theme'
+import windowSize from 'react-window-size'
 // import ModalChangePassword from 'src/containers/user/modalChangePassword'
 
 const { Header, Content, Footer } = Layout
 // const { SubMenu } = Menu
 
 const LayoutWrapper = styled.div`
+  .ant-menu-root {
+    ${props => (props.windowWidth < 900 ? 'display: flex;' : '')}
+    ${props => (props.windowWidth < 900 ? 'align-items: center;' : '')}
+  }
+
+  .menu-lg {
+    ${props => (props.windowWidth < 900 ? 'display: none;' : '')}
+  }
+
+  .menu-mobile {
+    ${props => (props.windowWidth < 900 ? '' : 'display: none;')}
+  }
+
+  .ant-layout-header {
+    padding: 0 24px 0 24px;
+  }
+
   .ant-menu-submenu-selected {
     background: #52c41a;
   }
@@ -29,6 +42,10 @@ const LayoutWrapper = styled.div`
   .ant-menu-horizontal {
     line-height: 67px;
     font-family: HelveticaNeue-Medium;
+  }
+
+  .ant-drawer-body {
+    padding: 0;
   }
 `
 
@@ -56,19 +73,23 @@ const ChildrenContainer = styled.div`
     clearUserInfo
   }
 )
-
 // @hocProtectLogin
+@windowSize
 class AppWithLayout extends React.Component {
   static propTypes = {
     FirstName: PropTypes.string,
     LastName: PropTypes.string,
+    breadcrumbArr: PropTypes.array.isRequired,
     children: PropTypes.node,
     clearUserInfo: PropTypes.func,
     isAuthenticated: PropTypes.bool,
     router: PropTypes.any,
-
     userLogout: PropTypes.func,
-    breadcrumbArr: PropTypes.array.isRequired
+    windowWidth: PropTypes.number
+  }
+
+  state = {
+    isOnDrawer: false
   }
 
   componentDidMount = () => {
@@ -76,7 +97,7 @@ class AppWithLayout extends React.Component {
     Promise.all([]).then(() => {})
   }
   hanldeChangeMenu = ({ key }) => {
-    if (!key) return
+    if (!key || key.includes('blank')) return
     Router.push(key)
   }
 
@@ -95,16 +116,20 @@ class AppWithLayout extends React.Component {
     console.log('dang ky')
   }
 
+  UNSAFE_componentWillReceiveProps(nextProps) {
+    if (this.state.isOnDrawer && nextProps.windowWidth > 900) {
+      this.setState({ isOnDrawer: false })
+    }
+  }
+
   render() {
     let pathMenu = ''
     const pathname = this.props.router.pathname
     pathMenu = this.getPathForMenu(pathname)
 
-    // console.log('pathMenu', pathMenu)
-
-    const { children } = this.props
+    const { children, windowWidth } = this.props
     return (
-      <LayoutWrapper>
+      <LayoutWrapper windowWidth={windowWidth}>
         <Head>
           <title>Travel</title>
         </Head>
@@ -136,28 +161,100 @@ class AppWithLayout extends React.Component {
               selectedKeys={[pathMenu]}
               onClick={this.hanldeChangeMenu}
             >
-              <Menu.Item key={slug.basic}>Tìm vé xe</Menu.Item>
-              <Menu.Item key={slug.promotion.base}>Khuyến mãi</Menu.Item>
-              <Menu.Item key={slug.infoTour.base}>Lịch trình - Giá vé</Menu.Item>
-              <Menu.Item key={slug.introduce.base}>Giới thiệu</Menu.Item>
-              <Menu.Item key={slug.contact.base}>Liên hệ</Menu.Item>
-              <Divider
-                type='vertical'
-                style={{
-                  height: 28,
-                  color: 'rgba(0, 0, 0, 0.08)',
-                  boxShadow: '0 4px 6px 0 rgba(0, 0, 0, 0.05), 0 1px 0 0 rgba(0, 0, 0, 0.08)'
-                }}
-              />
-              <Menu.Item key={slug.login}>Đăng nhập</Menu.Item>
-              <Button onClick={this.hanldeRegister} type='primary'>
-                Đăng ký
-              </Button>
+              <Menu.Item className='menu-lg' key={slug.basic}>
+                Tìm vé xe
+              </Menu.Item>
+              <Menu.Item className='menu-lg' key={slug.promotion.base}>
+                Khuyến mãi
+              </Menu.Item>
+              <Menu.Item className='menu-lg' key={slug.infoTour.base}>
+                Lịch trình - Giá vé
+              </Menu.Item>
+              <Menu.Item className='menu-lg' key={slug.introduce.base}>
+                Giới thiệu
+              </Menu.Item>
+              <Menu.Item className='menu-lg' key={slug.contact.base}>
+                Liên hệ
+              </Menu.Item>
+              <Menu.Item style={{ padding: 0 }} className='menu-lg' key='blank'>
+                <Divider
+                  key='blank'
+                  className='menu-lg'
+                  type='vertical'
+                  style={{
+                    height: 28,
+                    color: 'rgba(0, 0, 0, 0.08)',
+                    boxShadow: '0 4px 6px 0 rgba(0, 0, 0, 0.05), 0 1px 0 0 rgba(0, 0, 0, 0.08)'
+                  }}
+                />
+              </Menu.Item>
+
+              <Menu.Item className='menu-lg' key={slug.login}>
+                Đăng nhập
+              </Menu.Item>
+              <Menu.Item style={{ padding: 0 }} className='menu-lg' key='blankRegister'>
+                <Button className='menu-lg' onClick={this.hanldeRegister} type='primary'>
+                  Đăng ký
+                </Button>
+              </Menu.Item>
+              <Menu.Item style={{ padding: 0 }} key='blankIcon'>
+                <Icon
+                  className='menu-mobile'
+                  type='unordered-list'
+                  style={{ fontSize: 24, color: '#1890ff' }}
+                  onClick={() => {
+                    this.setState({
+                      isOnDrawer: true
+                    })
+                  }}
+                />
+              </Menu.Item>
             </Menu>
+
+            <Drawer
+              title='Travel'
+              placement='left'
+              bodyStyle={{ padding: 0 }}
+              closable={false}
+              onClose={() => {
+                this.setState({
+                  isOnDrawer: false
+                })
+              }}
+              visible={this.state.isOnDrawer}
+            >
+              <Menu
+                style={{
+                  color: '#9ea7d0',
+                  fontWeight: 500,
+                  fontSize: 16,
+                  height: 70,
+                  borderBottom: 'none'
+                }}
+                mode='inline'
+                defaultSelectedKeys={[slug.basic]}
+                selectedKeys={[pathMenu]}
+                onClick={this.hanldeChangeMenu}
+              >
+                <Menu.Item className='menu-mobile' key={slug.basic}>
+                  Tìm vé xe
+                </Menu.Item>
+                <Menu.Item className='menu-mobile' key={slug.promotion.base}>
+                  Khuyến mãi
+                </Menu.Item>
+                <Menu.Item className='menu-mobile' key={slug.infoTour.base}>
+                  Lịch trình - Giá vé
+                </Menu.Item>
+                <Menu.Item className='menu-mobile' key={slug.introduce.base}>
+                  Giới thiệu
+                </Menu.Item>
+                <Menu.Item className='menu-mobile' key={slug.contact.base}>
+                  Liên hệ
+                </Menu.Item>
+              </Menu>
+            </Drawer>
           </Header>
           <Content>
-            {/* <BoxAnimateBreadcrumb breadcrumbArr={this.props.breadcrumbArr} /> */}
-
             <ChildrenContainer>{children}</ChildrenContainer>
           </Content>
           <Footer
@@ -179,142 +276,3 @@ class AppWithLayout extends React.Component {
 }
 
 export default withRouter(AppWithLayout)
-
-const Box = posed.div({
-  enter: { x: 0, opacity: 1, transition: { duration: 200 } },
-  exit: { x: -100, opacity: 0, transition: { duration: 200 } }
-})
-
-const LastBread = styled.span`
-  color: rgba(0, 0, 0, 0.85);
-  font-weight: 500;
-  font-size: 1.17em;
-`
-class BoxAnimateBreadcrumb extends React.Component {
-  static propTypes = {
-    breadcrumbArr: PropTypes.array.isRequired
-  }
-
-  state = {
-    focus: 'enter',
-    dataBreadcrumbArr: []
-  }
-
-  // UNSAFE_componentWillReceiveProps(nextProps) {
-  //   const isDiff = !_isEqual(this.props.breadcrumbArr, nextProps.breadcrumbArr)
-  //   if (isDiff) {
-  //     this.setState({ focus: 'exit' }, () => {
-  //       setTimeout(() => {
-  //         this.setState({ focus: 'enter', dataBreadcrumbArr: nextProps.breadcrumbArr })
-  //       }, 400)
-  //     })
-  //   }
-  // }
-
-  static getDerivedStateFromProps(nextProps, prevState) {
-    const isDiff = !_isEqual(prevState.dataBreadcrumbArr, nextProps.breadcrumbArr)
-    if (isDiff) {
-      return { focus: 'exit' }
-    } else return null
-  }
-
-  // eslint-disable-next-line
-  componentDidUpdate(prevProps, prevState, snapshot) {
-    if (this.state.focus === 'exit') {
-      setTimeout(() => {
-        this.setState({ focus: 'enter', dataBreadcrumbArr: this.props.breadcrumbArr })
-      }, 400)
-    }
-  }
-
-  render() {
-    return (
-      <Box pose={this.state.focus}>
-        <Breadcrumb style={{ margin: '16px 0' }}>
-          {this.state.dataBreadcrumbArr.map((item, index) => {
-            const isLast = index === this.state.dataBreadcrumbArr.length - 1
-            if (!isLast)
-              return (
-                <Breadcrumb.Item key={index}>
-                  <Link href={item.slug}>
-                    <a>{item.name}</a>
-                  </Link>
-                </Breadcrumb.Item>
-              )
-            else
-              return (
-                <Breadcrumb.Item key={index}>
-                  <LastBread>{item.name}</LastBread>
-                </Breadcrumb.Item>
-              )
-          })}
-        </Breadcrumb>
-      </Box>
-    )
-  }
-}
-
-@connect(
-  state => ({
-    FirstName: _get(state, 'GeneralStore.userInfo.FirstName', ''),
-    LastName: _get(state, 'GeneralStore.userInfo.LastName', '')
-  }),
-  {
-    userLogout,
-    clearUserInfo
-  }
-)
-class AvatarUser extends React.Component {
-  static propTypes = {
-    FirstName: PropTypes.string,
-    LastName: PropTypes.string,
-    userLogout: PropTypes.func,
-    clearUserInfo: PropTypes.func
-  }
-
-  state = {
-    isVisible: false
-  }
-
-  render() {
-    const { FirstName } = this.props
-    return (
-      <div>
-        <Dropdown
-          trigger={['click']}
-          overlay={
-            <Menu>
-              <Menu.Item
-                onClick={() => {
-                  // this.ModalChangePassword.openModal()
-                }}
-                key='0'
-              >
-                <Icon type='lock' />
-                Đổi mật khẩu
-              </Menu.Item>
-              <Menu.Item
-                key='1'
-                onClick={() => {
-                  Router.replace(slug.login)
-                  this.props.userLogout()
-                  this.props.clearUserInfo()
-                }}
-              >
-                <Icon type='logout' />
-                Đăng xuất
-              </Menu.Item>
-            </Menu>
-          }
-        >
-          <div>
-            <Avatar style={{ backgroundColor: COLOR.PRIMARY, cursor: 'pointer' }} size=''>
-              {FirstName}
-            </Avatar>
-          </div>
-        </Dropdown>
-        {/* <ModalChangePassword getRef={ref => (this.ModalChangePassword = ref)} /> */}
-      </div>
-    )
-  }
-}
