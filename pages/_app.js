@@ -11,7 +11,6 @@ import 'src/less/app.less'
 
 const reduxStore = getOrCreateStore()
 
-
 class MyApp extends App {
   constructor(props) {
     super(props)
