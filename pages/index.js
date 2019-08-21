@@ -7,7 +7,6 @@ import styled from 'styled-components'
 // import Link from 'next/link'
 import { Row, Col, Icon, Input, Button, Card } from 'antd'
 import Clearfix from 'src/components/elements/clearfix'
-import slug, { breadcrumb } from 'src/routes'
 import DefaultLayout from 'src/layout/default'
 import ArrowIconSvg from 'static/images/icon/ic-arrow-map.svg'
 import ArrowIcon1Svg from 'static/images/icon/ic-arrow-map-1.svg'
@@ -153,7 +152,8 @@ const dataList = [
 @windowSize
 class Index extends React.Component {
   static propTypes = {
-    setBreadCrumb: PropTypes.any
+    setBreadCrumb: PropTypes.any,
+    windowWidth: PropTypes.number
   }
 
   // componentDidMount = () => {
@@ -228,7 +228,7 @@ class Index extends React.Component {
               {dataList &&
                 _map(dataList, item => {
                   return (
-                    <Col xs={24} sm={12} lg={8} style={{ marginBottom: 24 }}>
+                    <Col key={item._id} xs={24} sm={12} lg={8} style={{ marginBottom: 24 }}>
                       <Card
                         key={item._id}
                         className='list--content--card'
