@@ -9,7 +9,7 @@ import { clearUserInfo } from 'src/redux/actions/generalAction.js'
 import { get as _get } from 'lodash-es'
 import Router, { withRouter } from 'next/router'
 import slug from 'src/routes'
-import hocProtectLogin from 'src/hoc/is-authenticated'
+// import hocProtectLogin from 'src/hoc/is-authenticated'
 import posed from 'react-pose'
 import { isEqual as _isEqual } from 'lodash-es'
 import Link from 'next/link'
@@ -17,7 +17,7 @@ import { COLOR } from 'src/constant/theme'
 // import ModalChangePassword from 'src/containers/user/modalChangePassword'
 
 const { Header, Content, Footer } = Layout
-const { SubMenu } = Menu
+// const { SubMenu } = Menu
 
 const LayoutWrapper = styled.div`
   .ant-menu-submenu-selected {
@@ -36,7 +36,6 @@ const ChildrenContainer = styled.div`
   background: rgb(255, 255, 255);
   display: flex;
   flex: 1 1 0%;
-  // padding: 16px;
   min-height: 75vh;
   > * {
     width: 100%;
@@ -77,8 +76,8 @@ class AppWithLayout extends React.Component {
     Promise.all([]).then(() => {})
   }
   hanldeChangeMenu = ({ key }) => {
-    if (key === slug.coso.base) Router.push(slug.basic)
-    else Router.push(key)
+    if (!key) return
+    Router.push(key)
   }
 
   getPathForMenu(path) {
@@ -92,14 +91,16 @@ class AppWithLayout extends React.Component {
 
     return result
   }
+  hanldeRegister = () => {
+    console.log('dang ky')
+  }
 
   render() {
     let pathMenu = ''
     const pathname = this.props.router.pathname
-    if (pathname === slug.coso.list) pathMenu = slug.coso.base
-    else pathMenu = this.getPathForMenu(pathname)
+    pathMenu = this.getPathForMenu(pathname)
 
-    console.log('pathMenu', pathMenu)
+    // console.log('pathMenu', pathMenu)
 
     const { children } = this.props
     return (
@@ -109,24 +110,6 @@ class AppWithLayout extends React.Component {
         </Head>
 
         <Layout>
-          {/* <div
-            style={{
-              position: 'fixed',
-              paddingLeft: '16px',
-              background: '#fff',
-              width: '100%',
-              height: '40px',
-              display: 'flex',
-              alignItems: 'center',
-              zIndex: 1
-            }}
-          >
-            <img style={{ width: '30px', height: '30px', marginRight: '8px' }} src='/static/images/logo.png' />
-            <h2 style={{ margin: '0px' }}>Quản lý cơ sở dữ liệu Hồ Chí Minh</h2>
-            <div style={{ height: 'auto', position: 'fixed', right: '32px' }}>
-              <AvatarUser />
-            </div>
-          </div> */}
           <Header
             style={{
               height: '70px',
@@ -153,11 +136,11 @@ class AppWithLayout extends React.Component {
               selectedKeys={[pathMenu]}
               onClick={this.hanldeChangeMenu}
             >
-              <Menu.Item key={slug.coso.base}>Tìm vé xe</Menu.Item>
-              <Menu.Item key={slug.baocaogiamsatmoitruong.base}>Khuyến mãi</Menu.Item>
-              <Menu.Item key={slug.baocaoquanlychatthairan.base}>Lịch trình - Giá vé</Menu.Item>
-              <Menu.Item key={slug.thanhtrakiemtra.base}>Giới thiệu</Menu.Item>
-              <Menu.Item key={slug.thuphi.base}>Liên hệ</Menu.Item>
+              <Menu.Item key={slug.basic}>Tìm vé xe</Menu.Item>
+              <Menu.Item key={slug.promotion.base}>Khuyến mãi</Menu.Item>
+              <Menu.Item key={slug.infoTour.base}>Lịch trình - Giá vé</Menu.Item>
+              <Menu.Item key={slug.introduce.base}>Giới thiệu</Menu.Item>
+              <Menu.Item key={slug.contact.base}>Liên hệ</Menu.Item>
               <Divider
                 type='vertical'
                 style={{
@@ -166,8 +149,10 @@ class AppWithLayout extends React.Component {
                   boxShadow: '0 4px 6px 0 rgba(0, 0, 0, 0.05), 0 1px 0 0 rgba(0, 0, 0, 0.08)'
                 }}
               />
-              <Menu.Item key={slug.thuphi.base}>Đăng nhập</Menu.Item>
-              <Button type='primary'>Đăng ký</Button>
+              <Menu.Item key={slug.login}>Đăng nhập</Menu.Item>
+              <Button onClick={this.hanldeRegister} type='primary'>
+                Đăng ký
+              </Button>
             </Menu>
           </Header>
           <Content>
