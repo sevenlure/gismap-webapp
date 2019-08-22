@@ -38,6 +38,12 @@ const LayoutWrapper = styled.div`
 
   .ant-layout-header {
     padding: 0 24px 0 24px;
+    box-shadow: 0 4px 6px 0 rgba(0, 0, 0, 0.05), 0 1px 0 0 rgba(0, 0, 0, 0.08);
+  }
+
+  .ant-menu-item button span {
+    font-size: 16px;
+    font-family: HelveticaNeue-Medium;
   }
 
   .ant-menu-submenu-selected {
@@ -60,7 +66,8 @@ const ChildrenContainer = styled.div`
   background: rgb(255, 255, 255);
   display: flex;
   flex: 1 1 0%;
-  min-height: 75vh;
+  margin-top: 70px;
+  min-height: 80vh;
   > * {
     width: 100%;
   }
@@ -203,10 +210,10 @@ class AppWithLayout extends React.Component {
               <Menu.Item className='menu-lg' key={slug.promotion.base}>
                 Khuyến mãi
               </Menu.Item>
-              <Menu.Item className='menu-lg' key={slug.infoTour.base}>
+              <Menu.Item className='menu-lg' key={slug.booking.base}>
                 Lịch trình - Giá vé
               </Menu.Item>
-              <Menu.Item className='menu-lg' key={slug.introduce.base}>
+              <Menu.Item className='menu-lg' key={slug.about.base}>
                 Giới thiệu
               </Menu.Item>
               <Menu.Item className='menu-lg' key={slug.contact.base}>
@@ -225,7 +232,9 @@ class AppWithLayout extends React.Component {
                 />
               </Menu.Item>
 
-              <Menu.Item key={slug.login}>Đăng nhập</Menu.Item>
+              <Menu.Item key='blankLogin' onClick={() => {}}>
+                Đăng nhập
+              </Menu.Item>
               <Menu.Item style={{ padding: 0 }} key='blankRegister'>
                 <Button style={{ padding: '0 25px' }} size='large' onClick={this.hanldeRegister} type='primary'>
                   Đăng ký
@@ -303,10 +312,10 @@ class AppWithLayout extends React.Component {
                 <Menu.Item className='menu-mobile' key={slug.promotion.base}>
                   Khuyến mãi
                 </Menu.Item>
-                <Menu.Item className='menu-mobile' key={slug.infoTour.base}>
+                <Menu.Item className='menu-mobile' key={slug.booking.base}>
                   Lịch trình - Giá vé
                 </Menu.Item>
-                <Menu.Item className='menu-mobile' key={slug.introduce.base}>
+                <Menu.Item className='menu-mobile' key={slug.about.base}>
                   Giới thiệu
                 </Menu.Item>
                 <Menu.Item className='menu-mobile' key={slug.contact.base}>
