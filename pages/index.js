@@ -49,8 +49,6 @@ const WrapperIndex = styled.div`
     }
     .search--form--description {
       font-size: 16px;
-      font-weight: 300;
-      color: #4c4c4c;
     }
     .search--form--from-to {
       .search--form--from-to__icon > svg {
@@ -77,30 +75,29 @@ const WrapperIndex = styled.div`
       font-size: 28px;
       font-weight: bold;
     }
-    .list--content {
-      .list--content--card {
+    .list--content--card {
+      width: 370px;
+      height: 301px;
+      margin-top: 25px;
+      margin-right: 10px;
+      .ant-card-body {
+        padding: 0px;
+      }
+      .list--content--card__img {
         width: 370px;
-        height: 301px;
-        margin-top: 25px;
-        margin-right: 10px;
-        .ant-card-body {
-          padding: 0px;
-        }
-        .list--content--card__img {
-          width: 370px;
-          height: 180px;
-        }
-        .list--content--card--title {
-          padding-left: 20px;
-        }
-        .list--content--card--size {
-          padding-left: 20px;
-          color: #9ea7d0;
-        }
-        .list--content--card--price {
-          padding-left: 20px;
-          font-size: 24px;
-        }
+        height: 180px;
+      }
+      .list--content--card--title {
+        padding-left: 20px;
+        padding-top:20px;
+      }
+      .list--content--card--size {
+        padding-left: 20px;
+        color: #9ea7d0;
+      }
+      .list--content--card--price {
+        padding-left: 20px;
+        font-size: 24px;
       }
     }
   }
@@ -154,7 +151,7 @@ const dataList = [
 class Index extends React.Component {
   static propTypes = {
     setBreadCrumb: PropTypes.any,
-    windowWidth: PropTypes.any
+    windowWidth: PropTypes.number
   }
 
   // componentDidMount = () => {
@@ -186,7 +183,9 @@ class Index extends React.Component {
             <Clearfix height={30} />
             <div className='search--form'>
               <div className='search--form--description'>
-                Bạn hãy nhập điểm khởi hành và điểm muốn đến, chúng tôi sẽ tìm ra vé xe phù hợp với bạn nhất.
+                <span>
+                  Bạn hãy nhập điểm khởi hành và điểm muốn đến, chúng tôi sẽ tìm ra vé xe phù hợp với bạn nhất.
+                </span>
               </div>
               <Clearfix height={20} />
               <div className='search--form--from-to'>
@@ -229,7 +228,7 @@ class Index extends React.Component {
               {dataList &&
                 _map(dataList, item => {
                   return (
-                    <Col xs={24} sm={12} lg={8} style={{ marginBottom: 24 }}>
+                    <Col key={item._id} xs={24} sm={12} lg={8} style={{ marginBottom: 24 }}>
                       <Card
                         key={item._id}
                         className='list--content--card'
@@ -237,7 +236,9 @@ class Index extends React.Component {
                         cover={<img width={370} height={180} alt='' src={item.img} />}
                       >
                         <div style={{ height: 90 }}>
-                          <div className='list--content--card--title'>{item.title}</div>
+                          <div className='list--content--card--title'>
+                            <span>{item.title}</span>
+                          </div>
                           <Clearfix height={7} />
                           <div className='list--content--card--size'>{item.size}</div>
                           <Clearfix height={10} />

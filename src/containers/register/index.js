@@ -15,10 +15,6 @@ const RegisterWrapper = styled.div`
   .ant-form-item-with-help {
     margin-bottom: 0px;
   }
-
-  .ant-input-password-icon {
-    color: #3880ff;
-  }
 `
 
 class Register extends React.Component {
@@ -45,22 +41,21 @@ class Register extends React.Component {
   }
 
   render() {
-    const { getFieldDecorator, getFieldError } = this.props.form
+    const { getFieldDecorator } = this.props.form
     return (
       <RegisterWrapper>
         <Form onSubmit={this.handleSubmit}>
           <Form.Item>
             {getFieldDecorator('fullName', {
               rules: [{ required: true, message: 'Vui lòng nhập họ và tên!' }]
-            })(<Input prefix={<Icon component={PersonalSvg} />} placeholder='Họ và tên' />)}
+            })(<Input prefix={<Icon component={PersonalSvg} />} placeholder='Họ và tên *' />)}
           </Form.Item>
           <Form.Item>
             {getFieldDecorator('phoneNumber', {
-              rules: [
-                { required: true, message: 'Vui lòng nhập số điện thoại!' },
-                { type: 'number', message: 'Vui lòng nhập đúng định dạng số!' }
-              ]
-            })(<Input prefix={<Icon component={MobileSvg} />} placeholder='Số điện thoại' style={{ width: '100%' }} />)}
+              rules: [{ required: true, message: 'Vui lòng nhập số điện thoại!' }]
+            })(
+              <Input prefix={<Icon component={MobileSvg} />} placeholder='Số điện thoại *' style={{ width: '100%' }} />
+            )}
           </Form.Item>
           <Form.Item>
             {getFieldDecorator('email', {
@@ -68,20 +63,19 @@ class Register extends React.Component {
                 {
                   type: 'email',
                   message: 'Chưa đúng định dạng email!'
-                },
-                { required: true, message: 'Vui lòng nhâp địa chỉ email!' }
+                }
               ]
             })(<Input prefix={<Icon component={EmaillSvg} />} placeholder='Email' />)}
           </Form.Item>
           <Form.Item>
-            {getFieldDecorator('adress', {})(
+            {getFieldDecorator('address', {})(
               <Input prefix={<Icon component={AddressSvg} />} placeholder='Địa chỉ sinh sống' />
             )}
           </Form.Item>
           <Form.Item>
             {getFieldDecorator('password', {
               rules: [{ required: true, message: 'Vui lòng nhâp mật khẩu!' }]
-            })(<Input.Password prefix={<Icon component={PassSvg} />} placeholder='Mật khẩu' />)}
+            })(<Input.Password prefix={<Icon component={PassSvg} />} placeholder='Mật khẩu *' />)}
           </Form.Item>
           <Form.Item>
             {getFieldDecorator('confirm', {
@@ -91,7 +85,7 @@ class Register extends React.Component {
                   validator: this.compareToFirstPassword
                 }
               ]
-            })(<Input.Password prefix={<Icon component={PassSvg} />} placeholder='Nhập lại mật khẩu' />)}
+            })(<Input.Password prefix={<Icon component={PassSvg} />} placeholder='Nhập lại mật khẩu *' />)}
           </Form.Item>
           <Row>
             <Col xs={24} sm={{ span: 12, offset: 6 }} lg={{ span: 5, offset: 9 }}>
