@@ -1,29 +1,16 @@
-import { pick as _pick } from 'lodash-es'
+// import { pick as _pick } from 'lodash-es'
+import TourApi from 'src/api/TourApi'
+
 // NOTE  Quản lý các store của danh mục
-export const UPDATE_GENERAL_USER_INFO = 'GENERAL/UPDATE_GENERAL_USER_INFO'
-export const CLEAR_GENERAL_USER_INFO = 'GENERAL/CLEAR_GENERAL_USER_INFO'
 
-// NOTE  Quản lý các store menu & breadcrumb
-export const SET_BREADCRUMB = 'GENERAL/SET_BREADCRUMB'
+// NOTE  Quản lý các store của tour initial
+export const GET_GENERAL_LIST_TOUR = 'GENERAL/GET_GENERAL_LIST_TOUR'
 
-/* #region  ACTIONS cho user info  */
-export function updateUserInfo(data) {
-  return dispatch => {
-    dispatch({ type: UPDATE_GENERAL_USER_INFO, payload: _pick(data, ['Email', 'FirstName', 'LastName']) })
+export function getListTour() {
+  return async dispatch => {
+    const res = await TourApi.getListTour({})
+    if (res.data) {
+      dispatch({ type: GET_GENERAL_LIST_TOUR, payload: res.data })
+    }
   }
 }
-export function clearUserInfo() {
-  return dispatch => {
-    dispatch({ type: CLEAR_GENERAL_USER_INFO })
-  }
-}
-/* #endregion */
-
-/* #region  ACTIONS cho menu & breadcrumb */
-export function setBreadCrumb(breadcrumbArr) {
-  return dispatch => {
-    const payload = Array.isArray(breadcrumbArr) ? breadcrumbArr : []
-    dispatch({ type: SET_BREADCRUMB, payload })
-  }
-}
-/* #endregion */

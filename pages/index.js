@@ -1,12 +1,12 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { connect } from 'react-redux'
-import { setBreadCrumb } from 'src/redux/actions/generalAction'
-import { get, pick, pickBy, identity, map as _map } from 'lodash-es'
+import { get as _get, map as _map } from 'lodash-es'
 import styled from 'styled-components'
+import { connect } from 'react-redux'
 // import Link from 'next/link'
 import { Row, Col, Icon, Input, Button, Card } from 'antd'
 import Clearfix from 'src/components/elements/clearfix'
+import { getFormatNumber } from 'src/config/format'
 // import slug, { breadcrumb } from 'src/routes'
 import DefaultLayout from 'src/layout/default'
 import ArrowIconSvg from 'static/images/icon/ic-arrow-map.svg'
@@ -106,75 +106,18 @@ const WrapperIndex = styled.div`
   }
 `
 
-const dataList = [
-  {
-    _id: '1',
-    img: 'https://i.ibb.co/Ssx2d3W/img1.png',
-    title: 'Hồ Chí Minh - Dương Minh Châu, Tây Ninh',
-    size: 'Ghế 29 chỗ ngồi',
-    price: '65,000'
-  },
-  {
-    _id: '2',
-    img: 'https://i.ibb.co/6v239bj/img2.png',
-    title: 'Hồ Chí Minh - Dương Minh Châu, Tây Ninh',
-    size: 'Ghế 29 chỗ ngồi',
-    price: '65,000'
-  },
-  {
-    _id: '3',
-    img: 'https://i.ibb.co/KLqVqb1/img3.png',
-    title: 'Hồ Chí Minh - Dương Minh Châu, Tây Ninh',
-    size: 'Ghế 29 chỗ ngồi',
-    price: '65,000'
-  },
-  {
-    _id: '4',
-    img: 'https://i.ibb.co/yk412ck/img4.png',
-    title: 'Hồ Chí Minh - Dương Minh Châu, Tây Ninh',
-    size: 'Ghế 29 chỗ ngồi',
-    price: '65,000'
-  },
-  {
-    _id: '5',
-    img: 'https://i.ibb.co/jfPKh8n/img5.png',
-    title: 'Hồ Chí Minh - Dương Minh Châu, Tây Ninh',
-    size: 'Ghế 29 chỗ ngồi',
-    price: '65,000'
-  }
-]
-
-@connect(
-  null,
-  {
-    setBreadCrumb
-  }
-)
+@connect(null)
+@connect(state => ({
+  listTour: _get(state, 'GeneralStore.listtour', [])
+}))
 @windowSize
 class Index extends React.Component {
   static propTypes = {
-    setBreadCrumb: PropTypes.any,
-    windowWidth: PropTypes.number
-  }
-
-  // componentDidMount = () => {
-  //   this.props.setBreadCrumb(breadcrumb[slug.coso.list])
-  // }
-
-  onClickSearch = values => {
-    const onChangeSearch = get(this.TableList, 'props.onChangeSearch')
-    if (onChangeSearch) {
-      let querySearch = pick(values, ['Coso', 'KhuCumCongNghiep', 'NganhNghe', 'CoQuanThamQuyenQuanLy', 'search'])
-      querySearch = pickBy(querySearch, identity)
-      onChangeSearch({
-        ...querySearch,
-        ['DiaChi.ValueSelected']: get(values, 'DiaChi.ValueSelected')
-      })
-    }
+    windowWidth: PropTypes.number,
+    listTour: PropTypes.array
   }
 
   render() {
-    // console.log(this.props.windowWidth, 'windowWidth')
     return (
       <WrapperIndex windowWidth={this.props.windowWidth}>
         <div className='search'>
@@ -228,15 +171,15 @@ class Index extends React.Component {
             <div className='list--title'>Tuyến đi phổ biến</div>
             <Clearfix height={12} />
             <Row gutter={{ xs: 8, sm: 16, lg: 24 }}>
-              {dataList &&
-                _map(dataList, item => {
+              {this.props.listTour &&
+                _map(this.props.listTour, item => {
                   return (
-                    <Col key={item._id} xs={24} sm={12} lg={8} style={{ marginBottom: 24 }}>
+                    <Col key={item.id} xs={24} sm={12} lg={8} style={{ marginBottom: 24 }}>
                       <Card
-                        key={item._id}
+                        key={item.id}
                         className='list--content--card'
                         bordered
-                        cover={<img width={370} height={180} alt='' src={item.img} />}
+                        cover={<img width={370} height={180} alt='' src={item.image} />}
                       >
                         <div style={{ height: 90 }}>
                           <div className='list--content--card--title'>
@@ -245,7 +188,7 @@ class Index extends React.Component {
                           <Clearfix height={7} />
                           <div className='list--content--card--size'>{item.size}</div>
                           <Clearfix height={10} />
-                          <div className='list--content--card--price'>{item.price} đ</div>
+                          <div className='list--content--card--price'>{getFormatNumber(item.price)} đ</div>
                         </div>
                       </Card>
                     </Col>
