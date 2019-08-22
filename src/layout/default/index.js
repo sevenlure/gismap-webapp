@@ -5,7 +5,7 @@ import styled from 'styled-components'
 import { Layout, Menu, Icon, Divider, Button, Drawer } from 'antd'
 import { connect } from 'react-redux'
 import { userLogout } from 'src/redux/actions/authAction'
-import { clearUserInfo } from 'src/redux/actions/generalAction.js'
+import { getListTour } from 'src/redux/actions/generalAction.js'
 import { get as _get } from 'lodash-es'
 import Router, { withRouter } from 'next/router'
 import slug from 'src/routes'
@@ -72,12 +72,11 @@ const ChildrenContainer = styled.div`
     LastName: _get(state, 'GeneralStore.userInfo.LastName', ''),
     isAuthenticated: _get(state, 'AuthStore.isAuthenticated'),
     token: _get(state, 'AuthStore.token'),
-    menuSelected: _get(state, 'GeneralStore.menuSelected'),
-    breadcrumbArr: _get(state, 'GeneralStore.breadcrumb')
+    menuSelected: _get(state, 'GeneralStore.menuSelected')
   }),
   {
     userLogout,
-    clearUserInfo
+    getListTour
   }
 )
 // @hocProtectLogin
@@ -86,12 +85,13 @@ class AppWithLayout extends React.Component {
   static propTypes = {
     FirstName: PropTypes.string,
     LastName: PropTypes.string,
-    breadcrumbArr: PropTypes.array.isRequired,
     children: PropTypes.node,
     clearUserInfo: PropTypes.func,
     isAuthenticated: PropTypes.bool,
     router: PropTypes.any,
     userLogout: PropTypes.func,
+
+    getListTour: PropTypes.func,
     windowWidth: PropTypes.number
   }
 
@@ -102,7 +102,7 @@ class AppWithLayout extends React.Component {
 
   componentDidMount = () => {
     // console.log('componentDidMount Layout')
-    Promise.all([]).then(() => {})
+    Promise.all([this.props.getListTour()]).then(() => {})
   }
   hanldeChangeMenu = ({ key }) => {
     if (!key || key.includes('blank')) return

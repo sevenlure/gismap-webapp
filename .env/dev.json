@@ -1,5 +1,4 @@
 {
   "isDev": true,
-  "HOST_API": "http://localhost:3105/",
-  "HOST_ATTACHMENT": "http://localhost:3105/"
+  "HOST_API": "http://localhost:3005/"
 }
