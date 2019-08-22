@@ -25,7 +25,6 @@ const WrapperIndex = styled.div`
     display: flex;
     align-items: center;
     justify-content: center;
-    margin-top: 70px;
 
     .search--container {
       padding: 16px;
