@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import styled from 'styled-components'
-import { Row, Col, Form, Input, Icon, Button } from 'antd'
+import { Form, Input, Icon, Button } from 'antd'
 import PersonalSvg from 'static/images/icon/ic-personal.svg'
 import EmaillSvg from 'static/images/icon/ic-email.svg'
 import MobileSvg from 'static/images/icon/ic-mobile.svg'
@@ -14,6 +14,20 @@ const RegisterWrapper = styled.div`
   flex: 1;
   .ant-form-item-with-help {
     margin-bottom: 0px;
+  }
+  .form--button {
+    text-align: center;
+    height: 50px;
+    button {
+      max-width: 250px;
+      height: 100%;
+    }
+  }
+  .form--register {
+    text-align: center;
+    span {
+      font-size: 18px;
+    }
   }
 `
 
@@ -41,7 +55,7 @@ class Register extends React.Component {
   }
 
   render() {
-    const { getFieldDecorator } = this.props.form
+    const { getFieldDecorator, getFieldValue } = this.props.form
     return (
       <RegisterWrapper>
         <Form onSubmit={this.handleSubmit}>
@@ -87,22 +101,20 @@ class Register extends React.Component {
               ]
             })(<Input.Password prefix={<Icon component={PassSvg} />} placeholder='Nhập lại mật khẩu *' />)}
           </Form.Item>
-          <Row>
-            <Col xs={24} sm={{ span: 12, offset: 6 }} lg={{ span: 5, offset: 9 }}>
-              <Button type='primary' htmlType='submit' block={true} size='large'>
-                Đăng ký
-              </Button>
-            </Col>
-          </Row>
+          <div className='form--button'>
+            <Button disabled={!getFieldValue('confirm')} type='primary' htmlType='submit' block={true} size='large'>
+              Đăng ký
+            </Button>
+          </div>
           <Clearfix height={16} />
-          <Row>
-            <Col xs={24} sm={{ span: 20, offset: 4 }} lg={{ span: 8, offset: 8 }}>
+          <div className='form--register' style={{}}>
+            <span>
               Bạn đã có tài khoản rồi?
               <Link href='#'>
-                <a style={{ fontSize: 18 }}> Đăng nhập</a>
+                <a> Đăng nhập</a>
               </Link>
-            </Col>
-          </Row>
+            </span>
+          </div>
         </Form>
       </RegisterWrapper>
     )

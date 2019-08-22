@@ -182,7 +182,7 @@ class AppWithLayout extends React.Component {
             style={{
               height: '70px',
               position: 'fixed',
-              zIndex: 1,
+              zIndex: 11,
               width: '100%',
               top: '0px',
               background: '#fff',
@@ -236,7 +236,7 @@ class AppWithLayout extends React.Component {
                 Đăng nhập
               </Menu.Item>
               <Menu.Item style={{ padding: 0 }} key='blankRegister'>
-                <Button style={{ padding: '0 20px' }} onClick={this.hanldeRegister} type='primary'>
+                <Button style={{ padding: '0 25px' }} size='large' onClick={this.hanldeRegister} type='primary'>
                   Đăng ký
                 </Button>
               </Menu.Item>

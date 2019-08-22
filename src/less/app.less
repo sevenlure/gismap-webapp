@@ -1,4 +1,3 @@
-
 .page-wrapper {
   display: flex;
   min-height: 100vh;
@@ -47,12 +46,35 @@ li.ant-pagination-total-text {
 }
 
 /* NOTE  custom css về color */
-.ant-menu.ant-menu-dark .ant-menu-item-selected, .ant-menu-submenu-popup.ant-menu-dark .ant-menu-item-selected {
+.ant-menu.ant-menu-dark .ant-menu-item-selected,
+.ant-menu-submenu-popup.ant-menu-dark .ant-menu-item-selected {
   background-image: linear-gradient(to right, #3880ff, #5f98fd);
 }
 
 .ant-btn-primary {
   background-image: linear-gradient(to right, #3880ff, #5f98fd);
+}
+.ant-btn-primary span {
+  font-family: HelveticaNeue-Medium;
+}
+.ant-btn-primary-disabled,
+.ant-btn-primary.disabled,
+.ant-btn-primary[disabled],
+.ant-btn-primary-disabled:hover,
+.ant-btn-primary.disabled:hover,
+.ant-btn-primary[disabled]:hover,
+.ant-btn-primary-disabled:focus,
+.ant-btn-primary.disabled:focus,
+.ant-btn-primary[disabled]:focus,
+.ant-btn-primary-disabled:active,
+.ant-btn-primary.disabled:active,
+.ant-btn-primary[disabled]:active,
+.ant-btn-primary-disabled.active,
+.ant-btn-primary.disabled.active,
+.ant-btn-primary[disabled].active {
+  background-image: linear-gradient(to right, #3880ff, #5f98fd);
+  color: white;
+  opacity: 0.5;
 }
 
 .noPadding {
@@ -72,10 +94,21 @@ li.ant-pagination-total-text {
   color: #3880ff;
 }
 
-h1, h2, h3, h4, h5, h6 {
+.ant-input::placeholder {
+  font-family: HelveticaNeue-Light;
+  color: #9ea7d0;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
   color: #4c4c4c;
   font-weight: bold;
+  font-family: HelveticaNeue-Bold;
 }
-span{
+span {
   font-family: HelveticaNeue-Light;
 }
