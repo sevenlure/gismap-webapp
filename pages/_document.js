@@ -32,7 +32,7 @@ class MyDocument extends Document {
     return (
       <Html>
         <Head>
-          <style>{`body { heigth: 100% }`}</style>
+          {/* <style>{``}</style> */}
           {/* <link rel='stylesheet' href='/static/css/nprogress.css' /> */}
           {/* <link rel='icon' href='/static/images/logo.png'></link> */}
         </Head>
