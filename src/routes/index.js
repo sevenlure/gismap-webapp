@@ -7,11 +7,14 @@ const slug = {
   infoTour: {
     base: '/infoTour'
   },
-  introduce: {
-    base: '/introduce'
+  about: {
+    base: '/about'
   },
   contact: {
     base: '/contact'
+  },
+  booking: {
+    base: '/booking'
   }
 }
 

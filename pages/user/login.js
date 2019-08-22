@@ -7,7 +7,7 @@ import authApi from 'src/api/authApi'
 import { connect } from 'react-redux'
 
 import { userLogin, userLogout } from 'src/redux/actions/authAction'
-import { updateUserInfo } from 'src/redux/actions/generalAction.js'
+// import { updateUserInfo } from 'src/redux/actions/generalAction.js'
 
 import { get as _get } from 'lodash-es'
 import Router from 'next/router'
@@ -35,6 +35,7 @@ const Center = styled.div`
   justify-content: center;
 `
 
+const updateUserInfo = () => {}
 const mapStateToProps = state => ({
   isAuthenticated: _get(state, 'AuthStore.isAuthenticated')
 })
