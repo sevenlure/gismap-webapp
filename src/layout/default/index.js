@@ -24,7 +24,7 @@ const { Header, Content, Footer } = Layout
 
 const LayoutWrapper = styled.div`
   .ant-menu-root {
-    ${props => (props.windowWidth < 900 ? 'display: flex;' : '')}
+    ${props => (props.windowWidth < 900 ? 'display: block;' : '')}
     ${props => (props.windowWidth < 900 ? 'align-items: center;' : '')}
   }
 
@@ -225,15 +225,13 @@ class AppWithLayout extends React.Component {
                 />
               </Menu.Item>
 
-              <Menu.Item className='menu-lg' key={slug.login}>
-                Đăng nhập
-              </Menu.Item>
-              <Menu.Item style={{ padding: 0 }} className='menu-lg' key='blankRegister'>
-                <Button className='menu-lg' onClick={this.hanldeRegister} type='primary'>
+              <Menu.Item key={slug.login}>Đăng nhập</Menu.Item>
+              <Menu.Item style={{ padding: 0 }} key='blankRegister'>
+                <Button style={{ padding: '0 20px' }} onClick={this.hanldeRegister} type='primary'>
                   Đăng ký
                 </Button>
               </Menu.Item>
-              <Menu.Item style={{ padding: 0 }} key='blankIcon'>
+              <Menu.Item style={{ padding: 0, float: 'left' }} key='blankIcon'>
                 <Icon
                   className='menu-mobile'
                   type='unordered-list'
