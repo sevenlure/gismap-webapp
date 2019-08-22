@@ -7,6 +7,7 @@ import styled from 'styled-components'
 // import Link from 'next/link'
 import { Row, Col, Icon, Input, Button, Card } from 'antd'
 import Clearfix from 'src/components/elements/clearfix'
+// import slug, { breadcrumb } from 'src/routes'
 import DefaultLayout from 'src/layout/default'
 import ArrowIconSvg from 'static/images/icon/ic-arrow-map.svg'
 import ArrowIcon1Svg from 'static/images/icon/ic-arrow-map-1.svg'
@@ -18,6 +19,9 @@ const WrapperIndex = styled.div`
   .search {
     height: 500px;
     background-image: url(/static/images/unsplash.svg);
+    background-repeat:no-repeat;
+    background-position: center;
+    background-attachment: initial;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -48,8 +52,6 @@ const WrapperIndex = styled.div`
     }
     .search--form--description {
       font-size: 16px;
-      font-weight: 300;
-      color: #4c4c4c;
     }
     .search--form--from-to {
       .search--form--from-to__icon > svg {
@@ -76,30 +78,29 @@ const WrapperIndex = styled.div`
       font-size: 28px;
       font-weight: bold;
     }
-    .list--content {
-      .list--content--card {
+    .list--content--card {
+      width: 370px;
+      height: 301px;
+      margin-top: 25px;
+      margin-right: 10px;
+      .ant-card-body {
+        padding: 0px;
+      }
+      .list--content--card__img {
         width: 370px;
-        height: 301px;
-        margin-top: 25px;
-        margin-right: 10px;
-        .ant-card-body {
-          padding: 0px;
-        }
-        .list--content--card__img {
-          width: 370px;
-          height: 180px;
-        }
-        .list--content--card--title {
-          padding-left: 20px;
-        }
-        .list--content--card--size {
-          padding-left: 20px;
-          color: #9ea7d0;
-        }
-        .list--content--card--price {
-          padding-left: 20px;
-          font-size: 24px;
-        }
+        height: 180px;
+      }
+      .list--content--card--title {
+        padding-left: 20px;
+        padding-top:20px;
+      }
+      .list--content--card--size {
+        padding-left: 20px;
+        color: #9ea7d0;
+      }
+      .list--content--card--price {
+        padding-left: 20px;
+        font-size: 24px;
       }
     }
   }
@@ -185,7 +186,9 @@ class Index extends React.Component {
             <Clearfix height={30} />
             <div className='search--form'>
               <div className='search--form--description'>
-                Bạn hãy nhập điểm khởi hành và điểm muốn đến, chúng tôi sẽ tìm ra vé xe phù hợp với bạn nhất.
+                <span>
+                  Bạn hãy nhập điểm khởi hành và điểm muốn đến, chúng tôi sẽ tìm ra vé xe phù hợp với bạn nhất.
+                </span>
               </div>
               <Clearfix height={20} />
               <div className='search--form--from-to'>
@@ -236,7 +239,9 @@ class Index extends React.Component {
                         cover={<img width={370} height={180} alt='' src={item.img} />}
                       >
                         <div style={{ height: 90 }}>
-                          <div className='list--content--card--title'>{item.title}</div>
+                          <div className='list--content--card--title'>
+                            <span>{item.title}</span>
+                          </div>
                           <Clearfix height={7} />
                           <div className='list--content--card--size'>{item.size}</div>
                           <Clearfix height={10} />

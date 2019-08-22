@@ -9,6 +9,13 @@ import { clearUserInfo } from 'src/redux/actions/generalAction.js'
 import { get as _get } from 'lodash-es'
 import Router, { withRouter } from 'next/router'
 import slug from 'src/routes'
+// import hocProtectLogin from 'src/hoc/is-authenticated'
+// import posed from 'react-pose'
+// import { isEqual as _isEqual } from 'lodash-es'
+// import Link from 'next/link'
+// import { COLOR } from 'src/constant/theme'
+import { Modal } from 'antd'
+import Register from 'src/containers/register'
 import windowSize from 'react-window-size'
 // import ModalChangePassword from 'src/containers/user/modalChangePassword'
 
@@ -89,11 +96,12 @@ class AppWithLayout extends React.Component {
   }
 
   state = {
-    isOnDrawer: false
+    isOnDrawer: false,
+    isRegister: false
   }
 
   componentDidMount = () => {
-    console.log('componentDidMount Layout')
+    // console.log('componentDidMount Layout')
     Promise.all([]).then(() => {})
   }
   hanldeChangeMenu = ({ key }) => {
@@ -112,8 +120,36 @@ class AppWithLayout extends React.Component {
 
     return result
   }
+
   hanldeRegister = () => {
-    console.log('dang ky')
+    this.setState({
+      isRegister: true
+    })
+  }
+
+  getStyleReponsive = () => {
+    const { windowWidth } = this.props
+    let style
+    if (windowWidth >= 992) {
+      style = {
+        width: 968,
+        bodyStyle: {
+          padding: '30px 70px'
+        }
+      }
+    } else if (windowWidth >= 576) {
+      style = {
+        width: 500,
+        bodyStyle: {
+          padding: '30px 70px'
+        }
+      }
+    } else if (windowWidth < 576) {
+      style = {}
+    }
+    return {
+      ...style
+    }
   }
 
   UNSAFE_componentWillReceiveProps(nextProps) {
@@ -210,7 +246,34 @@ class AppWithLayout extends React.Component {
                 />
               </Menu.Item>
             </Menu>
-
+            <Modal
+              title={<h2 style={{ marginBottom: 0 }}>Đăng ký tài khoản</h2>}
+              visible={this.state.isRegister}
+              footer={null}
+              destroyOnClose={true}
+              // onOk={this.handleOk}
+              {...this.getStyleReponsive()}
+            >
+              <Register />
+              <div
+                style={{
+                  position: 'absolute',
+                  top: '10px',
+                  right: '20px',
+                  zIndex: 10
+                }}
+              >
+                <Button
+                  onClick={() => {
+                    this.setState({
+                      isRegister: false
+                    })
+                  }}
+                >
+                  Đóng
+                </Button>
+              </div>
+            </Modal>
             <Drawer
               title='Travel'
               placement='left'
