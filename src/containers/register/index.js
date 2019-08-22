@@ -55,7 +55,7 @@ class Register extends React.Component {
   }
 
   render() {
-    const { getFieldDecorator } = this.props.form
+    const { getFieldDecorator, getFieldValue } = this.props.form
     return (
       <RegisterWrapper>
         <Form onSubmit={this.handleSubmit}>
@@ -102,7 +102,7 @@ class Register extends React.Component {
             })(<Input.Password prefix={<Icon component={PassSvg} />} placeholder='Nhập lại mật khẩu *' />)}
           </Form.Item>
           <div className='form--button'>
-            <Button type='primary' htmlType='submit' block={true} size='large'>
+            <Button disabled={!getFieldValue('confirm')} type='primary' htmlType='submit' block={true} size='large'>
               Đăng ký
             </Button>
           </div>
