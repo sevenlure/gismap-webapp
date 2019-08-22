@@ -5,7 +5,7 @@
     "dev": "isDev=true next",
     "build": "next build",
     "start": "NODE_ENV=production node server.js",
-    "withPm2": "pm2 start --name QLNT-HCM-WEB npm -- start"
+    "withPm2": "pm2 start --name BOOKING-WEB npm -- start"
   },
   "dependencies": {
     "@svgr/webpack": "^4.3.2",
