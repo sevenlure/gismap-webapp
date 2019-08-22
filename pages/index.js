@@ -35,6 +35,7 @@ const WrapperIndex = styled.div`
       font-size: 50px;
       font-weight: bold;
       color: white;
+      font-family: HelveticaNeue-Bold;
       font-weight: bold;
     }
     .search--description {
@@ -79,10 +80,7 @@ const WrapperIndex = styled.div`
       font-weight: bold;
     }
     .list--content--card {
-      width: 370px;
-      height: 301px;
-      margin-top: 25px;
-      margin-right: 10px;
+      max-width: 370px;
       .ant-card-body {
         padding: 0px;
       }
@@ -101,6 +99,7 @@ const WrapperIndex = styled.div`
       .list--content--card--price {
         padding-left: 20px;
         font-size: 24px;
+        font-family: HelveticaNeue-Medium ;
       }
     }
   }
@@ -124,7 +123,7 @@ class Index extends React.Component {
           <div className='search--container'>
             <div className='search--title'>Travel</div>
             <div className='search--description'>
-              Chào mừng bạn đến với travel đặt vé xe, vui lòng đăng nhập để có trải nghiệm tốt nhất.
+              <span>Chào mừng bạn đến với travel đặt vé xe, vui lòng đăng nhập để có trải nghiệm tốt nhất.</span>
             </div>
             <Clearfix height={30} />
             <div className='search--form'>
@@ -169,7 +168,7 @@ class Index extends React.Component {
         <div className='list'>
           <div className='list--container'>
             <div className='list--title'>Tuyến đi phổ biến</div>
-            <Clearfix height={12} />
+            <Clearfix height={25} />
             <Row gutter={{ xs: 8, sm: 16, lg: 24 }}>
               {this.props.listTour &&
                 _map(this.props.listTour, item => {
@@ -181,14 +180,17 @@ class Index extends React.Component {
                         bordered
                         cover={<img width={370} height={180} alt='' src={item.image} />}
                       >
-                        <div style={{ height: 90 }}>
+                        <div>
                           <div className='list--content--card--title'>
                             <span>{item.title}</span>
                           </div>
                           <Clearfix height={7} />
-                          <div className='list--content--card--size'>{item.size}</div>
+                          <div className='list--content--card--size'>
+                            <span>Ghế {item.seat} chỗ ngồi</span>
+                          </div>
                           <Clearfix height={10} />
                           <div className='list--content--card--price'>{getFormatNumber(item.price)} đ</div>
+                          <Clearfix height={20} />
                         </div>
                       </Card>
                     </Col>
