@@ -97,11 +97,11 @@ class AppWithLayout extends React.Component {
 
   state = {
     isOnDrawer: false,
-    isRegister: true
+    isRegister: false
   }
 
   componentDidMount = () => {
-    console.log('componentDidMount Layout')
+    // console.log('componentDidMount Layout')
     Promise.all([]).then(() => {})
   }
   hanldeChangeMenu = ({ key }) => {
@@ -123,7 +123,7 @@ class AppWithLayout extends React.Component {
 
   hanldeRegister = () => {
     this.setState({
-      isRegister: false
+      isRegister: true
     })
   }
 
