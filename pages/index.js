@@ -27,14 +27,14 @@ const WrapperIndex = styled.div`
     justify-content: center;
 
     .search--container {
-      padding: 16px;
+      padding: 24px;
     }
 
     .search--title {
       font-size: 50px;
       font-weight: bold;
       color: white;
-      font-family: HelveticaNeue-Bold;
+      font-family: myFont-Bold;
       font-weight: bold;
     }
     .search--description {
@@ -77,6 +77,7 @@ const WrapperIndex = styled.div`
     .list--title {
       font-size: 28px;
       font-weight: bold;
+      font-family: myFont-Medium;
     }
     .list--content--card {
       max-width: 370px;
@@ -98,7 +99,7 @@ const WrapperIndex = styled.div`
       .list--content--card--price {
         padding-left: 20px;
         font-size: 24px;
-        font-family: HelveticaNeue-Medium ;
+        font-family: myFont-Medium ;
       }
     }
   }

@@ -43,7 +43,7 @@ const LayoutWrapper = styled.div`
 
   .ant-menu-item button span {
     font-size: 16px;
-    font-family: HelveticaNeue-Medium;
+    font-family: myFont-Medium;
   }
 
   .ant-menu-submenu-selected {
@@ -54,7 +54,7 @@ const LayoutWrapper = styled.div`
   }
   .ant-menu-horizontal {
     line-height: 67px;
-    font-family: HelveticaNeue-Medium;
+    font-family: myFont-Medium;
   }
 
   .ant-drawer-body {
@@ -257,6 +257,7 @@ class AppWithLayout extends React.Component {
               title={<h2 style={{ marginBottom: 0 }}>Đăng ký tài khoản</h2>}
               visible={this.state.isRegister}
               footer={null}
+              centered
               destroyOnClose={true}
               // onOk={this.handleOk}
               {...this.getStyleReponsive()}
