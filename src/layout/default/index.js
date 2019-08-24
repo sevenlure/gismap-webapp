@@ -33,6 +33,7 @@ const LayoutWrapper = styled.div`
   }
 
   .menu-mobile {
+    font-family: myFont-Medium;
     ${props => (props.windowWidth < 920 ? '' : 'display: none;')}
   }
 
