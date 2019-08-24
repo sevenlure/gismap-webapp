@@ -27,7 +27,7 @@ const WrapperIndex = styled.div`
     justify-content: center;
 
     .search--container {
-      padding: 24px;
+
     }
 
     .search--title {
@@ -121,48 +121,51 @@ class Index extends React.Component {
       <WrapperIndex windowWidth={this.props.windowWidth}>
         <div className='search'>
           <div className='search--container'>
-            <div className='search--title'>Travel</div>
-            <div className='search--description'>
-              <span>Chào mừng bạn đến với travel đặt vé xe, vui lòng đăng nhập để có trải nghiệm tốt nhất.</span>
+            <div style={{ margin: 16 }}>
+              <Clearfix height={24} />
+              <div className='search--title'>Travel</div>
+              <div className='search--description'>
+                <span>Chào mừng bạn đến với travel đặt vé xe, vui lòng đăng nhập để có trải nghiệm tốt nhất.</span>
+              </div>
+              <Clearfix height={30} />
+              <div className='search--form'>
+                <div className='search--form--description'>
+                  <span>
+                    Bạn hãy nhập điểm khởi hành và điểm muốn đến, chúng tôi sẽ tìm ra vé xe phù hợp với bạn nhất.
+                  </span>
+                </div>
+                <Clearfix height={20} />
+                <div className='search--form--from-to'>
+                  <Row gutter={8}>
+                    <Col xs={24} sm={12} lg={12} style={{ marginBottom: 8 }}>
+                      <Input
+                        size='large'
+                        placeholder='Điểm khởi hành'
+                        prefix={<Icon className='search--form--from-to__icon' component={ArrowIconSvg} />}
+                      />
+                    </Col>
+                    <Col xs={24} sm={12} lg={12} style={{ marginBottom: 8 }}>
+                      <Input
+                        size='large'
+                        placeholder='Điểm muốn đến'
+                        prefix={<Icon className='search--form--from-to__icon' component={ArrowIcon1Svg} />}
+                      />
+                    </Col>
+                  </Row>
+                </div>
+                <Clearfix height={20} />
+                <div className='search--form--button'>
+                  <Row>
+                    <Col xs={24} sm={{ span: 6, offset: 18 }} lg={{ span: 6, offset: 18 }}>
+                      <Button type='primary' block={true} size='large'>
+                        Tìm vé xe
+                      </Button>
+                    </Col>
+                  </Row>
+                </div>
+              </div>
+              <Clearfix height={74} />
             </div>
-            <Clearfix height={30} />
-            <div className='search--form'>
-              <div className='search--form--description'>
-                <span>
-                  Bạn hãy nhập điểm khởi hành và điểm muốn đến, chúng tôi sẽ tìm ra vé xe phù hợp với bạn nhất.
-                </span>
-              </div>
-              <Clearfix height={20} />
-              <div className='search--form--from-to'>
-                <Row gutter={8}>
-                  <Col xs={24} sm={12} lg={12} style={{ marginBottom: 8 }}>
-                    <Input
-                      size='large'
-                      placeholder='Điểm khởi hành'
-                      prefix={<Icon className='search--form--from-to__icon' component={ArrowIconSvg} />}
-                    />
-                  </Col>
-                  <Col xs={24} sm={12} lg={12} style={{ marginBottom: 8 }}>
-                    <Input
-                      size='large'
-                      placeholder='Điểm muốn đến'
-                      prefix={<Icon className='search--form--from-to__icon' component={ArrowIcon1Svg} />}
-                    />
-                  </Col>
-                </Row>
-              </div>
-              <Clearfix height={20} />
-              <div className='search--form--button'>
-                <Row>
-                  <Col xs={24} sm={{ span: 6, offset: 18 }} lg={{ span: 6, offset: 18 }}>
-                    <Button type='primary' block={true} size='large'>
-                      Tìm vé xe
-                    </Button>
-                  </Col>
-                </Row>
-              </div>
-            </div>
-            <Clearfix height={74} />
           </div>
         </div>
         <div className='list'>
