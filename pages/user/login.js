@@ -132,7 +132,7 @@ class Login extends React.Component {
               <span
                 style={{
                   fontWeight: 600,
-                  fontSize: 33,
+                  fontSize: '2rem',
                   color: 'rgba(0,0,0,.85)'
                 }}
               >
@@ -142,7 +142,7 @@ class Login extends React.Component {
             <Center
               style={{
                 color: 'rgba(0,0,0,.45)',
-                fontSize: 14
+                fontSize: '0.875rem'
               }}
             >
               Waste Source Management System - Hồ Chí Minh

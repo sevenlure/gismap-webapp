@@ -26,7 +26,7 @@ const RegisterWrapper = styled.div`
   .form--register {
     text-align: center;
     span {
-      font-size: 18px;
+      font-size: 1.125rem;
     }
   }
 `

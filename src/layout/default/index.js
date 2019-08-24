@@ -43,7 +43,7 @@ const LayoutWrapper = styled.div`
   }
 
   .ant-menu-item button span {
-    font-size: 16px;
+    font-size: 1rem;
     font-family: myFont-Medium;
   }
 
@@ -194,7 +194,7 @@ class AppWithLayout extends React.Component {
               style={{
                 color: '#9ea7d0',
                 fontWeight: 500,
-                fontSize: 16,
+                fontSize: '1rem',
                 textAlign: 'right',
                 height: 70,
                 borderBottom: 'none'
@@ -245,7 +245,7 @@ class AppWithLayout extends React.Component {
                 <Icon
                   className='menu-mobile'
                   type='unordered-list'
-                  style={{ fontSize: 24, color: '#1890ff' }}
+                  style={{ fontSize: '1.5rem', color: '#1890ff' }}
                   onClick={() => {
                     this.setState({
                       isOnDrawer: true
@@ -299,7 +299,7 @@ class AppWithLayout extends React.Component {
                 style={{
                   color: '#9ea7d0',
                   fontWeight: 500,
-                  fontSize: 16,
+                  fontSize: '1rem',
                   height: 70,
                   borderBottom: 'none'
                 }}
@@ -333,7 +333,7 @@ class AppWithLayout extends React.Component {
             style={{
               textAlign: 'left',
               padding: '27px 24px',
-              fontSize: 16,
+              fontSize: '1rem',
               fontWeight: 300,
               fontFamily: 'HelveticaNeue-Light',
               backgounrColor: '#fff'
