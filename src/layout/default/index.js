@@ -24,17 +24,17 @@ const { Header, Content, Footer } = Layout
 
 const LayoutWrapper = styled.div`
   .ant-menu-root {
-    ${props => (props.windowWidth < 920 ? 'display: block;' : '')}
-    ${props => (props.windowWidth < 920 ? 'align-items: center;' : '')}
+    ${props => (props.windowWidth < 980 ? 'display: block;' : '')}
+    ${props => (props.windowWidth < 980 ? 'align-items: center;' : '')}
   }
 
   .menu-lg {
-    ${props => (props.windowWidth < 920 ? 'display: none;' : '')}
+    ${props => (props.windowWidth < 980 ? 'display: none;' : '')}
   }
 
   .menu-mobile {
     font-family: myFont-Medium;
-    ${props => (props.windowWidth < 920 ? '' : 'display: none;')}
+    ${props => (props.windowWidth < 980 ? '' : 'display: none;')}
   }
 
   .ant-layout-header {
@@ -161,7 +161,7 @@ class AppWithLayout extends React.Component {
   }
 
   UNSAFE_componentWillReceiveProps(nextProps) {
-    if (this.state.isOnDrawer && nextProps.windowWidth > 920) {
+    if (this.state.isOnDrawer && nextProps.windowWidth > 980) {
       this.setState({ isOnDrawer: false })
     }
   }
