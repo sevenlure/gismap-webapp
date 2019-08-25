@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import styled from 'styled-components'
-import { Form, Input, Icon, Button } from 'antd'
+import { Form, Input, Icon, Button, Modal } from 'antd'
 import PersonalSvg from 'static/images/icon/ic-personal.svg'
 import EmaillSvg from 'static/images/icon/ic-email.svg'
 import MobileSvg from 'static/images/icon/ic-mobile.svg'
@@ -9,6 +9,9 @@ import PassSvg from 'static/images/icon/ic-pass.svg'
 import AddressSvg from 'static/images/icon/ic-address.svg'
 import Clearfix from 'src/components/elements/clearfix'
 import Link from 'next/link'
+
+// import InputOTP from 'src/components/elements/input-OTP'
+import OtpConfirm from 'src/containers/otp-confirm'
 
 const RegisterWrapper = styled.div`
   flex: 1;
@@ -28,6 +31,10 @@ const RegisterWrapper = styled.div`
     span {
       font-size: 1.125rem;
     }
+    a {
+      font-family: myFont-Bold;
+      text-decoration: underline;
+    }
   }
 `
 
@@ -41,6 +48,24 @@ class Register extends React.Component {
     this.props.form.validateFields((err, values) => {
       if (!err) {
         console.log('Received values of form: ', values)
+        const res = {
+          success: true,
+          data: {
+            otp: true
+          }
+        }
+        if (res.success) {
+          Modal.success({
+            icon: 'false',
+            title: <h2 style={{ textAlign: 'center' }}>Nhập mã xác thực</h2>,
+            width: 'fit-content',
+            centered: true,
+            style: {},
+            content: <OtpConfirm />,
+            okType: 'default',
+            okText: 'Đóng'
+          })
+        }
       }
     })
   }

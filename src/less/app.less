@@ -1,6 +1,14 @@
 body {
   height: 100%;
 }
+
+.text-color-default {
+  color: @text-color;
+}
+.text-color-secondary {
+  color: @text-color-secondary;
+}
+
 .page-wrapper {
   display: flex;
   min-height: 100vh;
@@ -11,6 +19,19 @@ body {
 .fontSize12 tr > td {
   font-size: 0.75rem;
 }
+
+/* #region NOTE Modal   */
+
+.ant-modal-confirm-body-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.ant-modal-confirm-body > .anticon + .ant-modal-confirm-title + .ant-modal-confirm-content {
+  margin-left: 0px;
+}
+
+/* #endregion */
 
 /* NOTE  dung để chỉnh PageTransition */
 .page-transition-enter {
@@ -52,6 +73,10 @@ li.ant-pagination-total-text {
 .ant-menu.ant-menu-dark .ant-menu-item-selected,
 .ant-menu-submenu-popup.ant-menu-dark .ant-menu-item-selected {
   background-image: linear-gradient(to right, #3880ff, #5f98fd);
+}
+
+.ant-btn-default {
+  color: @text-color-secondary;
 }
 
 .ant-btn-primary {
@@ -105,7 +130,7 @@ li.ant-pagination-total-text {
 
 .ant-input::placeholder {
   font-family: myFont-Light;
-  color: #9ea7d0;
+  color: @text-color-secondary;
 }
 
 h1,
@@ -120,8 +145,10 @@ h6 {
 }
 span {
   font-family: myFont-Light;
+  font-weight: 300;
 }
 
 strong {
   font-family: myFont-Medium;
+  font-weight: 500;
 }

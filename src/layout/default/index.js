@@ -2,7 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import Head from 'next/head'
 import styled from 'styled-components'
-import { Layout, Menu, Icon, Divider, Button, Drawer } from 'antd'
+import { Layout, Menu, Icon, Divider, Button, Drawer, Modal } from 'antd'
 import { connect } from 'react-redux'
 import { userLogout } from 'src/redux/actions/authAction'
 import { getListTour } from 'src/redux/actions/generalAction.js'
@@ -14,10 +14,8 @@ import slug from 'src/routes'
 // import { isEqual as _isEqual } from 'lodash-es'
 // import Link from 'next/link'
 // import { COLOR } from 'src/constant/theme'
-import { Modal } from 'antd'
 import Register from 'src/containers/register'
 import windowSize from 'react-window-size'
-// import ModalChangePassword from 'src/containers/user/modalChangePassword'
 
 const { Header, Content, Footer } = Layout
 // const { SubMenu } = Menu
@@ -105,7 +103,7 @@ class AppWithLayout extends React.Component {
 
   state = {
     isOnDrawer: false,
-    isRegister: false
+    isRegister: true
   }
 
   componentDidMount = () => {
@@ -273,6 +271,7 @@ class AppWithLayout extends React.Component {
                 }}
               >
                 <Button
+                  type='default'
                   onClick={() => {
                     this.setState({
                       isRegister: false
