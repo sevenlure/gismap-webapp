@@ -28,17 +28,28 @@ const InputOTPWrapper = styled.div`
 
 export default class InputOTP extends React.Component {
   static propTypes = {
-    numInputs: PropTypes.number.isRequired
+    numInputs: PropTypes.number.isRequired,
+    onSubmit: PropTypes.func,
+    onChange: PropTypes.func
   }
   state = {
     value: null
   }
 
   hanldeOnChage = otp => {
-    console.log(otp, 'otp')
+    // console.log(otp, 'otp')
     this.setState({
       value: otp
     })
+    if (this.props.onChange) {
+      this.props.onChange(otp)
+    }
+
+    if (this.props.numInputs === otp.length) {
+      if (this.props.onSubmit) {
+        this.props.onSubmit(otp)
+      }
+    }
   }
   render() {
     return (

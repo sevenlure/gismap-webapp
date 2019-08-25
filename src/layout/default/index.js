@@ -22,16 +22,17 @@ const { Header, Content, Footer } = Layout
 
 const LayoutWrapper = styled.div`
   .ant-menu-root {
-    ${props => (props.windowWidth < 920 ? 'display: block;' : '')}
-    ${props => (props.windowWidth < 920 ? 'align-items: center;' : '')}
+    ${props => (props.windowWidth < 980 ? 'display: block;' : '')}
+    ${props => (props.windowWidth < 980 ? 'align-items: center;' : '')}
   }
 
   .menu-lg {
-    ${props => (props.windowWidth < 920 ? 'display: none;' : '')}
+    ${props => (props.windowWidth < 980 ? 'display: none;' : '')}
   }
 
   .menu-mobile {
-    ${props => (props.windowWidth < 920 ? '' : 'display: none;')}
+    font-family: myFont-Medium;
+    ${props => (props.windowWidth < 980 ? '' : 'display: none;')}
   }
 
   .ant-layout-header {
@@ -158,7 +159,7 @@ class AppWithLayout extends React.Component {
   }
 
   UNSAFE_componentWillReceiveProps(nextProps) {
-    if (this.state.isOnDrawer && nextProps.windowWidth > 920) {
+    if (this.state.isOnDrawer && nextProps.windowWidth > 980) {
       this.setState({ isOnDrawer: false })
     }
   }
@@ -191,7 +192,7 @@ class AppWithLayout extends React.Component {
               style={{
                 color: '#9ea7d0',
                 fontWeight: 500,
-                fontSize: 16,
+                fontSize: '1rem',
                 textAlign: 'right',
                 height: 70,
                 borderBottom: 'none'
@@ -242,7 +243,7 @@ class AppWithLayout extends React.Component {
                 <Icon
                   className='menu-mobile'
                   type='unordered-list'
-                  style={{ fontSize: 24, color: '#1890ff' }}
+                  style={{ fontSize: '1.5rem', color: '#1890ff' }}
                   onClick={() => {
                     this.setState({
                       isOnDrawer: true
@@ -297,7 +298,7 @@ class AppWithLayout extends React.Component {
                 style={{
                   color: '#9ea7d0',
                   fontWeight: 500,
-                  fontSize: 16,
+                  fontSize: '1rem',
                   height: 70,
                   borderBottom: 'none'
                 }}
@@ -331,7 +332,7 @@ class AppWithLayout extends React.Component {
             style={{
               textAlign: 'left',
               padding: '27px 24px',
-              fontSize: 16,
+              fontSize: '1rem',
               fontWeight: 300,
               fontFamily: 'HelveticaNeue-Light',
               backgounrColor: '#fff'

@@ -1,6 +1,14 @@
 body {
   height: 100%;
 }
+
+.text-color-default {
+  color: @text-color;
+}
+.text-color-secondary {
+  color: @text-color-secondary;
+}
+
 .page-wrapper {
   display: flex;
   min-height: 100vh;
@@ -68,7 +76,7 @@ li.ant-pagination-total-text {
 }
 
 .ant-btn-default {
-  color: #9ea7d0;
+  color: @text-color-secondary;
 }
 
 .ant-btn-primary {
@@ -101,6 +109,12 @@ li.ant-pagination-total-text {
   padding: 0 !important;
 }
 
+.ant-menu-item,
+.ant-drawer-title {
+  font-family: myFont-Medium;
+  font-size: 1rem !important;
+}
+
 .menu-mobile.ant-menu-item-selected {
   background-image: linear-gradient(to right, #3880ff, #5f98fd);
   color: #fff;
@@ -116,7 +130,7 @@ li.ant-pagination-total-text {
 
 .ant-input::placeholder {
   font-family: myFont-Light;
-  color: #9ea7d0;
+  color: @text-color-secondary;
 }
 
 h1,

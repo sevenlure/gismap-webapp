@@ -24,6 +24,8 @@ class MyApp extends App {
     // MARK  hạn chế Modal Alert authen nhìu lần
     window.isAlertModalErr = false
     window.dispatch = this.reduxStore.dispatch
+    if (navigator.userAgent.includes('Windows')) document.documentElement.style.fontSize = '18px'
+    // console.log('navigator.userAgent',navigator.userAgent,document.documentElement.style.fontSize )
   }
 
   render() {
