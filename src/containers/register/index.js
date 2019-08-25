@@ -14,6 +14,13 @@ import Link from 'next/link'
 import OtpConfirm from 'src/containers/otp-confirm'
 
 const RegisterWrapper = styled.div`
+  .modal--title {
+    margin-bottom: 24px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
   flex: 1;
   .ant-form-item-with-help {
     margin-bottom: 0px;
@@ -41,7 +48,8 @@ const RegisterWrapper = styled.div`
 class Register extends React.Component {
   static propTypes = {
     form: PropTypes.any,
-    getFieldError: PropTypes.any
+    getFieldError: PropTypes.any,
+    handleCancel: PropTypes.func.isRequired
   }
   handleSubmit = e => {
     e.preventDefault()
@@ -83,6 +91,12 @@ class Register extends React.Component {
     const { getFieldDecorator, getFieldValue } = this.props.form
     return (
       <RegisterWrapper>
+        <div className='modal--title'>
+          <h3 style={{ marginBottom: 0 }}>Đăng ký tài khoản</h3>
+          <Button style={{ width: 88 }} onClick={this.props.handleCancel} size='large' type='default'>
+            Đóng
+          </Button>
+        </div>
         <Form onSubmit={this.handleSubmit}>
           <Form.Item>
             {getFieldDecorator('fullName', {

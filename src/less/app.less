@@ -75,10 +75,6 @@ li.ant-pagination-total-text {
   background-image: linear-gradient(to right, #3880ff, #5f98fd);
 }
 
-.ant-btn-default {
-  color: @text-color-secondary;
-}
-
 .ant-btn-primary {
   background-image: linear-gradient(to right, #3880ff, #5f98fd);
 }
@@ -156,3 +152,16 @@ strong {
 .ant-input-affix-wrapper .ant-input:not(:first-child) {
   padding-left: 42px;
 }
+
+/* #region NOTE Button   */
+.ant-btn-lg > span {
+  font-weight: 500;
+  font-family: myFont-Medium;
+  font-size: 1rem;
+}
+
+.ant-btn-default {
+  color: @text-color-secondary;
+  border: @border-button-default;
+}
+/* #endregion */
