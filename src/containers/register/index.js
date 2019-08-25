@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import styled from 'styled-components'
-import { Form, Input, Icon, Button } from 'antd'
+import { Row, Col, Form, Input, Icon, Button, Modal } from 'antd'
 import PersonalSvg from 'static/images/icon/ic-personal.svg'
 import EmaillSvg from 'static/images/icon/ic-email.svg'
 import MobileSvg from 'static/images/icon/ic-mobile.svg'
@@ -9,6 +9,8 @@ import PassSvg from 'static/images/icon/ic-pass.svg'
 import AddressSvg from 'static/images/icon/ic-address.svg'
 import Clearfix from 'src/components/elements/clearfix'
 import Link from 'next/link'
+
+import InputOTP from 'src/components/elements/input-OTP'
 
 const RegisterWrapper = styled.div`
   flex: 1;
@@ -26,7 +28,11 @@ const RegisterWrapper = styled.div`
   .form--register {
     text-align: center;
     span {
-      font-size: 18px;
+      font-size: 1.125rem;
+    }
+    a {
+      font-family: myFont-Bold;
+      text-decoration: underline;
     }
   }
 `
@@ -38,11 +44,48 @@ class Register extends React.Component {
   }
   handleSubmit = e => {
     e.preventDefault()
-    this.props.form.validateFields((err, values) => {
-      if (!err) {
-        console.log('Received values of form: ', values)
+    // this.props.form.validateFields((err, values) => {
+    //   if (!err) {
+    //     console.log('Received values of form: ', values)
+    //   }
+    // })
+    const res = {
+      success: true,
+      data: {
+        otp: true
       }
-    })
+    }
+    if (res.success) {
+      Modal.success({
+        icon: 'false',
+        title: <h2 style={{ textAlign: 'center' }}>Nhập mã xác thực</h2>,
+        width: 'fit-content',
+        centered: true,
+        style: {},
+        content: (
+          <Row>
+            <Col xs={24} sm={24} lg={24} style={{ display: 'flex', flexDirection: 'column', textAlign: 'center' }}>
+              <div>
+                <span style={{ color: '#9ea7d0' }}>
+                  Vui lòng nhập mã xác thực được gửi về số điện thoại bạn đã đăng ký.
+                </span>
+              </div>
+
+              <Clearfix height={50} />
+              <InputOTP numInputs={4} />
+              <Clearfix height={30} />
+
+              <span style={{ color: '#9ea7d0' }}>Gửi lại mã xác thực sau 59 giây…</span>
+              {/* <Button type='link'>
+                <strong style={{ textDecoration: 'underline' }}>Gửi lại mã xác thực</strong>
+              </Button> */}
+            </Col>
+          </Row>
+        ),
+        okType: 'default',
+        okText: 'Đóng'
+      })
+    }
   }
 
   compareToFirstPassword = (rule, value, callback) => {

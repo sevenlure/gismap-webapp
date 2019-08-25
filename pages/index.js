@@ -31,14 +31,14 @@ const WrapperIndex = styled.div`
     }
 
     .search--title {
-      font-size: 50px;
+      font-size: 3.125rem;
       font-weight: bold;
       color: white;
       font-family: myFont-Bold;
       font-weight: bold;
     }
     .search--description {
-      font-size: 20px;
+      font-size: 1.25rem;
       font-weight: 300;
       color: white;
     }
@@ -51,7 +51,7 @@ const WrapperIndex = styled.div`
       background-color: white;
     }
     .search--form--description {
-      font-size: 16px;
+      font-size: 1rem;
     }
     .search--form--from-to {
       .search--form--from-to__icon > svg {
@@ -75,7 +75,7 @@ const WrapperIndex = styled.div`
     }
 
     .list--title {
-      font-size: 28px;
+      font-size: 1.75rem;
       font-weight: bold;
       font-family: myFont-Medium;
     }
@@ -98,7 +98,7 @@ const WrapperIndex = styled.div`
       }
       .list--content--card--price {
         padding-left: 20px;
-        font-size: 24px;
+        font-size: 1.5rem;
         font-family: myFont-Medium ;
       }
     }

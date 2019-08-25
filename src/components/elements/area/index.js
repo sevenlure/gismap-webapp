@@ -7,7 +7,7 @@ import { COLOR } from 'src/constant/theme'
 const AreaCotainer = styled.div`
   position: relative;
   width: 100%;
-  font-size: 14px;
+  font-size: 0.875rem;
   border-radius: 0 0 2px 2px;
   -webkit-transition: background-color 0.4s;
   transition: background-color 0.4s;
@@ -25,7 +25,7 @@ const Title = styled.div`
   -webkit-transition: background-color 0.4s;
   transition: background-color 0.4s;
   color: ${COLOR.TITLE};
-  font-size: 20px;
+  font-size: 1.25rem;
   font-weight: 500;
 `
 
