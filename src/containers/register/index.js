@@ -87,7 +87,13 @@ class Register extends React.Component {
           <Form.Item>
             {getFieldDecorator('fullName', {
               rules: [{ required: true, message: 'Vui lòng nhập họ và tên!' }]
-            })(<Input prefix={<Icon component={PersonalSvg} />} placeholder='Họ và tên *' />)}
+            })(
+              <Input
+                style={{ height: 50 }}
+                prefix={<Icon style={{ fontSize: '1.5rem' }} component={PersonalSvg} />}
+                placeholder='Họ và tên *'
+              />
+            )}
           </Form.Item>
           <Form.Item>
             {getFieldDecorator('phoneNumber', {
