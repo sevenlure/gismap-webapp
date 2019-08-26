@@ -1,6 +1,6 @@
 import React from 'react'
-import PropTypes from 'prop-types'
-import styled from 'styled-components'
+// import PropTypes from 'prop-types'
+// import styled from 'styled-components'
 import DefaultLayout from 'src/layout/default'
 
 class BookingPage extends React.Component {

@@ -1,9 +1,11 @@
 import React from 'react'
-// import PropTypes from 'prop-types'
+import PropTypes from 'prop-types'
 import { Row, Col, Button, Typography } from 'antd'
 import styled from 'styled-components'
 import InputOTP from 'src/components/elements/input-OTP'
 import Clearfix from 'src/components/elements/clearfix'
+// import Router from 'next/router'
+// import slug from 'src/routes'
 
 const { Text } = Typography
 
@@ -15,7 +17,9 @@ const OtpConfirmWrapper = styled.div`
 const TIME_COUNT_DOWN = 60 // seconds
 let intervalID = null
 export default class OtpConfirm extends React.Component {
-  static propTypes = {}
+  static propTypes = {
+    onSuccess: PropTypes.func.isRequired
+  }
 
   state = {
     isLoading: true,
@@ -23,6 +27,10 @@ export default class OtpConfirm extends React.Component {
     isSend: false,
     numInputs: 4,
     messageError: ''
+  }
+
+  componentWillUnmount = () => {
+    clearTimeout(intervalID)
   }
 
   resetCountDown = () => {
@@ -73,17 +81,17 @@ export default class OtpConfirm extends React.Component {
 
   hanldeSendOTP = value => {
     const res = {
-      error: value === '1111' ? false : true,
+      error: value === '1111' || value === '2222' ? false : true,
       message: 'Mã OTP không chính xác!'
     }
     if (res.error) {
       this.setState({
         messageError: res.message
       })
+    } else if (value === '2222') {
+      if (this.props.onSuccess) this.props.onSuccess(false)
     } else {
-      this.setState({
-        messageError: null
-      })
+      if (this.props.onSuccess) this.props.onSuccess(true)
     }
   }
 

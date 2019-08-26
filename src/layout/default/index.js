@@ -103,7 +103,7 @@ class AppWithLayout extends React.Component {
 
   state = {
     isOnDrawer: false,
-    isRegister: true
+    isRegister: false
   }
 
   componentDidMount = () => {
@@ -161,6 +161,19 @@ class AppWithLayout extends React.Component {
   UNSAFE_componentWillReceiveProps(nextProps) {
     if (this.state.isOnDrawer && nextProps.windowWidth > 980) {
       this.setState({ isOnDrawer: false })
+    }
+  }
+
+  handleOnSucces = status => {
+    // console.log(isSuccess, 'isSuccess')
+
+    this.setState({
+      isRegister: false
+    })
+    if (status) {
+      Router.replace(slug.result.base)
+    } else {
+      Router.replace(slug.result.registerError)
     }
   }
 
@@ -257,11 +270,11 @@ class AppWithLayout extends React.Component {
               visible={this.state.isRegister}
               footer={null}
               centered
-              destroyOnClose={true}
+              destroyOnClose={false}
               // onOk={this.handleOk}
               {...this.getStyleReponsive()}
             >
-              <Register />
+              <Register onSuccess={this.handleOnSucces} />
               <div
                 style={{
                   position: 'absolute',

@@ -13,6 +13,8 @@ import Link from 'next/link'
 // import InputOTP from 'src/components/elements/input-OTP'
 import OtpConfirm from 'src/containers/otp-confirm'
 
+// let modal = Modal.success()
+
 const RegisterWrapper = styled.div`
   flex: 1;
   .ant-form-item-with-help {
@@ -41,8 +43,22 @@ const RegisterWrapper = styled.div`
 class Register extends React.Component {
   static propTypes = {
     form: PropTypes.any,
+    onSuccess: PropTypes.func,
     getFieldError: PropTypes.any
   }
+
+  state = {
+    modal: null
+  }
+
+  componentDidMount = () => {}
+  componentWillUnmount = () => {}
+
+  hanldeOnSuccess = status => {
+    this.state.modal.destroy()
+    if (this.props.onSuccess) this.props.onSuccess(status)
+  }
+
   handleSubmit = e => {
     e.preventDefault()
     this.props.form.validateFields((err, values) => {
@@ -55,15 +71,17 @@ class Register extends React.Component {
           }
         }
         if (res.success) {
-          Modal.success({
-            icon: 'false',
-            title: <h2 style={{ textAlign: 'center' }}>Nhập mã xác thực</h2>,
-            width: 'fit-content',
-            centered: true,
-            style: {},
-            content: <OtpConfirm />,
-            okType: 'default',
-            okText: 'Đóng'
+          this.setState({
+            modal: Modal.success({
+              icon: 'false',
+              title: <h2 style={{ textAlign: 'center' }}>Nhập mã xác thực</h2>,
+              width: 'fit-content',
+              centered: true,
+              style: {},
+              content: <OtpConfirm onSuccess={this.hanldeOnSuccess} />,
+              okType: 'default',
+              okText: 'Đóng'
+            })
           })
         }
       }

@@ -15,6 +15,11 @@ const slug = {
   },
   booking: {
     base: '/booking'
+  },
+  result: {
+    base: '/result/register-success',
+    registerSuccess: '/result/register-success',
+    registerError: '/result/register-error'
   }
 }
 
