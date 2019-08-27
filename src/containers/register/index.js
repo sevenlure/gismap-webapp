@@ -16,6 +16,13 @@ import OtpConfirm from 'src/containers/otp-confirm'
 // let modal = Modal.success()
 
 const RegisterWrapper = styled.div`
+  .modal--title {
+    margin-bottom: 24px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
   flex: 1;
   .ant-form-item-with-help {
     margin-bottom: 0px;
@@ -44,7 +51,8 @@ class Register extends React.Component {
   static propTypes = {
     form: PropTypes.any,
     onSuccess: PropTypes.func,
-    getFieldError: PropTypes.any
+    getFieldError: PropTypes.any,
+    handleCancel: PropTypes.func.isRequired
   }
 
   state = {
@@ -101,6 +109,12 @@ class Register extends React.Component {
     const { getFieldDecorator, getFieldValue } = this.props.form
     return (
       <RegisterWrapper>
+        <div className='modal--title'>
+          <h3 style={{ marginBottom: 0 }}>Đăng ký tài khoản</h3>
+          <Button style={{ width: 88 }} onClick={this.props.handleCancel} size='large' type='default'>
+            Đóng
+          </Button>
+        </div>
         <Form onSubmit={this.handleSubmit}>
           <Form.Item>
             {getFieldDecorator('fullName', {
@@ -110,9 +124,7 @@ class Register extends React.Component {
           <Form.Item>
             {getFieldDecorator('phoneNumber', {
               rules: [{ required: true, message: 'Vui lòng nhập số điện thoại!' }]
-            })(
-              <Input prefix={<Icon component={MobileSvg} />} placeholder='Số điện thoại *' style={{ width: '100%' }} />
-            )}
+            })(<Input prefix={<Icon component={MobileSvg} />} placeholder='Số điện thoại *' />)}
           </Form.Item>
           <Form.Item>
             {getFieldDecorator('email', {
@@ -122,7 +134,7 @@ class Register extends React.Component {
                   message: 'Chưa đúng định dạng email!'
                 }
               ]
-            })(<Input prefix={<Icon component={EmaillSvg} />} placeholder='Email' />)}
+            })(<Input prefix={<Icon style={{ fontSize: '1.5rem' }} component={EmaillSvg} />} placeholder='Email' />)}
           </Form.Item>
           <Form.Item>
             {getFieldDecorator('address', {})(

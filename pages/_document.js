@@ -36,7 +36,7 @@ class MyDocument extends Document {
           {/* <link rel='stylesheet' href='/static/css/nprogress.css' /> */}
           {/* <link rel='icon' href='/static/images/logo.png'></link> */}
         </Head>
-        <body style={{ fontFamily: 'HelveticaNeue', fontWeight: '300' }}>
+        <body style={{ fontFamily: 'myFont', fontWeight: '300' }}>
           <Main />
           <NextScript />
         </body>

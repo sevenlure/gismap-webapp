@@ -55,8 +55,7 @@ const WrapperIndex = styled.div`
     }
     .search--form--from-to {
       .search--form--from-to__icon > svg {
-        height: 2em;
-        width: 2em;
+        
       }
       .ant-input-affix-wrapper .ant-input:not(:first-child) {
         padding-left: 40px;

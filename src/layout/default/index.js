@@ -138,14 +138,14 @@ class AppWithLayout extends React.Component {
     let style
     if (windowWidth >= 992) {
       style = {
-        width: 968,
+        width: '100%',
         bodyStyle: {
           padding: '30px 70px'
         }
       }
     } else if (windowWidth >= 576) {
       style = {
-        width: 500,
+        width: '100%',
         bodyStyle: {
           padding: '30px 70px'
         }
@@ -266,16 +266,29 @@ class AppWithLayout extends React.Component {
               </Menu.Item>
             </Menu>
             <Modal
-              title={<h2 style={{ marginBottom: 0 }}>Đăng ký tài khoản</h2>}
+              // title={<h2 style={{ marginBottom: 0 }}>Đăng ký tài khoản</h2>}
               visible={this.state.isRegister}
               footer={null}
               centered
-              destroyOnClose={false}
+              closeIcon={<span />}
+              wrapClassName='register--modal'
               // onOk={this.handleOk}
+              closable={false}
               {...this.getStyleReponsive()}
+              style={{
+                maxWidth: windowWidth > 576 ? 968 : 500,
+                padding: windowWidth > 576 ? 24 : 8
+              }}
             >
-              <Register onSuccess={this.handleOnSucces} />
-              <div
+              <Register
+                onSuccess={this.handleOnSucces}
+                handleCancel={() => {
+                  this.setState({
+                    isRegister: false
+                  })
+                }}
+              />
+              {/* <div
                 style={{
                   position: 'absolute',
                   top: '10px',
@@ -293,7 +306,7 @@ class AppWithLayout extends React.Component {
                 >
                   Đóng
                 </Button>
-              </div>
+              </div> */}
             </Modal>
             <Drawer
               title='Travel'
