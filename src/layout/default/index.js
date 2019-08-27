@@ -138,14 +138,12 @@ class AppWithLayout extends React.Component {
     let style
     if (windowWidth >= 992) {
       style = {
-        width: '100%',
         bodyStyle: {
           padding: '30px 70px'
         }
       }
     } else if (windowWidth >= 576) {
       style = {
-        width: '100%',
         bodyStyle: {
           padding: '30px 70px'
         }
@@ -275,9 +273,10 @@ class AppWithLayout extends React.Component {
               // onOk={this.handleOk}
               closable={false}
               {...this.getStyleReponsive()}
+              width='100%'
               style={{
-                maxWidth: windowWidth > 576 ? 968 : 500,
-                padding: windowWidth > 576 ? 24 : 8
+                maxWidth: 968,
+                padding: windowWidth > 600 ? 24 : 12
               }}
             >
               <Register

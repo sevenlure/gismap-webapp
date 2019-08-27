@@ -85,7 +85,9 @@ class Register extends React.Component {
               title: <h2 style={{ textAlign: 'center' }}>Nhập mã xác thực</h2>,
               width: 'fit-content',
               centered: true,
-              style: {},
+              style: {
+                padding: 24
+              },
               content: <OtpConfirm onSuccess={this.hanldeOnSuccess} />,
               okType: 'default',
               okText: 'Đóng'
