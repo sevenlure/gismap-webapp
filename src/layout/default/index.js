@@ -9,11 +9,7 @@ import { getListTour } from 'src/redux/actions/generalAction.js'
 import { get as _get } from 'lodash-es'
 import Router, { withRouter } from 'next/router'
 import slug from 'src/routes'
-// import hocProtectLogin from 'src/hoc/is-authenticated'
-// import posed from 'react-pose'
-// import { isEqual as _isEqual } from 'lodash-es'
-// import Link from 'next/link'
-// import { COLOR } from 'src/constant/theme'
+import Login from 'src/containers/login'
 import Register from 'src/containers/register'
 import windowSize from 'react-window-size'
 
@@ -103,7 +99,8 @@ class AppWithLayout extends React.Component {
 
   state = {
     isOnDrawer: false,
-    isRegister: false
+    isRegister: false,
+    isLogin: false
   }
 
   componentDidMount = () => {
@@ -127,9 +124,17 @@ class AppWithLayout extends React.Component {
     return result
   }
 
+  hanldeLogin = () => {
+    this.setState({
+      isRegister: false,
+      isLogin: true
+    })
+  }
+
   hanldeRegister = () => {
     this.setState({
-      isRegister: true
+      isRegister: true,
+      isLogin: false
     })
   }
 
@@ -175,6 +180,25 @@ class AppWithLayout extends React.Component {
     } else {
       Router.replace(slug.result.registerError)
     }
+  }
+
+  handleOnSubmitLogin = value => {
+    // console.log('value --- ', value)
+    const res = {
+      success: true,
+      data: {
+        ...value
+      }
+    }
+    if (res.success) {
+      this.setState({
+        isLogin: false
+      })
+    }
+  }
+
+  handleOnRegister = () => {
+    this.hanldeRegister()
   }
 
   render() {
@@ -244,7 +268,7 @@ class AppWithLayout extends React.Component {
                 />
               </Menu.Item>
 
-              <Menu.Item key='blankLogin' onClick={() => {}}>
+              <Menu.Item key='blankLogin' onClick={this.hanldeLogin}>
                 Đăng nhập
               </Menu.Item>
               <Menu.Item style={{ padding: 0 }} key='blankRegister'>
@@ -266,13 +290,11 @@ class AppWithLayout extends React.Component {
               </Menu.Item>
             </Menu>
             <Modal
-              // title={<h2 style={{ marginBottom: 0 }}>Đăng ký tài khoản</h2>}
               visible={this.state.isRegister}
               footer={null}
               centered
               closeIcon={<span />}
               wrapClassName='register--modal'
-              // onOk={this.handleOk}
               closable={false}
               {...this.getStyleReponsive()}
               style={{
@@ -288,25 +310,29 @@ class AppWithLayout extends React.Component {
                   })
                 }}
               />
-              {/* <div
-                style={{
-                  position: 'absolute',
-                  top: '10px',
-                  right: '20px',
-                  zIndex: 10
+            </Modal>
+            <Modal
+              visible={this.state.isLogin}
+              footer={null}
+              centered
+              closeIcon={<span />}
+              wrapClassName='register--modal'
+              closable={false}
+              {...this.getStyleReponsive()}
+              style={{
+                maxWidth: windowWidth > 576 ? 968 : 500,
+                padding: windowWidth > 576 ? 24 : 8
+              }}
+            >
+              <Login
+                onSubmit={this.handleOnSubmitLogin}
+                onRegister={this.handleOnRegister}
+                handleCancel={() => {
+                  this.setState({
+                    isLogin: false
+                  })
                 }}
-              >
-                <Button
-                  type='default'
-                  onClick={() => {
-                    this.setState({
-                      isRegister: false
-                    })
-                  }}
-                >
-                  Đóng
-                </Button>
-              </div> */}
+              />
             </Modal>
             <Drawer
               title='Travel'
