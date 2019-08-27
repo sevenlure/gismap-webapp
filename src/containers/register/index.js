@@ -81,11 +81,9 @@ class Register extends React.Component {
         if (res.success) {
           this.setState({
             modal: Modal.success({
-              icon: 'false',
               title: <h2 style={{ textAlign: 'center' }}>Nhập mã xác thực</h2>,
               width: 'fit-content',
               centered: true,
-              style: {},
               content: <OtpConfirm onSuccess={this.hanldeOnSuccess} />,
               okType: 'default',
               okText: 'Đóng'

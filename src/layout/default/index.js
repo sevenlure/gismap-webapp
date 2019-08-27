@@ -298,7 +298,7 @@ class AppWithLayout extends React.Component {
               closable={false}
               {...this.getStyleReponsive()}
               style={{
-                maxWidth: windowWidth > 576 ? 968 : 500,
+                // maxWidth: windowWidth > 576 ? 968 : 500,
                 padding: windowWidth > 576 ? 24 : 8
               }}
             >
@@ -319,10 +319,6 @@ class AppWithLayout extends React.Component {
               wrapClassName='register--modal'
               closable={false}
               {...this.getStyleReponsive()}
-              style={{
-                maxWidth: windowWidth > 576 ? 968 : 500,
-                padding: windowWidth > 576 ? 24 : 8
-              }}
             >
               <Login
                 onSubmit={this.handleOnSubmitLogin}
@@ -334,6 +330,7 @@ class AppWithLayout extends React.Component {
                 }}
               />
             </Modal>
+
             <Drawer
               title='Travel'
               placement='left'

@@ -14,7 +14,6 @@ const LoginWrapper = styled.div`
     justify-content: space-between;
     align-items: center;
   }
-
   flex: 1;
   .ant-form-item-with-help {
     margin-bottom: 0px;
@@ -89,7 +88,6 @@ class Login extends React.Component {
               rules: [{ required: true, message: 'Vui lòng nhập số điện thoại!' }]
             })(<Input prefix={<Icon component={MobileSvg} />} placeholder='Số điện thoại *' />)}
           </Form.Item>
-          
           <div>
             {getFieldDecorator('password', {
               rules: [{ required: true, message: 'Vui lòng nhâp mật khẩu!' }]
@@ -101,6 +99,7 @@ class Login extends React.Component {
               <a> Quên mật khẩu?</a>
             </strong>
           </div>
+          <Clearfix height={30} />
           <div className='form--button'>
             <Button disabled={!getFieldValue('password')} type='primary' htmlType='submit' block={true} size='large'>
               Đăng nhập
