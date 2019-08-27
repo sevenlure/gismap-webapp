@@ -33,6 +33,23 @@ body {
 
 /* #endregion */
 
+.ant-result {
+  width: 496px;
+  padding: 40px;
+  border-radius: 20px;
+  border: solid 1px #9ea7d0;
+  background-color: white;
+  border-style: dashed;
+}
+
+.ant-result-subtitle {
+  font-size: 1rem;
+  font-weight: 300;
+  font-family: myFont-Light;
+  text-align: center;
+  color: @text-color;
+}
+
 /* NOTE  dung để chỉnh PageTransition */
 .page-transition-enter {
   opacity: 0;
@@ -73,6 +90,14 @@ li.ant-pagination-total-text {
 .ant-menu.ant-menu-dark .ant-menu-item-selected,
 .ant-menu-submenu-popup.ant-menu-dark .ant-menu-item-selected {
   background-image: linear-gradient(to right, #3880ff, #5f98fd);
+}
+
+.ant-btn-default {
+  color: @text-color-secondary;
+}
+.ant-btn-danger {
+  color: white;
+  background-color: @btn-danger-color;
 }
 
 .ant-btn-primary {
@@ -124,6 +149,10 @@ li.ant-pagination-total-text {
   color: #3880ff;
 }
 
+.ant-input {
+  height: 50px !important;
+}
+
 .ant-input::placeholder {
   font-family: myFont-Light;
   color: @text-color-secondary;
@@ -149,8 +178,12 @@ strong {
   font-weight: 500;
 }
 
+.ant-input-affix-wrapper .ant-input-prefix{
+  font-size: 1.5rem;
+}
+
 .ant-input-affix-wrapper .ant-input:not(:first-child) {
-  padding-left: 42px;
+  padding-left: 40px !important;
 }
 
 /* #region NOTE Button   */

@@ -13,6 +13,8 @@ import Link from 'next/link'
 // import InputOTP from 'src/components/elements/input-OTP'
 import OtpConfirm from 'src/containers/otp-confirm'
 
+// let modal = Modal.success()
+
 const RegisterWrapper = styled.div`
   .modal--title {
     margin-bottom: 24px;
@@ -48,9 +50,23 @@ const RegisterWrapper = styled.div`
 class Register extends React.Component {
   static propTypes = {
     form: PropTypes.any,
+    onSuccess: PropTypes.func,
     getFieldError: PropTypes.any,
     handleCancel: PropTypes.func.isRequired
   }
+
+  state = {
+    modal: null
+  }
+
+  componentDidMount = () => {}
+  componentWillUnmount = () => {}
+
+  hanldeOnSuccess = status => {
+    this.state.modal.destroy()
+    if (this.props.onSuccess) this.props.onSuccess(status)
+  }
+
   handleSubmit = e => {
     e.preventDefault()
     this.props.form.validateFields((err, values) => {
@@ -63,15 +79,17 @@ class Register extends React.Component {
           }
         }
         if (res.success) {
-          Modal.success({
-            icon: 'false',
-            title: <h2 style={{ textAlign: 'center' }}>Nhập mã xác thực</h2>,
-            width: 'fit-content',
-            centered: true,
-            style: {},
-            content: <OtpConfirm />,
-            okType: 'default',
-            okText: 'Đóng'
+          this.setState({
+            modal: Modal.success({
+              icon: 'false',
+              title: <h2 style={{ textAlign: 'center' }}>Nhập mã xác thực</h2>,
+              width: 'fit-content',
+              centered: true,
+              style: {},
+              content: <OtpConfirm onSuccess={this.hanldeOnSuccess} />,
+              okType: 'default',
+              okText: 'Đóng'
+            })
           })
         }
       }
@@ -101,20 +119,12 @@ class Register extends React.Component {
           <Form.Item>
             {getFieldDecorator('fullName', {
               rules: [{ required: true, message: 'Vui lòng nhập họ và tên!' }]
-            })(
-              <Input
-                style={{ height: 50 }}
-                prefix={<Icon style={{ fontSize: '1.5rem' }} component={PersonalSvg} />}
-                placeholder='Họ và tên *'
-              />
-            )}
+            })(<Input prefix={<Icon component={PersonalSvg} />} placeholder='Họ và tên *' />)}
           </Form.Item>
           <Form.Item>
             {getFieldDecorator('phoneNumber', {
               rules: [{ required: true, message: 'Vui lòng nhập số điện thoại!' }]
-            })(
-              <Input prefix={<Icon component={MobileSvg} />} placeholder='Số điện thoại *' style={{ width: '100%' }} />
-            )}
+            })(<Input prefix={<Icon component={MobileSvg} />} placeholder='Số điện thoại *' />)}
           </Form.Item>
           <Form.Item>
             {getFieldDecorator('email', {
@@ -124,7 +134,7 @@ class Register extends React.Component {
                   message: 'Chưa đúng định dạng email!'
                 }
               ]
-            })(<Input prefix={<Icon component={EmaillSvg} />} placeholder='Email' />)}
+            })(<Input prefix={<Icon style={{ fontSize: '1.5rem' }} component={EmaillSvg} />} placeholder='Email' />)}
           </Form.Item>
           <Form.Item>
             {getFieldDecorator('address', {})(
