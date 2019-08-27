@@ -18,13 +18,14 @@ const ResultPageWrapper = styled.div`
   justify-content: center;
   align-items: center;
 
-  .result--containt {
-    width: 496px;
-    padding: 40px;
-    border-radius: 20px;
-    border: solid 1px #9ea7d0;
-    background-color: white;
-    border-style: dashed;
+  .ant-result {
+    ${props =>
+      props.windowWidth < 576
+        ? `    
+    border: none;
+    width: 100%;
+    `
+        : ''}
   }
 `
 @windowSize
@@ -84,7 +85,7 @@ class ResultPage extends React.Component {
 
   render() {
     return (
-      <ResultPageWrapper>
+      <ResultPageWrapper windowWidth={this.props.windowWidth}>
         <Clearfix height={60} />
         <div className='result--containt'>
           <Result

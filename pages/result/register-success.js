@@ -1,8 +1,9 @@
 import React from 'react'
-// import PropTypes from 'prop-types'
+import PropTypes from 'prop-types'
 import styled from 'styled-components'
 import { Result, Button, Icon } from 'antd'
 import DefaultLayout from 'src/layout/default'
+import windowSize from 'react-window-size'
 import Clearfix from 'src/components/elements/clearfix'
 import ResultSuccess from 'static/images/icon/ic-result-success.svg'
 import Router from 'next/router'
@@ -14,17 +15,24 @@ const ResultPageWrapper = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  .result--containt {
-    width: 496px;
-    padding:40px;
-    border-radius: 20px;
-    border: solid 1px #9ea7d0;
-    background-color: white;
-    border-style: dashed;
+
+  .ant-result {
+    ${props =>
+      props.windowWidth < 576
+        ? `    
+    border: none;
+    width: 100%;
+    `
+        : ''}
   }
 `
 
+@windowSize
 class ResultPage extends React.Component {
+  static propTypes = {
+    windowWidth: PropTypes.number
+  }
+
   hanldeToHome = () => {
     // console.log(slug.basic,"slug.base")
     Router.push(slug.basic)
@@ -32,7 +40,7 @@ class ResultPage extends React.Component {
 
   render() {
     return (
-      <ResultPageWrapper>
+      <ResultPageWrapper windowWidth={this.props.windowWidth}>
         <Clearfix height={60} />
         <div className='result--containt'>
           <Result
