@@ -10,6 +10,8 @@ import { userLogin } from 'src/redux/actions/authAction'
 import { updateUserInfo } from 'src/redux/actions/generalAction.js'
 import { connect } from 'react-redux'
 import { get as _get } from 'lodash-es'
+import Link from 'next/link'
+
 
 const LoginWrapper = styled.div`
   .modal--title {
@@ -137,7 +139,7 @@ class Login extends React.Component {
           <Clearfix height={16} />
           <div className='form--forget-pasword'>
             <strong>
-              <a> Quên mật khẩu?</a>
+              <Link> Quên mật khẩu?</Link>
             </strong>
           </div>
           <Clearfix height={30} />

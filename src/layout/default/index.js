@@ -198,7 +198,7 @@ class AppWithLayout extends React.Component {
   }
 
   render() {
-    console.log(this.props.isAuthenticated, 'isAuthenticated')
+    // console.log(this.props.isAuthenticated, 'isAuthenticated')
     let pathMenu = ''
     const pathname = this.props.router.pathname
     pathMenu = this.getPathForMenu(pathname)
@@ -276,25 +276,20 @@ class AppWithLayout extends React.Component {
                   }}
                 />
               </Menu.Item>
-
-              {!this.props.isAuthenticated && (
-                <div>
-                  <Menu.Item key='blankLogin' onClick={this.hanldeLogin}>
-                    Đăng nhập
-                  </Menu.Item>
-                  <Menu.Item style={{ padding: 0 }} key='blankRegister'>
-                    <Button style={{ padding: '0 25px' }} size='large' onClick={this.hanldeRegister} type='primary'>
-                      Đăng ký
-                    </Button>
-                  </Menu.Item>
-                </div>
-              )}
+              <Menu.Item key='blankLogin' onClick={this.hanldeLogin}>
+                Đăng nhập
+              </Menu.Item>
+              <Menu.Item style={{ padding: 0 }} key='blankRegister'>
+                <Button style={{ padding: '0 25px' }} size='large' onClick={this.hanldeRegister} type='primary'>
+                  Đăng ký
+                </Button>
+              </Menu.Item>
             </Menu>
-            {this.props.isAuthenticated && (
+            {/* {this.props.isAuthenticated && (
               <div className='logo'>
                 <strong>{this.props.fullName}</strong>
               </div>
-            )}
+            )} */}
             <Modal
               visible={this.state.isRegister}
               footer={null}
@@ -303,9 +298,10 @@ class AppWithLayout extends React.Component {
               // wrapClassName='register--modal'
               closable={false}
               {...this.getStyleReponsive()}
+              width='100%'
               style={{
-                // maxWidth: windowWidth > 576 ? 968 : 500,
-                padding: windowWidth > 576 ? 24 : 8
+                padding: windowWidth > 576 ? 24 : 12,
+                maxWidth: 968
               }}
             >
               <Register
