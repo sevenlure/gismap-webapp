@@ -9,11 +9,7 @@ import { getListTour } from 'src/redux/actions/generalAction.js'
 import { get as _get } from 'lodash-es'
 import Router, { withRouter } from 'next/router'
 import slug from 'src/routes'
-// import hocProtectLogin from 'src/hoc/is-authenticated'
-// import posed from 'react-pose'
-// import { isEqual as _isEqual } from 'lodash-es'
-// import Link from 'next/link'
-// import { COLOR } from 'src/constant/theme'
+import Login from 'src/containers/login'
 import Register from 'src/containers/register'
 import windowSize from 'react-window-size'
 
@@ -74,10 +70,8 @@ const ChildrenContainer = styled.div`
 
 @connect(
   state => ({
-    FirstName: _get(state, 'GeneralStore.userInfo.FirstName', ''),
-    LastName: _get(state, 'GeneralStore.userInfo.LastName', ''),
     isAuthenticated: _get(state, 'AuthStore.isAuthenticated'),
-    token: _get(state, 'AuthStore.token'),
+    fullName: _get(state, 'GeneralStore.userInfo.name', ''),
     menuSelected: _get(state, 'GeneralStore.menuSelected')
   }),
   {
@@ -89,21 +83,20 @@ const ChildrenContainer = styled.div`
 @windowSize
 class AppWithLayout extends React.Component {
   static propTypes = {
-    FirstName: PropTypes.string,
-    LastName: PropTypes.string,
+    fullName: PropTypes.string,
     children: PropTypes.node,
     clearUserInfo: PropTypes.func,
     isAuthenticated: PropTypes.bool,
     router: PropTypes.any,
     userLogout: PropTypes.func,
-
     getListTour: PropTypes.func,
     windowWidth: PropTypes.number
   }
 
   state = {
     isOnDrawer: false,
-    isRegister: false
+    isRegister: false,
+    isLogin: false
   }
 
   componentDidMount = () => {
@@ -127,9 +120,17 @@ class AppWithLayout extends React.Component {
     return result
   }
 
+  hanldeLogin = () => {
+    this.setState({
+      isRegister: false,
+      isLogin: true
+    })
+  }
+
   hanldeRegister = () => {
     this.setState({
-      isRegister: true
+      isRegister: true,
+      isLogin: false
     })
   }
 
@@ -138,12 +139,14 @@ class AppWithLayout extends React.Component {
     let style
     if (windowWidth >= 992) {
       style = {
+        width: '70vw',
         bodyStyle: {
           padding: '30px 70px'
         }
       }
     } else if (windowWidth >= 576) {
       style = {
+        width: '70vw',
         bodyStyle: {
           padding: '30px 70px'
         }
@@ -175,7 +178,27 @@ class AppWithLayout extends React.Component {
     }
   }
 
+  handleOnSubmitLogin = value => {
+    // console.log('value --- ', value)
+    const res = {
+      success: true,
+      data: {
+        ...value
+      }
+    }
+    if (res.success) {
+      this.setState({
+        isLogin: false
+      })
+    }
+  }
+
+  handleOnRegister = () => {
+    this.hanldeRegister()
+  }
+
   render() {
+    // console.log(this.props.isAuthenticated, 'isAuthenticated')
     let pathMenu = ''
     const pathname = this.props.router.pathname
     pathMenu = this.getPathForMenu(pathname)
@@ -214,6 +237,18 @@ class AppWithLayout extends React.Component {
               selectedKeys={[pathMenu]}
               onClick={this.hanldeChangeMenu}
             >
+              <Menu.Item style={{ padding: 0, float: 'left' }} key='blankIcon'>
+                <Icon
+                  className='menu-mobile'
+                  type='unordered-list'
+                  style={{ fontSize: '1.5rem', color: '#1890ff' }}
+                  onClick={() => {
+                    this.setState({
+                      isOnDrawer: true
+                    })
+                  }}
+                />
+              </Menu.Item>
               <Menu.Item className='menu-lg' key={slug.basic}>
                 Tìm vé xe
               </Menu.Item>
@@ -241,8 +276,7 @@ class AppWithLayout extends React.Component {
                   }}
                 />
               </Menu.Item>
-
-              <Menu.Item key='blankLogin' onClick={() => {}}>
+              <Menu.Item key='blankLogin' onClick={this.hanldeLogin}>
                 Đăng nhập
               </Menu.Item>
               <Menu.Item style={{ padding: 0 }} key='blankRegister'>
@@ -250,33 +284,24 @@ class AppWithLayout extends React.Component {
                   Đăng ký
                 </Button>
               </Menu.Item>
-              <Menu.Item style={{ padding: 0, float: 'left' }} key='blankIcon'>
-                <Icon
-                  className='menu-mobile'
-                  type='unordered-list'
-                  style={{ fontSize: '1.5rem', color: '#1890ff' }}
-                  onClick={() => {
-                    this.setState({
-                      isOnDrawer: true
-                    })
-                  }}
-                />
-              </Menu.Item>
             </Menu>
+            {/* {this.props.isAuthenticated && (
+              <div className='logo'>
+                <strong>{this.props.fullName}</strong>
+              </div>
+            )} */}
             <Modal
-              // title={<h2 style={{ marginBottom: 0 }}>Đăng ký tài khoản</h2>}
               visible={this.state.isRegister}
               footer={null}
               centered
               closeIcon={<span />}
-              wrapClassName='register--modal'
-              // onOk={this.handleOk}
+              // wrapClassName='register--modal'
               closable={false}
               {...this.getStyleReponsive()}
               width='100%'
               style={{
-                maxWidth: 968,
-                padding: windowWidth > 600 ? 24 : 12
+                padding: windowWidth > 576 ? 24 : 12,
+                maxWidth: 968
               }}
             >
               <Register
@@ -287,26 +312,26 @@ class AppWithLayout extends React.Component {
                   })
                 }}
               />
-              {/* <div
-                style={{
-                  position: 'absolute',
-                  top: '10px',
-                  right: '20px',
-                  zIndex: 10
-                }}
-              >
-                <Button
-                  type='default'
-                  onClick={() => {
-                    this.setState({
-                      isRegister: false
-                    })
-                  }}
-                >
-                  Đóng
-                </Button>
-              </div> */}
             </Modal>
+            <Modal
+              visible={this.state.isLogin}
+              footer={null}
+              centered
+              closeIcon={<span />}
+              // wrapClassName='register--modal'
+              closable={false}
+              {...this.getStyleReponsive()}
+            >
+              <Login
+                onRegister={this.handleOnRegister}
+                onCancel={() => {
+                  this.setState({
+                    isLogin: false
+                  })
+                }}
+              />
+            </Modal>
+
             <Drawer
               title='Travel'
               placement='left'

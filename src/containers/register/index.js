@@ -81,7 +81,6 @@ class Register extends React.Component {
         if (res.success) {
           this.setState({
             modal: Modal.success({
-              icon: 'false',
               title: <h2 style={{ textAlign: 'center' }}>Nhập mã xác thực</h2>,
               width: 'fit-content',
               centered: true,
@@ -160,11 +159,11 @@ class Register extends React.Component {
           </Form.Item>
           <div className='form--button'>
             <Button disabled={!getFieldValue('confirm')} type='primary' htmlType='submit' block={true} size='large'>
-              Đăng ký
+              Đăng nhập
             </Button>
           </div>
           <Clearfix height={16} />
-          <div className='form--register' style={{}}>
+          <div className='form--register'>
             <span>
               Bạn đã có tài khoản rồi?
               <Link href='#'>

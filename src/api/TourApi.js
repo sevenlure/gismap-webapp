@@ -1,8 +1,8 @@
 import fetch from './fetch'
 
-const SLUG = '/tours'
+const SLUG = '/tour'
 export function getListTour(query) {
-  return fetch.get(`${SLUG}`, {
+  return fetch.get(`${SLUG}/popular`, {
     params: {
       ...query
     }

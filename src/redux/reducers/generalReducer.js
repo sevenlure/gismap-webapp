@@ -1,7 +1,7 @@
 import update from 'react-addons-update'
 import {
-  GET_GENERAL_LIST_TOUR
-  // UPDATE_GENERAL_USER_INFO
+  GET_GENERAL_LIST_TOUR,
+  UPDATE_GENERAL_USER_INFO
   // , CLEAR_GENERAL_USER_INFO, SET_BREADCRUMB
 } from '../actions/generalAction'
 
@@ -33,7 +33,11 @@ const generalReducer = (state = InitialState, action) => {
         listtour: { $set: action.payload }
       })
     }
-
+    case UPDATE_GENERAL_USER_INFO: {
+      return update(state, {
+        userInfo: { $set: action.payload }
+      })
+    }
     default:
       return state
   }
