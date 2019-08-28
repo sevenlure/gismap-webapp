@@ -3,16 +3,25 @@ import PropTypes from 'prop-types'
 import styled from 'styled-components'
 import OtpInput from 'react-otp-input'
 import Clearfix from 'src/components/elements/clearfix'
+import windowSize from 'react-window-size'
 
 const InputOTPWrapper = styled.div`
   flex: 1;
   display: flex;
   justify-content: center;
+  width: 100%;
+  height: 65px;
+
+  div {
+    height: 65px;
+  }
 
   .input--number {
     text-align: center;
-    width: 65px !important;
-    height: 65px;
+    max-width: 65px;
+    width: 100% !important;
+    height: ${props => (props.windowWidth >= 480 ? '100%' : 'auto')};
+    max-height: 65px;
     border-width: 0px;
     border-radius: 10px;
     background-color: #f2f3f7;
@@ -26,18 +35,19 @@ const InputOTPWrapper = styled.div`
   }
 `
 
+@windowSize
 export default class InputOTP extends React.Component {
   static propTypes = {
     numInputs: PropTypes.number.isRequired,
     onSubmit: PropTypes.func,
-    onChange: PropTypes.func
+    onChange: PropTypes.func,
+    windowWidth: PropTypes.number
   }
   state = {
-    value: null
+    value: ''
   }
 
   hanldeOnChage = otp => {
-    // console.log(otp, 'otp')
     this.setState({
       value: otp
     })
@@ -53,7 +63,7 @@ export default class InputOTP extends React.Component {
   }
   render() {
     return (
-      <InputOTPWrapper>
+      <InputOTPWrapper windowWidth={this.props.windowWidth}>
         <OtpInput
           onChange={this.hanldeOnChage}
           containerStyle={'otpWrapper'}
