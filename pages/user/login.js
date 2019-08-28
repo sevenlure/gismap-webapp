@@ -34,8 +34,6 @@ const Center = styled.div`
   align-items: center;
   justify-content: center;
 `
-
-const updateUserInfo = () => {}
 const mapStateToProps = state => ({
   isAuthenticated: _get(state, 'AuthStore.isAuthenticated')
 })

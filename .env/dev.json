@@ -1,4 +1,5 @@
 {
   "isDev": true,
-  "HOST_API": "http://localhost:3005/"
+  "HOST_API": "http://prtr.southeastasia.cloudapp.azure.com:8015/",
+  "HOST_MEDIA": "https://i.ibb.co/"
 }

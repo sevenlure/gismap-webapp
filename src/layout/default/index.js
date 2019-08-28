@@ -70,10 +70,8 @@ const ChildrenContainer = styled.div`
 
 @connect(
   state => ({
-    FirstName: _get(state, 'GeneralStore.userInfo.FirstName', ''),
-    LastName: _get(state, 'GeneralStore.userInfo.LastName', ''),
     isAuthenticated: _get(state, 'AuthStore.isAuthenticated'),
-    token: _get(state, 'AuthStore.token'),
+    fullName: _get(state, 'GeneralStore.userInfo.name', ''),
     menuSelected: _get(state, 'GeneralStore.menuSelected')
   }),
   {
@@ -85,14 +83,12 @@ const ChildrenContainer = styled.div`
 @windowSize
 class AppWithLayout extends React.Component {
   static propTypes = {
-    FirstName: PropTypes.string,
-    LastName: PropTypes.string,
+    fullName: PropTypes.string,
     children: PropTypes.node,
     clearUserInfo: PropTypes.func,
     isAuthenticated: PropTypes.bool,
     router: PropTypes.any,
     userLogout: PropTypes.func,
-
     getListTour: PropTypes.func,
     windowWidth: PropTypes.number
   }
@@ -143,14 +139,14 @@ class AppWithLayout extends React.Component {
     let style
     if (windowWidth >= 992) {
       style = {
-        width: '100%',
+        width: '70vw',
         bodyStyle: {
           padding: '30px 70px'
         }
       }
     } else if (windowWidth >= 576) {
       style = {
-        width: '100%',
+        width: '70vw',
         bodyStyle: {
           padding: '30px 70px'
         }
@@ -202,6 +198,7 @@ class AppWithLayout extends React.Component {
   }
 
   render() {
+    console.log(this.props.isAuthenticated, 'isAuthenticated')
     let pathMenu = ''
     const pathname = this.props.router.pathname
     pathMenu = this.getPathForMenu(pathname)
@@ -240,6 +237,18 @@ class AppWithLayout extends React.Component {
               selectedKeys={[pathMenu]}
               onClick={this.hanldeChangeMenu}
             >
+              <Menu.Item style={{ padding: 0, float: 'left' }} key='blankIcon'>
+                <Icon
+                  className='menu-mobile'
+                  type='unordered-list'
+                  style={{ fontSize: '1.5rem', color: '#1890ff' }}
+                  onClick={() => {
+                    this.setState({
+                      isOnDrawer: true
+                    })
+                  }}
+                />
+              </Menu.Item>
               <Menu.Item className='menu-lg' key={slug.basic}>
                 Tìm vé xe
               </Menu.Item>
@@ -268,33 +277,30 @@ class AppWithLayout extends React.Component {
                 />
               </Menu.Item>
 
-              <Menu.Item key='blankLogin' onClick={this.hanldeLogin}>
-                Đăng nhập
-              </Menu.Item>
-              <Menu.Item style={{ padding: 0 }} key='blankRegister'>
-                <Button style={{ padding: '0 25px' }} size='large' onClick={this.hanldeRegister} type='primary'>
-                  Đăng ký
-                </Button>
-              </Menu.Item>
-              <Menu.Item style={{ padding: 0, float: 'left' }} key='blankIcon'>
-                <Icon
-                  className='menu-mobile'
-                  type='unordered-list'
-                  style={{ fontSize: '1.5rem', color: '#1890ff' }}
-                  onClick={() => {
-                    this.setState({
-                      isOnDrawer: true
-                    })
-                  }}
-                />
-              </Menu.Item>
+              {!this.props.isAuthenticated && (
+                <div>
+                  <Menu.Item key='blankLogin' onClick={this.hanldeLogin}>
+                    Đăng nhập
+                  </Menu.Item>
+                  <Menu.Item style={{ padding: 0 }} key='blankRegister'>
+                    <Button style={{ padding: '0 25px' }} size='large' onClick={this.hanldeRegister} type='primary'>
+                      Đăng ký
+                    </Button>
+                  </Menu.Item>
+                </div>
+              )}
             </Menu>
+            {this.props.isAuthenticated && (
+              <div className='logo'>
+                <strong>{this.props.fullName}</strong>
+              </div>
+            )}
             <Modal
               visible={this.state.isRegister}
               footer={null}
               centered
               closeIcon={<span />}
-              wrapClassName='register--modal'
+              // wrapClassName='register--modal'
               closable={false}
               {...this.getStyleReponsive()}
               style={{
@@ -316,14 +322,13 @@ class AppWithLayout extends React.Component {
               footer={null}
               centered
               closeIcon={<span />}
-              wrapClassName='register--modal'
+              // wrapClassName='register--modal'
               closable={false}
               {...this.getStyleReponsive()}
             >
               <Login
-                onSubmit={this.handleOnSubmitLogin}
                 onRegister={this.handleOnRegister}
-                handleCancel={() => {
+                onCancel={() => {
                   this.setState({
                     isLogin: false
                   })

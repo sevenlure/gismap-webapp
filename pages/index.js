@@ -116,6 +116,7 @@ class Index extends React.Component {
   }
 
   render() {
+    console.log(process.env.HOST_MEDIA)
     return (
       <WrapperIndex windowWidth={this.props.windowWidth}>
         <div className='search'>
@@ -180,7 +181,7 @@ class Index extends React.Component {
                         key={item.id}
                         className='list--content--card'
                         bordered
-                        cover={<img width={370} height={180} alt='' src={item.image} />}
+                        cover={<img width={370} height={180} alt='' src={`${process.env.HOST_MEDIA}${item.image}`} />}
                       >
                         <div>
                           <div className='list--content--card--title'>
@@ -205,6 +206,5 @@ class Index extends React.Component {
     )
   }
 }
-
 Index.Layout = DefaultLayout
 export default Index

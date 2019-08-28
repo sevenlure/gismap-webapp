@@ -87,7 +87,7 @@ fetch.interceptors.response.use(
                 content: message || data.message, //'Hết phiên làm việc, Vui lòng đăng nhập lại',
                 onOk() {
                   window.dispatch(userLogout())
-                  Router.push(slug.login)
+                  Router.push(slug.basic)
                 }
               })
               break

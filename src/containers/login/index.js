@@ -1,11 +1,15 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import styled from 'styled-components'
-import { Form, Input, Icon, Button } from 'antd'
+import { Form, Input, Icon, Button, message } from 'antd'
 import MobileSvg from 'static/images/icon/ic-mobile.svg'
 import PassSvg from 'static/images/icon/ic-pass.svg'
 import Clearfix from 'src/components/elements/clearfix'
-import Link from 'next/link'
+import authApi from 'src/api/authApi'
+import { userLogin } from 'src/redux/actions/authAction'
+import { updateUserInfo } from 'src/redux/actions/generalAction.js'
+import { connect } from 'react-redux'
+import { get as _get } from 'lodash-es'
 
 const LoginWrapper = styled.div`
   .modal--title {
@@ -40,18 +44,30 @@ const LoginWrapper = styled.div`
     }
   }
 `
-
+const mapStateToProps = state => ({
+  isAuthenticated: _get(state, 'AuthStore.isAuthenticated')
+})
+const mapDispatchToProps = {
+  userLogin,
+  updateUserInfo
+}
+@connect(
+  mapStateToProps,
+  mapDispatchToProps
+)
 class Login extends React.Component {
   static propTypes = {
     form: PropTypes.any,
-    onSubmit: PropTypes.func.isRequired,
     getFieldError: PropTypes.any,
-    handleCancel: PropTypes.func.isRequired,
-    onRegister: PropTypes.func
+    onCancel: PropTypes.func.isRequired,
+    onRegister: PropTypes.func,
+    userLogin: PropTypes.func,
+    updateUserInfo: PropTypes.func
   }
 
   state = {
-    modal: null
+    modal: null,
+    isLoading: false
   }
 
   componentDidMount = () => {}
@@ -62,7 +78,32 @@ class Login extends React.Component {
     this.props.form.validateFields((err, values) => {
       if (!err) {
         // console.log('Received values of form: ', values)
-        if (this.props.onSubmit) this.props.onSubmit(values)
+        // if (this.props.onSubmit) this.props.onSubmit(values)
+        this.setState({
+          isLoading: true
+        })
+
+        setTimeout(async () => {
+          authApi
+            .login(values)
+            .then(res => {
+              console.log('API', res)
+              this.props.userLogin(_get(res, 'data', null))
+              const userInfo = _get(res, 'data', null)
+              this.props.updateUserInfo(userInfo)
+              message.success(`Welcome ${userInfo.name}`)
+              if (this.props.onCancel) this.props.onCancel()
+            })
+            .catch(e => {
+              // const { response } = e
+              console.log('catch', e)
+            })
+            .finally(() => {
+              this.setState({
+                isLoading: false
+              })
+            })
+        }, 500)
       }
     })
   }
@@ -78,13 +119,13 @@ class Login extends React.Component {
       <LoginWrapper>
         <div className='modal--title'>
           <h3 style={{ marginBottom: 0 }}>Đăng nhập</h3>
-          <Button style={{ width: 88 }} onClick={this.props.handleCancel} size='large' type='default'>
+          <Button style={{ width: 88 }} onClick={this.props.onCancel} size='large' type='default'>
             Đóng
           </Button>
         </div>
         <Form onSubmit={this.handleSubmit}>
           <Form.Item>
-            {getFieldDecorator('phoneNumber', {
+            {getFieldDecorator('phone', {
               rules: [{ required: true, message: 'Vui lòng nhập số điện thoại!' }]
             })(<Input prefix={<Icon component={MobileSvg} />} placeholder='Số điện thoại *' />)}
           </Form.Item>
@@ -101,7 +142,14 @@ class Login extends React.Component {
           </div>
           <Clearfix height={30} />
           <div className='form--button'>
-            <Button disabled={!getFieldValue('password')} type='primary' htmlType='submit' block={true} size='large'>
+            <Button
+              disabled={!getFieldValue('password')}
+              type='primary'
+              htmlType='submit'
+              block={true}
+              size='large'
+              loading={this.state.isLoading}
+            >
               Đăng nhập
             </Button>
           </div>
