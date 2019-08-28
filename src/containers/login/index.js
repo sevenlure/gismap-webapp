@@ -10,8 +10,6 @@ import { userLogin } from 'src/redux/actions/authAction'
 import { updateUserInfo } from 'src/redux/actions/generalAction.js'
 import { connect } from 'react-redux'
 import { get as _get } from 'lodash-es'
-import Link from 'next/link'
-
 
 const LoginWrapper = styled.div`
   .modal--title {
@@ -64,7 +62,8 @@ class Login extends React.Component {
     onCancel: PropTypes.func.isRequired,
     onRegister: PropTypes.func,
     userLogin: PropTypes.func,
-    updateUserInfo: PropTypes.func
+    updateUserInfo: PropTypes.func,
+    onForgetPass: PropTypes.func
   }
 
   state = {
@@ -139,7 +138,7 @@ class Login extends React.Component {
           <Clearfix height={16} />
           <div className='form--forget-pasword'>
             <strong>
-              <Link> Quên mật khẩu?</Link>
+              <a onClick={this.props.onForgetPass}> Quên mật khẩu?</a>
             </strong>
           </div>
           <Clearfix height={30} />

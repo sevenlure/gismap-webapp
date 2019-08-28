@@ -18,8 +18,13 @@ const slug = {
   },
   result: {
     base: '/result/register-success',
+    success: '/result/success',
     registerSuccess: '/result/register-success',
     registerError: '/result/register-error'
+  },
+  user: {
+    forgetPassword: '/user/forget-password',
+    forgetPasswordNew: '/user/forget-password-new'
   }
 }
 

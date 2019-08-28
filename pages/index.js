@@ -16,6 +16,7 @@ import windowSize from 'react-window-size'
 const WrapperIndex = styled.div`
   display: flex;
   flex-direction: column;
+  background: white;
   .search {
     height: 500px;
     background-image: url(/static/images/unsplash.svg);
