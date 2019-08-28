@@ -12,6 +12,7 @@ import slug from 'src/routes'
 import Login from 'src/containers/login'
 import Register from 'src/containers/register'
 import windowSize from 'react-window-size'
+import AvatarUser from 'src/containers/auth/avatar-user'
 
 const { Header, Content, Footer } = Layout
 // const { SubMenu } = Menu
@@ -71,7 +72,7 @@ const ChildrenContainer = styled.div`
 @connect(
   state => ({
     isAuthenticated: _get(state, 'AuthStore.isAuthenticated'),
-    fullName: _get(state, 'GeneralStore.userInfo.name', ''),
+    name: _get(state, 'GeneralStore.userInfo.name', ''),
     menuSelected: _get(state, 'GeneralStore.menuSelected')
   }),
   {
@@ -83,7 +84,7 @@ const ChildrenContainer = styled.div`
 @windowSize
 class AppWithLayout extends React.Component {
   static propTypes = {
-    fullName: PropTypes.string,
+    name: PropTypes.string,
     children: PropTypes.node,
     clearUserInfo: PropTypes.func,
     isAuthenticated: PropTypes.bool,
@@ -203,7 +204,7 @@ class AppWithLayout extends React.Component {
     const pathname = this.props.router.pathname
     pathMenu = this.getPathForMenu(pathname)
 
-    const { children, windowWidth } = this.props
+    const { children, windowWidth, isAuthenticated, name } = this.props
     return (
       <LayoutWrapper windowWidth={windowWidth}>
         <Head>
@@ -276,20 +277,28 @@ class AppWithLayout extends React.Component {
                   }}
                 />
               </Menu.Item>
-              <Menu.Item key='blankLogin' onClick={this.hanldeLogin}>
-                Đăng nhập
-              </Menu.Item>
-              <Menu.Item style={{ padding: 0 }} key='blankRegister'>
-                <Button style={{ padding: '0 25px' }} size='large' onClick={this.hanldeRegister} type='primary'>
-                  Đăng ký
-                </Button>
-              </Menu.Item>
+              {!isAuthenticated && [
+                <Menu.Item key='blankLogin' onClick={this.hanldeLogin}>
+                  Đăng nhập
+                </Menu.Item>,
+                <Menu.Item style={{ padding: 0 }} key='blankRegister'>
+                  <Button style={{ padding: '0 25px' }} size='large' onClick={this.hanldeRegister} type='primary'>
+                    Đăng ký
+                  </Button>
+                </Menu.Item>
+              ]}
+              {isAuthenticated && [
+                <Menu.Item
+                  style={{ padding: 0, marginRight: 16, marginLeft: 20, borderBottom: 'none', cursor: 'inherit' }}
+                  key='blankName'
+                >
+                  <strong style={{ color: '#4c4c4c' }}>{name}</strong>
+                </Menu.Item>,
+                <Menu.Item style={{ padding: 0 }} key='blankUser'>
+                  <AvatarUser />
+                </Menu.Item>
+              ]}
             </Menu>
-            {/* {this.props.isAuthenticated && (
-              <div className='logo'>
-                <strong>{this.props.fullName}</strong>
-              </div>
-            )} */}
             <Modal
               visible={this.state.isRegister}
               footer={null}

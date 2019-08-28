@@ -6,6 +6,7 @@ import TourApi from 'src/api/TourApi'
 // NOTE  Quản lý các store của tour initial
 export const GET_GENERAL_LIST_TOUR = 'GENERAL/GET_GENERAL_LIST_TOUR'
 export const UPDATE_GENERAL_USER_INFO = 'GENERAL/UPDATE_GENERAL_USER_INFO'
+export const CLEAR_GENERAL_USER_INFO = 'GENERAL/CLEAR_GENERAL_USER_INFO'
 
 export function getListTour() {
   return async dispatch => {
@@ -19,5 +20,11 @@ export function getListTour() {
 export function updateUserInfo(data) {
   return async dispatch => {
     dispatch({ type: UPDATE_GENERAL_USER_INFO, payload: data })
+  }
+}
+
+export function clearUserInfo() {
+  return dispatch => {
+    dispatch({ type: CLEAR_GENERAL_USER_INFO })
   }
 }

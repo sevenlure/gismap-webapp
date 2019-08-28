@@ -1,6 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { Form, Input, Icon, Button, Layout, message } from 'antd'
+import { Form, Input, Icon, Button, Layout } from 'antd'
 import styled from 'styled-components'
 import Clearfix from 'src/components/elements/clearfix'
 import authApi from 'src/api/authApi'
@@ -83,16 +83,16 @@ class Login extends React.Component {
               this.props.userLogin(_get(res, 'data', null))
               const userInfo = _get(res, 'data', null)
               this.props.updateUserInfo(userInfo)
-              message.success(`Welcome ${userInfo.FirstName} ${userInfo.LastName}`)
-              const tamp = window.location.href
-              Router.push(slug.basic)
-              window.shouldLogout = false
-              // check khi Router.push k0 lam viec
-              setTimeout(() => {
-                if (tamp === window.location.href) {
-                  window.location.href = slug.basic
-                }
-              }, 500)
+              // message.success(`Welcome ${userInfo.FirstName} ${userInfo.LastName}`)
+              // const tamp = window.location.href
+              // Router.push(slug.basic)
+              // window.shouldLogout = false
+              // // check khi Router.push k0 lam viec
+              // setTimeout(() => {
+              //   if (tamp === window.location.href) {
+              //     window.location.href = slug.basic
+              //   }
+              // }, 500)
             })
             .catch(e => {
               // const { response } = e
