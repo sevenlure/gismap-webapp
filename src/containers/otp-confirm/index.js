@@ -115,8 +115,8 @@ export default class OtpConfirm extends React.Component {
               </span>
             </div>
 
-            <Clearfix height={25} />
-            <div style={{ height: 25 }}>
+            <Clearfix height={25} className='hide--on--xs' />
+            <div style={{ height: 25, marginBottom: 4 }}>
               {this.state.messageError && <Text type='danger'>{this.state.messageError}</Text>}
             </div>
             {!this.state.isLoading && (

@@ -87,6 +87,7 @@ class Register extends React.Component {
               style: {
                 padding: 24
               },
+              icon: <span />,
               content: <OtpConfirm onSuccess={this.hanldeOnSuccess} />,
               okType: 'default',
               okText: 'Đóng'

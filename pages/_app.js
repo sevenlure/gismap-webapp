@@ -7,8 +7,10 @@ import { Provider } from 'react-redux'
 import { persistStore } from 'redux-persist'
 import { PersistGate } from 'redux-persist/integration/react'
 import Loader from 'src/components/loading-screen'
-import 'src/less/app.less'
+
 import 'src/less/font.less'
+import 'src/less/app.less'
+import 'src/less/responsive.less'
 
 const reduxStore = getOrCreateStore()
 

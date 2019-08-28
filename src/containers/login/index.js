@@ -12,7 +12,6 @@ import { connect } from 'react-redux'
 import { get as _get } from 'lodash-es'
 import Link from 'next/link'
 
-
 const LoginWrapper = styled.div`
   .modal--title {
     margin-bottom: 24px;
