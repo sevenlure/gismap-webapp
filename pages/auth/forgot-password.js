@@ -61,9 +61,6 @@ class ForgetPasswordPage extends React.Component {
     e.preventDefault()
     this.props.form.validateFields(async (err, values) => {
       if (!err) {
-        this.setState({
-          isLoading: true
-        })
         // console.log('Received values of form: ', values)
         const res = await forgotPasswordSendOTP(values.phone)
         if (res.status && res.data) {
@@ -81,6 +78,9 @@ class ForgetPasswordPage extends React.Component {
             })
           })
         }
+        this.setState({
+          isLoading: false
+        })
       }
     })
   }
@@ -101,7 +101,7 @@ class ForgetPasswordPage extends React.Component {
           <Form.Item className='forgot-password---contant--input'>
             {getFieldDecorator('phone', {
               rules: [{ required: true, message: 'Vui lòng nhập số điện thoại!' }]
-            })(<Input.Password prefix={<Icon component={MobileSvg} />} placeholder='Số điện thoại *' />)}
+            })(<Input prefix={<Icon component={MobileSvg} />} placeholder='Số điện thoại *' />)}
           </Form.Item>
           <Clearfix height={16} />
           <div className='forgot-password---contant--button'>

@@ -9,6 +9,8 @@ import PassSvg from 'static/images/icon/ic-pass.svg'
 import AddressSvg from 'static/images/icon/ic-address.svg'
 import Clearfix from 'src/components/elements/clearfix'
 import Link from 'next/link'
+import { registerUser } from 'src/api/authApi'
+import { get as _get } from 'lodash-es'
 
 // import InputOTP from 'src/components/elements/input-OTP'
 import OtpConfirm from 'src/containers/otp-confirm'
@@ -56,44 +58,48 @@ class Register extends React.Component {
   }
 
   state = {
-    modal: null
+    modal: null,
+    otp: ''
   }
 
   componentDidMount = () => {}
   componentWillUnmount = () => {}
 
-  hanldeOnSuccess = status => {
+  hanldeOnSuccess = async (status, secret) => {
     this.state.modal.destroy()
-    if (this.props.onSuccess) this.props.onSuccess(status)
+    if (this.props.onSuccess) {
+      const { getFieldValue } = this.props.form
+      const res = await registerUser({
+        email: getFieldValue('email'),
+        name: getFieldValue('fullName'),
+        phone: getFieldValue('phone'),
+        address: getFieldValue('address'),
+        password: getFieldValue('password'),
+        otp: '1234'
+      })
+      this.props.onSuccess(res.status)
+    }
   }
 
   handleSubmit = e => {
     e.preventDefault()
-    this.props.form.validateFields((err, values) => {
+    this.props.form.validateFields(async (err, values) => {
       if (!err) {
-        console.log('Received values of form: ', values)
-        const res = {
-          success: true,
-          data: {
-            otp: true
-          }
-        }
-        if (res.success) {
-          this.setState({
-            modal: Modal.success({
-              title: <h2 style={{ textAlign: 'center' }}>Nhập mã xác thực</h2>,
-              width: 'fit-content',
-              centered: true,
-              style: {
-                padding: 24
-              },
-              icon: <span />,
-              content: <OtpConfirm onSuccess={this.hanldeOnSuccess} />,
-              okType: 'default',
-              okText: 'Đóng'
-            })
+        // console.log('Received values of form: ', values)
+        this.setState({
+          modal: Modal.success({
+            title: <h2 style={{ textAlign: 'center' }}>Nhập mã xác thực</h2>,
+            width: 'fit-content',
+            centered: true,
+            style: {
+              padding: 24
+            },
+            icon: <span />,
+            content: <OtpConfirm onSuccess={this.hanldeOnSuccess} />,
+            okType: 'default',
+            okText: 'Đóng'
           })
-        }
+        })
       }
     })
   }
@@ -124,7 +130,7 @@ class Register extends React.Component {
             })(<Input prefix={<Icon component={PersonalSvg} />} placeholder='Họ và tên *' />)}
           </Form.Item>
           <Form.Item>
-            {getFieldDecorator('phoneNumber', {
+            {getFieldDecorator('phone', {
               rules: [{ required: true, message: 'Vui lòng nhập số điện thoại!' }]
             })(<Input prefix={<Icon component={MobileSvg} />} placeholder='Số điện thoại *' />)}
           </Form.Item>
@@ -152,6 +158,8 @@ class Register extends React.Component {
             {getFieldDecorator('confirm', {
               rules: [
                 { required: true, message: 'Vui lòng nhập mật khẩu xác nhận!' },
+                {min: 8, message: 'Độ dài tối thiểu 8 ký tự'},
+                {max: 32, message: 'Độ dài tối đa 32 ký tự'},
                 {
                   validator: this.compareToFirstPassword
                 }

@@ -17,7 +17,20 @@ export function changePassword({ phone, secret, newPassword }) {
     newPassword
   })
 }
+
+export function registerUser({ email, name, phone, address, password, otp }) {
+  // console.log(data, 'data')
+  return fetch.post(`${SLUG}/register`, {
+    email,
+    name,
+    phone,
+    address,
+    password,
+    otp
+  })
+}
 export default {
   login,
-  changePassword
+  changePassword,
+  registerUser
 }

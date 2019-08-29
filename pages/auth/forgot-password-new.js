@@ -50,7 +50,7 @@ class ForgetPasswordNewPage extends React.Component {
   componentDidMount = () => {
     const parsed = queryString.parse(location.search)
 
-    console.log(parsed)
+    // console.log(parsed)
     this.setState({
       phone: parsed.phone,
       secret: parsed.secret
@@ -64,14 +64,14 @@ class ForgetPasswordNewPage extends React.Component {
         this.setState({
           isLoading: true
         })
-        console.log('Received values of form: ', values)
+        // console.log('Received values of form: ', values)
         const res = await changePassword({
           newPassword: values.newPassword,
           phone: _get(this.state, 'phone', ''),
           secret: _get(this.state, 'secret', '')
         })
 
-        if (!res.status) {
+        if (res.status) {
           this.setState({
             isLoading: false
           })

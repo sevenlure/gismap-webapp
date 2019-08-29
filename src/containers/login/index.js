@@ -10,8 +10,6 @@ import { userLogin } from 'src/redux/actions/authAction'
 import { updateUserInfo } from 'src/redux/actions/generalAction.js'
 import { connect } from 'react-redux'
 import { get as _get } from 'lodash-es'
-import Link from 'next/link'
-import slug from '../../routes'
 
 const LoginWrapper = styled.div`
   .modal--title {
