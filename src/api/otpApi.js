@@ -9,7 +9,6 @@ export function fotgotPassword(phone) {
   })
 }
 
-
 export function register(phone) {
   // console.log(data, 'data')
   return fetch.post(`${SLUG}/register`, {

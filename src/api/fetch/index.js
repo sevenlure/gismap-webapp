@@ -65,7 +65,8 @@ fetch.interceptors.response.use(
   function(error) {
     // NOTE https://github.com/axios/axios tai liệu tham khảo
     if (error.response) {
-      const { status, data, message } = error.response
+      // const { status, data, message } = error.response
+      const { status, data } = error.response
       switch (status) {
         case 401: {
           const title = 'Chứng thực'
