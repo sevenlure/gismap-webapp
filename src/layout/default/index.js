@@ -198,10 +198,11 @@ class AppWithLayout extends React.Component {
     this.hanldeRegister()
   }
   handleOnForgetPass = () => {
+    console.log('handleOnForgetPass')
     this.setState({
       isLogin: false
     })
-    Router.push(slug.user.forgetPassword)
+    Router.push(slug.auth.forgot_password)
   }
 
   render() {
@@ -339,7 +340,7 @@ class AppWithLayout extends React.Component {
             >
               <Login
                 onRegister={this.handleOnRegister}
-                onForgetPass={this.handleOnForgetPass}
+                onForgotPass={this.handleOnForgetPass}
                 onCancel={() => {
                   this.setState({
                     isLogin: false

@@ -10,11 +10,8 @@ import { userLogin } from 'src/redux/actions/authAction'
 import { updateUserInfo } from 'src/redux/actions/generalAction.js'
 import { connect } from 'react-redux'
 import { get as _get } from 'lodash-es'
-<<<<<<< HEAD
-=======
 import Link from 'next/link'
 import slug from '../../routes'
->>>>>>> 9b899dd9524d3cfb6a1e158ffd8e736c0393fac7
 
 const LoginWrapper = styled.div`
   .modal--title {
@@ -27,7 +24,7 @@ const LoginWrapper = styled.div`
   .ant-form-item-with-help {
     margin-bottom: 0px;
   }
-  .form--forget-pasword {
+  .form--forgot-pasword {
     text-align: right;
   }
   .form--button {
@@ -68,7 +65,7 @@ class Login extends React.Component {
     onRegister: PropTypes.func,
     userLogin: PropTypes.func,
     updateUserInfo: PropTypes.func,
-    onForgetPass: PropTypes.func
+    onForgotPass: PropTypes.func
   }
 
   state = {
@@ -141,13 +138,9 @@ class Login extends React.Component {
             })(<Input.Password prefix={<Icon component={PassSvg} />} placeholder='Mật khẩu *' />)}
           </div>
           <Clearfix height={16} />
-          <div className='form--forget-pasword'>
+          <div className='form--forgot-pasword'>
             <strong>
-<<<<<<< HEAD
-              <a onClick={this.props.onForgetPass}> Quên mật khẩu?</a>
-=======
-              <Link href={slug.auth.forgot_password}> Quên mật khẩu?</Link>
->>>>>>> 9b899dd9524d3cfb6a1e158ffd8e736c0393fac7
+              <a onClick={this.props.onForgotPass}> Quên mật khẩu?</a>
             </strong>
           </div>
           <Clearfix height={30} />

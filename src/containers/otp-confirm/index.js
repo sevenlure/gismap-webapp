@@ -82,16 +82,25 @@ export default class OtpConfirm extends React.Component {
   hanldeSendOTP = value => {
     const res = {
       error: value === '1111' || value === '2222' ? false : true,
-      message: 'Mã OTP không chính xác!'
+      message: 'Mã OTP không chính xác!',
+      secret: 'ABCD'
     }
     if (res.error) {
       this.setState({
         messageError: res.message
       })
     } else if (value === '2222') {
-      if (this.props.onSuccess) this.props.onSuccess(false)
+      if (this.props.onSuccess)
+        this.props.onSuccess({
+          status: false,
+          secret: res.secret
+        })
     } else {
-      if (this.props.onSuccess) this.props.onSuccess(true)
+      if (this.props.onSuccess)
+        this.props.onSuccess({
+          status: true,
+          secret: res.secret
+        })
     }
   }
 
