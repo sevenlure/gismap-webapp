@@ -8,7 +8,8 @@ import { Form, Input, Icon, Button, Modal } from 'antd'
 import MobileSvg from 'static/images/icon/ic-mobile.svg'
 import OtpConfirm from 'src/containers/otp-confirm'
 import slug from 'src/routes'
-import { forgotPasswordSendOTP } from 'src/api/otpApi'
+import { fotgotPassword } from 'src/api/otpApi'
+import { authFotgotPassword } from 'src/api/authApi'
 
 const ForgetPasswordWrapper = styled.div`
   margin-top: 45px;
@@ -45,14 +46,19 @@ class ForgetPasswordPage extends React.Component {
     isLoading: false
   }
 
-  hanldeOnSuccess = ({ status, secret }) => {
+  hanldeOnSuccess = async otp => {
     this.state.modal.destroy()
-    if (status) {
-      this.setState({
-        isLoading: false
-      })
-      const { getFieldValue } = this.props.form
-      const param = `?secret=${secret}&phone=${getFieldValue('phone')}`
+
+    this.setState({
+      isLoading: false
+    })
+    const { getFieldValue } = this.props.form
+    const res = await authFotgotPassword({
+      otp,
+      phone: getFieldValue('phone')
+    })
+    if (res.status === 200) {
+      const param = `?secret=${res.data.secret}&phone=${getFieldValue('phone')}`
       Router.push(`${slug.auth.forgot_PasswordNew}${param}`)
     }
   }
@@ -62,8 +68,9 @@ class ForgetPasswordPage extends React.Component {
     this.props.form.validateFields(async (err, values) => {
       if (!err) {
         // console.log('Received values of form: ', values)
-        const res = await forgotPasswordSendOTP(values.phone)
-        if (res.status && res.data) {
+        const res = await fotgotPassword(values.phone)
+        console.log(res, 'fotgotPassword')
+        if (res.status === 200 && res.data) {
           this.setState({
             modal: Modal.success({
               title: <h2 style={{ textAlign: 'center' }}>Nhập mã xác thực</h2>,

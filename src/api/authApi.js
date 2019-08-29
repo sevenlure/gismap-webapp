@@ -8,6 +8,13 @@ export function login(data) {
     ...data
   })
 }
+export function authFotgotPassword({ phone, otp }) {
+  // console.log(data, 'data')
+  return fetch.post(`${SLUG}/forgot-password`, {
+    phone,
+    otp
+  })
+}
 
 export function changePassword({ phone, secret, newPassword }) {
   // console.log(data, 'data')

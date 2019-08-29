@@ -10,7 +10,9 @@ import AddressSvg from 'static/images/icon/ic-address.svg'
 import Clearfix from 'src/components/elements/clearfix'
 import Link from 'next/link'
 import { registerUser } from 'src/api/authApi'
-import { get as _get } from 'lodash-es'
+import otpApi from 'src/api/otpApi'
+
+// import { get as _get } from 'lodash-es'
 
 // import InputOTP from 'src/components/elements/input-OTP'
 import OtpConfirm from 'src/containers/otp-confirm'
@@ -58,26 +60,43 @@ class Register extends React.Component {
   }
 
   state = {
-    modal: null,
-    otp: ''
+    otp: '',
+    messageErrorOtp: ''
   }
 
   componentDidMount = () => {}
   componentWillUnmount = () => {}
 
-  hanldeOnSuccess = async (status, secret) => {
-    this.state.modal.destroy()
+  hanldeOnSuccess = async otp => {
     if (this.props.onSuccess) {
       const { getFieldValue } = this.props.form
-      const res = await registerUser({
-        email: getFieldValue('email'),
-        name: getFieldValue('fullName'),
-        phone: getFieldValue('phone'),
-        address: getFieldValue('address'),
-        password: getFieldValue('password'),
-        otp: '1234'
-      })
-      this.props.onSuccess(res.status)
+      try {
+        const res = await registerUser({
+          email: getFieldValue('email'),
+          name: getFieldValue('fullName'),
+          phone: getFieldValue('phone'),
+          address: getFieldValue('address'),
+          password: getFieldValue('password'),
+          otp: otp
+        })
+        if (res.status === 200) {
+          Modal.destroyAll()
+          this.props.onSuccess(true)
+        }
+      } catch (ex) {
+        console.log(ex.response.data.code, 'ex')
+        if (ex.response.data.code === 'Unauthorized') {
+          this.setState(
+            {
+              messageErrorOtp: ex.response.data.message
+            },
+            () => {
+              Modal.destroyAll()
+              this.getModal()
+            }
+          )
+        }
+      }
     }
   }
 
@@ -86,21 +105,27 @@ class Register extends React.Component {
     this.props.form.validateFields(async (err, values) => {
       if (!err) {
         // console.log('Received values of form: ', values)
-        this.setState({
-          modal: Modal.success({
-            title: <h2 style={{ textAlign: 'center' }}>Nhập mã xác thực</h2>,
-            width: 'fit-content',
-            centered: true,
-            style: {
-              padding: 24
-            },
-            icon: <span />,
-            content: <OtpConfirm onSuccess={this.hanldeOnSuccess} />,
-            okType: 'default',
-            okText: 'Đóng'
-          })
-        })
+        const res = await otpApi.register(values.phone)
+        console.log(res, 'handleSubmit')
+        if (res.status) {
+          this.getModal()
+        }
       }
+    })
+  }
+
+  getModal = () => {
+    return Modal.success({
+      title: <h2 style={{ textAlign: 'center' }}>Nhập mã xác thực</h2>,
+      width: 'fit-content',
+      centered: true,
+      style: {
+        padding: 24
+      },
+      icon: <span />,
+      content: <OtpConfirm messageError={this.state.messageErrorOtp} onSuccess={this.hanldeOnSuccess} />,
+      okType: 'default',
+      okText: 'Đóng'
     })
   }
 
@@ -151,15 +176,18 @@ class Register extends React.Component {
           </Form.Item>
           <Form.Item>
             {getFieldDecorator('password', {
-              rules: [{ required: true, message: 'Vui lòng nhâp mật khẩu!' }]
+              rules: [
+                { required: true, message: 'Vui lòng nhâp mật khẩu!' },
+                { min: 8, message: 'Độ dài tối thiểu 8 ký tự' },
+                { max: 32, message: 'Độ dài tối đa 32 ký tự' }
+              ]
             })(<Input.Password prefix={<Icon component={PassSvg} />} placeholder='Mật khẩu *' />)}
           </Form.Item>
           <Form.Item>
             {getFieldDecorator('confirm', {
               rules: [
                 { required: true, message: 'Vui lòng nhập mật khẩu xác nhận!' },
-                {min: 8, message: 'Độ dài tối thiểu 8 ký tự'},
-                {max: 32, message: 'Độ dài tối đa 32 ký tự'},
+
                 {
                   validator: this.compareToFirstPassword
                 }

@@ -18,15 +18,15 @@ const TIME_COUNT_DOWN = 60 // seconds
 let intervalID = null
 export default class OtpConfirm extends React.Component {
   static propTypes = {
-    onSuccess: PropTypes.func.isRequired
+    onSuccess: PropTypes.func.isRequired,
+    messageError: PropTypes.string
   }
 
   state = {
     isLoading: true,
     countDown: 0,
     isSend: false,
-    numInputs: 4,
-    messageError: ''
+    numInputs: 4
   }
 
   componentWillUnmount = () => {
@@ -37,7 +37,6 @@ export default class OtpConfirm extends React.Component {
     clearTimeout(intervalID)
     this.setState({
       countDown: TIME_COUNT_DOWN,
-      messageError: null,
       isLoading: false
     })
     intervalID = setInterval(this.runCountDown, 1000)
@@ -80,28 +79,7 @@ export default class OtpConfirm extends React.Component {
   }
 
   hanldeSendOTP = value => {
-    const res = {
-      error: value === '1111' || value === '2222' ? false : true,
-      message: 'Mã OTP không chính xác!',
-      secret: 'ABCD'
-    }
-    if (res.error) {
-      this.setState({
-        messageError: res.message
-      })
-    } else if (value === '2222') {
-      if (this.props.onSuccess)
-        this.props.onSuccess({
-          status: false,
-          secret: res.secret
-        })
-    } else {
-      if (this.props.onSuccess)
-        this.props.onSuccess({
-          status: true,
-          secret: res.secret
-        })
-    }
+    this.props.onSuccess(value)
   }
 
   hanldeOnChangeOTP = value => {
@@ -113,7 +91,7 @@ export default class OtpConfirm extends React.Component {
   }
 
   render() {
-    // console.log(this.state, 'countdown')
+    console.log(this.props.messageError, 'messageError')
     return (
       <OtpConfirmWrapper>
         <Row>
@@ -126,7 +104,7 @@ export default class OtpConfirm extends React.Component {
 
             <Clearfix height={25} className='hide--on--xs' />
             <div style={{ height: 25, marginBottom: 4 }}>
-              {this.state.messageError && <Text type='danger'>{this.state.messageError}</Text>}
+              {this.props.messageError && <Text type='danger'>{this.props.messageError}</Text>}
             </div>
             {!this.state.isLoading && (
               <InputOTP

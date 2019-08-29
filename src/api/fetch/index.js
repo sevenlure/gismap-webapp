@@ -82,15 +82,16 @@ fetch.interceptors.response.use(
               break
             }
             case 'Unauthorized': {
-              alertMess({
-                title: title,
-                content: message || data.message, //'Hết phiên làm việc, Vui lòng đăng nhập lại',
-                onOk() {
-                  window.dispatch(userLogout())
-                  Router.push(slug.basic)
-                }
-              })
-              break
+              return Promise.reject(error)
+              // alertMess({
+              //   title: title,
+              //   content: message || data.message, //'Hết phiên làm việc, Vui lòng đăng nhập lại',
+              //   onOk() {
+              //     window.dispatch(userLogout())
+              //     Router.push(slug.basic)
+              //   }
+              // })
+              // break
             }
             default: {
               messageAnt.error(error.response.message)

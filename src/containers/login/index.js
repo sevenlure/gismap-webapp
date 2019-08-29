@@ -88,7 +88,7 @@ class Login extends React.Component {
           authApi
             .login(values)
             .then(res => {
-              console.log('API', res)
+              // console.log('API', res)
               this.props.userLogin(_get(res, 'data', null))
               const userInfo = _get(res, 'data', null)
               this.props.updateUserInfo(userInfo)

@@ -105,7 +105,11 @@ class ForgetPasswordNewPage extends React.Component {
           <Clearfix height={30} />
           <Form.Item className='forget-password---contant--input'>
             {getFieldDecorator('newPassword', {
-              rules: [{ required: true, message: 'Vui lòng nhập mật khẩu mới!' }]
+              rules: [
+                { required: true, message: 'Vui lòng nhập mật khẩu mới!' },
+                { min: 8, message: 'Độ dài tối thiểu 8 ký tự' },
+                { max: 32, message: 'Độ dài tối đa 32 ký tự' }
+              ]
             })(<Input.Password prefix={<Icon component={PassSvg} />} placeholder='Mật khẩu mới *' />)}
           </Form.Item>
           <Form.Item className='forget-password---contant--input'>
