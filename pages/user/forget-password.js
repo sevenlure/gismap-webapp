@@ -45,15 +45,13 @@ class ForgetPasswordPage extends React.Component {
     isLoading: false
   }
 
-  hanldeOnSuccess = ({ status, secret }) => {
+  hanldeOnSuccess = status => {
     this.state.modal.destroy()
     if (status) {
       this.setState({
         isLoading: false
       })
-      const { getFieldValue } = this.props.form
-      const param = `?secret=${secret}&phone=${getFieldValue('phone')}`
-      Router.push(`${slug.auth.forgot_PasswordNew}${param}`)
+      Router.push(slug.user.forgetPasswordNew)
     }
   }
 

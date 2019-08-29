@@ -8,7 +8,8 @@ const slug = {
     base: '/infoTour'
   },
   auth: {
-    forgot_password: '/auth/forgot-password'
+    forgot_password: '/auth/forgot-password',
+    forgot_PasswordNew: '/auth/forgot-password-new'
   },
   about: {
     base: '/about'
@@ -21,8 +22,14 @@ const slug = {
   },
   result: {
     base: '/result/register-success',
+    success: '/result/success',
+    error: '/result/error',
     registerSuccess: '/result/register-success',
     registerError: '/result/register-error'
+  },
+  user: {
+    forgetPassword: '/user/forget-password',
+    forgetPasswordNew: '/user/forget-password-new'
   }
 }
 

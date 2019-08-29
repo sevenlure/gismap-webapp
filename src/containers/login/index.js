@@ -24,7 +24,7 @@ const LoginWrapper = styled.div`
   .ant-form-item-with-help {
     margin-bottom: 0px;
   }
-  .form--forget-pasword {
+  .form--forgot-pasword {
     text-align: right;
   }
   .form--button {
@@ -64,7 +64,8 @@ class Login extends React.Component {
     onCancel: PropTypes.func.isRequired,
     onRegister: PropTypes.func,
     userLogin: PropTypes.func,
-    updateUserInfo: PropTypes.func
+    updateUserInfo: PropTypes.func,
+    onForgotPass: PropTypes.func
   }
 
   state = {
@@ -137,9 +138,9 @@ class Login extends React.Component {
             })(<Input.Password prefix={<Icon component={PassSvg} />} placeholder='Mật khẩu *' />)}
           </div>
           <Clearfix height={16} />
-          <div className='form--forget-pasword'>
+          <div className='form--forgot-pasword'>
             <strong>
-              <Link href={slug.auth.forgot_password}> Quên mật khẩu?</Link>
+              <a onClick={this.props.onForgotPass}> Quên mật khẩu?</a>
             </strong>
           </div>
           <Clearfix height={30} />

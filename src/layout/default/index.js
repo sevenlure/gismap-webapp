@@ -59,7 +59,7 @@ const LayoutWrapper = styled.div`
 `
 
 const ChildrenContainer = styled.div`
-  background: rgb(255, 255, 255);
+  background: #f2f3f7;
   display: flex;
   flex: 1 1 0%;
   margin-top: 70px;
@@ -197,6 +197,13 @@ class AppWithLayout extends React.Component {
   handleOnRegister = () => {
     this.hanldeRegister()
   }
+  handleOnForgetPass = () => {
+    console.log('handleOnForgetPass')
+    this.setState({
+      isLogin: false
+    })
+    Router.push(slug.auth.forgot_password)
+  }
 
   render() {
     // console.log(this.props.isAuthenticated, 'isAuthenticated')
@@ -333,6 +340,7 @@ class AppWithLayout extends React.Component {
             >
               <Login
                 onRegister={this.handleOnRegister}
+                onForgotPass={this.handleOnForgetPass}
                 onCancel={() => {
                   this.setState({
                     isLogin: false
