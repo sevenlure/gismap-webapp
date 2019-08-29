@@ -3,16 +3,16 @@ import PropTypes from 'prop-types'
 // import styled from 'styled-components'
 import { Menu, Avatar, Dropdown, Icon } from 'antd'
 import { connect } from 'react-redux'
-// import { get as _get } from 'lodash-es'
+import { get as _get } from 'lodash-es'
 import { userLogout } from 'src/redux/actions/authAction'
 import { clearUserInfo } from 'src/redux/actions/generalAction.js'
 // import Router from 'next/router'
 // import slug from 'src/routes'
 
 @connect(
-  // state => ({
-  //   // name: _get(state, 'GeneralStore.userInfo.name', '')
-  // }),
+  state => ({
+    name: _get(state, 'GeneralStore.userInfo.name', '')
+  }),
   {
     userLogout,
     clearUserInfo
