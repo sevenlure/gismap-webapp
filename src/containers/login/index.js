@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import styled from 'styled-components'
-import { Form, Input, Icon, Button, message } from 'antd'
+import { Form, Input, Icon, Button } from 'antd'
 import MobileSvg from 'static/images/icon/ic-mobile.svg'
 import PassSvg from 'static/images/icon/ic-pass.svg'
 import Clearfix from 'src/components/elements/clearfix'
@@ -10,6 +10,11 @@ import { userLogin } from 'src/redux/actions/authAction'
 import { updateUserInfo } from 'src/redux/actions/generalAction.js'
 import { connect } from 'react-redux'
 import { get as _get } from 'lodash-es'
+<<<<<<< HEAD
+=======
+import Link from 'next/link'
+import slug from '../../routes'
+>>>>>>> 9b899dd9524d3cfb6a1e158ffd8e736c0393fac7
 
 const LoginWrapper = styled.div`
   .modal--title {
@@ -92,7 +97,7 @@ class Login extends React.Component {
               this.props.userLogin(_get(res, 'data', null))
               const userInfo = _get(res, 'data', null)
               this.props.updateUserInfo(userInfo)
-              message.success(`Welcome ${userInfo.name}`)
+              // message.success(`Welcome ${userInfo.name}`)
               if (this.props.onCancel) this.props.onCancel()
             })
             .catch(e => {
@@ -138,7 +143,11 @@ class Login extends React.Component {
           <Clearfix height={16} />
           <div className='form--forget-pasword'>
             <strong>
+<<<<<<< HEAD
               <a onClick={this.props.onForgetPass}> Quên mật khẩu?</a>
+=======
+              <Link href={slug.auth.forgot_password}> Quên mật khẩu?</Link>
+>>>>>>> 9b899dd9524d3cfb6a1e158ffd8e736c0393fac7
             </strong>
           </div>
           <Clearfix height={30} />

@@ -7,6 +7,9 @@ const slug = {
   infoTour: {
     base: '/infoTour'
   },
+  auth: {
+    forgot_password: '/auth/forgot-password'
+  },
   about: {
     base: '/about'
   },
