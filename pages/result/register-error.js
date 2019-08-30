@@ -18,14 +18,10 @@ const ResultPageWrapper = styled.div`
   justify-content: center;
   align-items: center;
 
-  .ant-result {
-    ${props =>
-      props.windowWidth < 576
-        ? `    
-    border: none;
+  .result--containt {
     width: 100%;
-    `
-        : ''}
+    padding: 24px;
+    max-width: 496px;
   }
 `
 @windowSize

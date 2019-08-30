@@ -19,14 +19,10 @@ const ResultPageWrapper = styled.div`
   justify-content: center;
   align-items: center;
 
-  .ant-result {
-    ${props =>
-      props.windowWidth < 576
-        ? `    
-    border: none;
+  .result--containt {
     width: 100%;
-    `
-        : ''}
+    padding: 24px;
+    max-width: 496px;
   }
 `
 @windowSize
@@ -89,7 +85,7 @@ class ResultPage extends React.Component {
         <div className='result--containt'>
           <Result
             title={<h4>{this.state.title}</h4>}
-            subTitle={<span>{this.state.message}.</span>}
+            subTitle={<span>{this.state.message ? this.state.message + '.' : <span>&nbsp;</span>}</span>}
             icon={<Icon component={ResultSuccess} />}
             // <Icon className='search--form--from-to__icon'  />
             extra={

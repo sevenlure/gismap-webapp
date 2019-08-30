@@ -38,7 +38,7 @@ body {
 /* #endregion */
 
 .ant-result {
-  width: 496px;
+  max-width: 496px;
   padding: 40px;
   border-radius: 20px;
   border: solid 1px #9ea7d0;
@@ -46,12 +46,22 @@ body {
   border-style: dashed;
 }
 
+
+.ant-result-title {
+  font-size: 1.5rem;
+  @media only screen and (max-width: 480px) {
+    // font-size: 1.25rem;
+  }
+}
 .ant-result-subtitle {
   font-size: 1rem;
   font-weight: 300;
   font-family: myFont-Light;
   text-align: center;
   color: @text-color;
+  @media only screen and (max-width: 480px) {
+    font-size: 0.75rem;
+  }
 }
 
 /* NOTE  dung để chỉnh PageTransition */
