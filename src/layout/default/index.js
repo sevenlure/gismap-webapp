@@ -167,8 +167,6 @@ class AppWithLayout extends React.Component {
   }
 
   handleOnSucces = status => {
-    // console.log(isSuccess, 'isSuccess')
-
     this.setState({
       isRegister: false
     })
@@ -198,7 +196,7 @@ class AppWithLayout extends React.Component {
     this.hanldeRegister()
   }
   handleOnForgetPass = () => {
-    console.log('handleOnForgetPass')
+    // console.log('handleOnForgetPass')
     this.setState({
       isLogin: false
     })

@@ -117,7 +117,7 @@ class Index extends React.Component {
   }
 
   render() {
-    console.log(process.env.HOST_MEDIA)
+    // console.log(process.env.HOST_MEDIA)
     return (
       <WrapperIndex windowWidth={this.props.windowWidth}>
         <div className='search'>

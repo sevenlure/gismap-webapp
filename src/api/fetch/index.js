@@ -65,7 +65,8 @@ fetch.interceptors.response.use(
   function(error) {
     // NOTE https://github.com/axios/axios tai liệu tham khảo
     if (error.response) {
-      const { status, data, message } = error.response
+      // const { status, data, message } = error.response
+      const { status, data } = error.response
       switch (status) {
         case 401: {
           const title = 'Chứng thực'
@@ -82,15 +83,16 @@ fetch.interceptors.response.use(
               break
             }
             case 'Unauthorized': {
-              alertMess({
-                title: title,
-                content: message || data.message, //'Hết phiên làm việc, Vui lòng đăng nhập lại',
-                onOk() {
-                  window.dispatch(userLogout())
-                  Router.push(slug.basic)
-                }
-              })
-              break
+              return Promise.reject(error)
+              // alertMess({
+              //   title: title,
+              //   content: message || data.message, //'Hết phiên làm việc, Vui lòng đăng nhập lại',
+              //   onOk() {
+              //     window.dispatch(userLogout())
+              //     Router.push(slug.basic)
+              //   }
+              // })
+              // break
             }
             default: {
               messageAnt.error(error.response.message)
