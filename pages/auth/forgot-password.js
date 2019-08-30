@@ -81,7 +81,8 @@ class ForgetPasswordPage extends React.Component {
                 padding: 24
               },
               content: <OtpConfirm onSuccess={this.hanldeOnSuccess} />,
-              okText: 'Đóng'
+              okText: 'Đóng',
+              maskClosable: true
             })
           })
         }

@@ -309,6 +309,7 @@ class AppWithLayout extends React.Component {
               footer={null}
               centered
               closeIcon={<span />}
+              onCancel={() => this.setState({ isRegister: false })}
               // wrapClassName='register--modal'
               closable={false}
               {...this.getStyleReponsive()}
@@ -332,6 +333,7 @@ class AppWithLayout extends React.Component {
               footer={null}
               centered
               closeIcon={<span />}
+              onCancel={() => this.setState({ isLogin: false })}
               // wrapClassName='register--modal'
               closable={false}
               {...this.getStyleReponsive()}

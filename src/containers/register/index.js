@@ -125,7 +125,8 @@ class Register extends React.Component {
       icon: <span />,
       content: <OtpConfirm messageError={this.state.messageErrorOtp} onSuccess={this.hanldeOnSuccess} />,
       okType: 'default',
-      okText: 'Đóng'
+      okText: 'Đóng',
+      maskClosable: true
     })
   }
 
