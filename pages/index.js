@@ -6,6 +6,7 @@ import { connect } from 'react-redux'
 import { Row, Col, Button, Card, Form } from 'antd'
 import { getFormatNumber } from 'src/config/format'
 import DefaultLayout from 'src/layout/default'
+
 // import ArrowIconSvg from 'static/images/icon/ic-arrow-map.svg'
 // import ArrowIcon1Svg from 'static/images/icon/ic-arrow-map-1.svg'
 import windowSize from 'react-window-size'
@@ -13,6 +14,10 @@ import windowSize from 'react-window-size'
 // NOTE Element
 import Clearfix from 'src/components/elements/clearfix'
 import SelectDeparture from 'src/components/elements/select-departure'
+
+
+import InputOTP from 'src/components/elements/input-OTP'
+
 
 const WrapperIndex = styled.div`
   display: flex;
@@ -145,6 +150,7 @@ class Index extends React.Component {
 
     return (
       <WrapperIndex windowWidth={this.props.windowWidth}>
+        {/* <InputOTP numInputs={4}/> */}
         <div className='search'>
           <div className='search--container'>
             <div style={{ margin: 16 }}>

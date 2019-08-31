@@ -43,6 +43,9 @@ export default class InputOTP extends React.Component {
     onChange: PropTypes.func,
     windowWidth: PropTypes.number
   }
+
+  componentDidMount = () => {}
+
   state = {
     value: ''
   }
@@ -71,6 +74,7 @@ export default class InputOTP extends React.Component {
           numInputs={this.props.numInputs}
           value={this.state.value}
           separator={<Clearfix width={20} />}
+          shouldAutoFocus={true}
         />
       </InputOTPWrapper>
     )

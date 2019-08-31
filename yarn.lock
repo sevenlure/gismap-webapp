@@ -6933,10 +6933,10 @@ react-lifecycles-compat@^3.0.0, react-lifecycles-compat@^3.0.2, react-lifecycles
   resolved "https://registry.yarnpkg.com/react-lifecycles-compat/-/react-lifecycles-compat-3.0.4.tgz#4f1a273afdfc8f3488a8c516bfda78f872352362"
   integrity sha512-fBASbA6LnOU9dOU2eW7aQ8xmYBSXUIWr+UmF9b1efZBazGNO+rcXT/icdKnYm2pTwcRylVUYwW7H1PHfLekVzA==
 
-react-otp-input@0.3.3:
-  version "0.3.3"
-  resolved "https://registry.yarnpkg.com/react-otp-input/-/react-otp-input-0.3.3.tgz#0459ca3693a6838a071056fa927172a07a7580a2"
-  integrity sha512-2hTfMkHht8mN9EgB+Jt9DkMbdbUu1e9q7sef5sKFmBLNYbHpVlhXdiKV/rZzknzg+Ug/AmNSxZzJPR7yU9GCFQ==
+react-otp-input@^1.0.1:
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/react-otp-input/-/react-otp-input-1.0.1.tgz#b07ded9ecf83bf7e3bced8653084e61eeff6b6ff"
+  integrity sha512-N57qZ+kQVgU7W1x/urL5zu6N0+nVqJxWn74ueaKaXl5rF6Pqe05q3WybPFxDg9CRQRisfEUjXyT8Q+1Uzwb8ng==
 
 react-pose@^4.0.8:
   version "4.0.8"
