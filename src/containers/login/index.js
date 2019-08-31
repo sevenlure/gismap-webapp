@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import styled from 'styled-components'
-import { Form, Input, Icon, Button } from 'antd'
+import { Form, Input, Icon, Button, message } from 'antd'
 import MobileSvg from 'static/images/icon/ic-mobile.svg'
 import PassSvg from 'static/images/icon/ic-pass.svg'
 import Clearfix from 'src/components/elements/clearfix'
@@ -98,9 +98,12 @@ class Login extends React.Component {
               // message.success(`Welcome ${userInfo.name}`)
               if (this.props.onCancel) this.props.onCancel()
             })
-            .catch(e => {
+            .catch(ex => {
               // const { response } = e
-              console.log('catch', e)
+              console.log('catch', ex)
+              if (ex.response.data.code === 'Unauthorized') {
+                message.error(ex.response.data.message)
+              }
             })
             .finally(() => {
               this.setState({
