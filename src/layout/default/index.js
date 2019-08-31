@@ -338,6 +338,8 @@ class AppWithLayout extends React.Component {
             >
               <Register
                 onSuccess={this.handleOnSucces}
+                isClearData={this.state.isRegister}
+                onLogin={this.hanldeLogin}
                 handleCancel={() => {
                   this.setState({
                     isRegister: false

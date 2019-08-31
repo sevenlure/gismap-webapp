@@ -8,10 +8,11 @@ import MobileSvg from 'static/images/icon/ic-mobile.svg'
 import PassSvg from 'static/images/icon/ic-pass.svg'
 import AddressSvg from 'static/images/icon/ic-address.svg'
 import Clearfix from 'src/components/elements/clearfix'
-import Link from 'next/link'
 import { registerUser } from 'src/api/authApi'
 import otpApi from 'src/api/otpApi'
-
+import { connect } from 'react-redux'
+import { userLogin } from 'src/redux/actions/authAction'
+import { updateUserInfo } from 'src/redux/actions/generalAction.js'
 // import { get as _get } from 'lodash-es'
 
 // import InputOTP from 'src/components/elements/input-OTP'
@@ -50,22 +51,30 @@ const RegisterWrapper = styled.div`
     }
   }
 `
-
+const mapDispatchToProps = {
+  userLogin,
+  updateUserInfo
+}
+@connect(
+  () => ({}),
+  mapDispatchToProps
+)
 class Register extends React.Component {
   static propTypes = {
     form: PropTypes.any,
     onSuccess: PropTypes.func,
     getFieldError: PropTypes.any,
-    handleCancel: PropTypes.func.isRequired
+    handleCancel: PropTypes.func.isRequired,
+    onLogin: PropTypes.func,
+    userLogin: PropTypes.func,
+    updateUserInfo: PropTypes.func,
+    isClearData: PropTypes.bool
   }
 
   state = {
     otp: '',
     messageErrorOtp: ''
   }
-
-  componentDidMount = () => {}
-  componentWillUnmount = () => {}
 
   hanldeOnSuccess = async otp => {
     if (this.props.onSuccess) {
@@ -81,10 +90,18 @@ class Register extends React.Component {
         })
         if (res.status === 200) {
           Modal.destroyAll()
+          this.props.userLogin({
+            token:
+              'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1ZDY1NTdmYzg0YmEzYTFmMTlhNDU2MDYiLCJlbWFpbCI6InNldmVubHVyZTE5OTNAZ21haWwuY29tIiwibmFtZSI6Ik1haSBUaHXhuq1uIFRo4bqjbyBNYWkiLCJwaG9uZSI6IjA3NzY5MDUwOTIiLCJhZGRyZXNzIjoixJBvw6BuIFbEg24gQsahIFAuMTYsIFE0LCBUUC5IQ00iLCJjcmVhdGVkQXQiOiIyMDE5LTA4LTI3VDE2OjE5OjA4LjE3MloiLCJ1cGRhdGVkQXQiOiIyMDE5LTA4LTMxVDE0OjQ3OjE2LjE3NFoiLCJpZCI6MCwiX192IjowLCJpYXQiOjE1NjcyNjMxNjIsImV4cCI6MTU2NzI3MDM2Mn0.fzzJmd5ZJwVfP7V4nheo7jDLwhawUa212kChghaBspY'
+          })
+          this.props.updateUserInfo(res.data)
           this.props.onSuccess(true)
+          this.setState({
+            messageErrorOtp: null
+          })
         }
       } catch (ex) {
-        console.log(ex.response.data.code, 'ex')
+        // console.log(ex.response.data.code, 'ex')
         if (ex.response.data.code === 'Unauthorized') {
           this.setState(
             {
@@ -106,7 +123,7 @@ class Register extends React.Component {
       if (!err) {
         // console.log('Received values of form: ', values)
         const res = await otpApi.register(values.phone)
-        console.log(res, 'handleSubmit')
+        // console.log(res, 'handleSubmit')
         if (res.status) {
           this.getModal()
         }
@@ -115,6 +132,9 @@ class Register extends React.Component {
   }
 
   getModal = () => {
+    this.setState({
+      messageErrorOtp: null
+    })
     return Modal.success({
       title: <h2 style={{ textAlign: 'center' }}>Nhập mã xác thực</h2>,
       width: 'fit-content',
@@ -122,6 +142,7 @@ class Register extends React.Component {
       style: {
         padding: 24
       },
+      autoFocusButton: 'cancel',
       icon: <span />,
       content: <OtpConfirm messageError={this.state.messageErrorOtp} onSuccess={this.hanldeOnSuccess} />,
       okType: 'default',
@@ -136,6 +157,12 @@ class Register extends React.Component {
       callback('Mật khẩu xác nhận chưa giống mật khẩu!')
     } else {
       callback()
+    }
+  }
+
+  componentDidUpdate = prevprops => {
+    if (this.props.isClearData !== prevprops.isClearData && prevprops.isClearData) {
+      this.props.form.resetFields()
     }
   }
 
@@ -197,16 +224,14 @@ class Register extends React.Component {
           </Form.Item>
           <div className='form--button'>
             <Button disabled={!getFieldValue('confirm')} type='primary' htmlType='submit' block={true} size='large'>
-              Đăng nhập
+              Đăng ký
             </Button>
           </div>
           <Clearfix height={16} />
           <div className='form--register'>
             <span>
               Bạn đã có tài khoản rồi?
-              <Link href='#'>
-                <a> Đăng nhập</a>
-              </Link>
+              <a onClick={this.props.onLogin}> Đăng nhập</a>
             </span>
           </div>
         </Form>
