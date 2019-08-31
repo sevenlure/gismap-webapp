@@ -46,7 +46,6 @@ body {
   border-style: dashed;
 }
 
-
 .ant-result-title {
   font-size: 1.5rem;
   @media only screen and (max-width: 480px) {
@@ -89,7 +88,18 @@ body {
 .pop-height-400 .ant-select-dropdown-menu {
   max-height: 400px !important;
 }
+/* #region   NOTE  ant-select */
+.ant-select-no-arrow .ant-select-selection__rendered {
+  margin-left: 40px !important;
+}
 
+.ant-select-lg .ant-select-selection--single{
+  height: 50px !important;
+}
+.ant-select-lg .ant-select-selection__rendered{
+  line-height: 50px !important;
+}
+/* #endregion */
 /* NOTE  custom css về table */
 ul.ant-pagination.ant-table-pagination {
   width: 100%;
@@ -192,7 +202,7 @@ strong {
   font-weight: 500;
 }
 
-.ant-input-affix-wrapper .ant-input-prefix{
+.ant-input-affix-wrapper .ant-input-prefix {
   font-size: 1.5rem;
 }
 

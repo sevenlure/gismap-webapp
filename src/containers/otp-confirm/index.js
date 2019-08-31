@@ -91,7 +91,7 @@ export default class OtpConfirm extends React.Component {
   }
 
   render() {
-    console.log(this.props.messageError, 'messageError')
+    // console.log(this.props.messageError, 'messageError')
     return (
       <OtpConfirmWrapper>
         <Row>

@@ -24,7 +24,7 @@ const hocProtectLoginTemp = Component => {
     componentDidMount() {
       const { isAuthenticated, token } = this.props
       if (!isAuthenticated) {
-        console.log(isAuthenticated, 'isAuthenticated')
+        // console.log(isAuthenticated, 'isAuthenticated')
         Router.replace(slug.login)
       } else {
         setAuthorizationforHeader(token)

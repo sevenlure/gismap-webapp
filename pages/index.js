@@ -3,15 +3,16 @@ import PropTypes from 'prop-types'
 import { get as _get, map as _map } from 'lodash-es'
 import styled from 'styled-components'
 import { connect } from 'react-redux'
-// import Link from 'next/link'
-import { Row, Col, Icon, Input, Button, Card } from 'antd'
-import Clearfix from 'src/components/elements/clearfix'
+import { Row, Col, Button, Card, Form } from 'antd'
 import { getFormatNumber } from 'src/config/format'
-// import slug, { breadcrumb } from 'src/routes'
 import DefaultLayout from 'src/layout/default'
-import ArrowIconSvg from 'static/images/icon/ic-arrow-map.svg'
-import ArrowIcon1Svg from 'static/images/icon/ic-arrow-map-1.svg'
+// import ArrowIconSvg from 'static/images/icon/ic-arrow-map.svg'
+// import ArrowIcon1Svg from 'static/images/icon/ic-arrow-map-1.svg'
 import windowSize from 'react-window-size'
+
+// NOTE Element
+import Clearfix from 'src/components/elements/clearfix'
+import SelectDeparture from 'src/components/elements/select-departure'
 
 const WrapperIndex = styled.div`
   display: flex;
@@ -105,19 +106,43 @@ const WrapperIndex = styled.div`
   }
 `
 
-@connect(null)
 @connect(state => ({
-  listTour: _get(state, 'GeneralStore.listtour', [])
+  listTour: _get(state, 'GeneralStore.listtour', []),
+  listDeparture: _get(state, 'GeneralStore.danhMuc.listDeparture', [])
 }))
 @windowSize
 class Index extends React.Component {
   static propTypes = {
     windowWidth: PropTypes.number,
-    listTour: PropTypes.array
+    listTour: PropTypes.array,
+    listDeparture: PropTypes.array,
+    form: PropTypes.any
+  }
+
+  hasErrors = fieldsError => {
+    // console.log(fieldsError, 'fieldsError')
+    return Object.keys(fieldsError).some(field => fieldsError[field])
+  }
+  hanldeSearch = e => {
+    // console.log('hanldeSearch')
+    e.preventDefault()
+    this.props.form.validateFields(async (err, values) => {
+      if (!err) {
+        console.log('Received values of form: ', values)
+      }
+      // console.log('err: ', values)
+    })
+  }
+
+  componentDidMount() {
+    // To disabled submit button at the beginning.
+    this.props.form.validateFields()
   }
 
   render() {
+    const { getFieldDecorator, getFieldsError } = this.props.form
     // console.log(process.env.HOST_MEDIA)
+
     return (
       <WrapperIndex windowWidth={this.props.windowWidth}>
         <div className='search'>
@@ -129,42 +154,46 @@ class Index extends React.Component {
                 <span>Chào mừng bạn đến với travel đặt vé xe, vui lòng đăng nhập để có trải nghiệm tốt nhất.</span>
               </div>
               <Clearfix height={30} />
-              <div className='search--form'>
-                <div className='search--form--description'>
-                  <span>
-                    Bạn hãy nhập điểm khởi hành và điểm muốn đến, chúng tôi sẽ tìm ra vé xe phù hợp với bạn nhất.
-                  </span>
+              <Form>
+                <div className='search--form'>
+                  <div className='search--form--description'>
+                    <span>
+                      Bạn hãy nhập điểm khởi hành và điểm muốn đến, chúng tôi sẽ tìm ra vé xe phù hợp với bạn nhất.
+                    </span>
+                  </div>
+                  <Clearfix height={20} />
+                  <div className='search--form--from-to'>
+                    <Row gutter={8}>
+                      <Col xs={24} sm={12} lg={12} style={{ marginBottom: 8 }}>
+                        {getFieldDecorator('diemKhoiHanh', {
+                          rules: [{ required: true, message: 'Vui lòng chọn điểm khởi hành!' }]
+                        })(<SelectDeparture placeholder='Điểm khởi hành' isFrom={true} />)}
+                      </Col>
+                      <Col xs={24} sm={12} lg={12} style={{ marginBottom: 8 }}>
+                        {getFieldDecorator('diemDen', {
+                          rules: [{ required: true, message: 'Vui lòng chọn điểm muốn đến!' }]
+                        })(<SelectDeparture placeholder='Điểm muốn đến' isFrom={false} />)}
+                      </Col>
+                    </Row>
+                  </div>
+                  <Clearfix height={20} />
+                  <div className='search--form--button'>
+                    <Row>
+                      <Col xs={24} sm={{ span: 6, offset: 18 }} lg={{ span: 6, offset: 18 }}>
+                        <Button
+                          onClick={this.hanldeSearch}
+                          type='primary'
+                          block={true}
+                          size='large'
+                          disabled={this.hasErrors(getFieldsError())}
+                        >
+                          Tìm vé xe
+                        </Button>
+                      </Col>
+                    </Row>
+                  </div>
                 </div>
-                <Clearfix height={20} />
-                <div className='search--form--from-to'>
-                  <Row gutter={8}>
-                    <Col xs={24} sm={12} lg={12} style={{ marginBottom: 8 }}>
-                      <Input
-                        size='large'
-                        placeholder='Điểm khởi hành'
-                        prefix={<Icon className='search--form--from-to__icon' component={ArrowIconSvg} />}
-                      />
-                    </Col>
-                    <Col xs={24} sm={12} lg={12} style={{ marginBottom: 8 }}>
-                      <Input
-                        size='large'
-                        placeholder='Điểm muốn đến'
-                        prefix={<Icon className='search--form--from-to__icon' component={ArrowIcon1Svg} />}
-                      />
-                    </Col>
-                  </Row>
-                </div>
-                <Clearfix height={20} />
-                <div className='search--form--button'>
-                  <Row>
-                    <Col xs={24} sm={{ span: 6, offset: 18 }} lg={{ span: 6, offset: 18 }}>
-                      <Button type='primary' block={true} size='large'>
-                        Tìm vé xe
-                      </Button>
-                    </Col>
-                  </Row>
-                </div>
-              </div>
+              </Form>
               <Clearfix height={74} />
             </div>
           </div>
@@ -208,4 +237,5 @@ class Index extends React.Component {
   }
 }
 Index.Layout = DefaultLayout
-export default Index
+
+export default Form.create({})(Index)
