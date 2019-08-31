@@ -35,6 +35,8 @@ class MyDocument extends Document {
           {/* <style>{``}</style> */}
           {/* <link rel='stylesheet' href='/static/css/nprogress.css' /> */}
           {/* <link rel='icon' href='/static/images/logo.png'></link> */}
+          <link rel='stylesheet' href='/static/css/simplebar.min.css' />
+          <script src='/static/js/simplebar.min.js'></script>
         </Head>
         <body style={{ fontFamily: 'myFont', fontWeight: '300' }}>
           <Main />

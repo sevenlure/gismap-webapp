@@ -25,7 +25,7 @@ const WrapperIndex = styled.div`
   background: white;
   .search {
     height: 500px;
-    background-image: url(/static/images/unsplash.svg);
+    background-image: url(/static/images/unsplash.png);
     background-repeat:no-repeat;
     background-position: center;
     background-attachment: initial;
