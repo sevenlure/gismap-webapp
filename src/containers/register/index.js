@@ -22,7 +22,7 @@ import OtpConfirm from 'src/containers/otp-confirm'
 
 const RegisterWrapper = styled.div`
   .modal--title {
-    margin-bottom: 24px;
+    margin-bottom: 16px;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -49,6 +49,9 @@ const RegisterWrapper = styled.div`
       font-family: myFont-Bold;
       text-decoration: underline;
     }
+  }
+  .ant-form-item {
+    margin-bottom: 4px;
   }
 `
 const mapDispatchToProps = {
@@ -179,28 +182,63 @@ class Register extends React.Component {
         <Form onSubmit={this.handleSubmit}>
           <Form.Item>
             {getFieldDecorator('fullName', {
-              rules: [{ required: true, message: 'Vui lòng nhập họ và tên!' }]
+              rules: [
+                { required: true, message: 'Vui lòng nhập họ và tên! ' },
+                {
+                  pattern: /^[^`~!@#$%^&*()_+={}\[\]|\\:;“’<,>.?๐฿]{5,30}$/,
+                  message: 'Họ và tên không đuợc chứa ký tự đặc biệt và có độ dài từ 5 đến 30! '
+                },
+                {
+                  validator: (rule, value, callback) => {
+                    const mess = 'Họ tên phải có ít nhất 2 từ! '
+                    if (value) {
+                      const tamp = value.split(' ')
+                      if (tamp.length < 2) callback(mess)
+                      if (!tamp[1]) callback(mess)
+                    }
+                    callback()
+                  }
+                }
+              ]
             })(<Input prefix={<Icon component={PersonalSvg} />} placeholder='Họ và tên *' />)}
           </Form.Item>
           <Form.Item>
             {getFieldDecorator('phone', {
-              rules: [{ required: true, message: 'Vui lòng nhập số điện thoại!' }]
+              rules: [
+                { required: true, message: 'Vui lòng nhập số điện thoại!' },
+                {
+                  pattern: /^[0-9]*$/,
+                  message: 'Chỉ đuợc nhập số!'
+                },
+                { min: 10, max: 13, message: 'Số điện thoại độ dài từ 10 đến 13 số!' }
+              ]
             })(<Input prefix={<Icon component={MobileSvg} />} placeholder='Số điện thoại *' />)}
           </Form.Item>
           <Form.Item>
             {getFieldDecorator('email', {
               rules: [
                 {
-                  type: 'email',
+                  required: true,
+                  message: 'Email là thông tin bắt buộc!'
+                },
+                {
+                  // type: 'email',
+                  pattern: /^.{5,}@.{2,}\..{2,}/,
                   message: 'Chưa đúng định dạng email!'
                 }
               ]
-            })(<Input prefix={<Icon style={{ fontSize: '1.5rem' }} component={EmaillSvg} />} placeholder='Email' />)}
+            })(<Input prefix={<Icon component={EmaillSvg} />} placeholder='Email' />)}
           </Form.Item>
           <Form.Item>
-            {getFieldDecorator('address', {})(
-              <Input prefix={<Icon component={AddressSvg} />} placeholder='Địa chỉ sinh sống' />
-            )}
+            {getFieldDecorator('address', {
+              rules: [
+                {
+                  min: 10,
+                  max: 200,
+                  message: 'Địa chỉ có độ dài từ 10 đến 200!'
+                }
+              ]
+            })(<Input prefix={<Icon component={AddressSvg} />} placeholder='Địa chỉ sinh sống' />)}
           </Form.Item>
           <Form.Item>
             {getFieldDecorator('password', {

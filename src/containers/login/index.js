@@ -13,7 +13,7 @@ import { get as _get } from 'lodash-es'
 
 const LoginWrapper = styled.div`
   .modal--title {
-    margin-bottom: 24px;
+    margin-bottom: 16px;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -42,6 +42,9 @@ const LoginWrapper = styled.div`
       font-family: myFont-Bold;
       text-decoration: underline;
     }
+  }
+  .ant-form-item {
+    margin-bottom: 4px;
   }
 `
 const mapStateToProps = state => ({
