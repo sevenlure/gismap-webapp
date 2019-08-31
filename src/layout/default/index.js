@@ -105,6 +105,11 @@ class AppWithLayout extends React.Component {
   componentDidMount = () => {
     // console.log('componentDidMount Layout')
     Promise.all([this.props.getListTour(), this.props.getListDeparture()]).then(() => {})
+    try {
+      new SimpleBar(document.body)
+    } catch (e) {
+      console.log('error SimpleBar', e)
+    }
   }
   hanldeChangeMenu = ({ key }) => {
     if (!key || key.includes('blank')) return
@@ -296,7 +301,17 @@ class AppWithLayout extends React.Component {
               ]}
               {isAuthenticated && [
                 <Menu.Item
-                  style={{ padding: 0, marginRight: 16, marginLeft: 20, borderBottom: 'none', cursor: 'inherit' }}
+                  style={{
+                    padding: 0,
+                    marginRight: 16,
+                    marginLeft: 20,
+                    borderBottom: 'none',
+                    cursor: 'inherit',
+                    whiteSpace: 'nowrap',
+                    overflow: 'hidden',
+                    textOverflow: 'ellipsis',
+                    width: 100
+                  }}
                   key='blankName'
                 >
                   <strong style={{ color: '#4c4c4c' }}>{name}</strong>
