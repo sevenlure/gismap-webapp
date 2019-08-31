@@ -69,7 +69,7 @@ class ForgetPasswordPage extends React.Component {
       if (!err) {
         // console.log('Received values of form: ', values)
         const res = await fotgotPassword(values.phone)
-        console.log(res, 'fotgotPassword')
+        // console.log(res, 'fotgotPassword')
         if (res.status === 200 && res.data) {
           this.setState({
             modal: Modal.success({

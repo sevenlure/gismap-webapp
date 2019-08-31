@@ -5,7 +5,7 @@ import styled from 'styled-components'
 import { Layout, Menu, Icon, Divider, Button, Drawer, Modal } from 'antd'
 import { connect } from 'react-redux'
 import { userLogout } from 'src/redux/actions/authAction'
-import { getListTour } from 'src/redux/actions/generalAction.js'
+import { getListTour, getListDeparture } from 'src/redux/actions/generalAction.js'
 import { get as _get } from 'lodash-es'
 import Router, { withRouter } from 'next/router'
 import slug from 'src/routes'
@@ -77,7 +77,8 @@ const ChildrenContainer = styled.div`
   }),
   {
     userLogout,
-    getListTour
+    getListTour,
+    getListDeparture
   }
 )
 // @hocProtectLogin
@@ -91,6 +92,7 @@ class AppWithLayout extends React.Component {
     router: PropTypes.any,
     userLogout: PropTypes.func,
     getListTour: PropTypes.func,
+    getListDeparture: PropTypes.func,
     windowWidth: PropTypes.number
   }
 
@@ -102,7 +104,7 @@ class AppWithLayout extends React.Component {
 
   componentDidMount = () => {
     // console.log('componentDidMount Layout')
-    Promise.all([this.props.getListTour()]).then(() => {})
+    Promise.all([this.props.getListTour(), this.props.getListDeparture()]).then(() => {})
   }
   hanldeChangeMenu = ({ key }) => {
     if (!key || key.includes('blank')) return
