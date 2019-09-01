@@ -111,6 +111,37 @@ const WrapperIndex = styled.div`
   }
 `
 
+const BookingContainer = styled.div`
+  display: flex;
+
+  .left--booking {
+    width: 472px;
+    height: 1024px;
+    box-shadow: 1px 0 0 0 #e6e6e6;
+    background-color: #fff;
+
+    .left--booking--content {
+      padding: 24px;
+    }
+  }
+
+  .right--booking {
+    flex: 1;
+    background: #f2f3f7;
+
+    .right--booking--content {
+      .right--booking--content--header {
+        padding: 24px;
+        display: flex;
+        justify-content: space-between;
+      }
+      .right--booking--content--body {
+        padding: 24px;
+      }
+    }
+  }
+`
+
 @connect(state => ({
   listTour: _get(state, 'GeneralStore.listtour', []),
   listDeparture: _get(state, 'GeneralStore.danhMuc.listDeparture', [])
@@ -238,6 +269,33 @@ class Index extends React.Component {
             </Row>
           </div>
         </div>
+        <BookingContainer>
+          <div className='left--booking'>
+            <div className='left--booking--content'>
+              <h3>Tuyến đi</h3>
+            </div>
+          </div>
+          <div className='right--booking'>
+            <div className='right--booking--content'>
+              <div className='right--booking--content--header'>
+                <Select size='large' defaultValue='timeRunAsc' style={{ width: 208 }}>
+                  <Option value='timeRunAsc'>Giờ chạy tăng dần</Option>
+                  <Option value='timeRunDesc'>Giờ chạy giảm dần</Option>
+                </Select>
+                <Input
+                  style={{ width: 320 }}
+                  size='large'
+                  placeholder='Nhập từ khóa cần tìm kiếm...'
+                  prefix={<Icon component={IconSvg.search} />}
+                />
+              </div>
+              <Divider style={{ margin: 0 }} />
+              <div className='right--booking--content--body'>
+                <h3>Body</h3>
+              </div>
+            </div>
+          </div>
+        </BookingContainer>
       </WrapperIndex>
     )
   }
