@@ -13,12 +13,10 @@ import otpApi from 'src/api/otpApi'
 import { connect } from 'react-redux'
 import { userLogin } from 'src/redux/actions/authAction'
 import { updateUserInfo } from 'src/redux/actions/generalAction.js'
-// import { get as _get } from 'lodash-es'
-
-// import InputOTP from 'src/components/elements/input-OTP'
+import { auth as authMess } from 'src/config/message'
 import OtpConfirm from 'src/containers/otp-confirm'
 
-// let modal = Modal.success()
+const registerMess = authMess.register
 
 const RegisterWrapper = styled.div`
   .modal--title {
@@ -138,7 +136,7 @@ class Register extends React.Component {
             this.props.form.setFields({
               phone: {
                 value: values.phone,
-                errors: [new Error('Số điện thoại đã được đăng ký')]
+                errors: [new Error(registerMess.phoneExist)]
               }
             })
           }
@@ -170,7 +168,7 @@ class Register extends React.Component {
   compareToFirstPassword = (rule, value, callback) => {
     const { form } = this.props
     if (value && value !== form.getFieldValue('password')) {
-      callback('Mật khẩu xác nhận chưa giống mật khẩu!')
+      callback(registerMess.comparePassword)
     } else {
       callback()
     }
@@ -196,17 +194,9 @@ class Register extends React.Component {
           <Form.Item>
             {getFieldDecorator('fullName', {
               rules: [
-                // { required: true, message: 'Thông tin chưa hợp lệ.' },
-                // {
-                //   required: true,
-                //   pattern: /^[^`~!@#$%^&*()_+={}\[\]|\\:;“’<,>.?๐฿]{5,30}$/,
-                //   message: 'Thông tin chưa hợp lệ.'
-                // }
                 {
-                  // required: true,
-                  // message: 'Thông tin chưa hợp lệ.',
                   validator: (rule, value, callback) => {
-                    const mess = 'Thông tin chưa hợp lệ.'
+                    const mess = registerMess.fullname
                     if (!value) return callback(mess)
 
                     const isValidPattern = /^[^`~!@#$%^&*()_+={}\[\]|\\:;“’<,>.?๐฿]{5,30}$/.test(value)
@@ -226,12 +216,12 @@ class Register extends React.Component {
           <Form.Item>
             {getFieldDecorator('phone', {
               rules: [
-                { required: true, message: 'Vui lòng nhập số điện thoại.' },
+                { required: true, message: registerMess.phoneRequired },
                 {
                   pattern: /^[0-9]*$/,
-                  message: 'Chỉ đuợc nhập số!'
+                  message: registerMess.phoneOnlyNumber
                 },
-                { min: 10, max: 13, message: 'Số điện thoại độ dài từ 10 đến 13 số.' }
+                { min: 10, max: 13, message: registerMess.phoneLen }
               ]
             })(
               <Input
@@ -247,12 +237,12 @@ class Register extends React.Component {
               rules: [
                 {
                   required: true,
-                  message: 'Email là thông tin bắt buộc.'
+                  message: registerMess.emailRequired
                 },
                 {
                   // type: 'email',
                   pattern: /^.{5,}@.{2,}\..{2,}/,
-                  message: 'Chưa đúng định dạng email.'
+                  message: registerMess.emailValid
                 }
               ]
             })(<Input prefix={<Icon component={EmaillSvg} />} placeholder='Email' />)}
@@ -263,7 +253,7 @@ class Register extends React.Component {
                 {
                   min: 10,
                   max: 200,
-                  message: 'Địa chỉ có độ dài từ 10 đến 200.'
+                  message: registerMess.addressLen
                 }
               ]
             })(<Input maxLength={200} prefix={<Icon component={AddressSvg} />} placeholder='Địa chỉ sinh sống' />)}
@@ -271,9 +261,9 @@ class Register extends React.Component {
           <Form.Item>
             {getFieldDecorator('password', {
               rules: [
-                { required: true, message: 'Vui lòng nhâp mật khẩu.' },
-                { min: 8, message: 'Độ dài tối thiểu 8 ký tự' },
-                { max: 32, message: 'Độ dài tối đa 32 ký tự' }
+                { required: true, message: registerMess.passwordRequired },
+                { min: 8, message: registerMess.passwordMin },
+                { max: 32, message: registerMess.passwordMax }
               ]
             })(
               <Input.Password
@@ -287,7 +277,7 @@ class Register extends React.Component {
           <Form.Item>
             {getFieldDecorator('confirm', {
               rules: [
-                { required: true, message: 'Vui lòng nhập mật khẩu xác nhận.' },
+                { required: true, message: registerMess.passwordConfirmRequied },
 
                 {
                   validator: this.compareToFirstPassword

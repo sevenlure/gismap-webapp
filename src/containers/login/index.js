@@ -10,6 +10,7 @@ import { userLogin } from 'src/redux/actions/authAction'
 import { updateUserInfo } from 'src/redux/actions/generalAction.js'
 import { connect } from 'react-redux'
 import { get as _get } from 'lodash-es'
+import { auth as authMess } from 'src/config/message'
 
 const LoginWrapper = styled.div`
   .modal--title {
@@ -102,7 +103,7 @@ class Login extends React.Component {
               // const { response } = e
               console.log('catch', ex)
               if (ex.response.data.code === 'Unauthorized') {
-                message.error(ex.response.data.message)
+                message.error(authMess.loginFail)
               }
             })
             .finally(() => {
