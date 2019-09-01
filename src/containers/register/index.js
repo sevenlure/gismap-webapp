@@ -211,7 +211,9 @@ class Register extends React.Component {
                   }
                 }
               ]
-            })(<Input maxLength={30} prefix={<Icon component={PersonalSvg} />} placeholder='Họ và tên *' />)}
+            })(
+              <Input size='large' maxLength={30} prefix={<Icon component={PersonalSvg} />} placeholder='Họ và tên *' />
+            )}
           </Form.Item>
           <Form.Item>
             {getFieldDecorator('phone', {
@@ -225,6 +227,7 @@ class Register extends React.Component {
               ]
             })(
               <Input
+                size='large'
                 maxLength={13}
                 autoComplete='new-password'
                 prefix={<Icon component={MobileSvg} />}
@@ -245,7 +248,7 @@ class Register extends React.Component {
                   message: registerMess.emailValid
                 }
               ]
-            })(<Input prefix={<Icon component={EmaillSvg} />} placeholder='Email' />)}
+            })(<Input size='large' prefix={<Icon component={EmaillSvg} />} placeholder='Email' />)}
           </Form.Item>
           <Form.Item>
             {getFieldDecorator('address', {
@@ -256,7 +259,14 @@ class Register extends React.Component {
                   message: registerMess.addressLen
                 }
               ]
-            })(<Input maxLength={200} prefix={<Icon component={AddressSvg} />} placeholder='Địa chỉ sinh sống' />)}
+            })(
+              <Input
+                size='large'
+                maxLength={200}
+                prefix={<Icon component={AddressSvg} />}
+                placeholder='Địa chỉ sinh sống'
+              />
+            )}
           </Form.Item>
           <Form.Item>
             {getFieldDecorator('password', {
@@ -267,6 +277,7 @@ class Register extends React.Component {
               ]
             })(
               <Input.Password
+                size='large'
                 maxLength={32}
                 autoComplete='new-password'
                 prefix={<Icon component={PassSvg} />}
@@ -285,6 +296,7 @@ class Register extends React.Component {
               ]
             })(
               <Input.Password
+                size='large'
                 maxLength={32}
                 autoComplete='new-password'
                 prefix={<Icon component={PassSvg} />}

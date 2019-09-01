@@ -147,14 +147,14 @@ class AppWithLayout extends React.Component {
     let style
     if (windowWidth >= 992) {
       style = {
-        width: '70vw',
+        // width: '70vw',
         bodyStyle: {
           padding: '30px 70px'
         }
       }
     } else if (windowWidth >= 576) {
       style = {
-        width: '70vw',
+        // width: '70vw',
         bodyStyle: {
           padding: '30px 70px'
         }
@@ -333,7 +333,7 @@ class AppWithLayout extends React.Component {
               width='100%'
               style={{
                 padding: windowWidth > 576 ? 24 : 12,
-                maxWidth: 968
+                maxWidth: 680
               }}
             >
               <Register
@@ -356,6 +356,11 @@ class AppWithLayout extends React.Component {
               // wrapClassName='register--modal'
               closable={false}
               {...this.getStyleReponsive()}
+              width='100%'
+              style={{
+                padding: windowWidth > 576 ? 24 : 12,
+                maxWidth: 680
+              }}
             >
               <Login
                 onRegister={this.handleOnRegister}
