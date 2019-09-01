@@ -72,14 +72,14 @@ fetch.interceptors.response.use(
           const title = 'Chứng thực'
           switch (data.code) {
             case 'InvalidCredentials': {
-              alertMess({
-                title: title,
-                content: 'Chữ ký không hợp lệ!!',
-                onOk() {
-                  window.dispatch(userLogout())
-                  Router.replace(slug.login)
-                }
-              })
+              // alertMess({
+              //   title: title,
+              //   content: 'Chữ ký không hợp lệ!!',
+              //   onOk() {
+              //     window.dispatch(userLogout())
+              //     Router.replace(slug.login)
+              //   }
+              // })
               break
             }
             case 'Unauthorized': {
@@ -95,7 +95,7 @@ fetch.interceptors.response.use(
               // break
             }
             default: {
-              messageAnt.error(error.response.message)
+              // messageAnt.error(error.response.message)
               break
             }
           }
@@ -111,17 +111,17 @@ fetch.interceptors.response.use(
         }
         default: {
           const messErr = error.response.message || data.message
-          messageAnt.error(messErr)
+          // messageAnt.error(messErr)
         }
       }
     } else if (error.request) {
-      alertMess({
-        title: 'Network',
-        content: 'Vui lòng kiểm tra lại hệ thống mạng của máy và server'
-      })
+      // alertMess({
+      //   title: 'Network',
+      //   content: 'Vui lòng kiểm tra lại hệ thống mạng của máy và server'
+      // })
       // console.log(error.request)
     } else {
-      messageAnt.error(error.response.message)
+      // messageAnt.error(error.response.message)
     }
     return Promise.reject(error)
   }

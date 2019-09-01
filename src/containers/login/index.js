@@ -134,12 +134,12 @@ class Login extends React.Component {
           <Form.Item>
             {getFieldDecorator('phone', {
               rules: [{ required: true, message: 'Vui lòng nhập số điện thoại!' }]
-            })(<Input prefix={<Icon component={MobileSvg} />} placeholder='Số điện thoại *' />)}
+            })(<Input maxLength={13} prefix={<Icon component={MobileSvg} />} placeholder='Số điện thoại *' />)}
           </Form.Item>
           <div>
             {getFieldDecorator('password', {
               rules: [{ required: true, message: 'Vui lòng nhâp mật khẩu!' }]
-            })(<Input.Password prefix={<Icon component={PassSvg} />} placeholder='Mật khẩu *' />)}
+            })(<Input.Password maxLength={32} prefix={<Icon component={PassSvg} />} placeholder='Mật khẩu *' />)}
           </div>
           <Clearfix height={16} />
           <div className='form--forgot-pasword'>

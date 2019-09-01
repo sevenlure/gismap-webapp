@@ -125,10 +125,23 @@ class Register extends React.Component {
     this.props.form.validateFields(async (err, values) => {
       if (!err) {
         // console.log('Received values of form: ', values)
-        const res = await otpApi.register(values.phone)
-        // console.log(res, 'handleSubmit')
-        if (res.status) {
-          this.getModal()
+        try {
+          const res = await otpApi.register(values.phone)
+          if (res.status) {
+            this.getModal()
+          }
+        } catch (e) {
+          const { response } = e
+          const { data } = response
+          console.log('response', response)
+          if (data.code === 'Conflict' && data.message === 'Phone is registered') {
+            this.props.form.setFields({
+              phone: {
+                value: values.phone,
+                errors: [new Error('Số điện thoại đã được đăng ký')]
+              }
+            })
+          }
         }
       }
     })
@@ -183,48 +196,63 @@ class Register extends React.Component {
           <Form.Item>
             {getFieldDecorator('fullName', {
               rules: [
-                { required: true, message: 'Vui lòng nhập họ và tên! ' },
+                // { required: true, message: 'Thông tin chưa hợp lệ.' },
+                // {
+                //   required: true,
+                //   pattern: /^[^`~!@#$%^&*()_+={}\[\]|\\:;“’<,>.?๐฿]{5,30}$/,
+                //   message: 'Thông tin chưa hợp lệ.'
+                // }
                 {
-                  pattern: /^[^`~!@#$%^&*()_+={}\[\]|\\:;“’<,>.?๐฿]{5,30}$/,
-                  message: 'Họ và tên không đuợc chứa ký tự đặc biệt và có độ dài từ 5 đến 30! '
-                },
-                {
+                  // required: true,
+                  // message: 'Thông tin chưa hợp lệ.',
                   validator: (rule, value, callback) => {
-                    const mess = 'Họ tên phải có ít nhất 2 từ! '
-                    if (value) {
-                      const tamp = value.split(' ')
-                      if (tamp.length < 2) callback(mess)
-                      if (!tamp[1]) callback(mess)
-                    }
+                    const mess = 'Thông tin chưa hợp lệ.'
+                    if (!value) return callback(mess)
+
+                    const isValidPattern = /^[^`~!@#$%^&*()_+={}\[\]|\\:;“’<,>.?๐฿]{5,30}$/.test(value)
+                    if (!isValidPattern) return callback(mess)
+
+                    const tamp = value.split(' ')
+                    if (tamp.length < 2) return callback(mess)
+
+                    if (!tamp[1]) return callback(mess)
+
                     callback()
                   }
                 }
               ]
-            })(<Input prefix={<Icon component={PersonalSvg} />} placeholder='Họ và tên *' />)}
+            })(<Input maxLength={30} prefix={<Icon component={PersonalSvg} />} placeholder='Họ và tên *' />)}
           </Form.Item>
           <Form.Item>
             {getFieldDecorator('phone', {
               rules: [
-                { required: true, message: 'Vui lòng nhập số điện thoại!' },
+                { required: true, message: 'Vui lòng nhập số điện thoại.' },
                 {
                   pattern: /^[0-9]*$/,
                   message: 'Chỉ đuợc nhập số!'
                 },
-                { min: 10, max: 13, message: 'Số điện thoại độ dài từ 10 đến 13 số!' }
+                { min: 10, max: 13, message: 'Số điện thoại độ dài từ 10 đến 13 số.' }
               ]
-            })(<Input prefix={<Icon component={MobileSvg} />} placeholder='Số điện thoại *' />)}
+            })(
+              <Input
+                maxLength={13}
+                autoComplete='new-password'
+                prefix={<Icon component={MobileSvg} />}
+                placeholder='Số điện thoại *'
+              />
+            )}
           </Form.Item>
           <Form.Item>
             {getFieldDecorator('email', {
               rules: [
                 {
                   required: true,
-                  message: 'Email là thông tin bắt buộc!'
+                  message: 'Email là thông tin bắt buộc.'
                 },
                 {
                   // type: 'email',
                   pattern: /^.{5,}@.{2,}\..{2,}/,
-                  message: 'Chưa đúng định dạng email!'
+                  message: 'Chưa đúng định dạng email.'
                 }
               ]
             })(<Input prefix={<Icon component={EmaillSvg} />} placeholder='Email' />)}
@@ -235,30 +263,44 @@ class Register extends React.Component {
                 {
                   min: 10,
                   max: 200,
-                  message: 'Địa chỉ có độ dài từ 10 đến 200!'
+                  message: 'Địa chỉ có độ dài từ 10 đến 200.'
                 }
               ]
-            })(<Input prefix={<Icon component={AddressSvg} />} placeholder='Địa chỉ sinh sống' />)}
+            })(<Input maxLength={200} prefix={<Icon component={AddressSvg} />} placeholder='Địa chỉ sinh sống' />)}
           </Form.Item>
           <Form.Item>
             {getFieldDecorator('password', {
               rules: [
-                { required: true, message: 'Vui lòng nhâp mật khẩu!' },
+                { required: true, message: 'Vui lòng nhâp mật khẩu.' },
                 { min: 8, message: 'Độ dài tối thiểu 8 ký tự' },
                 { max: 32, message: 'Độ dài tối đa 32 ký tự' }
               ]
-            })(<Input.Password prefix={<Icon component={PassSvg} />} placeholder='Mật khẩu *' />)}
+            })(
+              <Input.Password
+                maxLength={32}
+                autoComplete='new-password'
+                prefix={<Icon component={PassSvg} />}
+                placeholder='Mật khẩu *'
+              />
+            )}
           </Form.Item>
           <Form.Item>
             {getFieldDecorator('confirm', {
               rules: [
-                { required: true, message: 'Vui lòng nhập mật khẩu xác nhận!' },
+                { required: true, message: 'Vui lòng nhập mật khẩu xác nhận.' },
 
                 {
                   validator: this.compareToFirstPassword
                 }
               ]
-            })(<Input.Password prefix={<Icon component={PassSvg} />} placeholder='Nhập lại mật khẩu *' />)}
+            })(
+              <Input.Password
+                maxLength={32}
+                autoComplete='new-password'
+                prefix={<Icon component={PassSvg} />}
+                placeholder='Nhập lại mật khẩu *'
+              />
+            )}
           </Form.Item>
           <div className='form--button'>
             <Button disabled={!getFieldValue('confirm')} type='primary' htmlType='submit' block={true} size='large'>
