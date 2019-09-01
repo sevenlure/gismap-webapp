@@ -49,7 +49,7 @@ const RegisterWrapper = styled.div`
     }
   }
   .ant-form-item {
-    margin-bottom: 4px;
+    margin-bottom: 8px;
   }
 `
 const mapDispatchToProps = {
