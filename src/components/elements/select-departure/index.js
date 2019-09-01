@@ -10,6 +10,8 @@ import { get as _get, map as _map, isNumber as _isNumber } from 'lodash-es'
 import windowSize from 'react-window-size'
 import { connect } from 'react-redux'
 import { Spin, Select, Icon } from 'antd'
+import { get } from 'lodash-es'
+import { replaceVietnameseStr } from 'utils/string'
 const { Option } = Select
 
 const SelectDepartureWrapper = styled.div`
@@ -73,7 +75,11 @@ export default class SelectDeparture extends React.Component {
           <Select
             // defaultActiveFirstOption={false}
             showArrow={false}
-            filterOption={(input, option) => option.props.children.toLowerCase().indexOf(input.toLowerCase()) >= 0}
+            filterOption={(input, option) => {
+              const nameItem = get(option, 'props.nameSearch', '')
+              const inputXuly = replaceVietnameseStr(input.toLowerCase())
+              return nameItem.toLowerCase().indexOf(inputXuly) >= 0
+            }}
             placeholder={this.props.placeholder}
             showSearch
             style={{ width: '100%' }}
@@ -82,7 +88,7 @@ export default class SelectDeparture extends React.Component {
           >
             {_map(this.state.data, item => {
               return (
-                <Option key={item.id} value={item.id}>
+                <Option key={item.id} value={item.id} nameSearch={item.nameSearch}>
                   {item.name}
                 </Option>
               )
