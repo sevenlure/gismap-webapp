@@ -106,7 +106,9 @@ class AppWithLayout extends React.Component {
     // console.log('componentDidMount Layout')
     Promise.all([this.props.getListTour(), this.props.getListDeparture()]).then(() => {})
     try {
+      /* eslint-disable */
       new SimpleBar(document.body)
+      /* eslint-enable */
     } catch (e) {
       console.log('error SimpleBar', e)
     }

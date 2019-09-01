@@ -60,7 +60,6 @@ export default class SelectDeparture extends React.Component {
   render() {
     const isHave = _isNumber(this.props.value) ? true : false
     let iconSelect = this.props.isFrom ? FromIconSvg : ToIconSvg
-    let color = ''
     if (isHave) {
       iconSelect = this.props.isFrom ? FromSelectIconSvg : ToSelectIconSvg
     }
@@ -69,7 +68,7 @@ export default class SelectDeparture extends React.Component {
       <SelectDepartureWrapper windowWidth={this.props.windowWidth}>
         <Spin spinning={this.state.isloading}>
           <div className='Select-frefix'>
-            <Icon style={{ fontSize: '1.5rem', stroke: color }} component={iconSelect} />
+            <Icon style={{ fontSize: '1.5rem' }} component={iconSelect} />
           </div>
 
           <Select
