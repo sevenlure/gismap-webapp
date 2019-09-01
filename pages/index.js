@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import { get as _get, map as _map } from 'lodash-es'
 import styled from 'styled-components'
 import { connect } from 'react-redux'
-import { Row, Col, Button, Card, Form, Select, Input, Divider, Icon } from 'antd'
+import { Row, Col, Button, Card, Form } from 'antd'
 import { getFormatNumber } from 'src/config/format'
 import DefaultLayout from 'src/layout/default'
 import windowSize from 'react-window-size'
@@ -11,9 +11,7 @@ import windowSize from 'react-window-size'
 // NOTE Element
 import Clearfix from 'src/components/elements/clearfix'
 import SelectDeparture from 'src/components/elements/select-departure'
-import IconSvg from 'icons'
-// import InputOTP from 'src/components/elements/input-OTP'
-const { Option } = Select
+import Booking from 'src/containers/booking'
 
 const WrapperIndex = styled.div`
   display: flex;
@@ -107,36 +105,7 @@ const WrapperIndex = styled.div`
   }
 `
 
-const BookingContainer = styled.div`
-  display: flex;
-
-  .left--booking {
-    width: 472px;
-    height: 1024px;
-    box-shadow: 1px 0 0 0 #e6e6e6;
-    background-color: #fff;
-
-    .left--booking--content {
-      padding: 24px;
-    }
-  }
-
-  .right--booking {
-    flex: 1;
-    background: #f2f3f7;
-
-    .right--booking--content {
-      .right--booking--content--header {
-        padding: 24px;
-        display: flex;
-        justify-content: space-between;
-      }
-      .right--booking--content--body {
-        padding: 24px;
-      }
-    }
-  }
-`
+const isBooking = true
 
 @connect(state => ({
   listTour: _get(state, 'GeneralStore.listtour', []),
@@ -178,122 +147,100 @@ class Index extends React.Component {
     return (
       <WrapperIndex windowWidth={this.props.windowWidth}>
         {/* <InputOTP numInputs={4}/> */}
-        <div style={{ display: 'none' }}>
-          <div className='search'>
-            <div className='search--container'>
-              <div style={{ margin: 16 }}>
-                <Clearfix height={24} />
-                <div className='search--title'>Travel</div>
-                <div className='search--description'>
-                  <span>Chào mừng bạn đến với travel đặt vé xe, vui lòng đăng nhập để có trải nghiệm tốt nhất.</span>
-                </div>
-                <Clearfix height={30} />
-                <Form>
-                  <div className='search--form'>
-                    <div className='search--form--description'>
-                      <span>
-                        Bạn hãy nhập điểm khởi hành và điểm muốn đến, chúng tôi sẽ tìm ra vé xe phù hợp với bạn nhất.
-                      </span>
-                    </div>
-                    <Clearfix height={20} />
-                    <div className='search--form--from-to'>
-                      <Row gutter={8}>
-                        <Col xs={24} sm={12} lg={12} style={{ marginBottom: 8 }}>
-                          {getFieldDecorator('diemKhoiHanh', {
-                            rules: [{ required: true, message: 'Vui lòng chọn điểm khởi hành!' }]
-                          })(<SelectDeparture placeholder='Điểm khởi hành' isFrom={true} />)}
-                        </Col>
-                        <Col xs={24} sm={12} lg={12} style={{ marginBottom: 8 }}>
-                          {getFieldDecorator('diemDen', {
-                            rules: [{ required: true, message: 'Vui lòng chọn điểm muốn đến!' }]
-                          })(<SelectDeparture placeholder='Điểm muốn đến' isFrom={false} />)}
-                        </Col>
-                      </Row>
-                    </div>
-                    <Clearfix height={20} />
-                    <div className='search--form--button'>
-                      <Row>
-                        <Col xs={24} sm={{ span: 6, offset: 18 }} lg={{ span: 6, offset: 18 }}>
-                          <Button
-                            onClick={this.hanldeSearch}
-                            type='primary'
-                            block={true}
-                            size='large'
-                            disabled={this.hasErrors(getFieldsError())}
-                          >
-                            Tìm vé xe
-                          </Button>
-                        </Col>
-                      </Row>
-                    </div>
+        {!isBooking && (
+          <div>
+            <div className='search'>
+              <div className='search--container'>
+                <div style={{ margin: 16 }}>
+                  <Clearfix height={24} />
+                  <div className='search--title'>Travel</div>
+                  <div className='search--description'>
+                    <span>Chào mừng bạn đến với travel đặt vé xe, vui lòng đăng nhập để có trải nghiệm tốt nhất.</span>
                   </div>
-                </Form>
-                <Clearfix height={74} />
+                  <Clearfix height={30} />
+                  <Form>
+                    <div className='search--form'>
+                      <div className='search--form--description'>
+                        <span>
+                          Bạn hãy nhập điểm khởi hành và điểm muốn đến, chúng tôi sẽ tìm ra vé xe phù hợp với bạn nhất.
+                        </span>
+                      </div>
+                      <Clearfix height={20} />
+                      <div className='search--form--from-to'>
+                        <Row gutter={8}>
+                          <Col xs={24} sm={12} lg={12} style={{ marginBottom: 8 }}>
+                            {getFieldDecorator('diemKhoiHanh', {
+                              rules: [{ required: true, message: 'Vui lòng chọn điểm khởi hành!' }]
+                            })(<SelectDeparture placeholder='Điểm khởi hành' isFrom={true} />)}
+                          </Col>
+                          <Col xs={24} sm={12} lg={12} style={{ marginBottom: 8 }}>
+                            {getFieldDecorator('diemDen', {
+                              rules: [{ required: true, message: 'Vui lòng chọn điểm muốn đến!' }]
+                            })(<SelectDeparture placeholder='Điểm muốn đến' isFrom={false} />)}
+                          </Col>
+                        </Row>
+                      </div>
+                      <Clearfix height={20} />
+                      <div className='search--form--button'>
+                        <Row>
+                          <Col xs={24} sm={{ span: 6, offset: 18 }} lg={{ span: 6, offset: 18 }}>
+                            <Button
+                              onClick={this.hanldeSearch}
+                              type='primary'
+                              block={true}
+                              size='large'
+                              disabled={this.hasErrors(getFieldsError())}
+                            >
+                              Tìm vé xe
+                            </Button>
+                          </Col>
+                        </Row>
+                      </div>
+                    </div>
+                  </Form>
+                  <Clearfix height={74} />
+                </div>
               </div>
             </div>
-          </div>
-          <div className='list'>
-            <div className='list--container'>
-              <div className='list--title'>Tuyến đi phổ biến</div>
-              <Clearfix height={25} />
-              <Row gutter={{ xs: 8, sm: 16, lg: 24 }}>
-                {this.props.listTour &&
-                  _map(this.props.listTour, item => {
-                    return (
-                      <Col key={item.id} xs={24} sm={12} lg={8} style={{ marginBottom: 24 }}>
-                        <Card
-                          key={item.id}
-                          className='list--content--card'
-                          bordered
-                          cover={<img width={370} height={180} alt='' src={`${process.env.HOST_MEDIA}${item.image}`} />}
-                        >
-                          <div>
-                            <div className='list--content--card--title'>
-                              <span>{item.title}</span>
+            <div className='list'>
+              <div className='list--container'>
+                <div className='list--title'>Tuyến đi phổ biến</div>
+                <Clearfix height={25} />
+                <Row gutter={{ xs: 8, sm: 16, lg: 24 }}>
+                  {this.props.listTour &&
+                    _map(this.props.listTour, item => {
+                      return (
+                        <Col key={item.id} xs={24} sm={12} lg={8} style={{ marginBottom: 24 }}>
+                          <Card
+                            key={item.id}
+                            className='list--content--card'
+                            bordered
+                            cover={
+                              <img width={370} height={180} alt='' src={`${process.env.HOST_MEDIA}${item.image}`} />
+                            }
+                          >
+                            <div>
+                              <div className='list--content--card--title'>
+                                <span>{item.title}</span>
+                              </div>
+                              <Clearfix height={7} />
+                              <div className='list--content--card--size'>
+                                <span>Ghế {item.seat} chỗ ngồi</span>
+                              </div>
+                              <Clearfix height={10} />
+                              <div className='list--content--card--price'>{getFormatNumber(item.price)} đ</div>
+                              <Clearfix height={20} />
                             </div>
-                            <Clearfix height={7} />
-                            <div className='list--content--card--size'>
-                              <span>Ghế {item.seat} chỗ ngồi</span>
-                            </div>
-                            <Clearfix height={10} />
-                            <div className='list--content--card--price'>{getFormatNumber(item.price)} đ</div>
-                            <Clearfix height={20} />
-                          </div>
-                        </Card>
-                      </Col>
-                    )
-                  })}
-              </Row>
-            </div>
-          </div>
-        </div>
-        <BookingContainer>
-          <div className='left--booking'>
-            <div className='left--booking--content'>
-              <h3>Tuyến đi</h3>
-            </div>
-          </div>
-          <div className='right--booking'>
-            <div className='right--booking--content'>
-              <div className='right--booking--content--header'>
-                <Select size='large' defaultValue='timeRunAsc' style={{ width: 208 }}>
-                  <Option value='timeRunAsc'>Giờ chạy tăng dần</Option>
-                  <Option value='timeRunDesc'>Giờ chạy giảm dần</Option>
-                </Select>
-                <Input
-                  style={{ width: 320 }}
-                  size='large'
-                  placeholder='Nhập từ khóa cần tìm kiếm...'
-                  prefix={<Icon component={IconSvg.search} />}
-                />
-              </div>
-              <Divider style={{ margin: 0 }} />
-              <div className='right--booking--content--body'>
-                <h3>Body</h3>
+                          </Card>
+                        </Col>
+                      )
+                    })}
+                </Row>
               </div>
             </div>
           </div>
-        </BookingContainer>
+        )}
+        {isBooking && <Booking />}
       </WrapperIndex>
     )
   }

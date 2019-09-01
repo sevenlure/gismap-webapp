@@ -198,8 +198,10 @@ class Register extends React.Component {
                   validator: (rule, value, callback) => {
                     const mess = registerMess.fullname
                     if (!value) return callback(mess)
-
+                    /* eslint-disable */
                     const isValidPattern = /^[^`~!@#$%^&*()_+={}\[\]|\\:;“’<,>.?๐฿]{5,30}$/.test(value)
+                    /* eslint-enable */
+
                     if (!isValidPattern) return callback(mess)
 
                     const tamp = value.split(' ')

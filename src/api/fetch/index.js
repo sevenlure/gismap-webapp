@@ -1,10 +1,8 @@
 import axios from 'axios'
-import { message as messageAnt, Modal } from 'antd'
-import Router from 'next/router'
-import slug from 'src/routes'
+import { Modal } from 'antd'
 import error_500 from './error_500'
 import error_415 from './error_415'
-import { userLogout } from 'src/redux/actions/authAction'
+// import { userLogout } from 'src/redux/actions/authAction'
 
 //QLNY-API
 // const fetch = axios.create({
@@ -69,7 +67,7 @@ fetch.interceptors.response.use(
       const { status, data } = error.response
       switch (status) {
         case 401: {
-          const title = 'Chứng thực'
+          // const title = 'Chứng thực'
           switch (data.code) {
             case 'InvalidCredentials': {
               // alertMess({
@@ -110,7 +108,7 @@ fetch.interceptors.response.use(
           break
         }
         default: {
-          const messErr = error.response.message || data.message
+          // const messErr = error.response.message || data.message
           // messageAnt.error(messErr)
         }
       }
