@@ -11,7 +11,7 @@ import { getFormatNumber } from 'src/config/format'
 
 import Clearfix from 'src/components/elements/clearfix'
 import { map as _map, set as _set } from 'lodash-es'
-
+import DateStepPicker from 'src/components/elements/date-step-picker'
 const { Option } = Select
 
 const BookingContainer = styled.div`
@@ -237,6 +237,13 @@ class Booking extends React.Component {
                     <span style={{ fontSize: '1.25rem' }}>Hồ Chí Minh</span>
                   </Timeline.Item>
                 </Timeline>
+              </div>
+            </div>
+            <Clearfix height={45} />
+            <div className='left-booking--content--date--picker'>
+              <h3 className='left-booking--content__title'>Thời gian khởi hành</h3>
+              <div>
+                <DateStepPicker />
               </div>
             </div>
             <Clearfix height={45} />
