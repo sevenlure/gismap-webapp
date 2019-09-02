@@ -39,7 +39,7 @@ body {
 
 .ant-result {
   max-width: 496px;
-  padding: 40px;
+  padding: @element-large-height;
   border-radius: 20px;
   border: solid 1px #9ea7d0;
   background-color: white;
@@ -90,14 +90,14 @@ body {
 }
 /* #region   NOTE  ant-select */
 .ant-select-no-arrow .ant-select-selection__rendered {
-  margin-left: 40px !important;
+  margin-left: @element-large-height !important;
 }
 
 .ant-select-lg .ant-select-selection--single{
-  height: 50px !important;
+  height: @element-large-height !important;
 }
 .ant-select-lg .ant-select-selection__rendered{
-  line-height: 50px !important;
+  line-height: @element-large-height !important;
 }
 /* #endregion */
 /* NOTE  custom css về table */
@@ -173,10 +173,6 @@ li.ant-pagination-total-text {
   color: #3880ff;
 }
 
-.ant-input {
-  // height: 50px !important;
-}
-
 .ant-input::placeholder {
   font-family: myFont-Light;
   color: @text-color-secondary;
@@ -207,7 +203,7 @@ strong {
 }
 
 .ant-input-affix-wrapper .ant-input:not(:first-child) {
-  padding-left: 40px !important;
+  padding-left: @element-large-height !important;
 }
 
 /* #region NOTE Button   */
