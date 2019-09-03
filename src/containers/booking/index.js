@@ -1,13 +1,14 @@
 import React from 'react'
-// import PropTypes from 'prop-types'
+import PropTypes from 'prop-types'
 import styled from 'styled-components'
 import { Select, Input, Divider, Icon, Timeline, Button, Row, Col } from 'antd'
 import IconSvg from 'icons'
+import windowSize from 'react-window-size'
 
 import FromSelectIconSvg from 'static/images/icon/ic-arrow-map-from-select.svg'
 import ToSelectIconSvg from 'static/images/icon/ic-arrow-map-to-select.svg'
-import ArrowIconSvg from 'static/images/icon/ic-arrow.svg'
-import { getFormatNumber } from 'src/config/format'
+import BookingContentDefault from 'src/containers/booking/view-default'
+import BookingContentMobile from 'src/containers/booking/view-mobile'
 
 import Clearfix from 'src/components/elements/clearfix'
 import { map as _map, set as _set } from 'lodash-es'
@@ -85,41 +86,16 @@ const BookingContainer = styled.div`
         display: flex;
         justify-content: space-between;
       }
-      .right-booking--content-body {
-        padding: 30px;
-        .right-booking--content-body__tb-header-color{
-          color:#9ea7d0;
-        }
-
-        .right-booking--content-body--item{
-          border-radius: 10px;
-          border: solid 1px #e6e6e6;
-          background-color: white;
-          padding: 16px 8px;
-          min-height:112px;
-          margin-bottom: 20px;
-          // background-color: rgba(255, 123, 102, 0.1);
-
-          .right-booking--content-body__tb-row-time{
-            font-family: myFont-Bold;
-            color: #4c4c4c;
-            font-size: 1.125rem;
-          }
-          .right-booking--content-body--item__center{
-            min-height:calc(112px - 16px - 16px);
-            display: flex;
-            align-items: center;
-          }
-        }
-        
-      }
+      
     }
   }
 `
 
+@windowSize
 class Booking extends React.Component {
-  static propTypes = {}
-
+  static propTypes = {
+    windowWidth: PropTypes.number
+  }
   state = {
     dataTimeSlot: [
       {
@@ -204,6 +180,7 @@ class Booking extends React.Component {
       }
     ]
   }
+
   onChangeFilter(type, value) {
     let tempData = this.state.datafilter
     _set(tempData, type, value)
@@ -215,87 +192,104 @@ class Booking extends React.Component {
   }
 
   render() {
+    let isVisibleFilter = true
+    let isViewDefault = true
+    if (this.props.windowWidth < 1024) {
+      isVisibleFilter = false
+    }
+    if (this.props.windowWidth < 576) {
+      isViewDefault = false
+    }
     return (
       <BookingContainer>
-        <div className='left-booking'>
-          <div className='left-booking--content'>
-            <div className='left-booking--content--trip'>
-              <h3 className='left-booking--content__title'>Tuyến đi</h3>
-              <div className='left-booking--content__border'>
-                <Timeline>
-                  <Timeline.Item
-                    dot={<Icon style={{ fontSize: '1.5rem' }} component={FromSelectIconSvg} />}
-                    color='red'
-                  >
-                    <div>
-                      <span style={{ fontSize: '1.25rem' }}>Tây Ninh</span>
-                    </div>
-                    <Divider style={{ margin: '20px 0px 20px 0px' }} />
-                  </Timeline.Item>
-
-                  <Timeline.Item dot={<Icon style={{ fontSize: '1.5rem' }} component={ToSelectIconSvg} />} color='red'>
-                    <span style={{ fontSize: '1.25rem' }}>Hồ Chí Minh</span>
-                  </Timeline.Item>
-                </Timeline>
-              </div>
-            </div>
-            <Clearfix height={45} />
-            <div className='left-booking--content--date--picker'>
-              <h3 className='left-booking--content__title'>Thời gian khởi hành</h3>
-              <div>
-                <DateStepPicker />
-              </div>
-            </div>
-            <Clearfix height={45} />
-            <div className='left-booking--content--time-slot'>
-              <h3 className='left-booking--content__title'>Khung giờ</h3>
-              <div>
-                {_map(this.state.dataTimeSlot, item => {
-                  return (
-                    <Button
-                      key={item.id}
-                      style={{ padding: '0px 10px', margin: '0px 12px 12px 0px' }}
-                      type='default'
-                      shape='round'
-                      className={item.id === this.state.datafilter.timeSlotId ? 'select' : ''}
-                      onClick={() => this.onChangeFilter('timeSlotId', item.id)}
+        {isVisibleFilter && (
+          <div className='left-booking'>
+            <div className='left-booking--content'>
+              <div className='left-booking--content--trip'>
+                <h3 className='left-booking--content__title'>Tuyến đi</h3>
+                <div className='left-booking--content__border'>
+                  <Timeline>
+                    <Timeline.Item
+                      dot={<Icon style={{ fontSize: '1.5rem' }} component={FromSelectIconSvg} />}
+                      color='red'
                     >
-                      {item.name}
-                    </Button>
-                  )
-                })}
-              </div>
-            </div>
-            <Clearfix height={45} />
-            <div className='left-booking--content--seat-type'>
-              <h3 className='left-booking--content__title'>Loại ghế</h3>
-              <div>
-                {_map(this.state.dataSeatType, item => {
-                  return (
-                    <Button
-                      key={item.id}
-                      style={{ padding: '0px 10px', margin: '0px 12px 12px 0px' }}
-                      type='default'
-                      shape='round'
-                      className={item.id === this.state.datafilter.seatType ? 'select' : ''}
-                      onClick={() => this.onChangeFilter('seatType', item.id)}
+                      <div>
+                        <span style={{ fontSize: '1.25rem' }}>Tây Ninh</span>
+                      </div>
+                      <Divider style={{ margin: '20px 0px 20px 0px' }} />
+                    </Timeline.Item>
+                    <Timeline.Item
+                      dot={<Icon style={{ fontSize: '1.5rem' }} component={ToSelectIconSvg} />}
+                      color='red'
                     >
-                      {item.name}
-                    </Button>
-                  )
-                })}
+                      <span style={{ fontSize: '1.25rem' }}>Hồ Chí Minh</span>
+                    </Timeline.Item>
+                  </Timeline>
+                </div>
+              </div>
+              <Clearfix height={45} />
+              <div className='left-booking--content--date--picker'>
+                <h3 className='left-booking--content__title'>Thời gian khởi hành</h3>
+                <div>
+                  <DateStepPicker />
+                </div>
+              </div>
+              <Clearfix height={45} />
+              <div className='left-booking--content--time-slot'>
+                <h3 className='left-booking--content__title'>Khung giờ</h3>
+                <div>
+                  {_map(this.state.dataTimeSlot, item => {
+                    return (
+                      <Button
+                        key={item.id}
+                        style={{ padding: '0px 10px', margin: '0px 12px 12px 0px' }}
+                        type='default'
+                        shape='round'
+                        className={item.id === this.state.datafilter.timeSlotId ? 'select' : ''}
+                        onClick={() => this.onChangeFilter('timeSlotId', item.id)}
+                      >
+                        {item.name}
+                      </Button>
+                    )
+                  })}
+                </div>
+              </div>
+              <Clearfix height={45} />
+              <div className='left-booking--content--seat-type'>
+                <h3 className='left-booking--content__title'>Loại ghế</h3>
+                <div>
+                  {_map(this.state.dataSeatType, item => {
+                    return (
+                      <Button
+                        key={item.id}
+                        style={{ padding: '0px 10px', margin: '0px 12px 12px 0px' }}
+                        type='default'
+                        shape='round'
+                        className={item.id === this.state.datafilter.seatType ? 'select' : ''}
+                        onClick={() => this.onChangeFilter('seatType', item.id)}
+                      >
+                        {item.name}
+                      </Button>
+                    )
+                  })}
+                </div>
               </div>
             </div>
-            {/* <div className='left-booking--content--day'>
-              <h3 className='left-booking--content__title'>Thời gian khởi hành</h3>
-            </div>*/}
           </div>
-        </div>
+        )}
+
         <div className='right-booking'>
           <div className='right-booking--content'>
             <div className='right-booking--content--header'>
               <Row gutter={8} style={{ flex: 1 }}>
-                <Col xs={24} sm={24} lg={10} style={{ marginBottom: '8px' }}>
+                {!isVisibleFilter && (
+                  <Col xs={8} sm={4}>
+                    <Button size='large' type='primary' style={{ width: '100%' }} icon='filter'>
+                      Bộ lọc
+                    </Button>
+                  </Col>
+                )}
+                <Col xs={16} sm={20} lg={10} style={{ marginBottom: '8px' }}>
                   <Select size='large' defaultValue='timeRunAsc' style={{ width: '100%' }}>
                     <Option value='timeRunAsc'>Giờ chạy tăng dần</Option>
                     <Option value='timeRunDesc'>Giờ chạy giảm dần</Option>
@@ -317,96 +311,8 @@ class Booking extends React.Component {
               </Row>
             </div>
             <Divider style={{ margin: 0 }} />
-            <div className='right-booking--content-body'>
-              <Row gutter={8} style={{ flex: 1, padding: '0px 8px' }}>
-                <Col lg={3}>
-                  <strong className='right-booking--content-body__tb-header-color'>Thời gian</strong>
-                </Col>
-                <Col lg={6}>
-                  <strong className='right-booking--content-body__tb-header-color'>Điểm đi - Điểm đến</strong>
-                </Col>
-                <Col lg={5}>
-                  <strong className='right-booking--content-body__tb-header-color'>Loại xe</strong>
-                </Col>
-                <Col lg={3}>
-                  <strong className='right-booking--content-body__tb-header-color'>Số ghế trống</strong>
-                </Col>
-                <Col lg={3}>
-                  <strong className='right-booking--content-body__tb-header-color'>Giá vé</strong>
-                </Col>
-                <Col lg={4}></Col>
-              </Row>
-              <Clearfix height={20} />
-
-              {this.state.dataSearch &&
-                _map(this.state.dataSearch, (item, index) => {
-                  const styleStatus = {
-                    backgroundColor: item.fullSeat ? 'rgba(255, 123, 102, 0.1)' : 'white',
-                    opacity: item.fullSeat ? 0.6 : 1
-                  }
-
-                  return (
-                    <Row
-                      key={index}
-                      gutter={8}
-                      style={{ flex: 1, ...styleStatus }}
-                      className='right-booking--content-body--item'
-                    >
-                      <Col lg={3}>
-                        <div>
-                          <span className='right-booking--content-body__tb-row-time'>{item.fromTime}</span>
-                        </div>
-                        <div>
-                          <Icon style={{ fontSize: '1.5rem' }} component={ArrowIconSvg} />
-                        </div>
-                        <div>
-                          <span className='right-booking--content-body__tb-row-time'>{item.toTime}</span>
-                        </div>
-                      </Col>
-                      <Col lg={6}>
-                        <div>
-                          <span>{item.from}</span>
-                        </div>
-                        <div>
-                          <Icon style={{ fontSize: '1.5rem' }} component={ArrowIconSvg} />
-                        </div>
-                        <div>
-                          <span>{item.to}</span>
-                        </div>
-                      </Col>
-                      <Col lg={5} className='right-booking--content-body--item__center'>
-                        <span>{item.typeCar}</span>
-                      </Col>
-                      <Col
-                        lg={3}
-                        style={{ justifyContent: 'center' }}
-                        className='right-booking--content-body--item__center'
-                      >
-                        {item.fullSeat && <strong style={{ color: '#ff7b66' }}>{item.seat}</strong>}
-                        {!item.fullSeat && <span>{item.seat}</span>}
-                      </Col>
-                      <Col
-                        lg={7}
-                        className='right-booking--content-body--item__center'
-                        style={{ justifyContent: 'space-between' }}
-                      >
-                        <div>
-                          <h3 style={{ fontSize: '1.25rem', margin: '0px' }}>{getFormatNumber(item.price)}</h3>
-                        </div>
-
-                        {!item.fullSeat && (
-                          <div>
-                            <Button type='primary'> Đặt vé</Button>
-                          </div>
-                        )}
-                      </Col>
-                      {/* <Col lg={4} className='right-booking--content-body--item__center'>
-                        
-                      </Col> */}
-                    </Row>
-                  )
-                })}
-            </div>
+            {isViewDefault && <BookingContentDefault dataSearch={this.state.dataSearch} />}
+            {!isViewDefault && <BookingContentMobile dataSearch={this.state.dataSearch} />}
           </div>
         </div>
       </BookingContainer>

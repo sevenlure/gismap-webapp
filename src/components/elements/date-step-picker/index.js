@@ -5,7 +5,7 @@ import moment from 'moment'
 import StepPicker from './step'
 import Clearfix from 'src/components/elements/clearfix'
 
-moment.defineLocale('en-au', {
+moment.updateLocale('en-au', {
   monthsShort: 'Tháng 1_Tháng 2_Tháng 3_Tháng 4_Tháng 5_Tháng 6_Tháng 7_Tháng 8_Tháng 9_Tháng 10_Tháng 11_Tháng 12'.split(
     '_'
   ),
