@@ -42,15 +42,15 @@ function getTextFromDate(momentDate = moment()) {
   return dayName
 }
 
-const MenuItem = ({ text, selected, textAvatar }) => {
+const MenuItem = item => {
   return (
     <div style={{ width: 95 }} className=''>
       <div>
         <Avatar style={{ marginBottom: 8 }} size='large'>
-          {textAvatar}
+          {item.textAvatar}
         </Avatar>
       </div>
-      <div className='date-step-item-textdate'>{text}</div>
+      <div className='date-step-item-textdate'>{item.text}</div>
     </div>
   )
 }
