@@ -55,9 +55,11 @@ export default class DateStepPicker extends React.Component {
           }}
           dropdownClassName='custom-calendar'
           onChange={date => {
-            this.setState({ targetDate: date, isOpenCalendar: true }, () => {
-              this.StepPicker.changeVal(date)
-            })
+            if (date) {
+              this.setState({ targetDate: date, isOpenCalendar: true }, () => {
+                this.StepPicker.changeVal(date)
+              })
+            }
           }}
           disabledDate={current => {
             const today = moment()

@@ -58,11 +58,10 @@ const MenuItem = item => {
 export default class StepPicker extends React.Component {
   constructor(props) {
     super(props)
-    const dataGen = this.genDate(new Date(), 15)
     this.state = {
       // prettier-ignore
       selected: moment().endOf('day').unix(),
-      data: dataGen,
+      data: [],
       scrollToSelected: false
     }
   }
@@ -74,6 +73,10 @@ export default class StepPicker extends React.Component {
 
   componentDidMount() {
     if (this.props.getRef) this.props.getRef(this)
+    const dataGen = this.genDate(new Date(), 15)
+    this.setState({
+      data: dataGen
+    })
   }
 
   genDate(target = new Date(), count) {
