@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import styled from 'styled-components'
-import { Select, Input, Divider, Icon, Timeline, Button, Row, Col } from 'antd'
+import { Select, Input, Divider, Icon, Timeline, Button, Row, Col, Drawer } from 'antd'
 import IconSvg from 'icons'
 import windowSize from 'react-window-size'
 
@@ -20,7 +20,7 @@ const BookingContainer = styled.div`
   display: flex;
 
   .left-booking {
-    width: 400px;
+    width: ${props => (props.isVisibleFilter ? '400px;' : '375px;')}
     // height: 1024px;
     box-shadow: 1px 0 0 0 #e6e6e6;
     background-color: #fff;
@@ -97,6 +97,7 @@ class Booking extends React.Component {
     windowWidth: PropTypes.number
   }
   state = {
+    isVisibleDrawer: false,
     dataTimeSlot: [
       {
         id: 1,
@@ -181,6 +182,16 @@ class Booking extends React.Component {
     ]
   }
 
+  static getDerivedStateFromProps(nextProps, prevState) {
+    if (nextProps.windowWidth >= 1024 && prevState.isVisibleDrawer) {
+      return {
+        ...prevState,
+        isVisibleDrawer: false
+      }
+    }
+    return null
+  }
+
   onChangeFilter(type, value) {
     let tempData = this.state.datafilter
     _set(tempData, type, value)
@@ -189,6 +200,92 @@ class Booking extends React.Component {
         ...tempData
       }
     })
+  }
+
+  LeftBooking = ({ isVisibleDrawer, zIndex }) => {
+    return (
+      <div className='left-booking' style={{ zIndex: zIndex }}>
+        <div className='left-booking--content'>
+          <div className='left-booking--content--trip'>
+            <div className='util-space-between'>
+              <h3 className='left-booking--content__title'>Tuyến đi</h3>
+              {isVisibleDrawer && (
+                <Button
+                  type='default'
+                  onClick={() => {
+                    this.setState({
+                      isVisibleDrawer: false
+                    })
+                  }}
+                >
+                  Đóng
+                </Button>
+              )}
+            </div>
+            <div className='left-booking--content__border'>
+              <Timeline>
+                <Timeline.Item dot={<Icon style={{ fontSize: '1.5rem' }} component={FromSelectIconSvg} />} color='red'>
+                  <div>
+                    <span style={{ fontSize: '1.25rem' }}>Tây Ninh</span>
+                  </div>
+                  <Divider style={{ margin: '20px 0px 20px 0px' }} />
+                </Timeline.Item>
+                <Timeline.Item dot={<Icon style={{ fontSize: '1.5rem' }} component={ToSelectIconSvg} />} color='red'>
+                  <span style={{ fontSize: '1.25rem' }}>Hồ Chí Minh</span>
+                </Timeline.Item>
+              </Timeline>
+            </div>
+          </div>
+          <Clearfix height={45} />
+          <div className='left-booking--content--date--picker'>
+            <h3 className='left-booking--content__title'>Thời gian khởi hành</h3>
+            <div>
+              <DateStepPicker />
+            </div>
+          </div>
+          <Clearfix height={45} />
+          <div className='left-booking--content--time-slot'>
+            <h3 className='left-booking--content__title'>Khung giờ</h3>
+            <div>
+              {_map(this.state.dataTimeSlot, item => {
+                return (
+                  <Button
+                    key={item.id}
+                    style={{ padding: '0px 10px', margin: '0px 12px 12px 0px' }}
+                    type='default'
+                    shape='round'
+                    className={item.id === this.state.datafilter.timeSlotId ? 'select' : ''}
+                    onClick={() => this.onChangeFilter('timeSlotId', item.id)}
+                  >
+                    {item.name}
+                  </Button>
+                )
+              })}
+            </div>
+          </div>
+          <Clearfix height={45} />
+          <div className='left-booking--content--seat-type'>
+            <h3 className='left-booking--content__title'>Loại ghế</h3>
+            <div>
+              {_map(this.state.dataSeatType, item => {
+                return (
+                  <Button
+                    key={item.id}
+                    style={{ padding: '0px 10px', margin: '0px 12px 12px 0px' }}
+                    type='default'
+                    shape='round'
+                    className={item.id === this.state.datafilter.seatType ? 'select' : ''}
+                    onClick={() => this.onChangeFilter('seatType', item.id)}
+                  >
+                    {item.name}
+                  </Button>
+                )
+              })}
+            </div>
+          </div>
+        </div>
+      </div>
+    )
   }
 
   render() {
@@ -201,82 +298,22 @@ class Booking extends React.Component {
       isViewDefault = false
     }
     return (
-      <BookingContainer>
-        {isVisibleFilter && (
-          <div className='left-booking'>
-            <div className='left-booking--content'>
-              <div className='left-booking--content--trip'>
-                <h3 className='left-booking--content__title'>Tuyến đi</h3>
-                <div className='left-booking--content__border'>
-                  <Timeline>
-                    <Timeline.Item
-                      dot={<Icon style={{ fontSize: '1.5rem' }} component={FromSelectIconSvg} />}
-                      color='red'
-                    >
-                      <div>
-                        <span style={{ fontSize: '1.25rem' }}>Tây Ninh</span>
-                      </div>
-                      <Divider style={{ margin: '20px 0px 20px 0px' }} />
-                    </Timeline.Item>
-                    <Timeline.Item
-                      dot={<Icon style={{ fontSize: '1.5rem' }} component={ToSelectIconSvg} />}
-                      color='red'
-                    >
-                      <span style={{ fontSize: '1.25rem' }}>Hồ Chí Minh</span>
-                    </Timeline.Item>
-                  </Timeline>
-                </div>
-              </div>
-              <Clearfix height={45} />
-              <div className='left-booking--content--date--picker'>
-                <h3 className='left-booking--content__title'>Thời gian khởi hành</h3>
-                <div>
-                  <DateStepPicker />
-                </div>
-              </div>
-              <Clearfix height={45} />
-              <div className='left-booking--content--time-slot'>
-                <h3 className='left-booking--content__title'>Khung giờ</h3>
-                <div>
-                  {_map(this.state.dataTimeSlot, item => {
-                    return (
-                      <Button
-                        key={item.id}
-                        style={{ padding: '0px 10px', margin: '0px 12px 12px 0px' }}
-                        type='default'
-                        shape='round'
-                        className={item.id === this.state.datafilter.timeSlotId ? 'select' : ''}
-                        onClick={() => this.onChangeFilter('timeSlotId', item.id)}
-                      >
-                        {item.name}
-                      </Button>
-                    )
-                  })}
-                </div>
-              </div>
-              <Clearfix height={45} />
-              <div className='left-booking--content--seat-type'>
-                <h3 className='left-booking--content__title'>Loại ghế</h3>
-                <div>
-                  {_map(this.state.dataSeatType, item => {
-                    return (
-                      <Button
-                        key={item.id}
-                        style={{ padding: '0px 10px', margin: '0px 12px 12px 0px' }}
-                        type='default'
-                        shape='round'
-                        className={item.id === this.state.datafilter.seatType ? 'select' : ''}
-                        onClick={() => this.onChangeFilter('seatType', item.id)}
-                      >
-                        {item.name}
-                      </Button>
-                    )
-                  })}
-                </div>
-              </div>
-            </div>
-          </div>
-        )}
+      <BookingContainer isVisibleFilter={isVisibleFilter}>
+        {isVisibleFilter && <this.LeftBooking zIndex={2} />}
+
+        <div id='drawerContainer' style={{ zIndex: this.state.isVisibleDrawer ? 9999 : 1 }}>
+          <Drawer
+            width={375}
+            onClose={() => this.setState({ isVisibleDrawer: false })}
+            placement='left'
+            visible={this.state.isVisibleDrawer}
+            getContainer={document.getElementById('drawerContainer')}
+            closable={false}
+            destroyOnClose={true}
+          >
+            <this.LeftBooking isVisibleDrawer={this.state.isVisibleDrawer} />
+          </Drawer>
+        </div>
 
         <div className='right-booking'>
           <div className='right-booking--content'>
@@ -284,7 +321,15 @@ class Booking extends React.Component {
               <Row gutter={8} style={{ flex: 1 }}>
                 {!isVisibleFilter && (
                   <Col xs={8} sm={4}>
-                    <Button size='large' type='primary' style={{ width: '100%' }} icon='filter'>
+                    <Button
+                      size='large'
+                      type='primary'
+                      style={{ width: '100%' }}
+                      icon='filter'
+                      onClick={() => {
+                        this.setState({ isVisibleDrawer: true })
+                      }}
+                    >
                       Bộ lọc
                     </Button>
                   </Col>
