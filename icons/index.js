@@ -1,9 +1,22 @@
 import SearchIconSvg from 'static/images/icon/ic-search.svg'
 import RightIconSvg from 'static/images/icon/ic-right.svg'
 import CalendarIconSvg from 'static/images/icon/ic-calendar.svg'
+import ChoiseOffIconSvg from 'static/images/icon/ic-choice-off.svg'
+import ChoiseOnIconSvg from 'static/images/icon/ic-choice-on.svg'
+
+import SeatChooseIconSvg from 'static/images/icon/ic-seat-choose.svg'
+import SeatDisableIconSvg from 'static/images/icon/ic-seat-disable.svg'
+import SeatDriverIconSvg from 'static/images/icon/ic-seat-driver.svg'
+import SeatOffIconSvg from 'static/images/icon/ic-seat-off.svg'
 
 export default {
   search: SearchIconSvg,
   right: RightIconSvg,
-  calendar: CalendarIconSvg
+  calendar: CalendarIconSvg,
+  choiseOn: ChoiseOnIconSvg,
+  choiseOff: ChoiseOffIconSvg,
+  seatChoose: SeatChooseIconSvg,
+  seatDisable: SeatDisableIconSvg,
+  seatDriver: SeatDriverIconSvg,
+  seatOff: SeatOffIconSvg
 }

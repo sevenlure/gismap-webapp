@@ -8,6 +8,7 @@ import { getFormatNumber } from 'src/config/format'
 
 import Clearfix from 'src/components/elements/clearfix'
 import { map as _map } from 'lodash-es'
+import ModalBooking from './modal-booking'
 
 const BookingContentDefaultWrapper = styled.div`
   .right-booking--content-body {
@@ -38,6 +39,7 @@ const BookingContentDefaultWrapper = styled.div`
   }
 `
 
+// MARK  this.ModalBooking nắm ref của modal-booking
 class BookingContentLaptop extends React.Component {
   static propTypes = {
     dataSearch: PropTypes.any
@@ -123,7 +125,18 @@ class BookingContentLaptop extends React.Component {
 
                     {!item.fullSeat && (
                       <div>
-                        <Button type='primary'> Đặt vé</Button>
+                        <Button
+                          type='primary'
+                          onClick={() => {
+                            try {
+                              this.ModalBooking.showModal()
+                            } catch (e) {
+                              console.log('loi this.ModalBooking.showModal()', e)
+                            }
+                          }}
+                        >
+                          Đặt vé
+                        </Button>
                       </div>
                     )}
                   </Col>
@@ -131,6 +144,8 @@ class BookingContentLaptop extends React.Component {
               )
             })}
         </div>
+
+        <ModalBooking getRef={ref => (this.ModalBooking = ref)} />
       </BookingContentDefaultWrapper>
     )
   }
