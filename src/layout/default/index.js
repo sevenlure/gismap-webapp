@@ -428,7 +428,10 @@ class AppWithLayout extends React.Component {
               fontSize: '1rem',
               fontWeight: 300,
               fontFamily: 'HelveticaNeue-Light',
-              backgounrColor: '#fff'
+              backgounrColor: '#fff',
+              zIndex: 9,
+              backgroundColor: '#fff',
+              boxShadow: '0 -1px 4px 0 rgba(0, 0, 0, 0.1)'
             }}
           >
             <span>@ 2019 Travel. All rights reserved</span>
