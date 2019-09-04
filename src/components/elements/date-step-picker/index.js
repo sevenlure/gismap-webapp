@@ -1,9 +1,10 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { DatePicker, Button } from 'antd'
+import { DatePicker, Button, Icon } from 'antd'
 import moment from 'moment'
 import StepPicker from './step'
 import Clearfix from 'src/components/elements/clearfix'
+import IconSvg from 'icons'
 
 moment.updateLocale('en-au', {
   monthsShort: 'Tháng 1_Tháng 2_Tháng 3_Tháng 4_Tháng 5_Tháng 6_Tháng 7_Tháng 8_Tháng 9_Tháng 10_Tháng 11_Tháng 12'.split(
@@ -37,6 +38,8 @@ export default class DateStepPicker extends React.Component {
     return (
       <div>
         <DatePicker
+          allowClear={false}
+          size='large'
           locale={{ monthFormat: 'YYYY' }}
           open={this.state.isOpenCalendar}
           format='dddd, [ngày] D [tháng] M, YYYY'
@@ -44,6 +47,9 @@ export default class DateStepPicker extends React.Component {
           value={this.state.targetDate}
           showToday={false}
           style={{ width: '100%' }}
+          suffixIcon={
+            <Icon style={{ fontSize: 24, transform: 'translate(-6px, -4px)' }} component={IconSvg.calendar} />
+          }
           onOpenChange={status => {
             this.setState({ isOpenCalendar: status })
           }}
