@@ -1,7 +1,8 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import styled from 'styled-components'
-import { Select, Input, Divider, Icon, Timeline, Button, Row, Col, Drawer } from 'antd'
+import { Select, Input, Divider, Icon, Timeline, Button, Row, Col, Drawer, Skeleton } from 'antd'
+import { get as _get, find as _find } from 'lodash-es'
 import IconSvg from 'icons'
 import windowSize from 'react-window-size'
 
@@ -12,7 +13,14 @@ import BookingContentMobile from 'src/containers/booking/view-mobile'
 
 import Clearfix from 'src/components/elements/clearfix'
 import { map as _map, set as _set } from 'lodash-es'
+import { DATE_FORMAT } from 'src/config/format'
 import DateStepPicker from 'src/components/elements/date-step-picker'
+
+import { connect } from 'react-redux'
+import { getListTourSearch, setIsLoadedListTourSearch } from 'src/redux/actions/BookingAction'
+
+import moment from 'moment'
+
 const { Option } = Select
 
 const BookingContainer = styled.div`
@@ -91,115 +99,101 @@ const BookingContainer = styled.div`
   }
 `
 
+const mapStatetoProps = state => ({
+  listTourSearch: _get(state, 'BookingStore.listTourSearch', []),
+  listDeparture: _get(state, 'GeneralStore.danhMuc.listDeparture', []),
+  isLoadedlistTourSearch: _get(state, 'BookingStore.isLoadedlistTourSearch', null),
+  listTypeSeat: _get(state, 'GeneralStore.danhMuc.listTypeSeat', []),
+  listTimeSlot: _get(state, 'GeneralStore.danhMuc.listTimeSlot', [])
+})
+const mapDispatchToProps = { getListTourSearch, setIsLoadedListTourSearch }
+
+@connect(
+  mapStatetoProps,
+  mapDispatchToProps
+)
 @windowSize
 class Booking extends React.Component {
   static propTypes = {
-    windowWidth: PropTypes.number
+    querySearch: PropTypes.object,
+    listDeparture: PropTypes.array,
+    windowWidth: PropTypes.number,
+    listTourSearch: PropTypes.array,
+    isLoadedlistTourSearch: PropTypes.bool,
+    listTypeSeat: PropTypes.any,
+    listTimeSlot: PropTypes.any,
+    setIsLoadedListTourSearch: PropTypes.func,
+    getListTourSearch: PropTypes.func
   }
-  state = {
-    isVisibleDrawer: false,
-    dataTimeSlot: [
-      {
-        id: 1,
-        name: 'Tất cả'
-      },
-      {
-        id: 2,
-        name: '0:00 - 6:00'
-      },
-      {
-        id: 3,
-        name: '6:00 - 12:00'
-      },
-      {
-        id: 4,
-        name: '12:00 - 18:00'
-      },
-      {
-        id: 5,
-        name: '18:00 - 00:00'
+  constructor(props) {
+    super(props)
+    this.state = {
+      fromName: '',
+      toName: '',
+      isVisibleDrawer: false,
+      datafilter: {
+        from: _get(this.props, 'querySearch.from', null),
+        to: _get(this.props, 'querySearch.to', null),
+        timeSlotId: '',
+        seatType: '',
+        date: _get(this.props, 'querySearch.date', null) ? moment(this.props.querySearch.date) : moment()
       }
-    ],
-    dataSeatType: [
-      {
-        id: 1,
-        name: 'Tất cả'
-      },
-      {
-        id: 2,
-        name: ' Ghế thường'
-      },
-      {
-        id: 3,
-        name: 'Ghế giường nằm'
-      }
-    ],
-    datafilter: {
-      timeSlotId: 1,
-      seatType: 1
-    },
-    dataSearch: [
-      {
-        fromTime: '05:00',
-        toTime: '07:00',
-        from: 'Tây Ninh',
-        to: 'Quận 10, Hồ Chí Minh',
-        typeCar: 'Limousine 9 chỗ',
-        seat: '3/9',
-        price: 65000,
-        fullSeat: false
-      },
-      {
-        fromTime: '05:00',
-        toTime: '07:00',
-        from: 'Tây Ninh',
-        to: 'Quận 10, Hồ Chí Minh',
-        typeCar: 'Limousine 9 chỗ',
-        seat: '1/9',
-        price: 100000,
-        fullSeat: false
-      },
-      {
-        fromTime: '05:00',
-        toTime: '07:00',
-        from: 'Tây Ninh',
-        to: 'Quận 10, Hồ Chí Minh',
-        typeCar: 'Ghế ngồi 16 chỗ',
-        seat: 'Hết chỗ',
-        price: 100000,
-        fullSeat: true
-      },
-      {
-        fromTime: '05:00',
-        toTime: '07:00',
-        from: 'Tây Ninh',
-        to: 'Quận 10, Hồ Chí Minh',
-        typeCar: 'Limousine 9 chỗ',
-        seat: '4/9',
-        price: 100000,
-        fullSeat: false
-      }
-    ]
+    }
+  }
+
+  componentDidMount = () => {
+    if (this.props.querySearch) {
+      // console.log(this.props.listDeparture, 'componentDidMount')
+      this.setState({
+        fromName: _find(this.props.listDeparture, { id: this.props.querySearch.from }).name,
+        toName: _find(this.props.listDeparture, { id: this.props.querySearch.to }).name
+      })
+    }
   }
 
   static getDerivedStateFromProps(nextProps, prevState) {
+    let dataUpdate = null
     if (nextProps.windowWidth >= 1024 && prevState.isVisibleDrawer) {
-      return {
+      dataUpdate = {
         ...prevState,
         isVisibleDrawer: false
+      }
+    }
+
+    if (dataUpdate) {
+      return {
+        ...dataUpdate
       }
     }
     return null
   }
 
-  onChangeFilter(type, value) {
+  onChangeFilter = (type, value) => {
     let tempData = this.state.datafilter
     _set(tempData, type, value)
-    this.setState({
-      datafilter: {
-        ...tempData
+    // console.log(tempData, 'tempData')
+    this.setState(
+      {
+        datafilter: {
+          ...tempData
+        }
+      },
+      async () => {
+        this.props.setIsLoadedListTourSearch(false)
+        try {
+          await this.props.getListTourSearch({
+            from: _get(this.state, 'datafilter.from', null),
+            to: _get(this.state, 'datafilter.to', null),
+            date: decodeURIComponent(_get(this.state, 'datafilter.date', null).format(DATE_FORMAT)),
+            typeSeat: decodeURIComponent(_get(this.state, 'datafilter.seatType', null)),
+            timeSlot: _get(this.state, 'datafilter.date', null)
+          })
+          this.props.setIsLoadedListTourSearch(true)
+        } catch (ex) {
+          console.log(ex, 'ajs')
+        }
       }
-    })
+    )
   }
 
   LeftBooking = ({ isVisibleDrawer, zIndex }) => {
@@ -226,12 +220,12 @@ class Booking extends React.Component {
               <Timeline>
                 <Timeline.Item dot={<Icon style={{ fontSize: '1.5rem' }} component={FromSelectIconSvg} />} color='red'>
                   <div>
-                    <span style={{ fontSize: '1.25rem' }}>Tây Ninh</span>
+                    <span style={{ fontSize: '1.25rem' }}>{this.state.fromName}</span>
                   </div>
                   <Divider style={{ margin: '20px 0px 20px 0px' }} />
                 </Timeline.Item>
                 <Timeline.Item dot={<Icon style={{ fontSize: '1.5rem' }} component={ToSelectIconSvg} />} color='red'>
-                  <span style={{ fontSize: '1.25rem' }}>Hồ Chí Minh</span>
+                  <span style={{ fontSize: '1.25rem' }}>{this.state.toName}</span>
                 </Timeline.Item>
               </Timeline>
             </div>
@@ -240,22 +234,25 @@ class Booking extends React.Component {
           <div className='left-booking--content--date--picker'>
             <h3 className='left-booking--content__title'>Thời gian khởi hành</h3>
             <div>
-              <DateStepPicker />
+              <DateStepPicker
+                onChange={date => this.onChangeFilter('date', date)}
+                defaultValue={this.state.datafilter.date}
+              />
             </div>
           </div>
           <Clearfix height={45} />
           <div className='left-booking--content--time-slot'>
             <h3 className='left-booking--content__title'>Khung giờ</h3>
             <div>
-              {_map(this.state.dataTimeSlot, item => {
+              {_map(this.props.listTimeSlot, item => {
                 return (
                   <Button
-                    key={item.id}
+                    key={item.value}
                     style={{ padding: '0px 10px', margin: '0px 12px 12px 0px' }}
                     type='default'
                     shape='round'
-                    className={item.id === this.state.datafilter.timeSlotId ? 'select' : ''}
-                    onClick={() => this.onChangeFilter('timeSlotId', item.id)}
+                    className={item.value === this.state.datafilter.timeSlotId ? 'select' : ''}
+                    onClick={() => this.onChangeFilter('timeSlotId', item.value)}
                   >
                     {item.name}
                   </Button>
@@ -267,15 +264,18 @@ class Booking extends React.Component {
           <div className='left-booking--content--seat-type'>
             <h3 className='left-booking--content__title'>Loại ghế</h3>
             <div>
-              {_map(this.state.dataSeatType, item => {
+              {_map(this.props.listTypeSeat, item => {
                 return (
                   <Button
-                    key={item.id}
+                    key={item.value}
                     style={{ padding: '0px 10px', margin: '0px 12px 12px 0px' }}
                     type='default'
                     shape='round'
-                    className={item.id === this.state.datafilter.seatType ? 'select' : ''}
-                    onClick={() => this.onChangeFilter('seatType', item.id)}
+                    className={item.value === this.state.datafilter.seatType ? 'select' : ''}
+                    onClick={event => {
+                      event.preventDefault()
+                      this.onChangeFilter('seatType', item.value)
+                    }}
                   >
                     {item.name}
                   </Button>
@@ -289,6 +289,7 @@ class Booking extends React.Component {
   }
 
   render() {
+    // console.log(this.state.datafilter, 'datafilter')
     let isVisibleFilter = true
     let isViewDefault = true
     if (this.props.windowWidth < 1024) {
@@ -338,6 +339,8 @@ class Booking extends React.Component {
                   <Select size='large' defaultValue='timeRunAsc' style={{ width: '100%' }}>
                     <Option value='timeRunAsc'>Giờ chạy tăng dần</Option>
                     <Option value='timeRunDesc'>Giờ chạy giảm dần</Option>
+                    <Option value='priceRunAsc'>Giá vé tăng dần</Option>
+                    <Option value='priceRunDesc'>Giá vé giảm dần</Option>
                   </Select>
                 </Col>
                 <Col
@@ -356,8 +359,22 @@ class Booking extends React.Component {
               </Row>
             </div>
             <Divider style={{ margin: 0 }} />
-            {isViewDefault && <BookingContentDefault dataSearch={this.state.dataSearch} />}
-            {!isViewDefault && <BookingContentMobile dataSearch={this.state.dataSearch} />}
+            <div style={{ padding: '30px' }}>
+              {!this.props.isLoadedlistTourSearch &&
+                _map([1, 2, 3], key => {
+                  return (
+                    <div key={key} style={{ background: 'white', padding: '16px 8px', marginBottom: '20px' }}>
+                      <Skeleton paragraph={{ rows: 2 }} active />
+                    </div>
+                  )
+                })}
+              {this.props.isLoadedlistTourSearch && isViewDefault && (
+                <BookingContentDefault dataSearch={this.props.listTourSearch} />
+              )}
+              {this.props.isLoadedlistTourSearch && !isViewDefault && (
+                <BookingContentMobile dataSearch={this.props.listTourSearch} />
+              )}
+            </div>
           </div>
         </div>
       </BookingContainer>

@@ -6,16 +6,13 @@ import { Button, Row, Card } from 'antd'
 import { getFormatNumber } from 'src/config/format'
 
 import Clearfix from 'src/components/elements/clearfix'
-import { map as _map } from 'lodash-es'
+import { map as _map, get as _get } from 'lodash-es'
+import moment from 'moment'
+import { HH_MM } from 'src/config/format'
 import ModalBooking from './modal-booking'
 
 const BookingContentDefaultWrapper = styled.div`
   .right-booking--content-body {
-    padding: 30px;
-    // .right-booking--content-body__tb-header-color {
-    //   color: #9ea7d0;
-    // }
-
     .list--content--card {
       max-width: 360px;
       border-radius: 10px;
@@ -45,8 +42,22 @@ class BookingContentLaptop extends React.Component {
         <div className='right-booking--content-body'>
           {this.props.dataSearch &&
             _map(this.props.dataSearch, (item, index) => {
+              const timefrom = item.timeStart
+                ? moment(item.timeStart)
+                    .startOf('hour')
+                    .format(HH_MM)
+                : ''
+              const timeTo = item.timeStart
+                ? moment(item.timeStart)
+                    .startOf('hour')
+                    .add(2, 'hour')
+                    .format(HH_MM)
+                : ''
+
+              const fullSeat = item.seatBooked === item.seat ? true : false
+
               const styleStatus = {
-                backgroundColor: item.fullSeat ? 'rgba(255, 123, 102, 0.1)' : 'white'
+                backgroundColor: fullSeat ? 'rgba(255, 123, 102, 0.1)' : 'white'
               }
 
               return (
@@ -60,26 +71,28 @@ class BookingContentLaptop extends React.Component {
                   >
                     <div>
                       <div className='list--content--card--row'>
-                        <span> {`${item.from} - ${item.to}`}</span>
+                        <span>
+                          {`${_get(item, 'fromDeparture.name', '')}} - ${_get(item, 'toDeparture.name', '')}`}
+                        </span>
                       </div>
                       <Clearfix height={7} />
                       <div className='list--content--card--row'>
-                        <strong>Thời gian: </strong> <span> {`${item.fromTime} - ${item.toTime}`}</span>
+                        <strong>Thời gian: </strong> <span>{`${timefrom} - ${timeTo}`}</span>
                       </div>
                       <Clearfix height={7} />
                       <div className='list--content--card--row'>
-                        <strong>Loại xe: </strong> <span> {`${item.typeCar}`}</span>
+                        <strong>Loại xe: </strong> <span> {`${item.title}`}</span>
                       </div>
                       <Clearfix height={7} />
                       <div className='list--content--card--row'>
                         <strong>Số ghế: </strong>
-                        {item.fullSeat && <strong style={{ color: '#ff7b66' }}>{item.seat}</strong>}
-                        {!item.fullSeat && <span>{item.seat}</span>}
+                        {!fullSeat && <strong style={{ color: '#ff7b66' }}>{`${item.seatBooked}/${item.seat}`}</strong>}
+                        {fullSeat && <span>{'Hết chỗ'}</span>}
                       </div>
                       <Clearfix height={10} />
                       <div className='list--content--card--price'>{getFormatNumber(item.price)} đ</div>
                       <Clearfix height={10} />
-                      {!item.fullSeat && (
+                      {!fullSeat && (
                         <div>
                           <Button
                             type='primary'

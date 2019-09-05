@@ -14,10 +14,15 @@ moment.updateLocale('en-au', {
 })
 
 export default class DateStepPicker extends React.Component {
+  static propTypes = {
+    defaultValue: PropTypes.any,
+    onChange: PropTypes.func
+  }
+
   constructor(props) {
     super(props)
     this.state = {
-      targetDate: moment(),
+      targetDate: this.props.defaultValue,
       isOpenCalendar: false
     }
   }
@@ -79,6 +84,9 @@ export default class DateStepPicker extends React.Component {
           getRef={ref => (this.StepPicker = ref)}
           onChange={val => {
             this.setState({ targetDate: val })
+            if (this.props.onChange) {
+              this.props.onChange(val)
+            }
           }}
         />
       </div>

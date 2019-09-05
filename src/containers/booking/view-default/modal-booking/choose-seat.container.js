@@ -1,11 +1,11 @@
 import React from 'react'
-import PropTypes from 'prop-types'
+// import PropTypes from 'prop-types'
 import styled from 'styled-components'
-import { Radio, Input, Select, Card, Row, Col, Icon } from 'antd'
+import { Card, Row, Col, Icon } from 'antd'
 import IconSvg from 'icons'
-import Clearfix from 'src/components/elements/clearfix'
+// import Clearfix from 'src/components/elements/clearfix'
 
-const { Option } = Select
+// const { Option } = Select
 
 const Wrapper = styled.div`
   .title {

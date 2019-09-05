@@ -22,7 +22,7 @@ const SelectDepartureWrapper = styled.div`
   .Select-frefix {
     position: absolute;
     z-index: 2;
-    transform: translate(50%, 50%);
+    transform: translate(25%, 35%);
   }
 `
 @connect(state => ({
@@ -75,7 +75,7 @@ export default class SelectDeparture extends React.Component {
             // defaultActiveFirstOption={false}
             showArrow={false}
             filterOption={(input, option) => {
-              const nameItem = get(option, 'props.nameSearch', '')
+              const nameItem = get(option, 'props.namesearch', '')
               const inputXuly = replaceVietnameseStr(input.toLowerCase())
               return nameItem.toLowerCase().indexOf(inputXuly) >= 0
             }}
@@ -87,7 +87,7 @@ export default class SelectDeparture extends React.Component {
           >
             {_map(this.state.data, item => {
               return (
-                <Option key={item.id} value={item.id} nameSearch={item.nameSearch}>
+                <Option key={item.id} value={item.id} namesearch={item.nameSearch}>
                   {item.name}
                 </Option>
               )

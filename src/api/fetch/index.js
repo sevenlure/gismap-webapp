@@ -1,7 +1,7 @@
 import axios from 'axios'
 import { Modal } from 'antd'
-import error_500 from './error_500'
-import error_415 from './error_415'
+// import error_500 from './error_500'
+// import error_415 from './error_415'
 // import { userLogout } from 'src/redux/actions/authAction'
 
 //QLNY-API
@@ -61,66 +61,6 @@ fetch.interceptors.response.use(
     return response
   },
   function(error) {
-    // NOTE https://github.com/axios/axios tai liệu tham khảo
-    if (error.response) {
-      // const { status, data, message } = error.response
-      const { status, data } = error.response
-      switch (status) {
-        case 401: {
-          // const title = 'Chứng thực'
-          switch (data.code) {
-            case 'InvalidCredentials': {
-              // alertMess({
-              //   title: title,
-              //   content: 'Chữ ký không hợp lệ!!',
-              //   onOk() {
-              //     window.dispatch(userLogout())
-              //     Router.replace(slug.login)
-              //   }
-              // })
-              break
-            }
-            case 'Unauthorized': {
-              return Promise.reject(error)
-              // alertMess({
-              //   title: title,
-              //   content: message || data.message, //'Hết phiên làm việc, Vui lòng đăng nhập lại',
-              //   onOk() {
-              //     window.dispatch(userLogout())
-              //     Router.push(slug.basic)
-              //   }
-              // })
-              // break
-            }
-            default: {
-              // messageAnt.error(error.response.message)
-              break
-            }
-          }
-          break
-        }
-        case 415: {
-          error_415(error)
-          break
-        }
-        case 500: {
-          error_500(error)
-          break
-        }
-        default: {
-          // const messErr = error.response.message || data.message
-          // messageAnt.error(messErr)
-        }
-      }
-    } else if (error.request) {
-      // alertMess({
-      //   title: 'Network',
-      //   content: 'Vui lòng kiểm tra lại hệ thống mạng của máy và server'
-      // })
-      // console.log(error.request)
-    } else {
-      // messageAnt.error(error.response.message)
-    }
     return Promise.reject(error)
   }
 )

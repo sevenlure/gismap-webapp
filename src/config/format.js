@@ -1,5 +1,6 @@
 export const DATE_FORMAT = 'DD/MM/YYYY'
 export const DATETIME_FORMAT = 'DD/MM/YYYY HH:mm'
+export const HH_MM = 'HH:mm'
 
 export const FORMAT_LOCAL = 'en'
 export const ROUND_DIGIT = 2 // Làm tròn số thap phan

@@ -7,12 +7,13 @@ import ArrowIconSvg from 'static/images/icon/ic-arrow.svg'
 import { getFormatNumber } from 'src/config/format'
 
 import Clearfix from 'src/components/elements/clearfix'
-import { map as _map } from 'lodash-es'
+import { map as _map, get as _get } from 'lodash-es'
 import ModalBooking from './modal-booking'
+import moment from 'moment'
+import { HH_MM } from 'src/config/format'
 
 const BookingContentDefaultWrapper = styled.div`
   .right-booking--content-body {
-    padding: 30px;
     .right-booking--content-body__tb-header-color {
       color: #9ea7d0;
     }
@@ -70,10 +71,23 @@ class BookingContentLaptop extends React.Component {
 
           {this.props.dataSearch &&
             _map(this.props.dataSearch, (item, index) => {
-              const styleStatus = {
-                backgroundColor: item.fullSeat ? 'rgba(255, 123, 102, 0.1)' : 'white'
-              }
+              const timeTo = item.timeStart
+                ? moment(item.timeStart)
+                    .startOf('hour')
+                    .format(HH_MM)
+                : ''
+              const timefrom = item.timeStart
+                ? moment(item.timeStart)
+                    .startOf('hour')
+                    .add(2, 'hour')
+                    .format(HH_MM)
+                : ''
 
+              const fullSeat = item.seatBooked === item.seat ? true : false
+
+              const styleStatus = {
+                backgroundColor: fullSeat ? 'rgba(255, 123, 102, 0.1)' : 'white'
+              }
               return (
                 <Row
                   key={index}
@@ -83,36 +97,36 @@ class BookingContentLaptop extends React.Component {
                 >
                   <Col span={3}>
                     <div>
-                      <span className='right-booking--content-body__tb-row-time'>{item.fromTime}</span>
+                      <span className='right-booking--content-body__tb-row-time'>{timeTo}</span>
                     </div>
                     <div>
                       <Icon style={{ fontSize: '1.5rem' }} component={ArrowIconSvg} />
                     </div>
                     <div>
-                      <span className='right-booking--content-body__tb-row-time'>{item.toTime}</span>
+                      <span className='right-booking--content-body__tb-row-time'>{timefrom}</span>
                     </div>
                   </Col>
                   <Col span={6}>
                     <div>
-                      <span>{item.from}</span>
+                      <span>{_get(item, 'fromDeparture.name', '')}</span>
                     </div>
                     <div>
                       <Icon style={{ fontSize: '1.5rem' }} component={ArrowIconSvg} />
                     </div>
                     <div>
-                      <span>{item.to}</span>
+                      <span>{_get(item, 'toDeparture.name', '')}</span>
                     </div>
                   </Col>
                   <Col span={5} className='right-booking--content-body--item__center'>
-                    <span>{item.typeCar}</span>
+                    <span>{item.title}</span>
                   </Col>
                   <Col
                     span={3}
                     style={{ justifyContent: 'center' }}
                     className='right-booking--content-body--item__center'
                   >
-                    {item.fullSeat && <strong style={{ color: '#ff7b66' }}>{item.seat}</strong>}
-                    {!item.fullSeat && <span>{item.seat}</span>}
+                    {!fullSeat && <strong style={{ color: '#ff7b66' }}>{`${item.seatBooked}/${item.seat}`}</strong>}
+                    {fullSeat && <span>{`Hết chỗ`}</span>}
                   </Col>
                   <Col
                     span={7}
@@ -123,7 +137,7 @@ class BookingContentLaptop extends React.Component {
                       <h3 style={{ fontSize: '1.25rem', margin: '0px' }}>{getFormatNumber(item.price)}</h3>
                     </div>
 
-                    {!item.fullSeat && (
+                    {!fullSeat && (
                       <div>
                         <Button
                           type='primary'

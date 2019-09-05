@@ -5,9 +5,11 @@ import styled from 'styled-components'
 import { connect } from 'react-redux'
 import { Row, Col, Button, Card, Form } from 'antd'
 import { getFormatNumber } from 'src/config/format'
+import { getListTourSearch, setIsLoadedListTourSearch } from 'src/redux/actions/BookingAction'
 import DefaultLayout from 'src/layout/default'
 import windowSize from 'react-window-size'
-
+import moment from 'moment'
+import { DATE_FORMAT } from 'src/config/format'
 // NOTE Element
 import Clearfix from 'src/components/elements/clearfix'
 import SelectDeparture from 'src/components/elements/select-departure'
@@ -105,19 +107,48 @@ const WrapperIndex = styled.div`
   }
 `
 
-const isBooking = true
+const mapStateToProps = state => ({
+  listTourPopular: _get(state, 'GeneralStore.listTourPopular', []),
+  listDeparture: _get(state, 'GeneralStore.danhMuc.listDeparture', []),
+  listTourSearch: _get(state, 'BookingStore.listTourSearch', []),
+  isLoadedlistTourSearch: _get(state, 'BookingStore.isLoadedlistTourSearch', null)
+})
+const mapDispatchToProps = {
+  getListTourSearch,
+  setIsLoadedListTourSearch
+}
 
-@connect(state => ({
-  listTour: _get(state, 'GeneralStore.listtour', []),
-  listDeparture: _get(state, 'GeneralStore.danhMuc.listDeparture', [])
-}))
+@connect(
+  mapStateToProps,
+  mapDispatchToProps
+)
 @windowSize
 class Index extends React.Component {
   static propTypes = {
     windowWidth: PropTypes.number,
-    listTour: PropTypes.array,
+    listTourPopular: PropTypes.array,
     listDeparture: PropTypes.array,
+    getListTourSearch: PropTypes.func,
+    listTourSearch: PropTypes.array,
+    isLoadedlistTourSearch: PropTypes.bool,
+    setIsLoadedListTourSearch: PropTypes.func,
     form: PropTypes.any
+  }
+
+  state = {
+    isBooking: false,
+    querySearch: null
+  }
+
+  componentDidUpdate = prevProps => {
+    if (
+      this.props.isLoadedlistTourSearch != prevProps.isLoadedlistTourSearch &&
+      this.props.isLoadedlistTourSearch === true
+    ) {
+      this.setState({
+        isBooking: true
+      })
+    }
   }
 
   hasErrors = fieldsError => {
@@ -129,21 +160,35 @@ class Index extends React.Component {
     e.preventDefault()
     this.props.form.validateFields(async (err, values) => {
       if (!err) {
-        console.log('Received values of form: ', values)
+        // console.log('Received values of form: ', values)
       }
-      // console.log('err: ', values)
+      this.setState({
+        querySearch: {
+          ...values,
+          date: moment().format(DATE_FORMAT)
+        }
+      })
+      this.props.setIsLoadedListTourSearch(false)
+
+      await Promise.all([
+        this.props.getListTourSearch({
+          ...this.state.querySearch
+        })
+      ]).then(() => {
+        this.props.setIsLoadedListTourSearch(true)
+      })
     })
   }
 
   componentDidMount() {
     // To disabled submit button at the beginning.
+    this.props.setIsLoadedListTourSearch(true)
     this.props.form.validateFields()
   }
 
   render() {
     const { getFieldDecorator, getFieldsError } = this.props.form
-    // console.log(process.env.HOST_MEDIA)
-
+    const { isBooking } = this.state
     return (
       <WrapperIndex windowWidth={this.props.windowWidth}>
         {/* <InputOTP numInputs={4}/> */}
@@ -169,12 +214,12 @@ class Index extends React.Component {
                       <div className='search--form--from-to'>
                         <Row gutter={8}>
                           <Col xs={24} sm={12} lg={12} style={{ marginBottom: 8 }}>
-                            {getFieldDecorator('diemKhoiHanh', {
+                            {getFieldDecorator('from', {
                               rules: [{ required: true, message: 'Vui lòng chọn điểm khởi hành!' }]
                             })(<SelectDeparture placeholder='Điểm khởi hành' isFrom={true} />)}
                           </Col>
                           <Col xs={24} sm={12} lg={12} style={{ marginBottom: 8 }}>
-                            {getFieldDecorator('diemDen', {
+                            {getFieldDecorator('to', {
                               rules: [{ required: true, message: 'Vui lòng chọn điểm muốn đến!' }]
                             })(<SelectDeparture placeholder='Điểm muốn đến' isFrom={false} />)}
                           </Col>
@@ -189,6 +234,7 @@ class Index extends React.Component {
                               type='primary'
                               block={true}
                               size='large'
+                              loading={!this.props.isLoadedlistTourSearch}
                               disabled={this.hasErrors(getFieldsError())}
                             >
                               Tìm vé xe
@@ -207,8 +253,8 @@ class Index extends React.Component {
                 <div className='list--title'>Tuyến đi phổ biến</div>
                 <Clearfix height={25} />
                 <Row gutter={{ xs: 8, sm: 16, lg: 24 }}>
-                  {this.props.listTour &&
-                    _map(this.props.listTour, item => {
+                  {this.props.listTourPopular &&
+                    _map(this.props.listTourPopular, item => {
                       return (
                         <Col key={item.id} xs={24} sm={12} lg={8} style={{ marginBottom: 24 }}>
                           <Card
@@ -240,7 +286,7 @@ class Index extends React.Component {
             </div>
           </div>
         )}
-        {isBooking && <Booking />}
+        {isBooking && <Booking querySearch={this.state.querySearch} />}
       </WrapperIndex>
     )
   }

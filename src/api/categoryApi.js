@@ -9,6 +9,25 @@ export function getListDepartureAll(query) {
   })
 }
 
+const SLUG_OTHER = '/other'
+export function getLisTypeSeat(query) {
+  return fetch.get(`${SLUG_OTHER}/typeSeat`, {
+    params: {
+      ...query
+    }
+  })
+}
+
+export function getListTimeSlot(query) {
+  return fetch.get(`${SLUG_OTHER}/timeSlot`, {
+    params: {
+      ...query
+    }
+  })
+}
+
 export default {
-  getListDepartureAll
+  getListDepartureAll,
+  getLisTypeSeat,
+  getListTimeSlot
 }

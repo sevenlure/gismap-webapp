@@ -2,7 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import styled from 'styled-components'
 import { Radio, Input, Select } from 'antd'
-import IconSvg from 'icons'
+// import IconSvg from 'icons'
 import Clearfix from 'src/components/elements/clearfix'
 import windowSize from 'react-window-size'
 
@@ -51,6 +51,10 @@ const radioStyle = {
 
 @windowSize
 export default class PickupPointContainer extends React.Component {
+  static propTypes = {
+    windowWidth: PropTypes.number
+  }
+
   state = {
     pickupPointVal: 1,
     desPointVal: 1
