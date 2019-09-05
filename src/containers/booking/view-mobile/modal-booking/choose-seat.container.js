@@ -17,11 +17,20 @@ const Wrapper = styled.div`
     cursor: pointer;
   }
 
+  .ant-card.ant-card-bordered {
+    .ant-card-head {
+      zoom: 0.6;
+    }
+    .ant-card-body {
+      zoom: 0.75;
+    }
+  }
+
   .seat {
     display: flex;
     justify-content: space-between;
-    margin-left: 24px;
-    margin-right: 24px;
+    margin-left: 8px;
+    margin-right: 8px;
     .seat-matrix {
       width: 142px;
     }
@@ -97,7 +106,7 @@ export default class ChooseSeatContainer extends React.Component {
     return (
       <Wrapper>
         <div className='title'>Chọn ghế xe</div>
-        <Card bodyStyle={{ padding: '16px 24px 16px 24px' }} title={<TitleCard />}>
+        <Card bodyStyle={{ padding: '8px 12px 8px 12px' }} title={<TitleCard />}>
           <div className='seat'>
             <div className='seat-matrix'>
               <strong>Tầng dưới</strong>

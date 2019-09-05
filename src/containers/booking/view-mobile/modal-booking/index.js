@@ -74,7 +74,7 @@ export default class ModalBooking extends React.Component {
         <Modal
           width='100%'
           style={{
-            padding: this.props.windowWidth > 900 ? 24 : 24,
+            padding: 8,
             maxWidth: 780
           }}
           visible={this.state.isOpenModal}
@@ -119,11 +119,9 @@ export default class ModalBooking extends React.Component {
                     <h3>- - -</h3>
                   </div>
                 </div>
-                <Button style={{ marginLeft: 24 }} type='primary'>
-                  Xác nhận đặt vé
-                </Button>
               </div>
             </div>
+            <Button type='primary'>Xác nhận đặt vé</Button>
           </BodyWrapper>
         </Modal>
       </div>

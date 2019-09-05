@@ -7,6 +7,7 @@ import { getFormatNumber } from 'src/config/format'
 
 import Clearfix from 'src/components/elements/clearfix'
 import { map as _map } from 'lodash-es'
+import ModalBooking from './modal-booking'
 
 const BookingContentDefaultWrapper = styled.div`
   .right-booking--content-body {
@@ -80,7 +81,18 @@ class BookingContentLaptop extends React.Component {
                       <Clearfix height={10} />
                       {!item.fullSeat && (
                         <div>
-                          <Button type='primary'> Đặt vé</Button>
+                          <Button
+                            type='primary'
+                            onClick={() => {
+                              try {
+                                this.ModalBooking.showModal()
+                              } catch (e) {
+                                console.log('loi this.ModalBooking.showModal()', e)
+                              }
+                            }}
+                          >
+                            Đặt vé
+                          </Button>
                         </div>
                       )}
                     </div>
@@ -89,6 +101,7 @@ class BookingContentLaptop extends React.Component {
               )
             })}
         </div>
+        <ModalBooking getRef={ref => (this.ModalBooking = ref)} />
       </BookingContentDefaultWrapper>
     )
   }

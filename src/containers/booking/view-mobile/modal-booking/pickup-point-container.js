@@ -9,9 +9,6 @@ import windowSize from 'react-window-size'
 const { Option } = Select
 
 const Wrapper = styled.div`
-  ${props => (props.windowWidth < 900 ? 'display: flex;' : '')}
-  ${props => (props.windowWidth < 900 ? 'justify-content: space-between;' : '')}
-
   .title {
     font-family: myFont-Bold;
     font-size: 1.125rem;
@@ -77,12 +74,12 @@ export default class PickupPointContainer extends React.Component {
           <div className='title'>Chọn điểm đón</div>
           <Radio.Group onChange={this.onChangePickupPoint} value={this.state.pickupPointVal}>
             <Radio style={radioStyle} value={1}>
-              <Select size='large' placeholder='Chọn bến đón' style={{ width: 200 }}>
+              <Select size='large' placeholder='Chọn bến đón' style={{ width: 250 }}>
                 <Option value='137'>137 Đào duy Từ…</Option>
               </Select>
             </Radio>
             <Radio style={radioStyle} value={2}>
-              <Input size='large' placeholder='Vị trí cần đón...' style={{ width: 200 }} />
+              <Input size='large' placeholder='Vị trí cần đón...' />
             </Radio>
           </Radio.Group>
         </div>
@@ -91,12 +88,12 @@ export default class PickupPointContainer extends React.Component {
           <div className='title'>Chọn điểm trả</div>
           <Radio.Group onChange={this.onChangeDesPoint} value={this.state.desPointVal}>
             <Radio style={radioStyle} value={1}>
-              <Select size='large' placeholder='Xuống ở bến' style={{ width: 200 }}>
+              <Select size='large' placeholder='Xuống ở bến' style={{ width: 250 }}>
                 <Option value='137'>137 Đào duy Từ…</Option>
               </Select>
             </Radio>
             <Radio style={radioStyle} value={2}>
-              <Input size='large' placeholder='Xuống tận nhà...' style={{ width: 200 }} />
+              <Input size='large' placeholder='Xuống tận nhà...' />
             </Radio>
           </Radio.Group>
         </div>
