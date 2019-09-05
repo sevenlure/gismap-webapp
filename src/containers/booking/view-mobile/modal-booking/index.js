@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import styled from 'styled-components'
-import { Icon, Button, Row, Col, Modal, Divider } from 'antd'
+import { Button, Modal, Divider } from 'antd'
 import PickupPointContainer from './pickup-point-container'
 import ChooseSeatContainer from './choose-seat.container'
 import windowSize from 'react-window-size'
@@ -43,7 +43,8 @@ const BodyWrapper = styled.div`
 @windowSize
 export default class ModalBooking extends React.Component {
   static propTypes = {
-    getRef: PropTypes.func
+    getRef: PropTypes.func,
+    windowWidth: PropTypes.number
   }
 
   state = { isOpenModal: false }
@@ -87,7 +88,7 @@ export default class ModalBooking extends React.Component {
           <BodyWrapper windowWidth={this.props.windowWidth}>
             <div className='modal--title'>
               <div>
-                <div>05:00 -> 07:00</div>
+                <div>{`05:00 -> 07:00`}</div>
                 <div>Tây Ninh - Quận 10, Hồ Chí Minh</div>
                 <div>Limousine 9 chỗ</div>
               </div>

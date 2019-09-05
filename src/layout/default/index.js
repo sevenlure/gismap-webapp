@@ -5,7 +5,14 @@ import styled from 'styled-components'
 import { Layout, Menu, Icon, Divider, Button, Drawer, Modal } from 'antd'
 import { connect } from 'react-redux'
 import { userLogout } from 'src/redux/actions/authAction'
-import { getListTour, getListDeparture } from 'src/redux/actions/generalAction.js'
+import {
+  getListTourPopular,
+  getListTypeSeat,
+  getListTimeSlot,
+  isListTourPopular,
+  isLoadedDanhMuc,
+  getListDeparture
+} from 'src/redux/actions/generalAction.js'
 import { get as _get } from 'lodash-es'
 import Router, { withRouter } from 'next/router'
 import slug from 'src/routes'
@@ -77,8 +84,12 @@ const ChildrenContainer = styled.div`
   }),
   {
     userLogout,
-    getListTour,
-    getListDeparture
+    getListTourPopular,
+    getListTypeSeat,
+    getListTimeSlot,
+    getListDeparture,
+    isListTourPopular,
+    isLoadedDanhMuc
   }
 )
 // @hocProtectLogin
@@ -91,8 +102,12 @@ class AppWithLayout extends React.Component {
     isAuthenticated: PropTypes.bool,
     router: PropTypes.any,
     userLogout: PropTypes.func,
-    getListTour: PropTypes.func,
+    getListTourPopular: PropTypes.func,
     getListDeparture: PropTypes.func,
+    isListTourPopular: PropTypes.func,
+    isLoadedDanhMuc: PropTypes.func,
+    getListTypeSeat: PropTypes.func,
+    getListTimeSlot: PropTypes.func,
     windowWidth: PropTypes.number
   }
 
@@ -102,9 +117,23 @@ class AppWithLayout extends React.Component {
     isLogin: false
   }
 
-  componentDidMount = () => {
+  componentDidMount = async () => {
     // console.log('componentDidMount Layout')
-    Promise.all([this.props.getListTour(), this.props.getListDeparture()]).then(() => {})
+    this.props.isLoadedDanhMuc(false)
+    this.props.isListTourPopular(false)
+    await Promise.all([
+      this.props.getListTourPopular(),
+      this.props.getListTypeSeat(),
+      this.props.getListTimeSlot(),
+      this.props.getListDeparture()
+    ])
+      .then(() => {
+        this.props.isLoadedDanhMuc(true)
+        this.props.isListTourPopular(true)
+      })
+      .catch(e => {
+        console.log(e, 'e')
+      })
     try {
       /* eslint-disable */
       new SimpleBar(document.body)

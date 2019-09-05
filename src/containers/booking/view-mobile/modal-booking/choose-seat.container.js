@@ -1,11 +1,11 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import styled from 'styled-components'
-import { Radio, Input, Select, Card, Row, Col, Icon } from 'antd'
+import { Card, Row, Col, Icon } from 'antd'
 import IconSvg from 'icons'
 import Clearfix from 'src/components/elements/clearfix'
 
-const { Option } = Select
+// const { Option } = Select
 
 const Wrapper = styled.div`
   .title {
@@ -71,9 +71,12 @@ const SEAT_ICON_FROM_STATUS = {
   3: IconSvg.seatDriver
 }
 
-const IconFromMatrix = ({ matrix, col, row }) => {
+const IconFromMatrix = ({ matrix }) => {
   if (!matrix || matrix.status == null) return <div />
   return <Icon style={{ fontSize: 28 }} component={SEAT_ICON_FROM_STATUS[matrix.status]} />
+}
+IconFromMatrix.propTypes = {
+  matrix: PropTypes.any
 }
 
 const TitleCard = () => {
