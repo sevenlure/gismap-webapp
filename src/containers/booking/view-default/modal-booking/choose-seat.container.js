@@ -1,9 +1,9 @@
 import React from 'react'
 // import PropTypes from 'prop-types'
 import styled from 'styled-components'
-import { Card, Row, Col, Icon } from 'antd'
-import IconSvg from 'icons'
-// import Clearfix from 'src/components/elements/clearfix'
+import { Card, Row, Col } from 'antd'
+import Clearfix from 'src/components/elements/clearfix'
+import IconSeat from 'src/components/elements/icon-seat'
 
 // const { Option } = Select
 
@@ -55,36 +55,25 @@ const matrixObj = {
   ['5-D']: { status: 0 }
 }
 
-const SEAT_ICON_FROM_STATUS = {
-  0: IconSvg.seatOff,
-  1: IconSvg.seatChoose,
-  2: IconSvg.seatDisable,
-  3: IconSvg.seatDriver
-}
-
-const IconFromMatrix = ({ matrix, col, row }) => {
-  if (!matrix || matrix.status == null) return <div />
-  return <Icon style={{ fontSize: 28 }} component={SEAT_ICON_FROM_STATUS[matrix.status]} />
-}
-
 const TitleCard = () => {
   return (
     <Row gutter={8}>
-      <Col span={6}>
-        <Icon style={{ fontSize: 18 }} component={SEAT_ICON_FROM_STATUS[3]} />
-        <span style={{ fontSize: '1rem' }}> Tài xế</span>
+      <Col span={6} style={{ display: 'flex', alignItems: 'center' }}>
+        {/* <Icon style={{ fontSize: 18 }} component={SEAT_ICON_FROM_STATUS[3]} /> */}
+        <IconSeat zoom={0.8} matrix={{ status: 3 }} />
+        <span style={{ marginLeft: 4, fontSize: '0.75rem' }}> Tài xế</span>
       </Col>
-      <Col span={6}>
-        <Icon style={{ fontSize: 18 }} component={SEAT_ICON_FROM_STATUS[2]} />
-        <span style={{ fontSize: '1rem' }}> Đã đặt</span>
+      <Col span={6} style={{ display: 'flex', alignItems: 'center' }}>
+        <IconSeat zoom={0.8} matrix={{ status: 2 }} />
+        <span style={{ marginLeft: 4, fontSize: '0.75rem' }}> Đã đặt</span>
       </Col>
-      <Col span={6}>
-        <Icon style={{ fontSize: 18 }} component={SEAT_ICON_FROM_STATUS[1]} />
-        <span style={{ fontSize: '1rem' }}> Đang chọn</span>
+      <Col span={6} style={{ display: 'flex', alignItems: 'center' }}>
+        <IconSeat zoom={0.8} matrix={{ status: 1 }} />
+        <span style={{ marginLeft: 4, fontSize: '0.75rem' }}> Đang chọn</span>
       </Col>
-      <Col span={6}>
-        <Icon style={{ fontSize: 18 }} component={SEAT_ICON_FROM_STATUS[0]} />
-        <span style={{ fontSize: '1rem' }}> Còn trống</span>
+      <Col span={6} style={{ display: 'flex', alignItems: 'center' }}>
+        <IconSeat zoom={0.8} matrix={{ status: 0 }} />
+        <span style={{ marginLeft: 4, fontSize: '0.75rem' }}> Còn trống</span>
       </Col>
     </Row>
   )
@@ -106,16 +95,16 @@ export default class ChooseSeatContainer extends React.Component {
                 return (
                   <Row style={{ marginBottom: 20 }} key={row} gutter={16}>
                     <Col span={6}>
-                      <IconFromMatrix row={row} col='A' matrix={matrixObj[`${row}-A`]} />
+                      <IconSeat name={`${row}A`} row={row} col='A' matrix={matrixObj[`${row}-A`]} />
                     </Col>
                     <Col span={6}>
-                      <IconFromMatrix row={row} col='B' matrix={matrixObj[`${row}-B`]} />
+                      <IconSeat name={`${row}B`} row={row} col='B' matrix={matrixObj[`${row}-B`]} />
                     </Col>
                     <Col span={6}>
-                      <IconFromMatrix row={row} col='C' matrix={matrixObj[`${row}-C`]} />
+                      <IconSeat name={`${row}C`} row={row} col='C' matrix={matrixObj[`${row}-C`]} />
                     </Col>
                     <Col span={6}>
-                      <IconFromMatrix row={row} col='D' matrix={matrixObj[`${row}-D`]} />
+                      <IconSeat name={`${row}D`} row={row} col='D' matrix={matrixObj[`${row}-D`]} />
                     </Col>
                   </Row>
                 )
@@ -128,16 +117,16 @@ export default class ChooseSeatContainer extends React.Component {
                 return (
                   <Row style={{ marginBottom: 20 }} key={row} gutter={16}>
                     <Col span={6}>
-                      <IconFromMatrix row={row} col='A' matrix={matrixObj[`${row}-A`]} />
+                      <IconSeat name={`${row}A`} row={row} col='A' matrix={matrixObj[`${row}-A`]} />
                     </Col>
                     <Col span={6}>
-                      <IconFromMatrix row={row} col='B' matrix={matrixObj[`${row}-B`]} />
+                      <IconSeat name={`${row}B`} row={row} col='B' matrix={matrixObj[`${row}-B`]} />
                     </Col>
                     <Col span={6}>
-                      <IconFromMatrix row={row} col='C' matrix={matrixObj[`${row}-C`]} />
+                      <IconSeat name={`${row}C`} row={row} col='C' matrix={matrixObj[`${row}-C`]} />
                     </Col>
                     <Col span={6}>
-                      <IconFromMatrix row={row} col='D' matrix={matrixObj[`${row}-D`]} />
+                      <IconSeat name={`${row}D`} row={row} col='D' matrix={matrixObj[`${row}-D`]} />
                     </Col>
                   </Row>
                 )

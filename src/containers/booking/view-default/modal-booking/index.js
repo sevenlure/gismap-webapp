@@ -44,7 +44,7 @@ const BodyWrapper = styled.div`
 export default class ModalBooking extends React.Component {
   static propTypes = {
     getRef: PropTypes.func,
-    windowWidth: PropTypes.number,
+    windowWidth: PropTypes.number
   }
 
   state = { isOpenModal: false }
