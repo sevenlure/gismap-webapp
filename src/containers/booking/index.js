@@ -20,6 +20,7 @@ import { connect } from 'react-redux'
 import { getListTourSearch, setIsLoadedListTourSearch } from 'src/redux/actions/BookingAction'
 
 import moment from 'moment'
+import SelectDepartureV2 from 'src/components/elements/select-departure-v2'
 
 const { Option } = Select
 
@@ -59,7 +60,7 @@ const BookingContainer = styled.div`
             }
             .ant-timeline-item-content{
                 top:0px;
-                margin-left: 30px;
+                // margin-left: 30px;
             }
             .ant-timeline-item{
                 padding: 0 0 1px;
@@ -220,9 +221,10 @@ class Booking extends React.Component {
               <Timeline>
                 <Timeline.Item dot={<Icon style={{ fontSize: '1.5rem' }} component={FromSelectIconSvg} />} color='red'>
                   <div>
-                    <span style={{ fontSize: '1.25rem' }}>{this.state.fromName}</span>
+                    {/* <span style={{ fontSize: '1.25rem' }}>{this.state.fromName}</span> */}
+                    <SelectDepartureV2 placeholder='Điểm khởi hành' isFrom={true} />
                   </div>
-                  <Divider style={{ margin: '20px 0px 20px 0px' }} />
+                  <Divider style={{ margin: '8px 0px 16px 0px' }} />
                 </Timeline.Item>
                 <Timeline.Item dot={<Icon style={{ fontSize: '1.5rem' }} component={ToSelectIconSvg} />} color='red'>
                   <span style={{ fontSize: '1.25rem' }}>{this.state.toName}</span>

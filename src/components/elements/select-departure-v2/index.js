@@ -9,7 +9,7 @@ import ToSelectIconSvg from 'static/images/icon/ic-arrow-map-to-select.svg'
 import { get as _get, map as _map, isNumber as _isNumber } from 'lodash-es'
 import windowSize from 'react-window-size'
 import { connect } from 'react-redux'
-import { Spin, Select, Icon } from 'antd'
+import { Spin, Select } from 'antd'
 import { get } from 'lodash-es'
 import { replaceVietnameseStr } from 'utils/string'
 const { Option } = Select
@@ -58,22 +58,18 @@ export default class SelectDeparture extends React.Component {
   }
 
   render() {
-    const isHave = _isNumber(this.props.value) ? true : false
-    let iconSelect = this.props.isFrom ? FromIconSvg : ToIconSvg
-    if (isHave) {
-      iconSelect = this.props.isFrom ? FromSelectIconSvg : ToSelectIconSvg
-    }
+    // const isHave = _isNumber(this.props.value) ? true : false
+    // let iconSelect = this.props.isFrom ? FromIconSvg : ToIconSvg
+    // if (isHave) {
+    //   iconSelect = this.props.isFrom ? FromSelectIconSvg : ToSelectIconSvg
+    // }
 
     return (
       <SelectDepartureWrapper windowWidth={this.props.windowWidth}>
         <Spin spinning={this.state.isloading}>
-          <div className='Select-frefix'>
-            <Icon style={{ fontSize: '1.5rem' }} component={iconSelect} />
-          </div>
-
           <Select
-            className='custom-select'
             // defaultActiveFirstOption={false}
+            className='custom-select-v2'
             showArrow={false}
             filterOption={(input, option) => {
               const nameItem = get(option, 'props.namesearch', '')
@@ -82,7 +78,7 @@ export default class SelectDeparture extends React.Component {
             }}
             placeholder={this.props.placeholder}
             showSearch
-            style={{ width: '100%' }}
+            style={{ width: '100%', fontSize: '1.25rem', top: -4 }}
             size='large'
             onChange={this.props.onChange}
           >

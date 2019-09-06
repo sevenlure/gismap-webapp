@@ -89,16 +89,45 @@ body {
   max-height: 400px !important;
 }
 /* #region   NOTE  ant-select */
-.ant-select-no-arrow .ant-select-selection__rendered {
-  margin-left: @element-large-height !important;
-}
-
-.ant-select-lg .ant-select-selection--single {
+.ant-select-lg.custom-select .ant-select-selection--single {
   height: @element-large-height !important;
 }
-.ant-select-lg .ant-select-selection__rendered {
-  // line-height: @element-large-height !important;
+.ant-select-lg.custom-select {
+  height: 42px;
+
+  &.ant-select-no-arrow .ant-select-selection__rendered {
+    margin-left: @element-large-height !important;
+  }
+
+  .ant-select-selection__rendered {
+    line-height: @element-large-height !important;
+  }
 }
+
+.ant-select-lg.custom-select-v2 {
+  height: 42px;
+
+  &::selection {
+    background: initial;
+  }
+  &:hover, &:focus {
+    border: none;
+  }
+  .selection, .ant-select-selection:focus {
+    border: none;
+    box-shadow: none;
+  }
+
+  .ant-select-selection__rendered {
+    line-height: @element-large-height !important;
+    // margin-left: 0px;
+  }
+
+  .ant-select-selection--single {
+    border: none;
+  }
+}
+
 /* #endregion */
 /* NOTE  custom css về table */
 ul.ant-pagination.ant-table-pagination {
