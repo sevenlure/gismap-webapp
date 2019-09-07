@@ -2,7 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import styled from 'styled-components'
 import { Select, Input, Divider, Icon, Timeline, Button, Row, Col, Drawer, Skeleton } from 'antd'
-import { get as _get, find as _find } from 'lodash-es'
+import { get as _get } from 'lodash-es'
 import IconSvg from 'icons'
 import windowSize from 'react-window-size'
 
@@ -30,9 +30,10 @@ const BookingContainer = styled.div`
 
   .left-booking {
     width: ${props => (props.isVisibleFilter ? '400px;' : '375px;')}
-    // height: 1024px;
     box-shadow: 1px 0 0 0 #e6e6e6;
-    background-color: #fff;
+    // background-color: #fff;
+    // max-height: calc(100vh - 70px - 30px);
+    // overflow-y: auto;
     .left-booking--content {
       padding: 24px;
       .select{
@@ -129,8 +130,6 @@ class Booking extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      fromName: '',
-      toName: '',
       isVisibleDrawer: false,
       datafilter: {
         from: _get(this.props, 'querySearch.from', null),
@@ -143,13 +142,13 @@ class Booking extends React.Component {
   }
 
   componentDidMount = () => {
-    if (this.props.querySearch) {
-      // console.log(this.props.listDeparture, 'componentDidMount')
-      this.setState({
-        fromName: _find(this.props.listDeparture, { id: this.props.querySearch.from }).name,
-        toName: _find(this.props.listDeparture, { id: this.props.querySearch.to }).name
-      })
-    }
+    // if (this.props.querySearch) {
+    //   // console.log(this.props.listDeparture, 'componentDidMount')
+    //   this.setState({
+    //     fromName: _find(this.props.listDeparture, { id: this.props.querySearch.from }).name,
+    //     toName: _find(this.props.listDeparture, { id: this.props.querySearch.to }).name
+    //   })
+    // }
   }
 
   static getDerivedStateFromProps(nextProps, prevState) {
@@ -170,6 +169,7 @@ class Booking extends React.Component {
   }
 
   onChangeFilter = (type, value) => {
+    console.log(type, value, 'onChangeFilter')
     let tempData = this.state.datafilter
     _set(tempData, type, value)
     // console.log(tempData, 'tempData')
@@ -222,12 +222,21 @@ class Booking extends React.Component {
                 <Timeline.Item dot={<Icon style={{ fontSize: '1.5rem' }} component={FromSelectIconSvg} />} color='red'>
                   <div>
                     {/* <span style={{ fontSize: '1.25rem' }}>{this.state.fromName}</span> */}
-                    <SelectDepartureV2 placeholder='Điểm khởi hành' isFrom={true} />
+                    <SelectDepartureV2
+                      placeholder='Điểm khởi hành'
+                      onChange={value => this.onChangeFilter('from', value)}
+                      defaultValue={this.props.querySearch.from}
+                    />
                   </div>
                   <Divider style={{ margin: '8px 0px 16px 0px' }} />
                 </Timeline.Item>
                 <Timeline.Item dot={<Icon style={{ fontSize: '1.5rem' }} component={ToSelectIconSvg} />} color='red'>
-                  <span style={{ fontSize: '1.25rem' }}>{this.state.toName}</span>
+                  {/* <span style={{ fontSize: '1.25rem' }}>{this.state.toName}</span> */}
+                  <SelectDepartureV2
+                    placeholder='Điểm muốn đến'
+                    onChange={value => this.onChangeFilter('to', value)}
+                    defaultValue={this.props.querySearch.to}
+                  />
                 </Timeline.Item>
               </Timeline>
             </div>
@@ -338,7 +347,12 @@ class Booking extends React.Component {
                   </Col>
                 )}
                 <Col xs={16} sm={20} lg={10} style={{ marginBottom: '8px' }}>
-                  <Select size='large' defaultValue='timeRunAsc' style={{ width: '100%' }}>
+                  <Select
+                    size='large'
+                    onChange={value => this.onChangeFilter('orderBy', value)}
+                    defaultValue='timeRunAsc'
+                    style={{ width: '100%' }}
+                  >
                     <Option value='timeRunAsc'>Giờ chạy tăng dần</Option>
                     <Option value='timeRunDesc'>Giờ chạy giảm dần</Option>
                     <Option value='priceRunAsc'>Giá vé tăng dần</Option>

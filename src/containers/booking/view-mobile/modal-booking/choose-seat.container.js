@@ -1,7 +1,8 @@
 import React from 'react'
-// import PropTypes from 'prop-types'
+import PropTypes from 'prop-types'
 import styled from 'styled-components'
-import { Card, Row, Col } from 'antd'
+import { Card, Row, Col, Icon } from 'antd'
+import IconSvg from 'icons'
 import Clearfix from 'src/components/elements/clearfix'
 import IconSeat from 'src/components/elements/icon-seat'
 
@@ -62,6 +63,21 @@ const matrixObj = {
   ['5-B']: { status: 0 },
   ['5-C']: { status: 0 },
   ['5-D']: { status: 0 }
+}
+
+const SEAT_ICON_FROM_STATUS = {
+  0: IconSvg.seatOff,
+  1: IconSvg.seatChoose,
+  2: IconSvg.seatDisable,
+  3: IconSvg.seatDriver
+}
+
+const IconFromMatrix = ({ matrix }) => {
+  if (!matrix || matrix.status == null) return <div />
+  return <Icon style={{ fontSize: 28 }} component={SEAT_ICON_FROM_STATUS[matrix.status]} />
+}
+IconFromMatrix.propTypes = {
+  matrix: PropTypes.any
 }
 
 const TitleCard = () => {

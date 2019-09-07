@@ -1,6 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { get as _get, map as _map } from 'lodash-es'
+import { get as _get, map as _map, pick as _pick } from 'lodash-es'
 import styled from 'styled-components'
 import { connect } from 'react-redux'
 import { Row, Col, Button, Card, Form } from 'antd'
@@ -14,6 +14,7 @@ import { DATE_FORMAT } from 'src/config/format'
 import Clearfix from 'src/components/elements/clearfix'
 import SelectDeparture from 'src/components/elements/select-departure'
 import Booking from 'src/containers/booking'
+// import InfoCustomer from 'src/containers/booking/info-customer'
 
 const WrapperIndex = styled.div`
   display: flex;
@@ -83,6 +84,7 @@ const WrapperIndex = styled.div`
     }
     .list--content--card {
       max-width: 370px;
+      cursor: pointer;
       .ant-card-body {
         padding: 0px;
       }
@@ -158,25 +160,29 @@ class Index extends React.Component {
   hanldeSearch = e => {
     // console.log('hanldeSearch')
     e.preventDefault()
-    this.props.form.validateFields(async (err, values) => {
+    this.props.form.validateFields((err, values) => {
       if (!err) {
         // console.log('Received values of form: ', values)
       }
-      this.setState({
-        querySearch: {
-          ...values,
-          date: moment().format(DATE_FORMAT)
-        }
-      })
-      this.props.setIsLoadedListTourSearch(false)
+      this.searchTour(values)
+    })
+  }
 
-      await Promise.all([
-        this.props.getListTourSearch({
-          ...this.state.querySearch
-        })
-      ]).then(() => {
-        this.props.setIsLoadedListTourSearch(true)
+  searchTour = async values => {
+    this.setState({
+      querySearch: {
+        ..._pick(values, ['from', 'to']),
+        date: moment().format(DATE_FORMAT)
+      }
+    })
+    this.props.setIsLoadedListTourSearch(false)
+
+    await Promise.all([
+      this.props.getListTourSearch({
+        ...this.state.querySearch
       })
+    ]).then(() => {
+      this.props.setIsLoadedListTourSearch(true)
     })
   }
 
@@ -191,7 +197,6 @@ class Index extends React.Component {
     const { isBooking } = this.state
     return (
       <WrapperIndex windowWidth={this.props.windowWidth}>
-        {/* <InputOTP numInputs={4}/> */}
         {!isBooking && (
           <div>
             <div className='search'>
@@ -255,11 +260,17 @@ class Index extends React.Component {
                 <Row gutter={{ xs: 8, sm: 16, lg: 24 }}>
                   {this.props.listTourPopular &&
                     _map(this.props.listTourPopular, item => {
+                      item = {
+                        ...item,
+                        from: 1,
+                        to: 3
+                      }
                       return (
                         <Col key={item.id} xs={24} sm={12} lg={8} style={{ marginBottom: 24 }}>
                           <Card
                             key={item.id}
                             className='list--content--card'
+                            onClick={() => this.searchTour(item)}
                             bordered
                             cover={
                               <img width={370} height={180} alt='' src={`${process.env.HOST_MEDIA}${item.image}`} />

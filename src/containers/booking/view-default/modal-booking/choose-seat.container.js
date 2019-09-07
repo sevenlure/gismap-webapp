@@ -2,6 +2,7 @@ import React from 'react'
 // import PropTypes from 'prop-types'
 import styled from 'styled-components'
 import { Card, Row, Col } from 'antd'
+// import IconSvg from 'icons'
 import Clearfix from 'src/components/elements/clearfix'
 import IconSeat from 'src/components/elements/icon-seat'
 

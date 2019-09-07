@@ -2,11 +2,15 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import styled from 'styled-components'
 // import Clearfix from 'src/components/elements/clearfix'
-import FromIconSvg from 'static/images/icon/ic-arrow-map-from.svg'
-import ToIconSvg from 'static/images/icon/ic-arrow-map-to.svg'
-import FromSelectIconSvg from 'static/images/icon/ic-arrow-map-from-select.svg'
-import ToSelectIconSvg from 'static/images/icon/ic-arrow-map-to-select.svg'
-import { get as _get, map as _map, isNumber as _isNumber } from 'lodash-es'
+// import FromIconSvg from 'static/images/icon/ic-arrow-map-from.svg'
+// import ToIconSvg from 'static/images/icon/ic-arrow-map-to.svg'
+// import FromSelectIconSvg from 'static/images/icon/ic-arrow-map-from-select.svg'
+// import ToSelectIconSvg from 'static/images/icon/ic-arrow-map-to-select.svg'
+import {
+  get as _get,
+  map as _map
+  // isNumber as _isNumber
+} from 'lodash-es'
 import windowSize from 'react-window-size'
 import { connect } from 'react-redux'
 import { Spin, Select } from 'antd'
@@ -35,8 +39,8 @@ export default class SelectDeparture extends React.Component {
     windowWidth: PropTypes.number,
     listDeparture: PropTypes.array,
     placeholder: PropTypes.string,
-    isFrom: PropTypes.bool,
-    value: PropTypes.any
+    value: PropTypes.any,
+    defaultValue: PropTypes.any
   }
 
   state = {
@@ -58,17 +62,11 @@ export default class SelectDeparture extends React.Component {
   }
 
   render() {
-    // const isHave = _isNumber(this.props.value) ? true : false
-    // let iconSelect = this.props.isFrom ? FromIconSvg : ToIconSvg
-    // if (isHave) {
-    //   iconSelect = this.props.isFrom ? FromSelectIconSvg : ToSelectIconSvg
-    // }
-
     return (
       <SelectDepartureWrapper windowWidth={this.props.windowWidth}>
         <Spin spinning={this.state.isloading}>
           <Select
-            // defaultActiveFirstOption={false}
+            defaultValue={this.props.defaultValue}
             className='custom-select-v2'
             showArrow={false}
             filterOption={(input, option) => {

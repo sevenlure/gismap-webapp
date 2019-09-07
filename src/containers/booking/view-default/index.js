@@ -68,95 +68,96 @@ class BookingContentLaptop extends React.Component {
             </Col>
           </Row>
           <Clearfix height={20} />
+          <div>
+            {this.props.dataSearch &&
+              _map(this.props.dataSearch, (item, index) => {
+                const timeTo = item.timeStart
+                  ? moment(item.timeStart)
+                      .startOf('hour')
+                      .format(HH_MM)
+                  : ''
+                const timefrom = item.timeStart
+                  ? moment(item.timeStart)
+                      .startOf('hour')
+                      .add(2, 'hour')
+                      .format(HH_MM)
+                  : ''
 
-          {this.props.dataSearch &&
-            _map(this.props.dataSearch, (item, index) => {
-              const timeTo = item.timeStart
-                ? moment(item.timeStart)
-                    .startOf('hour')
-                    .format(HH_MM)
-                : ''
-              const timefrom = item.timeStart
-                ? moment(item.timeStart)
-                    .startOf('hour')
-                    .add(2, 'hour')
-                    .format(HH_MM)
-                : ''
+                const fullSeat = item.seatBooked === item.seat ? true : false
 
-              const fullSeat = item.seatBooked === item.seat ? true : false
-
-              const styleStatus = {
-                backgroundColor: fullSeat ? 'rgba(255, 123, 102, 0.1)' : 'white'
-              }
-              return (
-                <Row
-                  key={index}
-                  gutter={8}
-                  style={{ flex: 1, ...styleStatus }}
-                  className='right-booking--content-body--item'
-                >
-                  <Col span={3}>
-                    <div>
-                      <span className='right-booking--content-body__tb-row-time'>{timeTo}</span>
-                    </div>
-                    <div>
-                      <Icon style={{ fontSize: '1.5rem' }} component={ArrowIconSvg} />
-                    </div>
-                    <div>
-                      <span className='right-booking--content-body__tb-row-time'>{timefrom}</span>
-                    </div>
-                  </Col>
-                  <Col span={6}>
-                    <div>
-                      <span>{_get(item, 'fromDeparture.name', '')}</span>
-                    </div>
-                    <div>
-                      <Icon style={{ fontSize: '1.5rem' }} component={ArrowIconSvg} />
-                    </div>
-                    <div>
-                      <span>{_get(item, 'toDeparture.name', '')}</span>
-                    </div>
-                  </Col>
-                  <Col span={5} className='right-booking--content-body--item__center'>
-                    <span>{item.title}</span>
-                  </Col>
-                  <Col
-                    span={3}
-                    style={{ justifyContent: 'center' }}
-                    className='right-booking--content-body--item__center'
+                const styleStatus = {
+                  backgroundColor: fullSeat ? 'rgba(255, 123, 102, 0.1)' : 'white'
+                }
+                return (
+                  <Row
+                    key={index}
+                    gutter={8}
+                    style={{ flex: 1, ...styleStatus }}
+                    className='right-booking--content-body--item'
                   >
-                    {!fullSeat && <strong style={{ color: '#ff7b66' }}>{`${item.seatBooked}/${item.seat}`}</strong>}
-                    {fullSeat && <span>{`Hết chỗ`}</span>}
-                  </Col>
-                  <Col
-                    span={7}
-                    className='right-booking--content-body--item__center'
-                    style={{ justifyContent: 'space-between' }}
-                  >
-                    <div>
-                      <h3 style={{ fontSize: '1.25rem', margin: '0px' }}>{getFormatNumber(item.price)}</h3>
-                    </div>
-
-                    {!fullSeat && (
+                    <Col span={3}>
                       <div>
-                        <Button
-                          type='primary'
-                          onClick={() => {
-                            try {
-                              this.ModalBooking.showModal()
-                            } catch (e) {
-                              console.log('loi this.ModalBooking.showModal()', e)
-                            }
-                          }}
-                        >
-                          Đặt vé
-                        </Button>
+                        <span className='right-booking--content-body__tb-row-time'>{timeTo}</span>
                       </div>
-                    )}
-                  </Col>
-                </Row>
-              )
-            })}
+                      <div>
+                        <Icon style={{ fontSize: '1.5rem' }} component={ArrowIconSvg} />
+                      </div>
+                      <div>
+                        <span className='right-booking--content-body__tb-row-time'>{timefrom}</span>
+                      </div>
+                    </Col>
+                    <Col span={6}>
+                      <div>
+                        <span>{_get(item, 'fromDeparture.name', '')}</span>
+                      </div>
+                      <div>
+                        <Icon style={{ fontSize: '1.5rem' }} component={ArrowIconSvg} />
+                      </div>
+                      <div>
+                        <span>{_get(item, 'toDeparture.name', '')}</span>
+                      </div>
+                    </Col>
+                    <Col span={5} className='right-booking--content-body--item__center'>
+                      <span>{item.title}</span>
+                    </Col>
+                    <Col
+                      span={3}
+                      style={{ justifyContent: 'center' }}
+                      className='right-booking--content-body--item__center'
+                    >
+                      {!fullSeat && <strong style={{ color: '#ff7b66' }}>{`${item.seatBooked}/${item.seat}`}</strong>}
+                      {fullSeat && <span>{`Hết chỗ`}</span>}
+                    </Col>
+                    <Col
+                      span={7}
+                      className='right-booking--content-body--item__center'
+                      style={{ justifyContent: 'space-between' }}
+                    >
+                      <div>
+                        <h3 style={{ fontSize: '1.25rem', margin: '0px' }}>{getFormatNumber(item.price)}</h3>
+                      </div>
+
+                      {!fullSeat && (
+                        <div>
+                          <Button
+                            type='primary'
+                            onClick={() => {
+                              try {
+                                this.ModalBooking.showModal()
+                              } catch (e) {
+                                console.log('loi this.ModalBooking.showModal()', e)
+                              }
+                            }}
+                          >
+                            Đặt vé
+                          </Button>
+                        </div>
+                      )}
+                    </Col>
+                  </Row>
+                )
+              })}
+          </div>
         </div>
 
         <ModalBooking getRef={ref => (this.ModalBooking = ref)} />
