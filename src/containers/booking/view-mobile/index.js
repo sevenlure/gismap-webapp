@@ -114,6 +114,7 @@ class BookingContentLaptop extends React.Component {
               )
             })}
         </div>
+
         <ModalBooking getRef={ref => (this.ModalBooking = ref)} />
       </BookingContentDefaultWrapper>
     )
