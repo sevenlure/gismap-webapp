@@ -180,6 +180,7 @@ class Booking extends React.Component {
         }
       },
       async () => {
+        console.log('this.state changed', this.state.datafilter)
         this.props.setIsLoadedListTourSearch(false)
         try {
           await this.props.getListTourSearch({

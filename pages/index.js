@@ -9,7 +9,6 @@ import { getListTourSearch, setIsLoadedListTourSearch } from 'src/redux/actions/
 import DefaultLayout from 'src/layout/default'
 import windowSize from 'react-window-size'
 import moment from 'moment'
-import { DATE_FORMAT } from 'src/config/format'
 // NOTE Element
 import Clearfix from 'src/components/elements/clearfix'
 import SelectDeparture from 'src/components/elements/select-departure'
@@ -172,7 +171,7 @@ class Index extends React.Component {
     this.setState({
       querySearch: {
         ..._pick(values, ['from', 'to']),
-        date: moment().format(DATE_FORMAT)
+        date: moment()
       }
     })
     this.props.setIsLoadedListTourSearch(false)

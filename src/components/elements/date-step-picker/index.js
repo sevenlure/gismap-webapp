@@ -63,6 +63,7 @@ export default class DateStepPicker extends React.Component {
             if (date) {
               this.setState({ targetDate: date, isOpenCalendar: true }, () => {
                 this.StepPicker.changeVal(date)
+                if (this.props.onChange) this.props.onChange(date)
               })
             }
           }}

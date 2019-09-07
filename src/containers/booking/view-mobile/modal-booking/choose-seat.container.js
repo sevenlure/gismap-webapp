@@ -5,7 +5,8 @@ import { Card, Row, Col, Icon } from 'antd'
 import IconSvg from 'icons'
 import Clearfix from 'src/components/elements/clearfix'
 import IconSeat from 'src/components/elements/icon-seat'
-
+import { connect } from 'react-redux'
+import { get as _get } from 'lodash-es'
 // const { Option } = Select
 
 const Wrapper = styled.div`
@@ -38,32 +39,32 @@ const Wrapper = styled.div`
   }
 `
 
-const matrixObj = {
-  ['1-A']: { status: 3 },
-  // ['1-B']: { status: 0 },
-  ['1-C']: { status: 0 },
-  ['1-D']: { status: 2 },
+// const matrixObj = {
+//   ['1-A']: { status: 3 },
+//   // ['1-B']: { status: 0 },
+//   ['1-C']: { status: 0 },
+//   ['1-D']: { status: 2 },
 
-  ['2-A']: { status: 0 },
-  ['2-B']: { status: 0 },
-  ['2-C']: { status: 0 },
-  // ['2-D']: { status: 2 },
+//   ['2-A']: { status: 0 },
+//   ['2-B']: { status: 0 },
+//   ['2-C']: { status: 0 },
+//   // ['2-D']: { status: 2 },
 
-  ['3-A']: { status: 0 },
-  ['3-B']: { status: 2 },
-  ['3-C']: { status: 0 },
-  // ['3-D']: { status: 2 },
+//   ['3-A']: { status: 0 },
+//   ['3-B']: { status: 2 },
+//   ['3-C']: { status: 0 },
+//   // ['3-D']: { status: 2 },
 
-  ['4-A']: { status: 0 },
-  ['4-B']: { status: 0 },
-  ['4-C']: { status: 0 },
-  ['4-D']: { status: 2 },
+//   ['4-A']: { status: 0 },
+//   ['4-B']: { status: 0 },
+//   ['4-C']: { status: 0 },
+//   ['4-D']: { status: 2 },
 
-  ['5-A']: { status: 0 },
-  ['5-B']: { status: 0 },
-  ['5-C']: { status: 0 },
-  ['5-D']: { status: 0 }
-}
+//   ['5-A']: { status: 0 },
+//   ['5-B']: { status: 0 },
+//   ['5-C']: { status: 0 },
+//   ['5-D']: { status: 0 }
+// }
 
 const SEAT_ICON_FROM_STATUS = {
   0: IconSvg.seatOff,
@@ -103,59 +104,87 @@ const TitleCard = () => {
   )
 }
 
+const mapStateToProps = state => ({
+  seatDiagramDown: _get(state, 'BookingStore.BookingNow.seatDiagramDown'),
+  seatDiagramUp: _get(state, 'BookingStore.BookingNow.seatDiagramUp')
+})
+
+const mapDispatchToProps = {}
+
+// MARK  this.ModalBooking nắm ref của modal-booking
+@connect(
+  mapStateToProps,
+  mapDispatchToProps
+)
 export default class ChooseSeatContainer extends React.Component {
+  static propTypes = {
+    seatDiagramDown: PropTypes.object,
+    seatDiagramUp: PropTypes.object
+  }
+
   state = {}
 
   render() {
+    const { seatDiagramDown, seatDiagramUp } = this.props
+    const isHave2Floor = seatDiagramUp ? true : false
+
+    let styleHave1Floor = {}
+    if (!isHave2Floor) {
+      styleHave1Floor.display = 'flex'
+      styleHave1Floor.justifyContent = 'center'
+    }
+
     return (
       <Wrapper>
         <div className='title'>Chọn ghế xe</div>
         <Card bodyStyle={{ padding: '8px 12px 8px 12px' }} title={<TitleCard />}>
-          <div className='seat'>
+          <div style={{ ...styleHave1Floor }} className='seat'>
             <div className='seat-matrix'>
-              <strong>Tầng dưới</strong>
+              {isHave2Floor && <strong>Tầng dưới</strong>}
               <Clearfix height={12} />
               {[1, 2, 3, 4, 5].map(row => {
                 return (
                   <Row style={{ marginBottom: 20 }} key={row} gutter={16}>
                     <Col span={6}>
-                      <IconSeat name={`${row}A`} row={row} col='A' matrix={matrixObj[`${row}-A`]} />
+                      <IconSeat name={`${row}A`} row={row} col='A' matrix={seatDiagramDown[`${row}-A`]} />
                     </Col>
                     <Col span={6}>
-                      <IconSeat name={`${row}B`} row={row} col='B' matrix={matrixObj[`${row}-B`]} />
+                      <IconSeat name={`${row}B`} row={row} col='B' matrix={seatDiagramDown[`${row}-B`]} />
                     </Col>
                     <Col span={6}>
-                      <IconSeat name={`${row}C`} row={row} col='C' matrix={matrixObj[`${row}-C`]} />
+                      <IconSeat name={`${row}C`} row={row} col='C' matrix={seatDiagramDown[`${row}-C`]} />
                     </Col>
                     <Col span={6}>
-                      <IconSeat name={`${row}D`} row={row} col='D' matrix={matrixObj[`${row}-D`]} />
+                      <IconSeat name={`${row}D`} row={row} col='D' matrix={seatDiagramDown[`${row}-D`]} />
                     </Col>
                   </Row>
                 )
               })}
             </div>
-            <div className='seat-matrix'>
-              <strong>Tầng trên</strong>
-              <Clearfix height={12} />
-              {[1, 2, 3, 4, 5].map(row => {
-                return (
-                  <Row style={{ marginBottom: 20 }} key={row} gutter={16}>
-                    <Col span={6}>
-                      <IconSeat name={`${row}A`} row={row} col='A' matrix={matrixObj[`${row}-A`]} />
-                    </Col>
-                    <Col span={6}>
-                      <IconSeat name={`${row}B`} row={row} col='B' matrix={matrixObj[`${row}-B`]} />
-                    </Col>
-                    <Col span={6}>
-                      <IconSeat name={`${row}C`} row={row} col='C' matrix={matrixObj[`${row}-C`]} />
-                    </Col>
-                    <Col span={6}>
-                      <IconSeat name={`${row}D`} row={row} col='D' matrix={matrixObj[`${row}-D`]} />
-                    </Col>
-                  </Row>
-                )
-              })}
-            </div>
+            {isHave2Floor && (
+              <div className='seat-matrix'>
+                {isHave2Floor && <strong>Tầng trên</strong>}
+                <Clearfix height={12} />
+                {[6, 7, 8, 9, 10].map(row => {
+                  return (
+                    <Row style={{ marginBottom: 20 }} key={row} gutter={16}>
+                      <Col span={6}>
+                        <IconSeat name={`${row}A`} row={row} col='A' matrix={seatDiagramUp[`${row}-A`]} />
+                      </Col>
+                      <Col span={6}>
+                        <IconSeat name={`${row}B`} row={row} col='B' matrix={seatDiagramUp[`${row}-B`]} />
+                      </Col>
+                      <Col span={6}>
+                        <IconSeat name={`${row}C`} row={row} col='C' matrix={seatDiagramUp[`${row}-C`]} />
+                      </Col>
+                      <Col span={6}>
+                        <IconSeat name={`${row}D`} row={row} col='D' matrix={seatDiagramUp[`${row}-D`]} />
+                      </Col>
+                    </Row>
+                  )
+                })}
+              </div>
+            )}{' '}
           </div>
         </Card>
       </Wrapper>

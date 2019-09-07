@@ -5,6 +5,11 @@ import { Button, Modal, Divider } from 'antd'
 import PickupPointContainer from './pickup-point-container'
 import ChooseSeatContainer from './choose-seat.container'
 import windowSize from 'react-window-size'
+import { connect } from 'react-redux'
+import { get as _get, map as _map, values as _values } from 'lodash-es'
+import moment from 'moment'
+import { HH_MM } from 'src/config/format'
+import { formatCurrency } from 'utils/format'
 
 const BodyWrapper = styled.div`
   flex: 1;
@@ -32,6 +37,7 @@ const BodyWrapper = styled.div`
     justify-content: space-between;
 
     .footer-booking-left {
+      width: 40%;
     }
     .footer-booking-right {
       display: flex;
@@ -40,9 +46,23 @@ const BodyWrapper = styled.div`
   }
 `
 
+const mapStateToProps = state => ({
+  BookingNow: _get(state, 'BookingStore.BookingNow'),
+  BookingNowSeat: _get(state, 'BookingStore.BookingNowSeat')
+})
+
+const mapDispatchToProps = {}
+
+// MARK  this.ModalBooking nắm ref của modal-booking
+@connect(
+  mapStateToProps,
+  mapDispatchToProps
+)
 @windowSize
 export default class ModalBooking extends React.Component {
   static propTypes = {
+    BookingNow: PropTypes.object,
+    BookingNowSeat: PropTypes.object,
     getRef: PropTypes.func,
     windowWidth: PropTypes.number
   }
@@ -67,11 +87,47 @@ export default class ModalBooking extends React.Component {
   }
 
   render() {
+    const { BookingNow, BookingNowSeat } = this.props
+
+    if (!BookingNow) return null
+
+    const { timeStart, title } = BookingNow
+    const timefrom = timeStart
+      ? moment(timeStart)
+          .startOf('hour')
+          .format(HH_MM)
+      : ''
+    const timeTo = timeStart
+      ? moment(timeStart)
+          .startOf('hour')
+          .add(2, 'hour')
+          .format(HH_MM)
+      : ''
+    const fromDepartureName = _get(BookingNow, 'fromDeparture.name', '')
+    const toDepartureName = _get(BookingNow, 'toDeparture.name', '')
+
+    let colored = ''
+    let nameSoVe = '- - -'
+    let tongTien = '- - -'
+
+    if (_values(BookingNowSeat).some(x => x != null)) {
+      let tamp = []
+      _map(BookingNowSeat, item => {
+        if (item && item.name) tamp.push(item.name)
+      })
+      nameSoVe = tamp.join(', ')
+
+      let tampPrice = 0
+      _map(BookingNowSeat, item => {
+        if (item && item.price) tampPrice += item.price
+      })
+      tongTien = formatCurrency(tampPrice) + ' đ'
+
+      colored = '#3880ff'
+    }
+
     return (
       <div>
-        {/* <Button type='primary' onClick={this.showModal}>
-          Open Modal
-        </Button> */}
         <Modal
           width='100%'
           style={{
@@ -88,9 +144,13 @@ export default class ModalBooking extends React.Component {
           <BodyWrapper windowWidth={this.props.windowWidth}>
             <div className='modal--title'>
               <div>
-                <div>{`05:00 -> 07:00`}</div>
-                <div>Tây Ninh - Quận 10, Hồ Chí Minh</div>
-                <div>Limousine 9 chỗ</div>
+                <h4>{`${timefrom} -> ${timeTo}`}</h4>
+                <strong>
+                  {fromDepartureName} {'->'} {toDepartureName}
+                </strong>
+                <div>
+                  <span>{title}</span>
+                </div>
               </div>
               <Button style={{ width: 88 }} onClick={this.closeModal} size='large' type='default'>
                 Đóng
@@ -110,14 +170,14 @@ export default class ModalBooking extends React.Component {
               <div className='footer-booking-left'>
                 <span>Vé đã chọn</span>
                 <div>
-                  <h3>- - -</h3>
+                  <h3 style={{ color: colored }}>{nameSoVe}</h3>
                 </div>
               </div>
               <div className='footer-booking-right'>
                 <div>
                   <span>Tổng tiền</span>
                   <div>
-                    <h3>- - -</h3>
+                    <h3 style={{ color: colored }}>{tongTien}</h3>
                   </div>
                 </div>
                 <Button style={{ marginLeft: 24 }} type='primary'>

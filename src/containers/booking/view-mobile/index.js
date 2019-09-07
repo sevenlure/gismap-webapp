@@ -10,6 +10,8 @@ import { map as _map, get as _get } from 'lodash-es'
 import moment from 'moment'
 import { HH_MM } from 'src/config/format'
 import ModalBooking from './modal-booking'
+import { connect } from 'react-redux'
+import { setBookingNow, clearBookingNowSeat } from 'src/redux/actions/BookingAction'
 
 const BookingContentDefaultWrapper = styled.div`
   .right-booking--content-body {
@@ -31,9 +33,26 @@ const BookingContentDefaultWrapper = styled.div`
   }
 `
 
+const mapStateToProps = () => ({
+  // isAuthenticated: _get(state, 'AuthStore.isAuthenticated'),
+  // userInfo: _get(state, 'GeneralStore.userInfo', '')
+})
+
+const mapDispatchToProps = {
+  setBookingNow,
+  clearBookingNowSeat
+}
+
+// MARK  this.ModalBooking nắm ref của modal-booking
+@connect(
+  mapStateToProps,
+  mapDispatchToProps
+)
 class BookingContentLaptop extends React.Component {
   static propTypes = {
-    dataSearch: PropTypes.any
+    dataSearch: PropTypes.any,
+    setBookingNow: PropTypes.func.isRequired,
+    clearBookingNowSeat: PropTypes.func.isRequired
   }
 
   render() {
@@ -71,9 +90,11 @@ class BookingContentLaptop extends React.Component {
                   >
                     <div>
                       <div className='list--content--card--row'>
-                        <span>
-                          {`${_get(item, 'fromDeparture.name', '')}} - ${_get(item, 'toDeparture.name', '')}`}
-                        </span>
+                        <strong>{`${_get(item, 'fromDeparture.name', '')} -> ${_get(
+                          item,
+                          'toDeparture.name',
+                          ''
+                        )}`}</strong>
                       </div>
                       <Clearfix height={7} />
                       <div className='list--content--card--row'>
@@ -98,6 +119,8 @@ class BookingContentLaptop extends React.Component {
                             type='primary'
                             onClick={() => {
                               try {
+                                this.props.clearBookingNowSeat()
+                                this.props.setBookingNow(item)
                                 this.ModalBooking.showModal()
                               } catch (e) {
                                 console.log('loi this.ModalBooking.showModal()', e)

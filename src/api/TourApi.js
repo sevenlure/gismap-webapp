@@ -12,7 +12,8 @@ export function getListTour(query) {
 export function getListTourSearch({
   from,
   to,
-  // date, timeSlot,
+  // date,
+  // timeSlot,
   typeSeat,
   pageSize = 30
 }) {

@@ -11,6 +11,8 @@ import { map as _map, get as _get } from 'lodash-es'
 import ModalBooking from './modal-booking'
 import moment from 'moment'
 import { HH_MM } from 'src/config/format'
+import { connect } from 'react-redux'
+import { setBookingNow, clearBookingNowSeat } from 'src/redux/actions/BookingAction'
 
 const BookingContentDefaultWrapper = styled.div`
   .right-booking--content-body {
@@ -40,10 +42,26 @@ const BookingContentDefaultWrapper = styled.div`
   }
 `
 
+const mapStateToProps = () => ({
+  // isAuthenticated: _get(state, 'AuthStore.isAuthenticated'),
+  // userInfo: _get(state, 'GeneralStore.userInfo', '')
+})
+
+const mapDispatchToProps = {
+  setBookingNow,
+  clearBookingNowSeat
+}
+
 // MARK  this.ModalBooking nắm ref của modal-booking
+@connect(
+  mapStateToProps,
+  mapDispatchToProps
+)
 class BookingContentLaptop extends React.Component {
   static propTypes = {
-    dataSearch: PropTypes.any
+    dataSearch: PropTypes.any,
+    setBookingNow: PropTypes.func.isRequired,
+    clearBookingNowSeat: PropTypes.func.isRequired
   }
 
   render() {
@@ -71,15 +89,16 @@ class BookingContentLaptop extends React.Component {
           <div>
             {this.props.dataSearch &&
               _map(this.props.dataSearch, (item, index) => {
+                // console.log('BookingItem', item)
                 const timeTo = item.timeStart
                   ? moment(item.timeStart)
                       .startOf('hour')
+                      .add(2, 'hour')
                       .format(HH_MM)
                   : ''
                 const timefrom = item.timeStart
                   ? moment(item.timeStart)
                       .startOf('hour')
-                      .add(2, 'hour')
                       .format(HH_MM)
                   : ''
 
@@ -97,13 +116,13 @@ class BookingContentLaptop extends React.Component {
                   >
                     <Col span={3}>
                       <div>
-                        <span className='right-booking--content-body__tb-row-time'>{timeTo}</span>
+                        <span className='right-booking--content-body__tb-row-time'>{timefrom}</span>
                       </div>
                       <div>
                         <Icon style={{ fontSize: '1.5rem' }} component={ArrowIconSvg} />
                       </div>
                       <div>
-                        <span className='right-booking--content-body__tb-row-time'>{timefrom}</span>
+                        <span className='right-booking--content-body__tb-row-time'>{timeTo}</span>
                       </div>
                     </Col>
                     <Col span={6}>
@@ -143,6 +162,8 @@ class BookingContentLaptop extends React.Component {
                             type='primary'
                             onClick={() => {
                               try {
+                                this.props.clearBookingNowSeat()
+                                this.props.setBookingNow(item)
                                 this.ModalBooking.showModal()
                               } catch (e) {
                                 console.log('loi this.ModalBooking.showModal()', e)
