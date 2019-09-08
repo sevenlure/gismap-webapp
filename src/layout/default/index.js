@@ -11,7 +11,9 @@ import {
   getListTimeSlot,
   isListTourPopular,
   isLoadedDanhMuc,
-  getListDeparture
+  getListDeparture,
+  setVisibleRegister,
+  setVisibleLogin
 } from 'src/redux/actions/generalAction.js'
 import { get as _get } from 'lodash-es'
 import Router, { withRouter } from 'next/router'
@@ -80,7 +82,9 @@ const ChildrenContainer = styled.div`
   state => ({
     isAuthenticated: _get(state, 'AuthStore.isAuthenticated'),
     name: _get(state, 'GeneralStore.userInfo.name', ''),
-    menuSelected: _get(state, 'GeneralStore.menuSelected')
+    // menuSelected: _get(state, 'GeneralStore.menuSelected'),
+    isRegister: _get(state, 'GeneralStore.isRegister'),
+    isLogin: _get(state, 'GeneralStore.isLogin')
   }),
   {
     userLogout,
@@ -89,7 +93,9 @@ const ChildrenContainer = styled.div`
     getListTimeSlot,
     getListDeparture,
     isListTourPopular,
-    isLoadedDanhMuc
+    isLoadedDanhMuc,
+    setVisibleRegister,
+    setVisibleLogin
   }
 )
 // @hocProtectLogin
@@ -108,13 +114,15 @@ class AppWithLayout extends React.Component {
     isLoadedDanhMuc: PropTypes.func,
     getListTypeSeat: PropTypes.func,
     getListTimeSlot: PropTypes.func,
-    windowWidth: PropTypes.number
+    setVisibleRegister: PropTypes.func,
+    setVisibleLogin: PropTypes.func,
+    windowWidth: PropTypes.number,
+    isRegister: PropTypes.bool,
+    isLogin: PropTypes.bool
   }
 
   state = {
-    isOnDrawer: false,
-    isRegister: false,
-    isLogin: false
+    isOnDrawer: false
   }
 
   componentDidMount = async () => {
@@ -160,17 +168,22 @@ class AppWithLayout extends React.Component {
   }
 
   hanldeLogin = () => {
-    this.setState({
-      isRegister: false,
-      isLogin: true
-    })
+    this.props.setVisibleLogin(true)
+    this.props.setVisibleRegister(false)
+    // this.setState({
+    //   isRegister: false,
+    //   isLogin: true
+    // })
   }
 
   hanldeRegister = () => {
-    this.setState({
-      isRegister: true,
-      isLogin: false
-    })
+    console.log('hanldeRegister')
+    this.props.setVisibleLogin(false)
+    this.props.setVisibleRegister(true)
+    // this.setState({
+    //   isRegister: true,
+    //   isLogin: false
+    // })
   }
 
   getStyleReponsive = () => {
@@ -205,9 +218,10 @@ class AppWithLayout extends React.Component {
   }
 
   handleOnSucces = status => {
-    this.setState({
-      isRegister: false
-    })
+    this.props.setVisibleRegister(false)
+    // this.setState({
+    //   isRegister: false
+    // })
     if (status) {
       Router.replace(slug.result.base)
     } else {
@@ -224,9 +238,10 @@ class AppWithLayout extends React.Component {
       }
     }
     if (res.success) {
-      this.setState({
-        isLogin: false
-      })
+      this.props.setVisibleLogin(false)
+      // this.setState({
+      //   isLogin: false
+      // })
     }
   }
 
@@ -235,14 +250,15 @@ class AppWithLayout extends React.Component {
   }
   handleOnForgetPass = () => {
     // console.log('handleOnForgetPass')
-    this.setState({
-      isLogin: false
-    })
+    this.props.setVisibleLogin(false)
+    // this.setState({
+    //   isLogin: false
+    // })
     Router.push(slug.auth.forgot_password)
   }
 
   render() {
-    // console.log(this.props.isAuthenticated, 'isAuthenticated')
+    // console.log(this.props.isRegister, 'isRegister')
     let pathMenu = ''
     const pathname = this.props.router.pathname
     pathMenu = this.getPathForMenu(pathname)
@@ -353,11 +369,14 @@ class AppWithLayout extends React.Component {
               ]}
             </Menu>
             <Modal
-              visible={this.state.isRegister}
+              visible={this.props.isRegister}
               footer={null}
               centered
               closeIcon={<span />}
-              onCancel={() => this.setState({ isRegister: false })}
+              onCancel={
+                () => this.props.setVisibleRegister(false)
+                // this.setState({ isRegister: false })
+              }
               // wrapClassName='register--modal'
               closable={false}
               {...this.getStyleReponsive()}
@@ -369,21 +388,25 @@ class AppWithLayout extends React.Component {
             >
               <Register
                 onSuccess={this.handleOnSucces}
-                isClearData={this.state.isRegister}
+                isClearData={this.props.isRegister}
                 onLogin={this.hanldeLogin}
                 handleCancel={() => {
-                  this.setState({
-                    isRegister: false
-                  })
+                  this.props.setVisibleRegister(false)
+                  // this.setState({
+                  //   isRegister: false
+                  // })
                 }}
               />
             </Modal>
             <Modal
-              visible={this.state.isLogin}
+              visible={this.props.isLogin}
               footer={null}
               centered
               closeIcon={<span />}
-              onCancel={() => this.setState({ isLogin: false })}
+              onCancel={
+                () => this.props.setVisibleLogin(false)
+                // this.setState({ isLogin: false })
+              }
               // wrapClassName='register--modal'
               closable={false}
               {...this.getStyleReponsive()}
@@ -397,9 +420,10 @@ class AppWithLayout extends React.Component {
                 onRegister={this.handleOnRegister}
                 onForgotPass={this.handleOnForgetPass}
                 onCancel={() => {
-                  this.setState({
-                    isLogin: false
-                  })
+                  this.props.setVisibleLogin(false)
+                  // this.setState({
+                  //   isLogin: false
+                  // })
                 }}
               />
             </Modal>

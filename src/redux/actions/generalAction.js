@@ -84,3 +84,19 @@ export function clearUserInfo() {
     dispatch({ type: CLEAR_GENERAL_USER_INFO })
   }
 }
+
+// NOTE điều khiển modal login
+export const SET_GENERAL_IS_REGISTER = 'GENERAL/SET_GENERAL_IS_REGISTER'
+export const SET_GENERAL_IS_LOGIN = 'GENERAL/SET_GENERAL_IS_LOGIN'
+
+export function setVisibleRegister(isVisible) {
+  return dispatch => {
+    dispatch({ type: SET_GENERAL_IS_REGISTER, payload: isVisible })
+  }
+}
+
+export function setVisibleLogin(isVisible) {
+  return dispatch => {
+    dispatch({ type: SET_GENERAL_IS_LOGIN, payload: isVisible })
+  }
+}
