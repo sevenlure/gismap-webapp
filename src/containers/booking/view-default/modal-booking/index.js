@@ -6,10 +6,12 @@ import PickupPointContainer from './pickup-point-container'
 import ChooseSeatContainer from './choose-seat.container'
 import windowSize from 'react-window-size'
 import { connect } from 'react-redux'
-import { get as _get, map as _map, values as _values } from 'lodash-es'
+import { get as _get, map as _map, values as _values, isEmpty as _isEmpty } from 'lodash-es'
 import moment from 'moment'
 import { HH_MM } from 'src/config/format'
 import { formatCurrency } from 'utils/format'
+import Router from 'next/router'
+import slug from 'src/routes'
 
 const BodyWrapper = styled.div`
   flex: 1;
@@ -48,7 +50,8 @@ const BodyWrapper = styled.div`
 
 const mapStateToProps = state => ({
   BookingNow: _get(state, 'BookingStore.BookingNow'),
-  BookingNowSeat: _get(state, 'BookingStore.BookingNowSeat')
+  BookingNowSeat: _get(state, 'BookingStore.BookingNowSeat'),
+  BookingNowPoint: _get(state, 'BookingStore.BookingNowPoint')
 })
 
 const mapDispatchToProps = {}
@@ -63,11 +66,15 @@ export default class ModalBooking extends React.Component {
   static propTypes = {
     BookingNow: PropTypes.object,
     BookingNowSeat: PropTypes.object,
+    BookingNowPoint: PropTypes.object,
     getRef: PropTypes.func,
     windowWidth: PropTypes.number
   }
 
-  state = { isOpenModal: false }
+  state = {
+    isOpenModal: false,
+    isErrorBookingNowPoint: false
+  }
 
   componentDidMount() {
     const { getRef } = this.props
@@ -86,7 +93,22 @@ export default class ModalBooking extends React.Component {
     })
   }
 
+  hanldeConfirmTicket = () => {
+    const { BookingNowPoint } = this.props
+    this.setState({
+      isErrorBookingNowPoint: false
+    })
+    if (_isEmpty(BookingNowPoint.from) || _isEmpty(BookingNowPoint.to)) {
+      this.setState({
+        isErrorBookingNowPoint: true
+      })
+    } else {
+      Router.push(slug.booking.infoCustomer)
+    }
+  }
+
   render() {
+    // console.log(this.state.isErrorBookingNowPoint, 'isErrorBookingNowPoint')
     const { BookingNow, BookingNowSeat } = this.props
 
     if (!BookingNow) return null
@@ -110,7 +132,9 @@ export default class ModalBooking extends React.Component {
     let nameSoVe = '- - -'
     let tongTien = '- - -'
 
-    if (_values(BookingNowSeat).some(x => x != null)) {
+    const isConfirmOrderTicket = _values(BookingNowSeat).some(x => x != null)
+
+    if (isConfirmOrderTicket) {
       let tamp = []
       _map(BookingNowSeat, item => {
         if (item && item.name) tamp.push(item.name)
@@ -159,7 +183,9 @@ export default class ModalBooking extends React.Component {
             <Divider type='horizontal' style={{ margin: '16px 0px' }} />
             <div className='content-booking'>
               <div className='pickup-point-container'>
-                <PickupPointContainer />
+                {(!this.state.isErrorBookingNowPoint || this.state.isErrorBookingNowPoint) && (
+                  <PickupPointContainer isErrorBookingNowPoint={this.state.isErrorBookingNowPoint} />
+                )}
               </div>
               <div className='choose-seat-container'>
                 <ChooseSeatContainer />
@@ -180,7 +206,12 @@ export default class ModalBooking extends React.Component {
                     <h3 style={{ color: colored }}>{tongTien}</h3>
                   </div>
                 </div>
-                <Button style={{ marginLeft: 24 }} type='primary'>
+                <Button
+                  onClick={this.hanldeConfirmTicket}
+                  disabled={!isConfirmOrderTicket}
+                  style={{ marginLeft: 24 }}
+                  type='primary'
+                >
                   Xác nhận đặt vé
                 </Button>
               </div>

@@ -8,6 +8,10 @@ export const IS_LOADED_SET_BOOKING_NOW = 'BOOKING/IS_LOADED_BOOKING_NOW'
 export const CLEAR_BOOKING_NOW_SEAT = 'BOOKING/CLEAR_BOOKING_NOW_SEAT'
 export const ADD_BOOKING_NOW_SEAT = 'BOOKING/ADD_BOOKING_NOW_SEAT'
 export const REMOVE_BOOKING_NOW_SEAT = 'BOOKING/REMOVE_BOOKING_NOW_SEAT'
+export const CLEAR_BOOKING_NOW_POINT = 'BOOKING/CLEAR_BOOKING_NOW_POINT'
+export const SET_BOOKING_NOW_POINT = 'BOOKING/ADD_BOOKING_NOW_POINT'
+export const CLEAR_BOOKING_NOW_INFO_CUSTOMER = 'BOOKING/CLEAR_BOOKING_NOW_INFO_CUSTOMER'
+export const SET_BOOKING_NOW_INFO_CUSTOMER = 'BOOKING/SET_BOOKING_NOW_INFO_CUSTOMER'
 
 export function getListTourSearch(query) {
   return async dispatch => {
@@ -49,5 +53,29 @@ export function addBookingNowSeat(data) {
 export function removeBookingNowSeat(seatKey) {
   return async dispatch => {
     dispatch({ type: REMOVE_BOOKING_NOW_SEAT, payload: seatKey })
+  }
+}
+
+export function setBookingNowPoint(data) {
+  return async dispatch => {
+    dispatch({ type: SET_BOOKING_NOW_POINT, payload: data })
+  }
+}
+
+export function clearBookingNowPoint() {
+  return async dispatch => {
+    dispatch({ type: CLEAR_BOOKING_NOW_POINT })
+  }
+}
+
+export function setBookingNowInfoCustomer(data) {
+  return async dispatch => {
+    dispatch({ type: SET_BOOKING_NOW_INFO_CUSTOMER, payload: data })
+  }
+}
+
+export function clearBookingNowInfoCustomer() {
+  return async dispatch => {
+    dispatch({ type: CLEAR_BOOKING_NOW_INFO_CUSTOMER })
   }
 }

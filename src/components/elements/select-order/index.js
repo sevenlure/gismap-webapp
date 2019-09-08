@@ -8,9 +8,7 @@ import './style.less'
 const styleMenuItem = {
   display: 'flex',
   justifyContent: 'space-between',
-  alignItems: 'center',
-  height: 50,
-  marginTop: 12
+  alignItems: 'center'
 }
 const ITEM = [
   {
@@ -47,7 +45,6 @@ export default class SelectOrder extends React.Component {
         onClick={menuSelected => {
           const label = _get(menuSelected, 'item.props.label')
           this.setState({ value: menuSelected.key, label })
-          if (this.props.onChange) this.props.onChange(menuSelected.key)
         }}
         selectedKeys={[this.state.value]}
       >
@@ -61,17 +58,18 @@ export default class SelectOrder extends React.Component {
                 <Radio checked={this.state.value === item.key} />
               </div>
             </Menu.Item>,
-            <Divider key={item.key + 'devider'} style={{ margin: '12px 0' }} />
+            <Divider key={item.key + 'devider'} style={{ margin: '8px 0' }} />
           ]
         })}
 
-        <div style={{ float: 'right', margin: '12px 12px 20px 12px' }}>
+        <div style={{ float: 'right', marginBottom: '20px' }}>
           <Button
             style={{ width: 90 }}
             size='large'
             type='primary'
             onClick={() => {
               this.setState({ isVisible: false })
+              if (this.props.onChange) this.props.onChange(this.state.value)
             }}
           >
             Xong
@@ -99,7 +97,13 @@ export default class SelectOrder extends React.Component {
             this.setState({ isVisible: !this.state.isVisible })
           }}
           size='large'
-          style={{ width: '100%', textAlign: 'left' }}
+          style={{
+            width: '100%',
+            textAlign: 'left',
+            display: 'flex',
+            justifyContent: 'space-between',
+            alignItems: 'center'
+          }}
         >
           <span style={{ fontFamily: 'myFont-Light' }}>{this.state.label}</span>
           <Icon style={{ fontSize: '1rem' }} type={typeIcon} />

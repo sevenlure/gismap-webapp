@@ -6,7 +6,11 @@ import {
   IS_LOADED_SET_BOOKING_NOW,
   CLEAR_BOOKING_NOW_SEAT,
   ADD_BOOKING_NOW_SEAT,
-  REMOVE_BOOKING_NOW_SEAT
+  REMOVE_BOOKING_NOW_SEAT,
+  CLEAR_BOOKING_NOW_POINT,
+  SET_BOOKING_NOW_POINT,
+  SET_BOOKING_NOW_INFO_CUSTOMER,
+  CLEAR_BOOKING_NOW_INFO_CUSTOMER
 } from '../actions/BookingAction'
 
 import storage from 'redux-persist/lib/storage'
@@ -17,6 +21,11 @@ const InitialState = {
   isLoadedlistTourSearch: true,
   BookingNow: null,
   BookingNowSeat: {},
+  BookingNowPoint: {
+    from: null,
+    to: null
+  },
+  BookingNowInfoCustomer: null,
   isLoadedBookingNow: true
 }
 
@@ -59,6 +68,33 @@ const bookingReducer = (state = InitialState, action) => {
         BookingNowSeat: { $merge: { [seatKey]: undefined } }
       })
     }
+    case SET_BOOKING_NOW_POINT: {
+      return update(state, {
+        BookingNowPoint: { $set: action.payload }
+      })
+    }
+    case CLEAR_BOOKING_NOW_POINT: {
+      return update(state, {
+        BookingNowPoint: {
+          $set: {
+            from: null,
+            to: null
+          }
+        }
+      })
+    }
+    case SET_BOOKING_NOW_INFO_CUSTOMER: {
+      return update(state, {
+        BookingNowInfoCustomer: { $set: action.payload }
+      })
+    }
+    case CLEAR_BOOKING_NOW_INFO_CUSTOMER: {
+      return update(state, {
+        BookingNowInfoCustomer: {
+          $set: null
+        }
+      })
+    }
     default:
       return state
   }
@@ -67,7 +103,15 @@ const bookingReducer = (state = InitialState, action) => {
 const bookingPersistConfig = {
   key: 'BookingStore',
   storage: storage,
-  blacklist: ['listTourSearch', 'isLoadedlistTourSearch', 'BookingNow', 'isLoadedBookingNow', 'BookingNowSeat']
+  blacklist: [
+    'listTourSearch',
+    'isLoadedlistTourSearch',
+    'BookingNow',
+    'isLoadedBookingNow',
+    'BookingNowSeat',
+    'BookingNowPoint',
+    'BookingNowInfoCustomer'
+  ]
 }
 
 export default persistReducer(bookingPersistConfig, bookingReducer)

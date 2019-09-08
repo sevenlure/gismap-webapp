@@ -18,7 +18,11 @@ const slug = {
     base: '/contact'
   },
   booking: {
-    base: '/booking'
+    base: '/booking',
+    infoCustomer: '/booking/info-customer'
+  },
+  payment: {
+    base: '/payment'
   },
   result: {
     base: '/result/register-success',
