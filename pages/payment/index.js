@@ -13,6 +13,7 @@ import { connect } from 'react-redux'
 import { HH_MM } from 'src/config/format'
 import moment from 'moment'
 import { getFormatNumber } from 'src/config/format'
+import ModalChoosePromotion from 'src/containers/payment/modal-choose-promotion'
 
 const PaymentWrapper = styled.div`
   margin: 45px 24px 60px 24px;
@@ -202,7 +203,13 @@ class InfoCustomer extends React.Component {
                 <div className='page--contant--promotion-input'>
                   <Input prefix={<Icon component={icons.sale} />} placeholder='Nhập mã khuyễn mãi' size='large' />
                   <div className='page--contant--promotion-modal'>
-                    <Button size='default' type='default'>
+                    <Button
+                      size='default'
+                      type='default'
+                      onClick={() => {
+                        this.ModalChoosePromotion.showModal()
+                      }}
+                    >
                       Chọn mã
                     </Button>
                   </div>
@@ -342,6 +349,7 @@ class InfoCustomer extends React.Component {
           </Col>
         </Row>
         {/* <Clearfix width={25} /> */}
+        <ModalChoosePromotion getRef={ref => (this.ModalChoosePromotion = ref)} />
       </PaymentWrapper>
     )
   }
