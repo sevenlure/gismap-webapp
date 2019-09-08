@@ -115,25 +115,25 @@ class InfoCustomer extends React.Component {
     listPayments: [
       {
         id: '1',
-        url: '/static/images/bank/ic-momo.png',
+        url: '/static/images/bank/ic-napas.jpg',
         name: 'Thẻ nội địa',
         description: ''
       },
       {
         id: '2',
-        url: '/static/images/bank/ic-momo.png',
+        url: '/static/images/bank/ic-mastercard.png',
         name: 'Thẻ quốc tế',
         description: ''
       },
       {
         id: '3',
-        url: '/static/images/bank/ic-momo.png',
+        url: '/static/images/bank/ic-zalo.png',
         name: 'Zalopay',
         description: ''
       },
       {
         id: '4',
-        url: '/static/images/bank/ic-momo.png',
+        url: '/static/images/bank/ic-viettelPay.png',
         name: 'Viettelpay',
         description: ''
       },
@@ -145,7 +145,7 @@ class InfoCustomer extends React.Component {
       },
       {
         id: '6',
-        url: '/static/images/bank/ic-momo.png',
+        url: '/static/images/bank/ic-method1.png',
         name: 'Thanh toán bằng tiền mặt',
         description: 'Vé được giữ trong vòng 6 tiếng tính từ thời điểm xác nhận thanh toán'
       }
