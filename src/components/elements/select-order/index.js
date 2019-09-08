@@ -64,7 +64,7 @@ export default class SelectOrder extends React.Component {
 
         <div style={{ float: 'right', marginBottom: '20px' }}>
           <Button
-            style={{ width: 90 }}
+            style={{ width: 90, marginRight: 20 }}
             size='large'
             type='primary'
             onClick={() => {
