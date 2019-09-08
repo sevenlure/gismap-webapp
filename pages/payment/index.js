@@ -7,9 +7,12 @@ import { Radio, Input, Icon, Button, Row, Col, Divider, Checkbox } from 'antd'
 import icons from 'icons'
 import AvatarUser from 'src/containers/auth/avatar-user'
 
-import { get as _get, map as _map } from 'lodash-es'
+import { get as _get, map as _map, values as _values, isNumber as _isNumber } from 'lodash-es'
 import DefaultLayout from 'src/layout/default'
 import { connect } from 'react-redux'
+import { HH_MM } from 'src/config/format'
+import moment from 'moment'
+import { getFormatNumber } from 'src/config/format'
 
 const PaymentWrapper = styled.div`
   margin: 45px 24px 60px 24px;
@@ -83,7 +86,11 @@ const PaymentWrapper = styled.div`
 
 const mapStateToProps = state => ({
   isAuthenticated: _get(state, 'AuthStore.isAuthenticated'),
-  userInfo: _get(state, 'GeneralStore.userInfo', '')
+  userInfo: _get(state, 'GeneralStore.userInfo', ''),
+  BookingNow: _get(state, 'BookingStore.BookingNow', null),
+  BookingNowSeat: _get(state, 'BookingStore.BookingNowSeat', null),
+  BookingNowPoint: _get(state, 'BookingStore.BookingNowPoint', null),
+  BookingNowInfoCustomer: _get(state, 'BookingStore.BookingNowInfoCustomer', null)
 })
 
 const mapDispatchToProps = {}
@@ -96,7 +103,11 @@ class InfoCustomer extends React.Component {
   static propTypes = {
     form: PropTypes.any,
     isAuthenticated: PropTypes.bool,
-    userInfo: PropTypes.object
+    userInfo: PropTypes.object,
+    BookingNow: PropTypes.object,
+    BookingNowSeat: PropTypes.object,
+    BookingNowPoint: PropTypes.object,
+    BookingNowInfoCustomer: PropTypes.object
   }
 
   state = {
@@ -142,6 +153,43 @@ class InfoCustomer extends React.Component {
   }
 
   render() {
+    const { BookingNow, BookingNowSeat, BookingNowPoint, BookingNowInfoCustomer } = this.props
+    // console.log(BookingNowSeat, 'BookingNowInfoCustomer')
+    let timeTo, timefrom, typeCar
+    if (BookingNow) {
+      timeTo = BookingNow.timeStart
+        ? moment(BookingNow.timeStart)
+            .startOf('hour')
+            .add(2, 'hour')
+            .format(HH_MM)
+        : ''
+      timefrom = BookingNow.timeStart
+        ? moment(BookingNow.timeStart)
+            .startOf('hour')
+            .format(HH_MM)
+        : ''
+      typeCar = BookingNow.title
+    }
+    let strSeat, numberSeat, priceTicket
+    if (BookingNowSeat) {
+      numberSeat = _values(BookingNowSeat) ? _values(BookingNowSeat).length : 0
+      priceTicket = 0
+      strSeat = _map(_values(BookingNowSeat), item => {
+        priceTicket += _isNumber(item.price) ? item.price : 0
+        return item.name
+      }).join(', ')
+    }
+    let pointFrom, pointTo
+    if (BookingNowPoint) {
+      pointFrom = BookingNowPoint.from
+      pointTo = BookingNowPoint.to
+    }
+    let nameCustomer, phone
+    if (BookingNowInfoCustomer) {
+      nameCustomer = BookingNowInfoCustomer.fullName
+      phone = BookingNowInfoCustomer.phone
+    }
+
     return (
       <PaymentWrapper>
         <Row gutter={8}>
@@ -190,8 +238,8 @@ class InfoCustomer extends React.Component {
                   </Radio.Group>
                 </div>
                 <div className='page--contant--rules'>
-                  <Checkbox>
-                    {`Tôi đồng ý với `}
+                  <Checkbox style={{ paddingLeft: '12px' }}>
+                    <span> {`Tôi đồng ý với `}</span>
                     <Link href='#'>
                       <a>điều khoản sử dụng</a>
                     </Link>
@@ -208,18 +256,20 @@ class InfoCustomer extends React.Component {
                 </div>
                 <div>
                   <h4 className='page--contant--right__blue'>
-                    05:00 <Icon component={icons.arrowNext} /> 07:00
+                    {timefrom} <Icon component={icons.arrowNext} /> {timeTo}
                   </h4>
-                  <strong>Tây Ninh - Quận 10, Hồ Chí Minh</strong>
+                  <strong>
+                    {`${_get(BookingNow, 'fromDeparture.name', '')} - ${_get(BookingNow, 'toDeparture.name', '')}`}
+                  </strong>
                   <br />
-                  <span>Limousine 9 chỗ</span>
+                  <span>{typeCar}</span>
                 </div>
                 <Clearfix height={30} />
                 <div>
                   <h4>Số ghế</h4>
                 </div>
                 <div>
-                  <h4 className='page--contant--right__blue'>A3, B5, G7</h4>
+                  <h4 className='page--contant--right__blue'>{strSeat}</h4>
                 </div>
                 <Clearfix height={30} />
                 <div>
@@ -228,11 +278,11 @@ class InfoCustomer extends React.Component {
                 <div>
                   <span style={{ color: '#9ea7d0' }}>Điểm đón</span>
                   <br />
-                  <span>137 Đào Duy Từ, Tây Ninh</span>
+                  <span>{pointFrom}</span>
                   <Clearfix height={16} />
                   <span style={{ color: '#9ea7d0' }}>Điểm trả</span>
                   <br />
-                  <span>137 Đào Duy Từ, Tây Ninh</span>
+                  <span>{pointTo}</span>
                 </div>
               </div>
               <Clearfix height={20} />
@@ -245,9 +295,9 @@ class InfoCustomer extends React.Component {
                     <AvatarUser disabled={true} />
                   </div>
                   <div style={{ paddingLeft: 16 }}>
-                    <strong>Lan Wangji</strong>
+                    <strong>{nameCustomer}</strong>
                     <br />
-                    <span>033 222 589</span>
+                    <span>{phone}</span>
                   </div>
                 </div>
               </div>
@@ -258,10 +308,10 @@ class InfoCustomer extends React.Component {
                 </div>
                 <div style={{ display: 'flex', justifyContent: 'space-between' }}>
                   <div>
-                    <span>Tổng tiền 3 vé</span>
+                    <span>Tổng tiền {numberSeat} vé</span>
                   </div>
                   <div>
-                    <strong>300,000 đ</strong>
+                    <strong>{getFormatNumber(priceTicket)} đ</strong>
                   </div>
                 </div>
                 <div style={{ display: 'flex', justifyContent: 'space-between' }}>
@@ -278,7 +328,7 @@ class InfoCustomer extends React.Component {
                     <strong>Tổng tiền</strong>
                   </div>
                   <div>
-                    <h4 className='page--contant--right__blue'>300,000 đ</h4>
+                    <h4 className='page--contant--right__blue'>{getFormatNumber(priceTicket)} đ</h4>
                   </div>
                 </div>
                 <Clearfix height={24} />

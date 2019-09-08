@@ -11,19 +11,27 @@ import AddressSvg from 'static/images/icon/ic-address.svg'
 import DefaultLayout from 'src/layout/default'
 import { auth as authMess } from 'src/config/message'
 import { connect } from 'react-redux'
+import { setBookingNowInfoCustomer, clearBookingNowInfoCustomer } from 'src/redux/actions/BookingAction'
+import Router from 'next/router'
+import slug from 'src/routes'
+import windowSize from 'react-window-size'
 
 const registerMess = authMess.register
 
 const InfoCustomerWrapper = styled.div`
-  margin-top: 45px;
   display: flex;
   justify-content: center;
+  ${props => (props.windowWidth >= 992 ? 'margin: 45px;' : '')}
+  ${props => (props.windowWidth >= 576 ? 'margin: 20px;' : '')}
+  ${props => (props.windowWidth < 576 ? 'margin: 8px;' : '')}
 
   .page--contant {
     max-width: 968px;
     width: 100%;
     background: white;
-    padding: 50px 70px;
+    ${props => (props.windowWidth >= 992 ? 'padding: 50px 70px;' : '')}
+    ${props => (props.windowWidth >= 576 ? 'padding: 20px;' : '')}
+    ${props => (props.windowWidth < 576 ? 'padding: 8px;' : '')}
 
     .page--contant--title h3 {
       margin-bottom: 8px;
@@ -44,17 +52,21 @@ const mapStateToProps = state => ({
   userInfo: _get(state, 'GeneralStore.userInfo', '')
 })
 
-const mapDispatchToProps = {}
+const mapDispatchToProps = { setBookingNowInfoCustomer, clearBookingNowInfoCustomer }
 
 @connect(
   mapStateToProps,
   mapDispatchToProps
 )
+@windowSize
 class InfoCustomer extends React.Component {
   static propTypes = {
+    windowWidth: PropTypes.number,
     form: PropTypes.any,
     isAuthenticated: PropTypes.bool,
-    userInfo: PropTypes.object
+    userInfo: PropTypes.object,
+    clearBookingNowInfoCustomer: PropTypes.func,
+    setBookingNowInfoCustomer: PropTypes.func
   }
 
   state = {
@@ -70,9 +82,16 @@ class InfoCustomer extends React.Component {
     e.preventDefault()
     this.props.form.validateFields(async (err, values) => {
       if (!err) {
-        console.log('Received values of form: ', values)
+        // console.log('Received values of form: ', values)
+        this.props.setBookingNowInfoCustomer({
+          ...values
+        })
+        Router.push(slug.payment.base)
       }
     })
+  }
+  componentDidMount = () => {
+    this.props.clearBookingNowInfoCustomer()
   }
 
   render() {
@@ -83,7 +102,7 @@ class InfoCustomer extends React.Component {
     const { userInfo } = this.props
 
     return (
-      <InfoCustomerWrapper>
+      <InfoCustomerWrapper windowWidth={this.props.windowWidth}>
         <Form onSubmit={this.handleSubmit} className='page--contant'>
           <div className='page--contant--title'>
             <h3>{title}</h3>

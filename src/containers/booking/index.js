@@ -1,9 +1,9 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import styled from 'styled-components'
-import { Input, Divider, Icon, Timeline, Button, Row, Col, Drawer, Skeleton } from 'antd'
+import { Divider, Icon, Timeline, Button, Row, Col, Drawer, Skeleton } from 'antd'
 import { get as _get } from 'lodash-es'
-import IconSvg from 'icons'
+// import IconSvg from 'icons'
 import windowSize from 'react-window-size'
 
 import FromSelectIconSvg from 'static/images/icon/ic-arrow-map-from-select.svg'
@@ -28,6 +28,7 @@ const BookingContainer = styled.div`
   display: flex;
 
   .left-booking {
+    background-color: white;
     width: ${props => (props.isVisibleFilter ? '400px;' : '375px;')}
     box-shadow: 1px 0 0 0 #e6e6e6;
     // background-color: #fff;
@@ -168,7 +169,7 @@ class Booking extends React.Component {
   }
 
   onChangeFilter = (type, value) => {
-    console.log(type, value, 'onChangeFilter')
+    // console.log(type, value, 'onChangeFilter')
     let tempData = this.state.datafilter
     _set(tempData, type, value)
     // console.log(tempData, 'tempData')
@@ -179,7 +180,7 @@ class Booking extends React.Component {
         }
       },
       async () => {
-        console.log('this.state changed', this.state.datafilter)
+        // console.log('this.state changed', this.state.datafilter)
         this.props.setIsLoadedListTourSearch(false)
         try {
           await this.props.getListTourSearch({
@@ -306,18 +307,29 @@ class Booking extends React.Component {
     if (this.props.windowWidth < 1024) {
       isVisibleFilter = false
     }
+
+    let drawerStyle = {
+      width: 375,
+      placement: 'left'
+    }
     if (this.props.windowWidth < 576) {
       isViewDefault = false
+      drawerStyle = {
+        height: '75vh',
+        placement: 'bottom',
+        bodyStyle: {
+          height: '75vh',
+          overflowY: 'auto'
+        }
+      }
     }
     return (
       <BookingContainer isVisibleFilter={isVisibleFilter}>
         {isVisibleFilter && <this.LeftBooking zIndex={2} />}
-
-        <div id='drawerContainer' style={{ zIndex: this.state.isVisibleDrawer ? 9999 : 1 }}>
+        <div id='drawerContainer' style={{ zIndex: this.state.isVisibleDrawer ? 10 : 1 }}>
           <Drawer
-            width={375}
+            {...drawerStyle}
             onClose={() => this.setState({ isVisibleDrawer: false })}
-            placement='left'
             visible={this.state.isVisibleDrawer}
             getContainer={document.getElementById('drawerContainer')}
             closable={false}
@@ -347,31 +359,7 @@ class Booking extends React.Component {
                   </Col>
                 )}
                 <Col xs={16} sm={20} lg={10} style={{ marginBottom: '8px' }}>
-                  {/* <Select
-                    size='large'
-                    onChange={value => this.onChangeFilter('orderBy', value)}
-                    defaultValue='timeRunAsc'
-                    style={{ width: '100%' }}
-                  >
-                    <Option value='timeRunAsc'>Giờ chạy tăng dần</Option>
-                    <Option value='timeRunDesc'>Giờ chạy giảm dần</Option>
-                    <Option value='priceRunAsc'>Giá vé tăng dần</Option>
-                    <Option value='priceRunDesc'>Giá vé giảm dần</Option>
-                  </Select> */}
-                  <SelectCustom />
-                </Col>
-                <Col
-                  xs={24}
-                  sm={24}
-                  lg={14}
-                  // style={{ height: '100%' }
-                >
-                  <Input
-                    style={{ width: '100%' }}
-                    size='large'
-                    placeholder='Nhập từ khóa cần tìm kiếm...'
-                    prefix={<Icon component={IconSvg.search} />}
-                  />
+                  <SelectCustom onChange={value => this.onChangeFilter('orderBy', value)} />
                 </Col>
               </Row>
             </div>

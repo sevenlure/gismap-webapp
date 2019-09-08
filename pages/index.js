@@ -256,13 +256,13 @@ class Index extends React.Component {
               <div className='list--container'>
                 <div className='list--title'>Tuyến đi phổ biến</div>
                 <Clearfix height={25} />
-                <Row gutter={{ xs: 8, sm: 16, lg: 24 }}>
+                <Row gutter={{ xs: 8, sm: 16, lg: 24 }} style={{ display: 'flex', flexWrap: 'wrap' }}>
                   {this.props.listTourPopular &&
                     _map(this.props.listTourPopular, item => {
                       item = {
                         ...item,
-                        from: 1,
-                        to: 3
+                        from: _get(item, 'fromDeparture.id', null),
+                        to: _get(item, 'toDeparture.id', null)
                       }
                       return (
                         <Col key={item.id} xs={24} sm={12} lg={8} style={{ marginBottom: 24 }}>
@@ -277,7 +277,9 @@ class Index extends React.Component {
                           >
                             <div>
                               <div className='list--content--card--title'>
-                                <span>{item.title}</span>
+                                <span>{_get(item, 'fromDeparture.name', '').replace(/-/gi, ',')}</span>
+                                {` - `}
+                                <span>{_get(item, 'toDeparture.name', '').replace(/-/gi, ',')}</span>
                               </div>
                               <Clearfix height={7} />
                               <div className='list--content--card--size'>
