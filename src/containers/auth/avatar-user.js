@@ -22,7 +22,8 @@ export default class AvatarUser extends React.Component {
   static propTypes = {
     // name: PropTypes.string,
     userLogout: PropTypes.func,
-    clearUserInfo: PropTypes.func
+    clearUserInfo: PropTypes.func,
+    disabled: PropTypes.bool
   }
 
   state = {
@@ -35,6 +36,7 @@ export default class AvatarUser extends React.Component {
       <div>
         <Dropdown
           trigger={['click']}
+          disabled={this.props.disabled}
           overlay={
             <Menu>
               {/* <Menu.Item

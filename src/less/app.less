@@ -110,10 +110,12 @@ body {
   &::selection {
     background: initial;
   }
-  &:hover, &:focus {
+  &:hover,
+  &:focus {
     border: none;
   }
-  .selection, .ant-select-selection:focus {
+  .selection,
+  .ant-select-selection:focus {
     border: none;
     box-shadow: none;
   }
@@ -217,6 +219,9 @@ h6 {
   font-weight: bold;
   font-family: myFont-Bold;
 }
+h4 {
+  font-size: 1.125rem;
+}
 span {
   font-family: myFont-Light;
   font-weight: 300;
@@ -277,12 +282,6 @@ strong {
   }
 }
 
-.date-step-item-wrapper.active {
-  // border: 1px blue solid;
-}
-.date-step-item.active {
-  // border: 1px green solid;
-}
 .date-step-wrapper {
   // width: 420px;
   width: 100%;
@@ -334,3 +333,25 @@ strong {
   display: flex;
   justify-content: space-between;
 }
+
+/* #region  NOTE ant-radio   */
+.ant-radio {
+  &.ant-radio-checked {
+    height: 22px;
+    width: 22px;
+    background: url(/static/images/icon/ic-choice-on.svg) no-repeat;
+  }
+  .ant-radio-inner {
+    opacity: 0;
+  }
+}
+
+.ant-radio {
+  height: 22px;
+  width: 22px;
+  background: url(/static/images/icon/ic-choice-off.svg) no-repeat;
+  .ant-radio-inner {
+    opacity: 0;
+  }
+}
+/* #endregion */

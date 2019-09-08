@@ -78,7 +78,7 @@ class InfoCustomer extends React.Component {
   render() {
     const { getFieldDecorator, getFieldsError, getFieldValue } = this.props.form
 
-    console.log(this.props, 'render')
+    // console.log(this.props, 'render')
     const title = this.props.isAuthenticated ? 'Xác nhận thông tin khách hàng' : 'Vui lòng nhập thông tin khách hàng'
     const { userInfo } = this.props
 
@@ -175,27 +175,28 @@ class InfoCustomer extends React.Component {
               Tiếp tục
             </Button>
           </div>
-
-          <div>
-            <Clearfix height={30} />
+          {!this.props.isAuthenticated && (
             <div>
-              <h3>Hoặc đăng nhập để bỏ qua phần này</h3>
+              <Clearfix height={30} />
+              <div>
+                <h4>Hoặc đăng nhập để bỏ qua phần này</h4>
+              </div>
+              <div>
+                <Row gutter={8}>
+                  <Col xs={24} sm={12} lg={4}>
+                    <Button type='primary' block={true} size='large'>
+                      <span>Đăng nhập</span>
+                    </Button>
+                  </Col>
+                  <Col xs={24} sm={12} lg={4}>
+                    <Button type='default' block={true} size='large'>
+                      <span>Đăng ký</span>
+                    </Button>
+                  </Col>
+                </Row>
+              </div>
             </div>
-            <div>
-              <Row>
-                <Col>
-                  <Button type='primary' block={true} size='large'>
-                    Tiếp tục
-                  </Button>
-                </Col>
-                <Col>
-                  <Button type='primary' block={true} size='large'>
-                    Tiếp tục
-                  </Button>
-                </Col>
-              </Row>
-            </div>
-          </div>
+          )}
         </Form>
       </InfoCustomerWrapper>
     )

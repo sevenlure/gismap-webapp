@@ -3,6 +3,8 @@ import RightIconSvg from 'static/images/icon/ic-right.svg'
 import CalendarIconSvg from 'static/images/icon/ic-calendar.svg'
 import ChoiseOffIconSvg from 'static/images/icon/ic-choice-off.svg'
 import ChoiseOnIconSvg from 'static/images/icon/ic-choice-on.svg'
+import SaleIconlSvg from 'static/images/icon/ic-sale.svg'
+import ArrowNextIconSvg from 'static/images/icon/ic-arrow-next.svg'
 
 import SeatChooseIconSvg from 'static/images/icon/ic-seat-choose.svg'
 import SeatDisableIconSvg from 'static/images/icon/ic-seat-disable.svg'
@@ -18,5 +20,7 @@ export default {
   seatChoose: SeatChooseIconSvg,
   seatDisable: SeatDisableIconSvg,
   seatDriver: SeatDriverIconSvg,
-  seatOff: SeatOffIconSvg
+  seatOff: SeatOffIconSvg,
+  sale: SaleIconlSvg,
+  arrowNext: ArrowNextIconSvg
 }

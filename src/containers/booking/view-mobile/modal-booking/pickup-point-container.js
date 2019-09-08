@@ -22,24 +22,6 @@ const Wrapper = styled.div`
 
   .des-container {
   }
-
-  .ant-radio.ant-radio-checked {
-    height: 22px;
-    width: 22px;
-    background: url(/static/images/icon/ic-choice-on.svg) no-repeat;
-    .ant-radio-inner {
-      opacity: 0;
-    }
-  }
-
-  .ant-radio {
-    height: 22px;
-    width: 22px;
-    background: url(/static/images/icon/ic-choice-off.svg) no-repeat;
-    .ant-radio-inner {
-      opacity: 0;
-    }
-  }
 `
 const radioStyle = {
   // display: 'block',
