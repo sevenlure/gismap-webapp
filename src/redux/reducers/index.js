@@ -1,7 +1,7 @@
 import { combineReducers } from 'redux'
 import authReducer from './authReducer'
 import gereralReducer from './generalReducer'
-import bookingReducer from './BookingReducer'
+import bookingReducer from './bookingReducer'
 import paymentReducer from './paymentReducer'
 
 export default combineReducers({
