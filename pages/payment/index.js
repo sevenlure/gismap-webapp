@@ -10,6 +10,7 @@ import AvatarUser from 'src/containers/auth/avatar-user'
 import { get as _get, map as _map } from 'lodash-es'
 import DefaultLayout from 'src/layout/default'
 import { connect } from 'react-redux'
+import ModalChoosePromotion from 'src/containers/payment/modal-choose-promotion'
 
 const PaymentWrapper = styled.div`
   margin: 45px 24px 60px 24px;
@@ -154,7 +155,13 @@ class InfoCustomer extends React.Component {
                 <div className='page--contant--promotion-input'>
                   <Input prefix={<Icon component={icons.sale} />} placeholder='Nhập mã khuyễn mãi' size='large' />
                   <div className='page--contant--promotion-modal'>
-                    <Button size='default' type='default'>
+                    <Button
+                      size='default'
+                      type='default'
+                      onClick={() => {
+                        this.ModalChoosePromotion.showModal()
+                      }}
+                    >
                       Chọn mã
                     </Button>
                   </div>
@@ -292,6 +299,7 @@ class InfoCustomer extends React.Component {
           </Col>
         </Row>
         {/* <Clearfix width={25} /> */}
+        <ModalChoosePromotion getRef={ref => (this.ModalChoosePromotion = ref)} />
       </PaymentWrapper>
     )
   }

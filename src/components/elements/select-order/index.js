@@ -45,9 +45,11 @@ export default class SelectOrder extends React.Component {
     return (
       <Menu
         onClick={menuSelected => {
-          const label = _get(menuSelected, 'item.props.label')
-          this.setState({ value: menuSelected.key, label })
-          if (this.props.onChange) this.props.onChange(menuSelected.key)
+          if (menuSelected && menuSelected.key) {
+            const label = _get(menuSelected, 'item.props.label')
+            this.setState({ value: menuSelected.key, label })
+            if (this.props.onChange) this.props.onChange(menuSelected.key)
+          }
         }}
         selectedKeys={[this.state.value]}
       >
