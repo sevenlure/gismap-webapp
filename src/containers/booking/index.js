@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import styled from 'styled-components'
-import { Select, Input, Divider, Icon, Timeline, Button, Row, Col, Drawer, Skeleton } from 'antd'
+import { Input, Divider, Icon, Timeline, Button, Row, Col, Drawer, Skeleton } from 'antd'
 import { get as _get } from 'lodash-es'
 import IconSvg from 'icons'
 import windowSize from 'react-window-size'
@@ -21,8 +21,7 @@ import { getListTourSearch, setIsLoadedListTourSearch } from 'src/redux/actions/
 
 import moment from 'moment'
 import SelectDepartureV2 from 'src/components/elements/select-departure-v2'
-
-const { Option } = Select
+import SelectCustom from 'src/components/elements/select-order'
 
 const BookingContainer = styled.div`
   flex: 1;
@@ -348,7 +347,7 @@ class Booking extends React.Component {
                   </Col>
                 )}
                 <Col xs={16} sm={20} lg={10} style={{ marginBottom: '8px' }}>
-                  <Select
+                  {/* <Select
                     size='large'
                     onChange={value => this.onChangeFilter('orderBy', value)}
                     defaultValue='timeRunAsc'
@@ -358,7 +357,8 @@ class Booking extends React.Component {
                     <Option value='timeRunDesc'>Giờ chạy giảm dần</Option>
                     <Option value='priceRunAsc'>Giá vé tăng dần</Option>
                     <Option value='priceRunDesc'>Giá vé giảm dần</Option>
-                  </Select>
+                  </Select> */}
+                  <SelectCustom />
                 </Col>
                 <Col
                   xs={24}
