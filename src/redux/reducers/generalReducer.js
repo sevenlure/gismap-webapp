@@ -7,7 +7,9 @@ import {
   GET_GENERAL_LIST_TOUR_POPULAR,
   IS_LOADED_GENERAL_LIST_TOUR_POPULAR,
   UPDATE_GENERAL_USER_INFO,
-  CLEAR_GENERAL_USER_INFO
+  CLEAR_GENERAL_USER_INFO,
+  SET_GENERAL_IS_REGISTER,
+  SET_GENERAL_IS_LOGIN
 } from '../actions/generalAction'
 
 import storage from 'redux-persist/lib/storage'
@@ -22,12 +24,24 @@ const InitialState = {
   },
   danhMucIsLoaded: false,
   listTourPopular: [],
-  isLoadedListTourPopular: false
+  isLoadedListTourPopular: false,
+  isRegister: false,
+  isLogin: false
 }
 
 // REDUCERS
 const generalReducer = (state = InitialState, action) => {
   switch (action.type) {
+    case SET_GENERAL_IS_REGISTER: {
+      return update(state, {
+        isRegister: { $set: action.payload }
+      })
+    }
+    case SET_GENERAL_IS_LOGIN: {
+      return update(state, {
+        isLogin: { $set: action.payload }
+      })
+    }
     case GET_GENERAL_LIST_DEPARTURE: {
       return update(state, {
         danhMuc: { listDeparture: { $set: action.payload } }

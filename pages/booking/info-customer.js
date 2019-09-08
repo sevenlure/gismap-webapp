@@ -12,6 +12,7 @@ import DefaultLayout from 'src/layout/default'
 import { auth as authMess } from 'src/config/message'
 import { connect } from 'react-redux'
 import { setBookingNowInfoCustomer, clearBookingNowInfoCustomer } from 'src/redux/actions/BookingAction'
+import { setVisibleRegister, setVisibleLogin } from 'src/redux/actions/generalAction.js'
 import Router from 'next/router'
 import slug from 'src/routes'
 import windowSize from 'react-window-size'
@@ -52,7 +53,12 @@ const mapStateToProps = state => ({
   userInfo: _get(state, 'GeneralStore.userInfo', '')
 })
 
-const mapDispatchToProps = { setBookingNowInfoCustomer, clearBookingNowInfoCustomer }
+const mapDispatchToProps = {
+  setBookingNowInfoCustomer,
+  clearBookingNowInfoCustomer,
+  setVisibleRegister,
+  setVisibleLogin
+}
 
 @connect(
   mapStateToProps,
@@ -66,7 +72,9 @@ class InfoCustomer extends React.Component {
     isAuthenticated: PropTypes.bool,
     userInfo: PropTypes.object,
     clearBookingNowInfoCustomer: PropTypes.func,
-    setBookingNowInfoCustomer: PropTypes.func
+    setBookingNowInfoCustomer: PropTypes.func,
+    setVisibleRegister: PropTypes.func,
+    setVisibleLogin: PropTypes.func
   }
 
   state = {
@@ -202,13 +210,18 @@ class InfoCustomer extends React.Component {
               </div>
               <div>
                 <Row gutter={8}>
-                  <Col xs={24} sm={12} lg={4}>
-                    <Button type='primary' block={true} size='large'>
+                  <Col xs={12} sm={6} lg={4}>
+                    <Button onClick={() => this.props.setVisibleLogin(true)} type='primary' block={true} size='large'>
                       <span>Đăng nhập</span>
                     </Button>
                   </Col>
-                  <Col xs={24} sm={12} lg={4}>
-                    <Button type='default' block={true} size='large'>
+                  <Col xs={12} sm={6} lg={4}>
+                    <Button
+                      onClick={() => this.props.setVisibleRegister(true)}
+                      type='default'
+                      block={true}
+                      size='large'
+                    >
                       <span>Đăng ký</span>
                     </Button>
                   </Col>
