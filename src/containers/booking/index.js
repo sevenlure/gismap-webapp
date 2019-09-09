@@ -34,14 +34,32 @@ const BookingContainer = styled.div`
     // background-color: #fff;
     // max-height: calc(100vh - 70px - 30px);
     // overflow-y: auto;
+    .ant-btn-round {
+      height: 44px;
+      font-family: myFont-Light;
+      background-color: #f2f3f7;
+      border: none;
+      color: #4c4c4c;
+
+      span {
+        margin-left: 16px;
+        margin-right: 16px;
+      }
+      
+      &.select {
+        font-family: myFont-Medium;
+        // background-color: #3880ff;
+        background-color: rgba(56, 128, 255, 0.2);
+      }
+    }
     .left-booking--content {
       padding: 24px;
       .select{
-        background-color: rgb(56, 128, 255, 0.4);
+        // background-color: rgb(56, 128, 255, 0.4);
       }
       .select > span {
         font-weight: 500;
-        font-family: HelveticaNeue-Medium;
+        font-family: myFont-Medium;
         color: #3880ff;
       }
       .left-booking--content__border{
@@ -262,7 +280,7 @@ class Booking extends React.Component {
                 return (
                   <Button
                     key={item.value}
-                    style={{ padding: '0px 10px', margin: '0px 12px 12px 0px' }}
+                    style={{ padding: '0px 10px', margin: '0px 12px 12px 0px', fontSize: '1rem', minWidth: 86 }}
                     type='default'
                     shape='round'
                     className={item.value === this.state.datafilter.timeSlotId ? 'select' : ''}
@@ -282,7 +300,7 @@ class Booking extends React.Component {
                 return (
                   <Button
                     key={item.value}
-                    style={{ padding: '0px 10px', margin: '0px 12px 12px 0px' }}
+                    style={{ padding: '0px 10px', margin: '0px 12px 12px 0px', fontSize: '1rem', minWidth: 86  }}
                     type='default'
                     shape='round'
                     className={item.value === this.state.datafilter.seatType ? 'select' : ''}

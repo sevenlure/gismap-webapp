@@ -72,26 +72,29 @@ export default class IconSeat extends React.Component {
     _map(BookingNowSeat, item => {
       if (item != null) totalSeat++
     })
-    if (totalSeat >= 4) {
-      return Modal.error({
-        title: <h3 style={{ textAlign: 'center' }}>Thông báo</h3>,
-        width: 'fit-content',
-        centered: true,
-        style: {
-          padding: 24
-        },
-        autoFocusButton: 'cancel',
-        icon: <span />,
-        content: <span>Chỉ đc phép mua tối đa 4 vé / lượt</span>,
-        okType: 'default',
-        okText: 'Đã hiểu',
-        maskClosable: true
-      })
-    }
+
     const item = BookingNowSeat[`${row}-${col}`]
 
     if (!item) {
       // MARK  chưa book => add seat vào Booking
+
+      // MARK  check xem 4 seat chưa r mới cho book them
+      if (totalSeat >= 4) {
+        return Modal.error({
+          title: <h3 style={{ textAlign: 'center' }}>Thông báo</h3>,
+          width: 'fit-content',
+          centered: true,
+          style: {
+            padding: 24
+          },
+          autoFocusButton: 'cancel',
+          icon: <span />,
+          content: <span>Chỉ đc phép mua tối đa 4 vé / lượt</span>,
+          okType: 'default',
+          okText: 'Đã hiểu',
+          maskClosable: true
+        })
+      }
       addBookingNowSeat({
         [`${row}-${col}`]: {
           price,
