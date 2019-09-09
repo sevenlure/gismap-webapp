@@ -300,7 +300,7 @@ class Booking extends React.Component {
                 return (
                   <Button
                     key={item.value}
-                    style={{ padding: '0px 10px', margin: '0px 12px 12px 0px', fontSize: '1rem', minWidth: 86  }}
+                    style={{ padding: '0px 10px', margin: '0px 12px 12px 0px', fontSize: '1rem', minWidth: 86 }}
                     type='default'
                     shape='round'
                     className={item.value === this.state.datafilter.seatType ? 'select' : ''}
