@@ -28,7 +28,7 @@ const RegisterWrapper = styled.div`
 
   flex: 1;
   .ant-form-item-with-help {
-    margin-bottom: 0px;
+    // margin-bottom: 0px;
   }
   .form--button {
     text-align: center;
@@ -49,7 +49,7 @@ const RegisterWrapper = styled.div`
     }
   }
   .ant-form-item {
-    margin-bottom: 8px;
+    // margin-bottom: 8px;
   }
 `
 const mapDispatchToProps = {

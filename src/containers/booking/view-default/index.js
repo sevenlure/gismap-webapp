@@ -68,17 +68,17 @@ class BookingContentLaptop extends React.Component {
     return (
       <BookingContentDefaultWrapper>
         <div className='right-booking--content-body'>
-          <Row gutter={8} style={{ flex: 1, padding: '0px 8px' }}>
+          <Row gutter={24} style={{ flex: 1, padding: '0px 8px' }}>
             <Col span={3}>
               <strong className='right-booking--content-body__tb-header-color'>Thời gian</strong>
             </Col>
             <Col span={6}>
               <strong className='right-booking--content-body__tb-header-color'>Điểm đi - Điểm đến</strong>
             </Col>
-            <Col span={5}>
+            <Col span={4}>
               <strong className='right-booking--content-body__tb-header-color'>Loại xe</strong>
             </Col>
-            <Col span={3}>
+            <Col span={4} style={{ display: 'flex', justifyContent: 'center' }}>
               <strong className='right-booking--content-body__tb-header-color'>Số ghế trống</strong>
             </Col>
             <Col span={7}>
@@ -110,7 +110,7 @@ class BookingContentLaptop extends React.Component {
                 return (
                   <Row
                     key={index}
-                    gutter={8}
+                    gutter={24}
                     style={{ flex: 1, ...styleStatus }}
                     className='right-booking--content-body--item'
                   >
@@ -136,11 +136,11 @@ class BookingContentLaptop extends React.Component {
                         <span>{_get(item, 'toDeparture.name', '')}</span>
                       </div>
                     </Col>
-                    <Col span={5} className='right-booking--content-body--item__center'>
+                    <Col span={4} className='right-booking--content-body--item__center'>
                       <span>{item.title}</span>
                     </Col>
                     <Col
-                      span={3}
+                      span={4}
                       style={{ justifyContent: 'center' }}
                       className='right-booking--content-body--item__center'
                     >

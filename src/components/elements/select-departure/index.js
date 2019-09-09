@@ -36,7 +36,8 @@ export default class SelectDeparture extends React.Component {
     listDeparture: PropTypes.array,
     placeholder: PropTypes.string,
     isFrom: PropTypes.bool,
-    value: PropTypes.any
+    value: PropTypes.any,
+    keyDisable: PropTypes.string
   }
 
   state = {
@@ -88,7 +89,12 @@ export default class SelectDeparture extends React.Component {
           >
             {_map(this.state.data, item => {
               return (
-                <Option key={item.id} value={item.id} namesearch={item.nameSearch}>
+                <Option
+                  key={item.id}
+                  value={item.id}
+                  namesearch={item.nameSearch}
+                  disabled={this.props.keyDisable === item.id}
+                >
                   {item.name}
                 </Option>
               )

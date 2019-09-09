@@ -13,6 +13,7 @@ import moment from 'moment'
 import Clearfix from 'src/components/elements/clearfix'
 import SelectDeparture from 'src/components/elements/select-departure'
 import Booking from 'src/containers/booking'
+import slug from 'src/routes'
 // import InfoCustomer from 'src/containers/booking/info-customer'
 
 const WrapperIndex = styled.div`
@@ -158,6 +159,7 @@ class Index extends React.Component {
   }
   hanldeSearch = e => {
     // console.log('hanldeSearch')
+    history.pushState({}, slug.basic)
     e.preventDefault()
     this.props.form.validateFields((err, values) => {
       if (!err) {
@@ -168,21 +170,25 @@ class Index extends React.Component {
   }
 
   searchTour = async values => {
-    this.setState({
-      querySearch: {
-        ..._pick(values, ['from', 'to']),
-        date: moment()
-      }
-    })
-    this.props.setIsLoadedListTourSearch(false)
+    this.setState(
+      {
+        querySearch: {
+          ..._pick(values, ['from', 'to']),
+          date: moment()
+        }
+      },
+      async () => {
+        this.props.setIsLoadedListTourSearch(false)
 
-    await Promise.all([
-      this.props.getListTourSearch({
-        ...this.state.querySearch
-      })
-    ]).then(() => {
-      this.props.setIsLoadedListTourSearch(true)
-    })
+        await Promise.all([
+          this.props.getListTourSearch({
+            ...this.state.querySearch
+          })
+        ]).then(() => {
+          this.props.setIsLoadedListTourSearch(true)
+        })
+      }
+    )
   }
 
   componentDidMount() {
@@ -192,7 +198,7 @@ class Index extends React.Component {
   }
 
   render() {
-    const { getFieldDecorator, getFieldsError } = this.props.form
+    const { getFieldDecorator, getFieldsError, getFieldValue } = this.props.form
     const { isBooking } = this.state
     return (
       <WrapperIndex windowWidth={this.props.windowWidth}>
@@ -220,12 +226,24 @@ class Index extends React.Component {
                           <Col xs={24} sm={12} lg={12} style={{ marginBottom: 8 }}>
                             {getFieldDecorator('from', {
                               rules: [{ required: true, message: 'Vui lòng chọn điểm khởi hành!' }]
-                            })(<SelectDeparture placeholder='Điểm khởi hành' isFrom={true} />)}
+                            })(
+                              <SelectDeparture
+                                placeholder='Điểm khởi hành'
+                                isFrom={true}
+                                keyDisable={getFieldValue('to')}
+                              />
+                            )}
                           </Col>
                           <Col xs={24} sm={12} lg={12} style={{ marginBottom: 8 }}>
                             {getFieldDecorator('to', {
                               rules: [{ required: true, message: 'Vui lòng chọn điểm muốn đến!' }]
-                            })(<SelectDeparture placeholder='Điểm muốn đến' isFrom={false} />)}
+                            })(
+                              <SelectDeparture
+                                placeholder='Điểm muốn đến'
+                                isFrom={false}
+                                keyDisable={getFieldValue('from')}
+                              />
+                            )}
                           </Col>
                         </Row>
                       </div>

@@ -1,4 +1,5 @@
 import React from 'react'
+import styled from 'styled-components'
 import PropTypes from 'prop-types'
 import { DatePicker, Button, Icon } from 'antd'
 import moment from 'moment'
@@ -13,6 +14,12 @@ moment.updateLocale('en-au', {
   weekdays: 'Chủ nhật_Thứ 2_Thứ 3_Thứ 4_Thứ 5_Thứ 6_Thứ 7'.split('_')
 })
 
+const Wrapper = styled.div`
+  .ant-calendar-picker-input,
+  .ant-calendar-picker {
+    cursor: pointer;
+  }
+`
 export default class DateStepPicker extends React.Component {
   static propTypes = {
     defaultValue: PropTypes.any,
@@ -41,7 +48,7 @@ export default class DateStepPicker extends React.Component {
 
   render() {
     return (
-      <div>
+      <Wrapper>
         <DatePicker
           allowClear={false}
           size='large'
@@ -90,7 +97,7 @@ export default class DateStepPicker extends React.Component {
             }
           }}
         />
-      </div>
+      </Wrapper>
     )
   }
 }

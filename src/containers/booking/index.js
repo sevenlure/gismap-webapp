@@ -226,7 +226,8 @@ class Booking extends React.Component {
                     <SelectDepartureV2
                       placeholder='Điểm khởi hành'
                       onChange={value => this.onChangeFilter('from', value)}
-                      defaultValue={this.props.querySearch.from}
+                      defaultValue={this.state.datafilter.from}
+                      keyDisable={this.state.datafilter.to}
                     />
                   </div>
                   <Divider style={{ margin: '8px 0px 16px 0px' }} />
@@ -236,7 +237,8 @@ class Booking extends React.Component {
                   <SelectDepartureV2
                     placeholder='Điểm muốn đến'
                     onChange={value => this.onChangeFilter('to', value)}
-                    defaultValue={this.props.querySearch.to}
+                    defaultValue={this.state.datafilter.to}
+                    keyDisable={this.state.datafilter.from}
                   />
                 </Timeline.Item>
               </Timeline>
