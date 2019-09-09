@@ -148,9 +148,6 @@ export default class ModalBooking extends React.Component {
 
     return (
       <div>
-        <Button type='primary' onClick={this.showModal}>
-          Open Modal
-        </Button>
         <Modal
           width='100%'
           style={{

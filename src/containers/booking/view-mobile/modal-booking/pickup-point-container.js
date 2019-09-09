@@ -105,7 +105,9 @@ export default class PickupPointContainer extends React.Component {
             <Radio style={radioStyle} value={1}>
               <Select
                 onChange={value => this.hanldeOnChangeData('from', value)}
-                value={this.state.pickupPointVal === 1 && this.state.dataPoint.from ? this.state.dataPoint.from : ''}
+                value={
+                  this.state.pickupPointVal === 1 && this.state.dataPoint.from ? this.state.dataPoint.from : undefined
+                }
                 size='large'
                 placeholder='Chọn bến đón'
                 style={{ width: 250 }}
@@ -146,7 +148,7 @@ export default class PickupPointContainer extends React.Component {
             <Radio style={radioStyle} value={1}>
               <Select
                 onChange={value => this.hanldeOnChangeData('to', value)}
-                value={this.state.desPointVal === 1 && this.state.dataPoint.to ? this.state.dataPoint.to : ''}
+                value={this.state.desPointVal === 1 && this.state.dataPoint.to ? this.state.dataPoint.to : undefined}
                 size='large'
                 placeholder='Xuống ở bến'
                 style={{ width: 250 }}
