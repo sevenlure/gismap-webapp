@@ -77,7 +77,7 @@ export default class SelectDeparture extends React.Component {
             }}
             placeholder={this.props.placeholder}
             showSearch
-            style={{ width: '100%', fontSize: '1.25rem', top: -4 }}
+            style={{ width: '100%', fontSize: '1.25rem', top: -4, fontFamily: 'myFont-Light' }}
             size='large'
             onChange={this.props.onChange}
           >

@@ -3,8 +3,8 @@ import PropTypes from 'prop-types'
 import styled from 'styled-components'
 import { connect } from 'react-redux'
 import { addBookingNowSeat, removeBookingNowSeat } from 'src/redux/actions/BookingAction'
-import { get as _get } from 'lodash-es'
-
+import { get as _get, map as _map } from 'lodash-es'
+import { Modal } from 'antd'
 const I = styled.i`
   background: ${props => props.background}
   height: 28px;
@@ -68,8 +68,28 @@ export default class IconSeat extends React.Component {
 
   handleOnClick = () => {
     const { name, row, col, addBookingNowSeat, price, BookingNowSeat, removeBookingNowSeat } = this.props
-
+    let totalSeat = 0
+    _map(BookingNowSeat, item => {
+      if (item != null) totalSeat++
+    })
+    if (totalSeat >= 4) {
+      return Modal.error({
+        title: <h3 style={{ textAlign: 'center' }}>Thông báo</h3>,
+        width: 'fit-content',
+        centered: true,
+        style: {
+          padding: 24
+        },
+        autoFocusButton: 'cancel',
+        icon: <span />,
+        content: <span>Chỉ đc phép mua tối đa 4 vé / lượt</span>,
+        okType: 'default',
+        okText: 'Đã hiểu',
+        maskClosable: true
+      })
+    }
     const item = BookingNowSeat[`${row}-${col}`]
+
     if (!item) {
       // MARK  chưa book => add seat vào Booking
       addBookingNowSeat({
