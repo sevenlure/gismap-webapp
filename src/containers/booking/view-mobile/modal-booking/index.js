@@ -78,6 +78,11 @@ export default class ModalBooking extends React.Component {
     if (getRef) getRef(this)
   }
 
+  resetData = () => {
+    console.log('modal reset')
+    if (this.PickupPointContainer && this.PickupPointContainer.resetData) this.PickupPointContainer.resetData()
+  }
+
   showModal = () => {
     this.setState({
       isOpenModal: true
@@ -180,7 +185,10 @@ export default class ModalBooking extends React.Component {
             <div className='content-booking'>
               <div className='pickup-point-container'>
                 {(!this.state.isErrorBookingNowPoint || this.state.isErrorBookingNowPoint) && (
-                  <PickupPointContainer isErrorBookingNowPoint={this.state.isErrorBookingNowPoint} />
+                  <PickupPointContainer
+                    getRef={ref => (this.PickupPointContainer = ref)}
+                    isErrorBookingNowPoint={this.state.isErrorBookingNowPoint}
+                  />
                 )}
               </div>
               <div className='choose-seat-container'>
@@ -196,7 +204,7 @@ export default class ModalBooking extends React.Component {
                 </div>
               </div>
               <div className='footer-booking-right'>
-                <div>
+                <div style={{ width: 120, textAlign: 'right' }}>
                   <span>Tổng tiền</span>
                   <div>
                     <h3 style={{ color: colored }}>{tongTien}</h3>
@@ -204,9 +212,16 @@ export default class ModalBooking extends React.Component {
                 </div>
               </div>
             </div>
-            <Button onClick={this.hanldeConfirmTicket} disabled={!isConfirmOrderTicket} type='primary'>
-              Xác nhận đặt vé
-            </Button>
+            <div style={{ textAlign: 'center' }}>
+              <Button
+                onClick={this.hanldeConfirmTicket}
+                disabled={!isConfirmOrderTicket}
+                type='primary'
+                style={{ height: 50, width: 214 }}
+              >
+                Xác nhận đặt vé
+              </Button>
+            </div>
           </BodyWrapper>
         </Modal>
       </div>

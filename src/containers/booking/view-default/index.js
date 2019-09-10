@@ -42,8 +42,8 @@ const BookingContentDefaultWrapper = styled.div`
   }
 `
 
-const mapStateToProps = () => ({
-  // isAuthenticated: _get(state, 'AuthStore.isAuthenticated'),
+const mapStateToProps = state => ({
+  BookingNow: _get(state, 'BookingStore.BookingNow', {})
   // userInfo: _get(state, 'GeneralStore.userInfo', '')
 })
 
@@ -59,9 +59,10 @@ const mapDispatchToProps = {
 )
 class BookingContentLaptop extends React.Component {
   static propTypes = {
+    BookingNow: PropTypes.object,
+    clearBookingNowSeat: PropTypes.func.isRequired,
     dataSearch: PropTypes.any,
-    setBookingNow: PropTypes.func.isRequired,
-    clearBookingNowSeat: PropTypes.func.isRequired
+    setBookingNow: PropTypes.func.isRequired
   }
 
   render() {
@@ -162,7 +163,11 @@ class BookingContentLaptop extends React.Component {
                             type='primary'
                             onClick={() => {
                               try {
-                                this.props.clearBookingNowSeat()
+                                console.log('this.props.BookingNow',this.props.BookingNow)
+                                if (this.props.BookingNow && this.props.BookingNow.id !== item.id) {
+                                  this.props.clearBookingNowSeat()
+                                  this.ModalBooking.resetData()
+                                }
                                 this.props.setBookingNow(item)
                                 this.ModalBooking.showModal()
                               } catch (e) {

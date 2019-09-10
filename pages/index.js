@@ -5,7 +5,7 @@ import styled from 'styled-components'
 import { connect } from 'react-redux'
 import { Row, Col, Button, Card, Form } from 'antd'
 import { getFormatNumber } from 'src/config/format'
-import { getListTourSearch, setIsLoadedListTourSearch } from 'src/redux/actions/BookingAction'
+import { getListTourSearch, setIsLoadedListTourSearch, changeFilter } from 'src/redux/actions/BookingAction'
 import DefaultLayout from 'src/layout/default'
 import windowSize from 'react-window-size'
 import moment from 'moment'
@@ -113,11 +113,13 @@ const mapStateToProps = state => ({
   listTourPopular: _get(state, 'GeneralStore.listTourPopular', []),
   listDeparture: _get(state, 'GeneralStore.danhMuc.listDeparture', []),
   listTourSearch: _get(state, 'BookingStore.listTourSearch', []),
-  isLoadedlistTourSearch: _get(state, 'BookingStore.isLoadedlistTourSearch', null)
+  isLoadedlistTourSearch: _get(state, 'BookingStore.isLoadedlistTourSearch', null),
+  filter: _get(state, 'BookingStore.filter', {})
 })
 const mapDispatchToProps = {
   getListTourSearch,
-  setIsLoadedListTourSearch
+  setIsLoadedListTourSearch,
+  changeFilter
 }
 
 @connect(
@@ -127,14 +129,16 @@ const mapDispatchToProps = {
 @windowSize
 class Index extends React.Component {
   static propTypes = {
-    windowWidth: PropTypes.number,
-    listTourPopular: PropTypes.array,
-    listDeparture: PropTypes.array,
+    changeFilter: PropTypes.func.isRequired,
+    filter: PropTypes.object,
+    form: PropTypes.any,
     getListTourSearch: PropTypes.func,
-    listTourSearch: PropTypes.array,
     isLoadedlistTourSearch: PropTypes.bool,
+    listDeparture: PropTypes.array,
+    listTourPopular: PropTypes.array,
+    listTourSearch: PropTypes.array,
     setIsLoadedListTourSearch: PropTypes.func,
-    form: PropTypes.any
+    windowWidth: PropTypes.number
   }
 
   state = {
@@ -225,6 +229,10 @@ class Index extends React.Component {
                         <Row gutter={8}>
                           <Col xs={24} sm={12} lg={12} style={{ marginBottom: 8 }}>
                             {getFieldDecorator('from', {
+                              initialValue: this.props.filter.from,
+                              onChange: value => {
+                                this.props.changeFilter({ from: value })
+                              },
                               rules: [{ required: true, message: 'Vui lòng chọn điểm khởi hành!' }]
                             })(
                               <SelectDeparture
@@ -236,6 +244,10 @@ class Index extends React.Component {
                           </Col>
                           <Col xs={24} sm={12} lg={12} style={{ marginBottom: 8 }}>
                             {getFieldDecorator('to', {
+                              initialValue: this.props.filter.to,
+                              onChange: value => {
+                                this.props.changeFilter({ to: value })
+                              },
                               rules: [{ required: true, message: 'Vui lòng chọn điểm muốn đến!' }]
                             })(
                               <SelectDeparture

@@ -81,6 +81,7 @@ export default class SelectDeparture extends React.Component {
               const inputXuly = replaceVietnameseStr(input.toLowerCase())
               return nameItem.toLowerCase().indexOf(inputXuly) >= 0
             }}
+            value={this.props.value}
             placeholder={this.props.placeholder}
             showSearch
             style={{ width: '100%', fontFamily: 'myFont-Light' }}

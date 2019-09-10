@@ -10,13 +10,15 @@ import {
   CLEAR_BOOKING_NOW_POINT,
   SET_BOOKING_NOW_POINT,
   SET_BOOKING_NOW_INFO_CUSTOMER,
-  CLEAR_BOOKING_NOW_INFO_CUSTOMER
+  CLEAR_BOOKING_NOW_INFO_CUSTOMER,
+  CHANGE_FILLTER
 } from '../actions/BookingAction'
 
 import storage from 'redux-persist/lib/storage'
 import { persistReducer } from 'redux-persist'
 
 const InitialState = {
+  filter: {},
   listTourSearch: [],
   isLoadedlistTourSearch: true,
   BookingNow: null,
@@ -95,6 +97,13 @@ const bookingReducer = (state = InitialState, action) => {
         }
       })
     }
+    case CHANGE_FILLTER: {
+      const valueChanged = action.payload
+      console.log('vo day')
+      return update(state, {
+        filter: { $merge: valueChanged }
+      })
+    }
     default:
       return state
   }
@@ -110,7 +119,8 @@ const bookingPersistConfig = {
     'isLoadedBookingNow',
     'BookingNowSeat',
     'BookingNowPoint',
-    'BookingNowInfoCustomer'
+    'BookingNowInfoCustomer',
+    'filter'
   ]
 }
 

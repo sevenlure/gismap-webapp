@@ -19,6 +19,7 @@ const Wrapper = styled.div`
     font-family: myFont-Bold;
     font-size: 1.125rem;
     margin-bottom: 16px;
+    color: #4c4c4c;
   }
 
   .pickup-container {
@@ -44,6 +45,24 @@ const Wrapper = styled.div`
       opacity: 0;
     }
   }
+
+  .ant-select-selection__placeholder,
+  .ant-input[value=''],
+  .ant-input::placeholder {
+    color: #9ea7d0;
+  }
+  .ant-select-selection-selected-value,
+  .ant-input {
+    color: #4c4c4c;
+    height: 50px;
+  }
+
+  .ant-select-lg .ant-select-selection--single {
+    height: 50px;
+  }
+  .ant-select-lg .ant-select-selection__rendered {
+    line-height: 48px;
+  }
 `
 const radioStyle = {
   marginBottom: 16
@@ -68,13 +87,14 @@ const mapDispatchToProps = {
 @windowSize
 export default class PickupPointContainer extends React.Component {
   static propTypes = {
-    windowWidth: PropTypes.number,
-    busPickup: PropTypes.array,
-    busDes: PropTypes.array,
     BookingNowPoint: PropTypes.object,
-    setBookingNowPoint: PropTypes.func,
+    busDes: PropTypes.array,
+    busPickup: PropTypes.array,
     clearBookingNowPoint: PropTypes.func,
-    isErrorBookingNowPoint: PropTypes.bool
+    getRef: PropTypes.any,
+    isErrorBookingNowPoint: PropTypes.bool,
+    setBookingNowPoint: PropTypes.func,
+    windowWidth: PropTypes.number
   }
 
   static defaultProps = {
@@ -88,7 +108,24 @@ export default class PickupPointContainer extends React.Component {
     dataPoint: {
       from: null,
       to: null
-    }
+    },
+    pickupPointInput: null,
+    desPointInput: null
+  }
+
+  resetData = () => {
+    this.hanldeOnChangeData('from', null)
+    this.hanldeOnChangeData('to', null)
+    this.setState({
+      pickupPointVal: 1,
+      desPointVal: 1,
+      dataPoint: {
+        from: null,
+        to: null
+      },
+      pickupPointInput: null,
+      desPointInput: null
+    })
   }
 
   onChangePickupPoint = e => {
@@ -120,6 +157,7 @@ export default class PickupPointContainer extends React.Component {
   }
 
   componentDidMount = () => {
+    if (this.props.getRef) this.props.getRef(this)
     this.props.clearBookingNowPoint()
   }
   render() {
@@ -156,7 +194,9 @@ export default class PickupPointContainer extends React.Component {
                 onChange={e => {
                   const value = e.target.value
                   this.hanldeOnChangeData('from', value)
+                  this.setState({ pickupPointInput: value })
                 }}
+                value={this.state.pickupPointInput}
                 disabled={this.state.pickupPointVal === 2 ? false : true}
                 size='large'
                 placeholder='Vị trí cần đón...'
@@ -199,7 +239,9 @@ export default class PickupPointContainer extends React.Component {
                 onChange={e => {
                   const value = e.target.value
                   this.hanldeOnChangeData('to', value)
+                  this.setState({ desPointInput: value })
                 }}
+                value={this.state.desPointInput}
                 disabled={this.state.desPointVal === 2 ? false : true}
                 size='large'
                 placeholder='Xuống tận nhà...'

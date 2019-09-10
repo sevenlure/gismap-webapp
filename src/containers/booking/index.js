@@ -17,7 +17,7 @@ import { DATE_FORMAT } from 'src/config/format'
 import DateStepPicker from 'src/components/elements/date-step-picker'
 
 import { connect } from 'react-redux'
-import { getListTourSearch, setIsLoadedListTourSearch } from 'src/redux/actions/BookingAction'
+import { getListTourSearch, setIsLoadedListTourSearch, changeFilter } from 'src/redux/actions/BookingAction'
 
 import moment from 'moment'
 import SelectDepartureV2 from 'src/components/elements/select-departure-v2'
@@ -126,7 +126,7 @@ const mapStatetoProps = state => ({
   listTypeSeat: _get(state, 'GeneralStore.danhMuc.listTypeSeat', []),
   listTimeSlot: _get(state, 'GeneralStore.danhMuc.listTimeSlot', [])
 })
-const mapDispatchToProps = { getListTourSearch, setIsLoadedListTourSearch }
+const mapDispatchToProps = { getListTourSearch, setIsLoadedListTourSearch, changeFilter }
 
 @connect(
   mapStatetoProps,
@@ -135,15 +135,16 @@ const mapDispatchToProps = { getListTourSearch, setIsLoadedListTourSearch }
 @windowSize
 class Booking extends React.Component {
   static propTypes = {
-    querySearch: PropTypes.object,
-    listDeparture: PropTypes.array,
-    windowWidth: PropTypes.number,
-    listTourSearch: PropTypes.array,
+    changeFilter: PropTypes.func.isRequired,
+    getListTourSearch: PropTypes.func,
     isLoadedlistTourSearch: PropTypes.bool,
-    listTypeSeat: PropTypes.any,
+    listDeparture: PropTypes.array,
     listTimeSlot: PropTypes.any,
+    listTourSearch: PropTypes.array,
+    listTypeSeat: PropTypes.any,
+    querySearch: PropTypes.object,
     setIsLoadedListTourSearch: PropTypes.func,
-    getListTourSearch: PropTypes.func
+    windowWidth: PropTypes.number
   }
   constructor(props) {
     super(props)
@@ -243,7 +244,11 @@ class Booking extends React.Component {
                     {/* <span style={{ fontSize: '1.25rem' }}>{this.state.fromName}</span> */}
                     <SelectDepartureV2
                       placeholder='Điểm khởi hành'
-                      onChange={value => this.onChangeFilter('from', value)}
+                      // onChange={value => this.onChangeFilter('from', value)}
+                      onChange={value => {
+                        this.props.changeFilter({ from: value })
+                        this.onChangeFilter('from', value)
+                      }}
                       defaultValue={this.state.datafilter.from}
                       keyDisable={this.state.datafilter.to}
                     />
@@ -254,7 +259,11 @@ class Booking extends React.Component {
                   {/* <span style={{ fontSize: '1.25rem' }}>{this.state.toName}</span> */}
                   <SelectDepartureV2
                     placeholder='Điểm muốn đến'
-                    onChange={value => this.onChangeFilter('to', value)}
+                    // onChange={value => this.onChangeFilter('to', value)}
+                    onChange={value => {
+                      this.props.changeFilter({ to: value })
+                      this.onChangeFilter('to', value)
+                    }}
                     defaultValue={this.state.datafilter.to}
                     keyDisable={this.state.datafilter.from}
                   />

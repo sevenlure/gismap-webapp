@@ -63,19 +63,19 @@ const TitleCard = () => {
       <Col span={6} style={{ display: 'flex', alignItems: 'center' }}>
         {/* <Icon style={{ fontSize: 18 }} component={SEAT_ICON_FROM_STATUS[3]} /> */}
         <IconSeat zoom={0.8} matrix={{ status: 3 }} />
-        <span style={{ marginLeft: 4, fontSize: '0.75rem' }}> Tài xế</span>
+        <span style={{ marginLeft: 4, fontSize: '1rem' }}> Tài xế</span>
       </Col>
       <Col span={6} style={{ display: 'flex', alignItems: 'center' }}>
         <IconSeat zoom={0.8} matrix={{ status: 2 }} />
-        <span style={{ marginLeft: 4, fontSize: '0.75rem' }}> Đã đặt</span>
+        <span style={{ marginLeft: 4, fontSize: '1rem' }}> Đã đặt</span>
       </Col>
       <Col span={6} style={{ display: 'flex', alignItems: 'center' }}>
         <IconSeat zoom={0.8} matrix={{ status: 1 }} />
-        <span style={{ marginLeft: 4, fontSize: '0.75rem' }}> Đang chọn</span>
+        <span style={{ marginLeft: 4, fontSize: '1rem' }}> Đang chọn</span>
       </Col>
       <Col span={6} style={{ display: 'flex', alignItems: 'center' }}>
         <IconSeat zoom={0.8} matrix={{ status: 0 }} />
-        <span style={{ marginLeft: 4, fontSize: '0.75rem' }}> Còn trống</span>
+        <span style={{ marginLeft: 4, fontSize: '1rem' }}> Còn trống</span>
       </Col>
     </Row>
   )
@@ -113,7 +113,13 @@ export default class ChooseSeatContainer extends React.Component {
     return (
       <Wrapper>
         <div className='title'>Chọn ghế xe</div>
-        <Card bodyStyle={{ padding: '16px 24px 16px 24px' }} title={<TitleCard />}>
+        <Card
+          bodyStyle={{
+            // padding: '16px 24px 16px 24px'
+            padding: '16px 10%'
+          }}
+          title={<TitleCard />}
+        >
           <div style={{ ...styleHave1Floor }} className='seat'>
             <div className='seat-matrix'>
               {isHave2Floor && <strong>Tầng dưới</strong>}

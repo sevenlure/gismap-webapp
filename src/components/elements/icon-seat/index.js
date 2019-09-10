@@ -7,17 +7,21 @@ import { get as _get, map as _map } from 'lodash-es'
 import { Modal } from 'antd'
 const I = styled.i`
   background: ${props => props.background}
-  height: 28px;
-  width: 28px;
+  // height: 28px;
+  // width: 28px;
+  height: 32px;
+  width: 32px;
+  background-size: 32px 32px;
   font-size: 2px;
+
 `
 
 const NameSeat = styled.span`
   position: absolute;
-  transform: translate(-50%, 100%);
+  transform: translate(-50%, 60%);
   font-family: myFont-Bold;
   color: #fff;
-  font-size: 8px;
+  font-size: 12px;
 `
 
 const TYPE = {

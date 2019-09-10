@@ -33,11 +33,10 @@ const BookingContentDefaultWrapper = styled.div`
   }
 `
 
-const mapStateToProps = () => ({
-  // isAuthenticated: _get(state, 'AuthStore.isAuthenticated'),
+const mapStateToProps = state => ({
+  BookingNow: _get(state, 'BookingStore.BookingNow', {})
   // userInfo: _get(state, 'GeneralStore.userInfo', '')
 })
-
 const mapDispatchToProps = {
   setBookingNow,
   clearBookingNowSeat
@@ -50,9 +49,10 @@ const mapDispatchToProps = {
 )
 class BookingContentLaptop extends React.Component {
   static propTypes = {
+    BookingNow: PropTypes.object,
+    clearBookingNowSeat: PropTypes.func.isRequired,
     dataSearch: PropTypes.any,
-    setBookingNow: PropTypes.func.isRequired,
-    clearBookingNowSeat: PropTypes.func.isRequired
+    setBookingNow: PropTypes.func.isRequired
   }
 
   render() {
@@ -118,13 +118,13 @@ class BookingContentLaptop extends React.Component {
                           <Button
                             type='primary'
                             onClick={() => {
-                              try {
+                              console.log('this.props.BookingNow', this.props.BookingNow)
+                              if (this.props.BookingNow && this.props.BookingNow.id !== item.id) {
                                 this.props.clearBookingNowSeat()
-                                this.props.setBookingNow(item)
-                                this.ModalBooking.showModal()
-                              } catch (e) {
-                                console.log('loi this.ModalBooking.showModal()', e)
+                                this.ModalBooking.resetData()
                               }
+                              this.props.setBookingNow(item)
+                              this.ModalBooking.showModal()
                             }}
                           >
                             Đặt vé

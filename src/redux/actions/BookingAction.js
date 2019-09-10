@@ -12,6 +12,7 @@ export const CLEAR_BOOKING_NOW_POINT = 'BOOKING/CLEAR_BOOKING_NOW_POINT'
 export const SET_BOOKING_NOW_POINT = 'BOOKING/ADD_BOOKING_NOW_POINT'
 export const CLEAR_BOOKING_NOW_INFO_CUSTOMER = 'BOOKING/CLEAR_BOOKING_NOW_INFO_CUSTOMER'
 export const SET_BOOKING_NOW_INFO_CUSTOMER = 'BOOKING/SET_BOOKING_NOW_INFO_CUSTOMER'
+export const CHANGE_FILLTER = 'BOOKING/CHANGE_FILLTER'
 
 export function getListTourSearch(query) {
   return async dispatch => {
@@ -77,5 +78,11 @@ export function setBookingNowInfoCustomer(data) {
 export function clearBookingNowInfoCustomer() {
   return async dispatch => {
     dispatch({ type: CLEAR_BOOKING_NOW_INFO_CUSTOMER })
+  }
+}
+
+export function changeFilter(valueChanged) {
+  return async dispatch => {
+    dispatch({ type: CHANGE_FILLTER, payload: valueChanged })
   }
 }

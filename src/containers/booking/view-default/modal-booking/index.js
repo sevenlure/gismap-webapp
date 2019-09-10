@@ -27,6 +27,7 @@ const BodyWrapper = styled.div`
 
     .pickup-point-container {
       width: ${props => (props.windowWidth < 900 ? '100%;' : '250px;')};
+      margin-right: 5%;
     }
 
     .choose-seat-container {
@@ -43,7 +44,7 @@ const BodyWrapper = styled.div`
     }
     .footer-booking-right {
       display: flex;
-      justify-content: space-between;
+      justify-content: flex-end;
     }
   }
 `
@@ -79,6 +80,10 @@ export default class ModalBooking extends React.Component {
   componentDidMount() {
     const { getRef } = this.props
     if (getRef) getRef(this)
+  }
+
+  resetData = () => {
+    if (this.PickupPointContainer && this.PickupPointContainer.resetData) this.PickupPointContainer.resetData()
   }
 
   showModal = () => {
@@ -155,8 +160,11 @@ export default class ModalBooking extends React.Component {
         <Modal
           width='100%'
           style={{
-            padding: this.props.windowWidth > 900 ? 24 : 24,
-            maxWidth: 780
+            padding: this.props.windowWidth > 900 ? '30px 40px' : '16px 24px',
+            maxWidth: 992
+          }}
+          bodyStyle={{
+            padding: '30px 5%'
           }}
           visible={this.state.isOpenModal}
           onOk={this.closeModal}
@@ -184,7 +192,10 @@ export default class ModalBooking extends React.Component {
             <div className='content-booking'>
               <div className='pickup-point-container'>
                 {(!this.state.isErrorBookingNowPoint || this.state.isErrorBookingNowPoint) && (
-                  <PickupPointContainer isErrorBookingNowPoint={this.state.isErrorBookingNowPoint} />
+                  <PickupPointContainer
+                    getRef={ref => (this.PickupPointContainer = ref)}
+                    isErrorBookingNowPoint={this.state.isErrorBookingNowPoint}
+                  />
                 )}
               </div>
               <div className='choose-seat-container'>
@@ -200,7 +211,7 @@ export default class ModalBooking extends React.Component {
                 </div>
               </div>
               <div className='footer-booking-right'>
-                <div>
+                <div style={{ width: 120, textAlign: 'right' }}>
                   <span>Tổng tiền</span>
                   <div>
                     <h3 style={{ color: colored }}>{tongTien}</h3>
@@ -209,7 +220,7 @@ export default class ModalBooking extends React.Component {
                 <Button
                   onClick={this.hanldeConfirmTicket}
                   disabled={!isConfirmOrderTicket}
-                  style={{ marginLeft: 24 }}
+                  style={{ marginLeft: 30, height: 50, width: 214 }}
                   type='primary'
                 >
                   Xác nhận đặt vé
