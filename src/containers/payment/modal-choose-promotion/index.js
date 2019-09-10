@@ -56,7 +56,7 @@ export default class ModalChoosePromotion extends React.Component {
         <BodyWrapper windowWidth={this.props.windowWidth}>
           <div className='modal--title'>
             <div>
-              <h4>Khuyến mãi</h4>
+              <h4 style={{ fontSize: '1.5rem' }}>Khuyến mãi</h4>
             </div>
             <Button style={{ width: 88 }} onClick={this.closeModal} size='large' type='default'>
               Đóng

@@ -1,8 +1,9 @@
 import React from 'react'
-// import PropTypes from 'prop-types'
+import PropTypes from 'prop-types'
 import styled from 'styled-components'
 import { Button, Divider } from 'antd'
 import posed from 'react-pose'
+import windowSize from 'react-window-size'
 
 const DetailContainer = posed.div({
   enter: { height: 'auto', opacity: 1, marginBottom: 12 },
@@ -36,10 +37,10 @@ const Wraper = styled.div`
   }
 
   .body {
-    height: 130px;
+    height: ${props => (props.isMobileView ? '160px' : '130px')};
     display: flex;
     justify-content: space-between;
-    padding: 20px 20px 20px 40px;
+    padding: ${props => (props.isMobileView ? '20px 20px 20px 20px' : '20px 20px 20px 40px')};
 
     .body-left {
       .body-left-discount {
@@ -53,10 +54,24 @@ const Wraper = styled.div`
       }
     }
     .body-right {
+      text-align: ${props => (props.isMobileView ? 'right' : '')};
+      button {
+        width: 90px;
+        margin-right: ${props => (props.isMobileView ? '' : '16px')};
+        margin-bottom: 16px;
+        border: none;
+        span {
+          font-family: myFont;
+        }
+        &:not(.ant-btn-primary) {
+          border: solid 1px #9ea7d0;
+          color: #9ea7d0;
+        }
+      }
     }
   }
   .footer {
-    padding-left: 40px;
+    padding-left: ${props => (props.isMobileView ? '20px' : '40px')};
     .footer-title {
       font-size: 18px;
       font-family: myFont-Bold;
@@ -69,15 +84,21 @@ const Wraper = styled.div`
   }
 `
 
+@windowSize
 export default class ItemPromotion extends React.Component {
+  propTypes = {
+    windowWidth: PropTypes.number
+  }
+
   state = {
     isDetail: false
   }
   render() {
+    const isMobileView = this.props.windowWidth < 600 ? true : false
     const { isDetail } = this.state
     const labelButton = isDetail ? 'Rút gọn' : 'Chi tiết'
     return (
-      <Wraper>
+      <Wraper isMobileView={isMobileView}>
         <div className='body'>
           <div className='body-left'>
             <div>
@@ -90,7 +111,6 @@ export default class ItemPromotion extends React.Component {
           </div>
           <div className='body-right'>
             <Button
-              style={{ marginRight: 16 }}
               onClick={() => {
                 this.setState({ isDetail: !isDetail })
               }}
