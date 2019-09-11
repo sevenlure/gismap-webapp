@@ -266,7 +266,7 @@ class InfoCustomer extends React.Component {
                     {timefrom} <Icon component={icons.arrowNext} /> {timeTo}
                   </h4>
                   <strong>
-                    {`${_get(BookingNow, 'fromDeparture.name', '')} - ${_get(BookingNow, 'toDeparture.name', '')}`}
+                    {`${_get(BookingNow, 'fromDeparture.name', '')} -> ${_get(BookingNow, 'toDeparture.name', '')}`}
                   </strong>
                   <br />
                   <span>{typeCar}</span>
@@ -287,7 +287,7 @@ class InfoCustomer extends React.Component {
                   <br />
                   <span>{pointFrom}</span>
                   <Clearfix height={16} />
-                  <span style={{ color: '#9ea7d0' }}>Điểm trả</span>
+                  <span style={{ color: '#9ea7d0' }}>Điểm xuống trả</span>
                   <br />
                   <span>{pointTo}</span>
                 </div>

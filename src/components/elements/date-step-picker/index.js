@@ -11,7 +11,9 @@ moment.updateLocale('en-au', {
   monthsShort: 'Tháng 1_Tháng 2_Tháng 3_Tháng 4_Tháng 5_Tháng 6_Tháng 7_Tháng 8_Tháng 9_Tháng 10_Tháng 11_Tháng 12'.split(
     '_'
   ),
-  weekdays: 'Chủ nhật_Thứ 2_Thứ 3_Thứ 4_Thứ 5_Thứ 6_Thứ 7'.split('_')
+  weekdays: 'Chủ nhật_Thứ 2_Thứ 3_Thứ 4_Thứ 5_Thứ 6_Thứ 7'.split('_'),
+  weekdaysShort: 'CN_T2_T3_T4_T5_T6_T7'.split('_'),
+  weekdaysMin: 'CN_T2_T3_T4_T5_T6_T7'.split('_')
 })
 
 const Wrapper = styled.div`

@@ -22,16 +22,16 @@ const registerMess = authMess.register
 const InfoCustomerWrapper = styled.div`
   display: flex;
   justify-content: center;
-  ${props => (props.windowWidth >= 992 ? 'margin: 45px;' : '')}
   ${props => (props.windowWidth >= 576 ? 'margin: 20px;' : '')}
+  ${props => (props.windowWidth >= 992 ? 'margin: 45px;' : '')}
   ${props => (props.windowWidth < 576 ? 'margin: 8px;' : '')}
 
   .page--contant {
     max-width: 968px;
     width: 100%;
     background: white;
+    ${props => (props.windowWidth >= 576 ? 'padding: 30px 50px;' : '')}
     ${props => (props.windowWidth >= 992 ? 'padding: 50px 70px;' : '')}
-    ${props => (props.windowWidth >= 576 ? 'padding: 20px;' : '')}
     ${props => (props.windowWidth < 576 ? 'padding: 8px;' : '')}
 
     .page--contant--title h3 {

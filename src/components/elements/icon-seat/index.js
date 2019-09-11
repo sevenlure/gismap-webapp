@@ -93,7 +93,7 @@ export default class IconSeat extends React.Component {
           },
           autoFocusButton: 'cancel',
           icon: <span />,
-          content: <span>Chỉ đc phép mua tối đa 4 vé / lượt</span>,
+          content: <span>Chỉ được phép mua tối đa 4 vé / lượt</span>,
           okType: 'default',
           okText: 'Đã hiểu',
           maskClosable: true

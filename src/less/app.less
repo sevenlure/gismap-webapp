@@ -314,7 +314,7 @@ strong {
 .custom-calendar {
   font-family: myFont-Light;
   font-size: 1rem;
-
+  z-index: 9999;
   .ant-calendar-month-panel-month {
     font-family: myFont-Light;
     font-size: 1rem;
@@ -324,13 +324,44 @@ strong {
   }
 
   width: 100%;
-  max-width: 425px;
+  max-width: 355px;
   .ant-calendar {
     width: 100%;
-    max-width: 425px;
+    max-width: 355px;
   }
   .ant-calendar-footer {
     border-top: none;
+  }
+  .ant-calendar-date {
+    font-family: myFont-Light;
+  }
+  .ant-calendar-my-select {
+    font-family: myFont-Medium;
+  }
+  .ant-calendar-date {
+    width: 38px;
+    height: 38px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .ant-calendar-selected-date .ant-calendar-date {
+    border-radius: 10px;
+    font-weight: 500;
+    font-family: myFont-Medium;
+    background: #3880ff;
+    color: #fff;
+  }
+  &::selection {
+    border-radius: 10px;
+  }
+  .ant-calendar-disabled-cell .ant-calendar-date,
+  .ant-calendar-next-month-btn-day .ant-calendar-date {
+    color: #9ea7d0;
+    font-weight: 300;
+  }
+  .ant-calendar-disabled-cell.ant-calendar-selected-day .ant-calendar-date::before {
+    content: inherit;
   }
 }
 
