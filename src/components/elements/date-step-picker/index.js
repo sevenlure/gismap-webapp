@@ -52,6 +52,14 @@ export default class DateStepPicker extends React.Component {
     return (
       <Wrapper>
         <DatePicker
+          id='datePickerInput'
+          align={{
+            overflow: { adjustX: false, adjustY: false }
+            // targetOffset: [0, 0],
+            // offset: [0, 0]
+          }}
+          popupStyle={{ zIndex: 22 }}
+          getCalendarContainer={() => document.getElementById('datePickerInput')}
           allowClear={false}
           size='large'
           locale={{ monthFormat: 'YYYY' }}

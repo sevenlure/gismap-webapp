@@ -35,7 +35,7 @@ const PaymentWrapper = styled.div`
         .page--contant--promotion-modal {
           position: absolute;
           right: 5px;
-          top: 4px;
+          top: 8px;
         }
       }
     }
@@ -43,7 +43,10 @@ const PaymentWrapper = styled.div`
 
   .page--contant--payments--item {
     .page--contant--payments--item__description {
-      padding-left: 70px;
+      padding-left: 88px;
+    }
+    .ant-radio {
+      margin-right: 12px;
     }
   }
   .page--contant--rules {
@@ -194,14 +197,19 @@ class InfoCustomer extends React.Component {
     return (
       <PaymentWrapper>
         <Row gutter={8}>
-          <Col xs={24} sm={14} lg={16} style={{ marginBottom: 24 }}>
+          <Col xs={24} sm={14} lg={16} style={{ marginBottom: 24, paddingRight: 20 }}>
             <div className='page--contant'>
               <div className='page--contant--promotion'>
                 <div className='page--contant--promotion--title'>
                   <h4>Khuyến mãi</h4>
                 </div>
                 <div className='page--contant--promotion-input'>
-                  <Input prefix={<Icon component={icons.sale} />} placeholder='Nhập mã khuyễn mãi' size='large' />
+                  <Input
+                    style={{ height: 50, fontSize: '1rem' }}
+                    prefix={<Icon component={icons.sale} />}
+                    placeholder='Nhập mã khuyễn mãi'
+                    size='large'
+                  />
                   <div className='page--contant--promotion-modal'>
                     <Button
                       size='default'
@@ -210,7 +218,7 @@ class InfoCustomer extends React.Component {
                         this.ModalChoosePromotion.showModal()
                       }}
                     >
-                      Chọn mã
+                      <strong>Chọn mã</strong>
                     </Button>
                   </div>
                 </div>
@@ -220,7 +228,7 @@ class InfoCustomer extends React.Component {
                 <div className='page--contant--payment--title'>
                   <h4>Phương thức thanh toán</h4>
                 </div>
-                <div className='page--contant--payments'>
+                <div className='page--contant--payments' style={{ marginTop: 16 }}>
                   <Radio.Group
                     style={{ width: '100%' }}
                     //   onChange={this.onChangeDesPoint} value={this.state.desPointVal}
@@ -231,14 +239,14 @@ class InfoCustomer extends React.Component {
                           <div key={item.id} className='page--contant--payments--item'>
                             <div style={{ marginBottom: '8px' }}>
                               <Radio value={item.id}>
-                                <img src={item.url} width={26} height={26} />
+                                <img src={item.url} width={32} height={32} />
                                 <span style={{ paddingLeft: 12 }}>{item.name}</span>
                               </Radio>
                               <div className='page--contant--payments--item__description'>
                                 <span style={{ color: '#9ea7d0' }}>{item.description}</span>
                               </div>
                             </div>
-                            <Divider style={{ margin: '10px 0px' }} />
+                            <Divider style={{ margin: '12px 0px 20px' }} />
                           </div>
                         )
                       })}

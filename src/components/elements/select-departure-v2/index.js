@@ -67,6 +67,9 @@ export default class SelectDeparture extends React.Component {
       <SelectDepartureWrapper windowWidth={this.props.windowWidth}>
         <Spin spinning={this.state.isloading}>
           <Select
+            dropdownAlign={{
+              overflow: { adjustX: false, adjustY: false }
+            }}
             defaultValue={this.props.defaultValue}
             className='custom-select-v2'
             showArrow={false}
