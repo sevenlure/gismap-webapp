@@ -42,6 +42,7 @@ export default class ModalChoosePromotion extends React.Component {
   render() {
     return (
       <Modal
+        centered
         closeIcon={<span />}
         closable={false}
         footer={null}

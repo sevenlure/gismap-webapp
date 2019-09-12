@@ -163,7 +163,7 @@ class BookingContentLaptop extends React.Component {
                             type='primary'
                             onClick={() => {
                               try {
-                                console.log('this.props.BookingNow',this.props.BookingNow)
+                                console.log('this.props.BookingNow', this.props.BookingNow)
                                 if (this.props.BookingNow && this.props.BookingNow.id !== item.id) {
                                   this.props.clearBookingNowSeat()
                                   this.ModalBooking.resetData()

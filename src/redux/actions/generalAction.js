@@ -6,6 +6,7 @@ import categoryApi from 'src/api/categoryApi'
 export const GET_GENERAL_LIST_DEPARTURE = 'GENERAL/GET_GENERAL_LIST_DEPARTURE'
 export const GET_GENERAL_LIST_TYPE_SEAT = 'GENERAL/GET_GENERAL_LIST_TYPE_SEAT'
 export const GET_GENERAL_LIST_TIME_SLOT = 'GENERAL/GET_GENERAL_LIST_TIME_SLOT'
+export const GET_GENERAL_LIST_PROMOTION = 'GENERAL/GET_GENERAL_LIST_PROMOTION'
 
 export const IS_LOADED_GENERAL_DANHMUC = 'GENERAL/IS_LOADED_GENERAL_DANHMUC'
 export function getListDeparture() {
@@ -31,7 +32,6 @@ export function getListTypeSeat() {
     }
   }
 }
-
 export function getListTimeSlot() {
   return async dispatch => {
     let res = await categoryApi.getListTimeSlot({})
@@ -44,6 +44,14 @@ export function getListTimeSlot() {
         res.data
       )
       dispatch({ type: GET_GENERAL_LIST_TIME_SLOT, payload: res.data })
+    }
+  }
+}
+export function getListPromotion() {
+  return async dispatch => {
+    let res = await categoryApi.getListPromotionAll({})
+    if (res.status) {
+      dispatch({ type: GET_GENERAL_LIST_PROMOTION, payload: res.data })
     }
   }
 }
