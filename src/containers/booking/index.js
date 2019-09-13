@@ -22,6 +22,7 @@ import { getListTourSearch, setIsLoadedListTourSearch, changeFilter } from 'src/
 import moment from 'moment'
 import SelectDepartureV2 from 'src/components/elements/select-departure-v2'
 import SelectCustom from 'src/components/elements/select-order'
+import posed from 'react-pose'
 
 const BookingContainer = styled.div`
   flex: 1;
@@ -29,11 +30,8 @@ const BookingContainer = styled.div`
 
   .left-booking {
     background-color: white;
-    width: ${props => (props.isVisibleFilter ? '400px;' : '375px;')}
+    width: ${props => (props.isVisibleFilter ? '400px' : '375px')};
     box-shadow: 1px 0 0 0 #e6e6e6;
-    // background-color: #fff;
-    // max-height: calc(100vh - 70px - 30px);
-    // overflow-y: auto;
     .ant-btn-round {
       height: 44px;
       font-family: myFont-Light;
@@ -119,6 +117,21 @@ const BookingContainer = styled.div`
   }
 `
 
+const LeftP = posed.div({
+  enter: { x: 0, opacity: 1, transition: { duration: 500 }, staggerChildren: 300 },
+  exit: { x: -200, opacity: 0 }
+})
+
+const LeftItemP = posed.div({
+  enter: { x: 0, opacity: 1 },
+  exit: { x: 50, opacity: 0 }
+})
+
+const RightP = posed.div({
+  enter: { x: 0, opacity: 1, transition: { duration: 500 }, staggerChildren: 300 },
+  exit: { x: 1000, opacity: 0 }
+})
+
 const mapStatetoProps = state => ({
   listTourSearch: _get(state, 'BookingStore.listTourSearch', []),
   listDeparture: _get(state, 'GeneralStore.danhMuc.listDeparture', []),
@@ -156,11 +169,13 @@ class Booking extends React.Component {
         timeSlotId: '',
         seatType: '',
         date: _get(this.props, 'querySearch.date', null) ? moment(this.props.querySearch.date) : moment()
-      }
+      },
+      anim: 'exit'
     }
   }
 
   componentDidMount = () => {
+    this.setState({ anim: 'enter' })
     // if (this.props.querySearch) {
     //   // console.log(this.props.listDeparture, 'componentDidMount')
     //   this.setState({
@@ -220,8 +235,8 @@ class Booking extends React.Component {
   LeftBooking = ({ isVisibleDrawer, zIndex }) => {
     return (
       <div className='left-booking' style={{ zIndex: zIndex }}>
-        <div className='left-booking--content'>
-          <div className='left-booking--content--trip'>
+        <LeftP pose={this.state.anim} className='left-booking--content'>
+          <LeftItemP className='left-booking--content--trip'>
             <div className='util-space-between'>
               <h3 className='left-booking--content__title'>Tuyến đi</h3>
               {isVisibleDrawer && (
@@ -270,9 +285,9 @@ class Booking extends React.Component {
                 </Timeline.Item>
               </Timeline>
             </div>
-          </div>
+          </LeftItemP>
           <Clearfix height={45} />
-          <div className='left-booking--content--date--picker'>
+          <LeftItemP className='left-booking--content--date--picker'>
             <h3 className='left-booking--content__title'>Thời gian khởi hành</h3>
             <div>
               <DateStepPicker
@@ -280,9 +295,9 @@ class Booking extends React.Component {
                 defaultValue={this.state.datafilter.date}
               />
             </div>
-          </div>
+          </LeftItemP>
           <Clearfix height={45} />
-          <div className='left-booking--content--time-slot'>
+          <LeftItemP className='left-booking--content--time-slot'>
             <h3 className='left-booking--content__title'>Khung giờ</h3>
             <div>
               {_map(this.props.listTimeSlot, item => {
@@ -300,9 +315,9 @@ class Booking extends React.Component {
                 )
               })}
             </div>
-          </div>
+          </LeftItemP>
           <Clearfix height={45} />
-          <div className='left-booking--content--seat-type'>
+          <LeftItemP className='left-booking--content--seat-type'>
             <h3 className='left-booking--content__title'>Loại ghế</h3>
             <div>
               {_map(this.props.listTypeSeat, item => {
@@ -323,8 +338,8 @@ class Booking extends React.Component {
                 )
               })}
             </div>
-          </div>
-        </div>
+          </LeftItemP>
+        </LeftP>
       </div>
     )
   }
@@ -368,7 +383,7 @@ class Booking extends React.Component {
           </Drawer>
         </div>
 
-        <div className='right-booking'>
+        <RightP pose={this.state.anim} className='right-booking'>
           <div className='right-booking--content'>
             <div className='right-booking--content--header'>
               <Row gutter={8} style={{ flex: 1 }}>
@@ -410,7 +425,7 @@ class Booking extends React.Component {
               )}
             </div>
           </div>
-        </div>
+        </RightP>
       </BookingContainer>
     )
   }
