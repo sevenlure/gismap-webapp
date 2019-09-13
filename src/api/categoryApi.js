@@ -9,7 +9,6 @@ export function getListDepartureAll(query) {
   })
 }
 
-
 const SLUG_PROMOTION = '/promotion'
 export function getListPromotionAll(query) {
   return fetch.get(`${SLUG_PROMOTION}/getAll`, {
@@ -18,7 +17,6 @@ export function getListPromotionAll(query) {
     }
   })
 }
-
 
 const SLUG_OTHER = '/other'
 export function getLisTypeSeat(query) {
@@ -36,7 +34,6 @@ export function getListTimeSlot(query) {
     }
   })
 }
-
 
 export default {
   getListDepartureAll,

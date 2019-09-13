@@ -28,6 +28,8 @@ const slug = {
     base: '/result/register-success',
     success: '/result/success',
     error: '/result/error',
+    paymentSucces: '/result/payment-success',
+    paymentFailt: '/result/payment-failt',
     registerSuccess: '/result/register-success',
     registerError: '/result/register-error'
   },

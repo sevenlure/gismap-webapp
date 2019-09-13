@@ -54,7 +54,7 @@ const generalReducer = (state = InitialState, action) => {
         danhMuc: { listPromotion: { $set: action.payload } }
       })
     }
-    
+
     case GET_GENERAL_LIST_TIME_SLOT: {
       return update(state, {
         danhMuc: { listTimeSlot: { $set: action.payload } }

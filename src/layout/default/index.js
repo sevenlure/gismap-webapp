@@ -7,6 +7,7 @@ import { connect } from 'react-redux'
 import { userLogout } from 'src/redux/actions/authAction'
 import {
   getListTourPopular,
+  getListPromotion,
   getListTypeSeat,
   getListTimeSlot,
   isListTourPopular,
@@ -89,6 +90,7 @@ const ChildrenContainer = styled.div`
   {
     userLogout,
     getListTourPopular,
+    getListPromotion,
     getListTypeSeat,
     getListTimeSlot,
     getListDeparture,
@@ -109,6 +111,7 @@ class AppWithLayout extends React.Component {
     router: PropTypes.any,
     userLogout: PropTypes.func,
     getListTourPopular: PropTypes.func,
+    getListPromotion: PropTypes.func,
     getListDeparture: PropTypes.func,
     isListTourPopular: PropTypes.func,
     isLoadedDanhMuc: PropTypes.func,
@@ -133,7 +136,8 @@ class AppWithLayout extends React.Component {
       this.props.getListTourPopular(),
       this.props.getListTypeSeat(),
       this.props.getListTimeSlot(),
-      this.props.getListDeparture()
+      this.props.getListDeparture(),
+      this.props.getListPromotion(),
     ])
       .then(() => {
         this.props.isLoadedDanhMuc(true)

@@ -1,5 +1,7 @@
 export const DATE_FORMAT = 'DD/MM/YYYY'
 export const DATETIME_FORMAT = 'DD/MM/YYYY HH:mm'
+export const DATETIME_FORMAT_v2 = 'DD/MM/YYYY, HH:mm'
+
 export const HH_MM = 'HH:mm'
 
 export const FORMAT_LOCAL = 'en'
