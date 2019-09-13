@@ -1,6 +1,7 @@
 import update from 'react-addons-update'
 import {
   GET_GENERAL_LIST_DEPARTURE,
+  GET_GENERAL_LIST_PROMOTION,
   GET_GENERAL_LIST_TIME_SLOT,
   GET_GENERAL_LIST_TYPE_SEAT,
   IS_LOADED_GENERAL_DANHMUC,
@@ -20,7 +21,8 @@ const InitialState = {
   danhMuc: {
     listDeparture: [],
     listTypeSeat: [],
-    listTimeSlot: []
+    listTimeSlot: [],
+    listPromotion: []
   },
   danhMucIsLoaded: false,
   listTourPopular: [],
@@ -47,6 +49,12 @@ const generalReducer = (state = InitialState, action) => {
         danhMuc: { listDeparture: { $set: action.payload } }
       })
     }
+    case GET_GENERAL_LIST_PROMOTION: {
+      return update(state, {
+        danhMuc: { listPromotion: { $set: action.payload } }
+      })
+    }
+
     case GET_GENERAL_LIST_TIME_SLOT: {
       return update(state, {
         danhMuc: { listTimeSlot: { $set: action.payload } }
