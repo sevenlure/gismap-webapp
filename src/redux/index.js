@@ -8,7 +8,7 @@ import rootReducer from './reducers'
 const persistConfig = {
   key: 'root',
   storage,
-  blacklist: ['GeneralStore', 'BookingStore']
+  blacklist: ['GeneralStore', 'BookingStore']//PaymentStore
 }
 const persistedReducer = persistReducer(persistConfig, rootReducer)
 

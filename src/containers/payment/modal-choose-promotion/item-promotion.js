@@ -4,6 +4,9 @@ import styled from 'styled-components'
 import { Button, Divider } from 'antd'
 import posed from 'react-pose'
 import windowSize from 'react-window-size'
+import moment from 'moment'
+import { DATE_FORMAT } from 'src/config/format'
+import { map as _map } from 'lodash-es'
 
 const DetailContainer = posed.div({
   enter: { height: 'auto', opacity: 1, marginBottom: 12 },
@@ -14,6 +17,7 @@ const Wraper = styled.div`
   min-height: 180px;
   border: solid 1px #e6e6e6;
   border-radius: 12px;
+  margin-bottom: 20px;
 
   .half-circle {
     position: absolute;
@@ -86,14 +90,22 @@ const Wraper = styled.div`
 
 @windowSize
 export default class ItemPromotion extends React.Component {
-  propTypes = {
-    windowWidth: PropTypes.number
+  static propTypes = {
+    windowWidth: PropTypes.number,
+    item: PropTypes.object.isRequired,
+    onChange: PropTypes.func
   }
 
   state = {
     isDetail: false
   }
+  handleOnClick = (item)=>{
+    if(this.props.onChange){
+      this.props.onChange(item)
+    }
+  }
   render() {
+    const { item } = this.props
     const isMobileView = this.props.windowWidth < 600 ? true : false
     const { isDetail } = this.state
     const labelButton = isDetail ? 'Rút gọn' : 'Chi tiết'
@@ -102,11 +114,11 @@ export default class ItemPromotion extends React.Component {
         <div className='body'>
           <div className='body-left'>
             <div>
-              <strong>DATVEXE50</strong>
+              <strong>{item.code}</strong>
             </div>
-            <div className='body-left-discount'>50%</div>
+            <div className='body-left-discount'>{item.discount}%</div>
             <div className='body-left-description'>
-              <span>Giảm 50% trên tổng tiền đặt vé</span>
+              <span>{item.description}</span>
             </div>
           </div>
           <div className='body-right'>
@@ -117,7 +129,7 @@ export default class ItemPromotion extends React.Component {
             >
               {labelButton}
             </Button>
-            <Button type='primary'>Sử dụng</Button>
+            <Button onClick={()=>this.handleOnClick(item)} type='primary'>Sử dụng</Button>
           </div>
         </div>
         <div className='half-circle left-rotated' />
@@ -126,12 +138,12 @@ export default class ItemPromotion extends React.Component {
         <div className='footer'>
           <DetailContainer key='detail' pose={isDetail ? 'enter' : 'exit'}>
             <div className='footer-title'>Điều kiện:</div>
-            <div>- Áp dụng cho các ngày thứ 7, chủ nhật.</div>
-            <div>- Giảm tối đa 100,000 đ.</div>
-            <div>- Mỗi khách hàng sử dụng tối đa 1 lần.</div>
+            {_map(item.detailInfo, (strItem, index) => {
+              return <div key={index}>- {strItem}.</div>
+            })}
           </DetailContainer>
           <div className='footer-end'>
-            <span>Hạn sử dụng: 30/8/2019</span>
+            <span>Hạn sử dụng: {moment(item.expire).format(DATE_FORMAT)}</span>
           </div>
         </div>
       </Wraper>

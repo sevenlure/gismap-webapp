@@ -4,6 +4,8 @@ import styled from 'styled-components'
 import { Modal, Button } from 'antd'
 import windowSize from 'react-window-size'
 import ItemPromotion from './item-promotion'
+import { connect } from 'react-redux'
+import { map as _map, get as _get } from 'lodash-es'
 
 const BodyWrapper = styled.div`
   flex: 1;
@@ -16,11 +18,24 @@ const BodyWrapper = styled.div`
   .content-booking {
   }
 `
+
+const mapStateToProps = state => ({
+  listPromotion: _get(state, 'GeneralStore.danhMuc.listPromotion', [])
+})
+
+const mapDispatchToProps = {}
+
+@connect(
+  mapStateToProps,
+  mapDispatchToProps
+)
 @windowSize
 export default class ModalChoosePromotion extends React.Component {
   static propTypes = {
     getRef: PropTypes.func,
-    windowWidth: PropTypes.number
+    windowWidth: PropTypes.number,
+    listPromotion: PropTypes.array,
+    onChange: PropTypes.func
   }
   state = { isShow: false }
 
@@ -42,6 +57,7 @@ export default class ModalChoosePromotion extends React.Component {
   render() {
     return (
       <Modal
+        centered
         closeIcon={<span />}
         closable={false}
         footer={null}
@@ -63,7 +79,9 @@ export default class ModalChoosePromotion extends React.Component {
             </Button>
           </div>
           <div className='content-booking'>
-            <ItemPromotion />
+            {_map(this.props.listPromotion, (item, index) => {
+              return <ItemPromotion key={index} onChange={this.props.onChange} item={item} />
+            })}
           </div>
         </BodyWrapper>
       </Modal>
