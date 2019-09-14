@@ -1,12 +1,13 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import styled from 'styled-components'
-import { Button, Divider } from 'antd'
+import { Button, Divider, message } from 'antd'
 import posed from 'react-pose'
 import windowSize from 'react-window-size'
 import moment from 'moment'
 import { DATE_FORMAT } from 'src/config/format'
 import { map as _map } from 'lodash-es'
+import { CopyToClipboard } from 'react-copy-to-clipboard'
 
 const DetailContainer = posed.div({
   enter: { height: 'auto', opacity: 1, marginBottom: 12 },
@@ -18,6 +19,7 @@ const Wraper = styled.div`
   border: solid 1px #e6e6e6;
   border-radius: 12px;
   margin-bottom: 20px;
+  width: 100%;
   position: relative;
 
   .half-circle {
@@ -61,7 +63,7 @@ const Wraper = styled.div`
     .body-right {
       text-align: ${props => (props.isMobileView ? 'right' : '')};
       button {
-        width: 90px;
+        width: 100px;
         height: 40px;
         margin-right: ${props => (props.isMobileView ? '' : '16px')};
         margin-bottom: 16px;
@@ -101,11 +103,7 @@ export default class ItemPromotion extends React.Component {
   state = {
     isDetail: false
   }
-  handleOnClick = (item)=>{
-    if(this.props.onChange){
-      this.props.onChange(item)
-    }
-  }
+
   render() {
     const { item } = this.props
     const isMobileView = this.props.windowWidth < 600 ? true : false
@@ -131,7 +129,9 @@ export default class ItemPromotion extends React.Component {
             >
               {labelButton}
             </Button>
-            <Button onClick={()=>this.handleOnClick(item)} type='primary'>Sử dụng</Button>
+            <CopyToClipboard text={item.code} onCopy={() => message.success('Chép mã thành công')}>
+              <Button type='primary'>Chép mã</Button>
+            </CopyToClipboard>
           </div>
         </div>
         <div className='half-circle left-rotated' />

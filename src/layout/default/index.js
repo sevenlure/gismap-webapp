@@ -319,7 +319,7 @@ class AppWithLayout extends React.Component {
               <Menu.Item className='menu-lg' key={slug.promotion.base}>
                 Khuyến mãi
               </Menu.Item>
-              <Menu.Item className='menu-lg' key={slug.booking.base}>
+              <Menu.Item className='menu-lg' key={slug.schedule.base}>
                 Lịch trình - Giá vé
               </Menu.Item>
               <Menu.Item className='menu-lg' key={slug.about.base}>
@@ -463,7 +463,7 @@ class AppWithLayout extends React.Component {
                 <Menu.Item className='menu-mobile' key={slug.promotion.base}>
                   Khuyến mãi
                 </Menu.Item>
-                <Menu.Item className='menu-mobile' key={slug.booking.base}>
+                <Menu.Item className='menu-mobile' key={slug.schedule.base}>
                   Lịch trình - Giá vé
                 </Menu.Item>
                 <Menu.Item className='menu-mobile' key={slug.about.base}>
