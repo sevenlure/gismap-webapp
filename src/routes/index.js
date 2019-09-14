@@ -21,6 +21,9 @@ const slug = {
     base: '/booking',
     infoCustomer: '/booking/info-customer'
   },
+  schedule: {
+    base: '/schedule'
+  },
   payment: {
     base: '/payment'
   },
