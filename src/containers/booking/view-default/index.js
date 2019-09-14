@@ -14,6 +14,7 @@ import { HH_MM } from 'src/config/format'
 import { connect } from 'react-redux'
 import { setBookingNow, clearBookingNowSeat } from 'src/redux/actions/BookingAction'
 import posed from 'react-pose'
+import windowSize from 'react-window-size'
 
 const BookingContentDefaultWrapper = styled.div`
   .right-booking--content-body {
@@ -68,10 +69,12 @@ class BookingContentLaptop extends React.Component {
     BookingNow: PropTypes.object,
     clearBookingNowSeat: PropTypes.func.isRequired,
     dataSearch: PropTypes.any,
-    setBookingNow: PropTypes.func.isRequired
+    setBookingNow: PropTypes.func.isRequired,
+    windowWidth: PropTypes.number
   }
 
   render() {
+    // console.log(this.props.dataSearch, 'dataSearch')
     return (
       <BookingContentDefaultWrapper>
         <div className='right-booking--content-body'>
@@ -96,7 +99,7 @@ class BookingContentLaptop extends React.Component {
           <div>
             {this.props.dataSearch &&
               _map(this.props.dataSearch, (item, index) => {
-                // console.log('BookingItem', item)
+                // console.log('run 1', item)
                 const timeTo = item.timeStart
                   ? moment(item.timeStart)
                       .startOf('hour')
@@ -115,7 +118,7 @@ class BookingContentLaptop extends React.Component {
                   backgroundColor: fullSeat ? 'rgba(255, 123, 102, 0.1)' : 'white'
                 }
                 return (
-                  <RightItemP>
+                  <RightItemP key={index}>
                     <Row
                       key={index}
                       gutter={24}
@@ -144,6 +147,7 @@ class BookingContentLaptop extends React.Component {
                           <span>{_get(item, 'toDeparture.name', '')}</span>
                         </div>
                       </Col>
+
                       <Col span={4} className='right-booking--content-body--item__center'>
                         <span>{item.title}</span>
                       </Col>
@@ -194,7 +198,7 @@ class BookingContentLaptop extends React.Component {
           </div>
         </div>
 
-        <ModalBooking getRef={ref => (this.ModalBooking = ref)} />
+        <ModalBooking windowWidth={this.props.windowWidth} getRef={ref => (this.ModalBooking = ref)} />
       </BookingContentDefaultWrapper>
     )
   }

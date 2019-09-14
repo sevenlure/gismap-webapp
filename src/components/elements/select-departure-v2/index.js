@@ -41,7 +41,7 @@ export default class SelectDeparture extends React.Component {
     placeholder: PropTypes.string,
     value: PropTypes.any,
     defaultValue: PropTypes.any,
-    keyDisable: PropTypes.string
+    keyDisable: PropTypes.oneOfType([PropTypes.string, PropTypes.number])
   }
 
   state = {

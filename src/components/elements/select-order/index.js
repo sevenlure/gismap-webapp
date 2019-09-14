@@ -31,7 +31,8 @@ const ITEM = [
 
 export default class SelectOrder extends React.Component {
   static propTypes = {
-    onChange: PropTypes.func
+    onChange: PropTypes.func,
+    defaultSelectedKeys: PropTypes.string
   }
 
   state = {
@@ -49,6 +50,7 @@ export default class SelectOrder extends React.Component {
             if (this.props.onChange) this.props.onChange(menuSelected.key)
           }
         }}
+        defaultSelectedKeys={[this.props.defaultSelectedKeys]}
         selectedKeys={[this.state.value]}
       >
         {ITEM.map(item => {
