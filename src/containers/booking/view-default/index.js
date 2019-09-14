@@ -14,7 +14,6 @@ import { HH_MM } from 'src/config/format'
 import { connect } from 'react-redux'
 import { setBookingNow, clearBookingNowSeat } from 'src/redux/actions/BookingAction'
 import posed from 'react-pose'
-import windowSize from 'react-window-size'
 
 const BookingContentDefaultWrapper = styled.div`
   .right-booking--content-body {
@@ -43,6 +42,11 @@ const BookingContentDefaultWrapper = styled.div`
     }
   }
 `
+
+const RightP = posed.div({
+  enter: { x: 0, opacity: 1, transition: { duration: 500 }, staggerChildren: 300 },
+  exit: { x: 1000, opacity: 0 }
+})
 
 const RightItemP = posed.div({
   enter: { x: 0, opacity: 1 },
@@ -73,11 +77,19 @@ class BookingContentLaptop extends React.Component {
     windowWidth: PropTypes.number
   }
 
+  state = {
+    anim: 'exit'
+  }
+
+  componentDidMount() {
+    this.setState({ anim: 'enter' })
+  }
+
   render() {
     // console.log(this.props.dataSearch, 'dataSearch')
     return (
       <BookingContentDefaultWrapper>
-        <div className='right-booking--content-body'>
+        <RightP withParent={false} pose={this.state.anim} className='right-booking--content-body'>
           <Row gutter={24} style={{ flex: 1, padding: '0px 8px' }}>
             <Col span={3}>
               <strong className='right-booking--content-body__tb-header-color'>Thời gian</strong>
@@ -118,7 +130,7 @@ class BookingContentLaptop extends React.Component {
                   backgroundColor: fullSeat ? 'rgba(255, 123, 102, 0.1)' : 'white'
                 }
                 return (
-                  <RightItemP key={index}>
+                  <RightItemP key={index + 'P'}>
                     <Row
                       key={index}
                       gutter={24}
@@ -196,7 +208,7 @@ class BookingContentLaptop extends React.Component {
                 )
               })}
           </div>
-        </div>
+        </RightP>
 
         <ModalBooking windowWidth={this.props.windowWidth} getRef={ref => (this.ModalBooking = ref)} />
       </BookingContentDefaultWrapper>

@@ -5,7 +5,7 @@ import Booking from 'src/containers/booking'
 import DefaultLayout from 'src/layout/default'
 import { connect } from 'react-redux'
 import { get as _get, isEmpty as _isEmpty } from 'lodash-es'
-import { getListTourSearch, setIsLoadedListTourSearch, changeFilter } from 'src/redux/actions/BookingAction'
+import { getListTourSearch, setIsLoadedListTourSearch } from 'src/redux/actions/BookingAction'
 
 const mapStateToProps = state => ({
   filter: _get(state, 'BookingStore.filter', {})

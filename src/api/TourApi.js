@@ -14,7 +14,7 @@ export function getListTourSearch({
   to,
   // date,
   // timeSlot,
-  typeSeat,
+  // typeSeat,
   pageSize = 30
 }) {
   return fetch.get(`${SLUG}/query`, {
