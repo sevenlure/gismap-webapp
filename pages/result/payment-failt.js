@@ -11,7 +11,7 @@ import ResultSuccess from 'static/images/icon/ic-result-error.svg'
 import Router from 'next/router'
 import slug from 'src/routes'
 import moment from 'moment'
-import { get as _get, map as _map, values as _values } from 'lodash-es'
+import { get as _get } from 'lodash-es'
 import { DATETIME_FORMAT_v2, HH_MM } from 'src/config/format'
 
 const ResultPageWrapper = styled.div`
@@ -49,6 +49,9 @@ class ResultPage extends React.Component {
     Router.push(slug.basic)
   }
 
+  hanldeAgain = () =>{
+    Router.push(slug.booking.base)
+  }
   renderTitle = () => {
     const { paymentInfoTicket } = this.props
     const datePayment = moment(_get(paymentInfoTicket, 'createdAt')).format(DATETIME_FORMAT_v2)
@@ -115,7 +118,7 @@ class ResultPage extends React.Component {
             </Button>
           </Col>
           <Col xs={12} sm={12} lg={12}>
-            <Button style={{ width: '100%' }} type='danger'>
+            <Button style={{ width: '100%' }} type='danger' onClick={this.hanldeAgain}>
               Thử lại
             </Button>
           </Col>

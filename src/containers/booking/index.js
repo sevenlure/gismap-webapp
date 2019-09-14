@@ -137,7 +137,8 @@ const mapStatetoProps = state => ({
   listDeparture: _get(state, 'GeneralStore.danhMuc.listDeparture', []),
   isLoadedlistTourSearch: _get(state, 'BookingStore.isLoadedlistTourSearch', null),
   listTypeSeat: _get(state, 'GeneralStore.danhMuc.listTypeSeat', []),
-  listTimeSlot: _get(state, 'GeneralStore.danhMuc.listTimeSlot', [])
+  listTimeSlot: _get(state, 'GeneralStore.danhMuc.listTimeSlot', []),
+  filter: _get(state, 'BookingStore.filter', {})
 })
 const mapDispatchToProps = { getListTourSearch, setIsLoadedListTourSearch, changeFilter }
 
@@ -155,20 +156,20 @@ class Booking extends React.Component {
     listTimeSlot: PropTypes.any,
     listTourSearch: PropTypes.array,
     listTypeSeat: PropTypes.any,
-    querySearch: PropTypes.object,
     setIsLoadedListTourSearch: PropTypes.func,
-    windowWidth: PropTypes.number
+    windowWidth: PropTypes.number,
+    filter: PropTypes.object
   }
   constructor(props) {
     super(props)
     this.state = {
       isVisibleDrawer: false,
       datafilter: {
-        from: _get(this.props, 'querySearch.from', null),
-        to: _get(this.props, 'querySearch.to', null),
-        timeSlotId: '',
-        seatType: '',
-        date: _get(this.props, 'querySearch.date', null) ? moment(this.props.querySearch.date) : moment()
+        from: _get(this.props, 'filter.from', null),
+        to: _get(this.props, 'filter.to', null),
+        timeSlotId: _get(this.props, 'filter.timeSlotId', null),
+        typeSeat: _get(this.props, 'filter.typeSeat', null),
+        date: _get(this.props, 'filter.date', null) ? moment(this.props.filter.date) : moment()
       },
       anim: 'exit'
     }
@@ -176,13 +177,10 @@ class Booking extends React.Component {
 
   componentDidMount = () => {
     this.setState({ anim: 'enter' })
-    // if (this.props.querySearch) {
-    //   // console.log(this.props.listDeparture, 'componentDidMount')
-    //   this.setState({
-    //     fromName: _find(this.props.listDeparture, { id: this.props.querySearch.from }).name,
-    //     toName: _find(this.props.listDeparture, { id: this.props.querySearch.to }).name
-    //   })
-    // }
+  }
+
+  componentWillUnmount = () => {
+    // this.setState({ anim: 'exit' })
   }
 
   static getDerivedStateFromProps(nextProps, prevState) {
@@ -221,7 +219,7 @@ class Booking extends React.Component {
             from: _get(this.state, 'datafilter.from', null),
             to: _get(this.state, 'datafilter.to', null),
             date: decodeURIComponent(_get(this.state, 'datafilter.date', null).format(DATE_FORMAT)),
-            typeSeat: decodeURIComponent(_get(this.state, 'datafilter.seatType', null)),
+            typeSeat: decodeURIComponent(_get(this.state, 'datafilter.typeSeat', null)),
             timeSlot: _get(this.state, 'datafilter.date', null)
           })
           this.props.setIsLoadedListTourSearch(true)
@@ -291,7 +289,10 @@ class Booking extends React.Component {
             <h3 className='left-booking--content__title'>Thời gian khởi hành</h3>
             <div>
               <DateStepPicker
-                onChange={date => this.onChangeFilter('date', date)}
+                onChange={date => {
+                  this.props.changeFilter({ date: date })
+                  this.onChangeFilter('date', date)
+                }}
                 defaultValue={this.state.datafilter.date}
               />
             </div>
@@ -308,7 +309,10 @@ class Booking extends React.Component {
                     type='default'
                     shape='round'
                     className={item.value === this.state.datafilter.timeSlotId ? 'select' : ''}
-                    onClick={() => this.onChangeFilter('timeSlotId', item.value)}
+                    onClick={() => {
+                      this.props.changeFilter({ timeSlotId: item.value })
+                      this.onChangeFilter('timeSlotId', item.value)
+                    }}
                   >
                     {item.name}
                   </Button>
@@ -327,10 +331,11 @@ class Booking extends React.Component {
                     style={{ padding: '0px 10px', margin: '0px 12px 12px 0px', fontSize: '1rem', minWidth: 86 }}
                     type='default'
                     shape='round'
-                    className={item.value === this.state.datafilter.seatType ? 'select' : ''}
+                    className={item.value === this.state.datafilter.typeSeat ? 'select' : ''}
                     onClick={event => {
                       event.preventDefault()
-                      this.onChangeFilter('seatType', item.value)
+                      this.props.changeFilter({ typeSeat: item.value })
+                      this.onChangeFilter('typeSeat', item.value)
                     }}
                   >
                     {item.name}
@@ -370,18 +375,20 @@ class Booking extends React.Component {
     return (
       <BookingContainer isVisibleFilter={isVisibleFilter}>
         {isVisibleFilter && <this.LeftBooking zIndex={2} />}
-        <div id='drawerContainer' style={{ zIndex: this.state.isVisibleDrawer ? 10 : 1 }}>
-          <Drawer
-            {...drawerStyle}
-            onClose={() => this.setState({ isVisibleDrawer: false })}
-            visible={this.state.isVisibleDrawer}
-            getContainer={document.getElementById('drawerContainer')}
-            closable={false}
-            destroyOnClose={true}
-          >
-            <this.LeftBooking isVisibleDrawer={this.state.isVisibleDrawer} />
-          </Drawer>
-        </div>
+        {this.state.isVisibleDrawer && (
+          <div id='drawerContainer' style={{ zIndex: this.state.isVisibleDrawer ? 10 : 1 }}>
+            <Drawer
+              {...drawerStyle}
+              onClose={() => this.setState({ isVisibleDrawer: false })}
+              visible={this.state.isVisibleDrawer}
+              getContainer={document.getElementById('drawerContainer')}
+              closable={false}
+              destroyOnClose={true}
+            >
+              <this.LeftBooking isVisibleDrawer={this.state.isVisibleDrawer} />
+            </Drawer>
+          </div>
+        )}
 
         <RightP pose={this.state.anim} className='right-booking'>
           <div className='right-booking--content'>
@@ -403,7 +410,13 @@ class Booking extends React.Component {
                   </Col>
                 )}
                 <Col xs={16} sm={20} lg={10} style={{ marginBottom: '8px' }}>
-                  <SelectCustom onChange={value => this.onChangeFilter('orderBy', value)} />
+                  <SelectCustom
+                    defaultSelectedKeys={this.state.datafilter.orderBy}
+                    onChange={value => {
+                      // this.props.changeFilter({ orderBy: value })// không luư biến này vào redux
+                      this.onChangeFilter('orderBy', value)
+                    }}
+                  />
                 </Col>
               </Row>
             </div>
@@ -418,10 +431,10 @@ class Booking extends React.Component {
                   )
                 })}
               {this.props.isLoadedlistTourSearch && isViewDefault && (
-                <BookingContentDefault dataSearch={this.props.listTourSearch} />
+                <BookingContentDefault windowWidth={this.props.windowWidth} dataSearch={this.props.listTourSearch} />
               )}
               {this.props.isLoadedlistTourSearch && !isViewDefault && (
-                <BookingContentMobile dataSearch={this.props.listTourSearch} />
+                <BookingContentMobile windowWidth={this.props.windowWidth} dataSearch={this.props.listTourSearch} />
               )}
             </div>
           </div>

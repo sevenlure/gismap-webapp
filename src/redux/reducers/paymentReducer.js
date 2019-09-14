@@ -5,7 +5,7 @@ import storage from 'redux-persist/lib/storage'
 import { persistReducer } from 'redux-persist'
 
 const InitialState = {
-  paymentInfoTicket:{}
+  paymentInfoTicket: {}
 }
 
 // REDUCERS

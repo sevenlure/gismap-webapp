@@ -4,7 +4,6 @@ import styled from 'styled-components'
 import { Button, Modal, Divider } from 'antd'
 import PickupPointContainer from './pickup-point-container'
 import ChooseSeatContainer from './choose-seat.container'
-import windowSize from 'react-window-size'
 import { connect } from 'react-redux'
 import { get as _get, map as _map, values as _values, isEmpty as _isEmpty } from 'lodash-es'
 import moment from 'moment'
@@ -60,8 +59,6 @@ const mapDispatchToProps = {}
   mapStateToProps,
   mapDispatchToProps
 )
-@windowSize
-@windowSize
 export default class ModalBooking extends React.Component {
   static propTypes = {
     getRef: PropTypes.func,

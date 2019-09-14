@@ -470,8 +470,6 @@ class InfoCustomer extends React.Component {
                             BookingNowSeat,
                             BookingNowPoint,
                             BookingNowInfoCustomer,
-                            BookingNowPoint,
-                            BookingNowInfoCustomer,
                             promotionCode,
                             pricePromotion,
                             totalPrice

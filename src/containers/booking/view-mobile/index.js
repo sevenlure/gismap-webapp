@@ -50,6 +50,7 @@ const mapDispatchToProps = {
 class BookingContentLaptop extends React.Component {
   static propTypes = {
     BookingNow: PropTypes.object,
+    windowWidth: PropTypes.number,
     clearBookingNowSeat: PropTypes.func.isRequired,
     dataSearch: PropTypes.any,
     setBookingNow: PropTypes.func.isRequired

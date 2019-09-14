@@ -23,7 +23,7 @@ export function getListTourSearch({
       to,
       // date,
       // timeSlot,
-      typeSeat,
+      // typeSeat,
       pageSize
     }
   })

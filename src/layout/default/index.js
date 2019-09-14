@@ -137,7 +137,7 @@ class AppWithLayout extends React.Component {
       this.props.getListTypeSeat(),
       this.props.getListTimeSlot(),
       this.props.getListDeparture(),
-      this.props.getListPromotion(),
+      this.props.getListPromotion()
     ])
       .then(() => {
         this.props.isLoadedDanhMuc(true)
