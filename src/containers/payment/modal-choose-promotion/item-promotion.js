@@ -42,12 +42,13 @@ const Wraper = styled.div`
   }
 
   .body {
-    height: ${props => (props.isMobileView ? '160px' : '130px')};
+    /* height: ${props => (props.isMobileView ? '160px' : '130px')}; */
     display: flex;
     justify-content: space-between;
     padding: ${props => (props.isMobileView ? '20px 20px 20px 20px' : '20px 20px 20px 40px')};
 
     .body-left {
+      margin-right: 8px;
       .body-left-discount {
         font-size: 1.75rem;
         font-weight: bold;
@@ -60,11 +61,14 @@ const Wraper = styled.div`
     }
     .body-right {
       text-align: ${props => (props.isMobileView ? 'right' : '')};
+      width: ${props => (props.isMobileView ? '120px' : '')};
       button {
         width: 90px;
         height: 40px;
         margin-right: ${props => (props.isMobileView ? '' : '16px')};
-        margin-bottom: 16px;
+        :not(.ant-btn-primary) {
+          margin-bottom: 16px;
+        }
         border: none;
         span {
           font-family: myFont-Medium;

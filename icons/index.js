@@ -12,6 +12,8 @@ import SeatDisableIconSvg from 'static/images/icon/ic-seat-disable.svg'
 import SeatDriverIconSvg from 'static/images/icon/ic-seat-driver.svg'
 import SeatOffIconSvg from 'static/images/icon/ic-seat-off.svg'
 
+import Sale2IconSvg from 'static/images/icon/ic-sale2.svg'
+
 export default {
   search: SearchIconSvg,
   right: RightIconSvg,
@@ -24,5 +26,6 @@ export default {
   seatOff: SeatOffIconSvg,
   sale: SaleIconlSvg,
   arrowNext: ArrowNextIconSvg,
-  check: CheckIconSvg
+  check: CheckIconSvg,
+  sale2: Sale2IconSvg
 }

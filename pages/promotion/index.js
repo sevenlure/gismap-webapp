@@ -7,6 +7,7 @@ import Clearfix from 'src/components/elements/clearfix'
 import { Skeleton } from 'antd'
 import { connect } from 'react-redux'
 import { get as _get, map as _map } from 'lodash-es'
+import ItemEmpty from 'src/containers/promotion/item-emty'
 
 const WrapperPage = styled.div`
   min-height: calc(100vh - 140px);
@@ -15,7 +16,7 @@ const WrapperPage = styled.div`
   justify-content: center;
 
   .content {
-    margin-top: 50px;
+    margin: 50px 24px;
     max-width: 682px;
     width: 100%;
   }
@@ -64,6 +65,7 @@ class PromotionPage extends React.Component {
           {this.props.listPromotion.map(item => {
             return <ItemPromotion key={item.code} item={item} />
           })}
+          <ItemEmpty />
         </div>
       </WrapperPage>
     )
