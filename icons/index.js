@@ -6,6 +6,7 @@ import ChoiseOnIconSvg from 'static/images/icon/ic-choice-on.svg'
 import SaleIconlSvg from 'static/images/icon/ic-sale.svg'
 import ArrowNextIconSvg from 'static/images/icon/ic-arrow-next.svg'
 import CheckIconSvg from 'static/images/icon/ic-check.svg'
+import EditIconSvg from 'static/images/icon/ic-edit.svg'
 
 import SeatChooseIconSvg from 'static/images/icon/ic-seat-choose.svg'
 import SeatDisableIconSvg from 'static/images/icon/ic-seat-disable.svg'
@@ -24,5 +25,6 @@ export default {
   seatOff: SeatOffIconSvg,
   sale: SaleIconlSvg,
   arrowNext: ArrowNextIconSvg,
-  check: CheckIconSvg
+  check: CheckIconSvg,
+  edit: EditIconSvg
 }
