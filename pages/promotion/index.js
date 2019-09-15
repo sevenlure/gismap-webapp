@@ -20,10 +20,6 @@ const WrapperPage = styled.div`
     max-width: 682px;
     width: 100%;
   }
-  .title {
-    display: flex;
-    justify-content: center;
-  }
 `
 
 @connect(
