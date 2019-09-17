@@ -8,6 +8,7 @@
     "withPm2": "pm2 start --name BOOKING-WEB npm -- start"
   },
   "dependencies": {
+    "@react-google-maps/api": "^1.7.5",
     "@svgr/webpack": "^4.3.2",
     "@zeit/next-less": "^1.0.1",
     "antd": "^3.23.2",
@@ -32,6 +33,7 @@
     "query-string": "^6.8.2",
     "react": "^16.8.6",
     "react-addons-update": "^15.6.2",
+    "react-copy-to-clipboard": "^5.0.1",
     "react-dom": "^16.8.6",
     "react-horizontal-scrolling-menu": "^0.7.3",
     "react-otp-input": "^1.0.1",

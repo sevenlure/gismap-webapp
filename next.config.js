@@ -79,7 +79,8 @@ const nextConfig = {
   env: {
     isDev: env.isDev,
     HOST_API: env.HOST_API,
-    HOST_MEDIA: env.HOST_MEDIA
+    HOST_MEDIA: env.HOST_MEDIA,
+    GOOGLE_MAP_API_KEY: env.GOOGLE_MAP_API_KEY
   }
 }
 
