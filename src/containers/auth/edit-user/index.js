@@ -87,6 +87,7 @@ class EditUser extends React.Component {
   static propTypes = {
     form: PropTypes.any,
     onSuccess: PropTypes.func,
+    windowWidth: PropTypes.number,
     getFieldError: PropTypes.any,
     handleCancel: PropTypes.func.isRequired,
     onLogin: PropTypes.func,
@@ -174,10 +175,21 @@ class EditUser extends React.Component {
 
   render() {
     const { getFieldDecorator, getFieldValue, getFieldsError } = this.props.form
+    const { windowWidth } = this.props
+    let titleStyle = {
+      marginBottom: 0
+    }
+    if (windowWidth < 576) {
+      // console.log(windowWidth, 'windowWidth')
+      titleStyle = {
+        ...titleStyle,
+        fontSize: '1.2rem'
+      }
+    }
     return (
       <EditUserWrapper>
         <div className='modal--title'>
-          <h3 style={{ marginBottom: 0 }}>Chỉnh sửa thông tin</h3>
+          <h3 style={{ ...titleStyle }}>Chỉnh sửa thông tin</h3>
           <Button style={{ width: 88 }} onClick={this.props.handleCancel} size='large' type='default'>
             Đóng
           </Button>

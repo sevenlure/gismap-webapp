@@ -112,11 +112,14 @@ export default class AvatarUserV2 extends React.Component {
             maxWidth: 968
           }}
         >
-          <EditUser handleCancel={() =>{
-            this.setState({
-              isEdit: false
-            })
-          }} />
+          <EditUser
+            windowWidth={windowWidth}
+            handleCancel={() => {
+              this.setState({
+                isEdit: false
+              })
+            }}
+          />
         </Modal>
       </AvatarUserWrapper>
     )
