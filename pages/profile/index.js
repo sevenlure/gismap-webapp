@@ -2,8 +2,9 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import styled from 'styled-components'
 // import { connect } from 'react-redux'
-import { Row, Col, Avatar, Icon, Radio, Skeleton } from 'antd'
+import { Row, Col, Avatar, Icon, Radio, Skeleton, Button } from 'antd'
 import Icons from 'icons/index'
+import AvatarUserv2 from 'src/containers/auth/avatar-user-v2.js'
 import DefaultLayout from 'src/layout/default'
 import Clearfix from 'src/components/elements/clearfix'
 import windowSize from 'react-window-size'
@@ -18,27 +19,9 @@ const ProfilePageWrapper = styled.div`
   background: white;
 
   .page--content {
-    // background: white;
     max-width: 682px;
     width: 100%;
     margin: 50px 0px;
-
-    // NOTE  avatar
-    .page--content--avatar__border {
-      background: conic-gradient(#fff, #dde8fc, #3880ff);
-      padding: 3px;
-      border-radius: 50%;
-    }
-
-    .page--content--avatar .page--content--avatar__icon {
-      width: 36px;
-      height: 36px;
-      background-color: #f2f3f7;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      border-radius: 50%;
-    }
 
     .page--content--wrapper-tab {
       border-radius: 20px;
@@ -67,6 +50,10 @@ const ProfilePageWrapper = styled.div`
             outline: none;
           }
           .ant-radio-button-wrapper {
+            display: flex;
+            min-height:50px;
+            justify-content: center;
+            align-items: center;
             border-radius: 36px;
             border: none;
             background-color: #f2f3f7;
@@ -102,12 +89,14 @@ class ProfilePage extends React.Component {
 
   state = {
     keyTab: keyDefault,
-    isLoading: false
+    isLoading: false,
+    isHaveData: false
   }
 
   hanldeOnChange = e => {
     this.setState({
-      isLoading: true
+      isLoading: true,
+      isHaveData: true
     })
     const key = e.target.value
 
@@ -122,32 +111,11 @@ class ProfilePage extends React.Component {
   render() {
     const backgroundColor = this.state.keyTab === keyDefault ? '#f2f3f7' : '#fff'
 
-    console.log(backgroundColor, 'backgroundColor')
+    // console.log(backgroundColor, 'backgroundColor')
     return (
       <ProfilePageWrapper windowWidth={this.props.windowWidth}>
         <div className='page--content'>
-          <Row className='page--content--avatar'>
-            <Col style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-              <div className='page--content--avatar__border'>
-                <Avatar
-                  src='/static/images/avatar_default.png'
-                  style={{ backgroundColor: '', cursor: 'pointer' }}
-                  size={74}
-                />
-              </div>
-
-              <Clearfix width={16} />
-              <div className='page--content--avatar__icon'>
-                <div>
-                  <Icon style={{ fontSize: '1.5rem' }} component={Icons.edit} />
-                </div>
-              </div>
-            </Col>
-            <Clearfix height={12} />
-            <Col style={{ textAlign: 'center' }}>
-              <strong>Mai Thuận Thảo</strong>
-            </Col>
-          </Row>
+          <AvatarUserv2 />
           <Clearfix height={30} />
           <Row className='page--content--wrapper-tab'>
             <Col>
@@ -177,7 +145,8 @@ class ProfilePage extends React.Component {
                 <Skeleton active />
               </div>
             )}
-            {!this.state.isLoading && (
+
+            {!this.state.isLoading && this.state.isHaveData && (
               <div>
                 <Col>
                   <BookingItem
@@ -218,6 +187,19 @@ class ProfilePage extends React.Component {
                   />
                   <Clearfix height={20} />
                 </Col>
+              </div>
+            )}
+            {!this.state.isLoading && !this.state.isHaveData && (
+              <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+                <div>
+                  <span>Bạn chưa đặt vé, hãy thử trải nghiệm</span>
+                </div>
+                <Clearfix height={20} />
+                <div>
+                  <Button type='default' size='large'>
+                    Đặt vé ngay
+                  </Button>
+                </div>
               </div>
             )}
           </Row>
