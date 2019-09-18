@@ -6,6 +6,9 @@ import ChoiseOnIconSvg from 'static/images/icon/ic-choice-on.svg'
 import SaleIconlSvg from 'static/images/icon/ic-sale.svg'
 import ArrowNextIconSvg from 'static/images/icon/ic-arrow-next.svg'
 import CheckIconSvg from 'static/images/icon/ic-check.svg'
+import EditIconSvg from 'static/images/icon/ic-edit.svg'
+import CameraIconSvg from 'static/images/icon/ic-camera.svg'
+import PassSvg from 'static/images/icon/ic-pass.svg'
 
 import SeatChooseIconSvg from 'static/images/icon/ic-seat-choose.svg'
 import SeatDisableIconSvg from 'static/images/icon/ic-seat-disable.svg'
@@ -27,5 +30,8 @@ export default {
   sale: SaleIconlSvg,
   arrowNext: ArrowNextIconSvg,
   check: CheckIconSvg,
+  edit: EditIconSvg,
+  camera: CameraIconSvg,
+  password: PassSvg,
   sale2: Sale2IconSvg
 }

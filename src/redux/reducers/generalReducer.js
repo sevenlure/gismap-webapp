@@ -11,6 +11,7 @@ import {
   CLEAR_GENERAL_USER_INFO,
   SET_GENERAL_IS_REGISTER,
   SET_GENERAL_IS_LOGIN,
+  SET_GENERAL_IS_EDIT_USER,
   GET_GENERAL_LIST_SCHEDULE,
   IS_LOADED_GENERAL_SCHEDULE,
   IS_LOADING_GENERAL_SCHEDULE
@@ -32,6 +33,7 @@ const InitialState = {
   isLoadedListTourPopular: false,
   isRegister: false,
   isLogin: false,
+  isEditUser: false,
   scheduleList: [],
   scheduleIsLoading: false
 }
@@ -47,6 +49,11 @@ const generalReducer = (state = InitialState, action) => {
     case SET_GENERAL_IS_LOGIN: {
       return update(state, {
         isLogin: { $set: action.payload }
+      })
+    }
+    case SET_GENERAL_IS_EDIT_USER: {
+      return update(state, {
+        isEditUser: { $set: action.payload }
       })
     }
     case GET_GENERAL_LIST_DEPARTURE: {

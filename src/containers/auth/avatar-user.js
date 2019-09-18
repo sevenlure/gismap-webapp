@@ -6,6 +6,10 @@ import { connect } from 'react-redux'
 import { get as _get } from 'lodash-es'
 import { userLogout } from 'src/redux/actions/authAction'
 import { clearUserInfo } from 'src/redux/actions/generalAction.js'
+import { setVisibleEdituser } from 'src/redux/actions/generalAction'
+
+import Link from 'next/link'
+
 // import Router from 'next/router'
 // import slug from 'src/routes'
 
@@ -15,7 +19,8 @@ import { clearUserInfo } from 'src/redux/actions/generalAction.js'
   }),
   {
     userLogout,
-    clearUserInfo
+    clearUserInfo,
+    setVisibleEdituser
   }
 )
 export default class AvatarUser extends React.Component {
@@ -23,6 +28,7 @@ export default class AvatarUser extends React.Component {
     // name: PropTypes.string,
     userLogout: PropTypes.func,
     clearUserInfo: PropTypes.func,
+    setVisibleEdituser: PropTypes.func,
     disabled: PropTypes.bool
   }
 
@@ -39,17 +45,21 @@ export default class AvatarUser extends React.Component {
           disabled={this.props.disabled}
           overlay={
             <Menu>
-              {/* <Menu.Item
-                onClick={() => {
-                  this.ModalChangePassword.openModal()
-                }}
-                key='0'
-              >
-                <Icon type='lock' />
-                Đổi mật khẩu
-              </Menu.Item> */}
+              <Menu.Item key='1'>
+                <Link href='/profile'>
+                  <a>Thông tin vé xe</a>
+                </Link>
+              </Menu.Item>
               <Menu.Item
-                key='1'
+                key='2'
+                onClick={() => {
+                  this.props.setVisibleEdituser(true)
+                }}
+              >
+                Thông tin cá nhân
+              </Menu.Item>
+              <Menu.Item
+                key='3'
                 onClick={() => {
                   // Router.replace(slug.login)
                   this.props.userLogout()
