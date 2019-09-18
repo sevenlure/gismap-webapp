@@ -23,6 +23,7 @@ import Login from 'src/containers/login'
 import Register from 'src/containers/register'
 import windowSize from 'react-window-size'
 import AvatarUser from 'src/containers/auth/avatar-user'
+import EditUser from 'src/containers/auth/edit-user'
 
 const { Header, Content, Footer } = Layout
 // const { SubMenu } = Menu
@@ -85,7 +86,8 @@ const ChildrenContainer = styled.div`
     name: _get(state, 'GeneralStore.userInfo.name', ''),
     // menuSelected: _get(state, 'GeneralStore.menuSelected'),
     isRegister: _get(state, 'GeneralStore.isRegister'),
-    isLogin: _get(state, 'GeneralStore.isLogin')
+    isLogin: _get(state, 'GeneralStore.isLogin'),
+    isEditUser: _get(state, 'GeneralStore.isEditUser')
   }),
   {
     userLogout,
@@ -121,7 +123,8 @@ class AppWithLayout extends React.Component {
     setVisibleLogin: PropTypes.func,
     windowWidth: PropTypes.number,
     isRegister: PropTypes.bool,
-    isLogin: PropTypes.bool
+    isLogin: PropTypes.bool,
+    isEditUser: PropTypes.bool
   }
 
   state = {
@@ -431,7 +434,33 @@ class AppWithLayout extends React.Component {
                 }}
               />
             </Modal>
-
+            {/* NOTE Thông tin cá nhân */}
+            <Modal
+              visible={this.props.isEditUser}
+              footer={null}
+              centered
+              closeIcon={<span />}
+              // onCancel={
+              //   () => this.props.setVisibleRegister(false)
+              // }
+              // wrapClassName='register--modal'
+              closable={false}
+              {...this.getStyleReponsive()}
+              width='100%'
+              style={{
+                padding: windowWidth > 576 ? 24 : 12,
+                maxWidth: 968
+              }}
+            >
+              <EditUser
+                windowWidth={windowWidth}
+                handleCancel={() => {
+                  this.setState({
+                    isEdit: false
+                  })
+                }}
+              />
+            </Modal>
             <Drawer
               title='Travel'
               placement='left'
