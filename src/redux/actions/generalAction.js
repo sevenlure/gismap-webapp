@@ -96,6 +96,7 @@ export function clearUserInfo() {
 // NOTE điều khiển modal login
 export const SET_GENERAL_IS_REGISTER = 'GENERAL/SET_GENERAL_IS_REGISTER'
 export const SET_GENERAL_IS_LOGIN = 'GENERAL/SET_GENERAL_IS_LOGIN'
+export const SET_GENERAL_IS_EDIT_USER = 'GENERAL/SET_GENERAL_IS_EDIT_USER'
 
 export function setVisibleRegister(isVisible) {
   return dispatch => {
@@ -106,5 +107,11 @@ export function setVisibleRegister(isVisible) {
 export function setVisibleLogin(isVisible) {
   return dispatch => {
     dispatch({ type: SET_GENERAL_IS_LOGIN, payload: isVisible })
+  }
+}
+
+export function setVisibleEdituser(isVisible) {
+  return dispatch => {
+    dispatch({ type: SET_GENERAL_IS_EDIT_USER, payload: isVisible })
   }
 }

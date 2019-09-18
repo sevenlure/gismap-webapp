@@ -24,6 +24,7 @@ const BookingItemWrapper = styled.div`
       display: flex;
       flex-direction: column;
       justify-content: center;
+      text-align: right;
     }
   }
 `
@@ -59,7 +60,7 @@ export default class BookingItem extends React.PureComponent {
               <span>{typeCar}</span>
             </div>
           </div>
-          <div className='page--content--item---right'>
+          <div className='page--content--item--right'>
             <div>
               <h4>{seat}</h4>
             </div>

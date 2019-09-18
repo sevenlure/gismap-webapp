@@ -10,10 +10,9 @@ import AddressSvg from 'static/images/icon/ic-address.svg'
 import Clearfix from 'src/components/elements/clearfix'
 // import { EditUserUser } from 'src/api/authApi'
 import { connect } from 'react-redux'
-import { userLogin } from 'src/redux/actions/authAction'
-import { updateUserInfo } from 'src/redux/actions/generalAction.js'
 import { auth as authMess } from 'src/config/message'
 import icons from 'icons/index'
+import { setVisibleEdituser } from 'src/redux/actions/generalAction'
 
 const registerMess = authMess.register
 
@@ -76,8 +75,7 @@ const EditUserWrapper = styled.div`
   }
 `
 const mapDispatchToProps = {
-  userLogin,
-  updateUserInfo
+  setVisibleEdituser
 }
 @connect(
   () => ({}),
@@ -86,14 +84,8 @@ const mapDispatchToProps = {
 class EditUser extends React.Component {
   static propTypes = {
     form: PropTypes.any,
-    onSuccess: PropTypes.func,
     windowWidth: PropTypes.number,
-    getFieldError: PropTypes.any,
-    handleCancel: PropTypes.func.isRequired,
-    onLogin: PropTypes.func,
-    userLogin: PropTypes.func,
-    updateUserInfo: PropTypes.func,
-    isClearData: PropTypes.bool
+    setVisibleEdituser: PropTypes.func
   }
 
   state = {
@@ -155,12 +147,6 @@ class EditUser extends React.Component {
     })
   }
 
-  componentDidUpdate = prevprops => {
-    if (this.props.isClearData !== prevprops.isClearData && prevprops.isClearData) {
-      this.props.form.resetFields()
-    }
-  }
-
   beforeUpload = file => {
     const isJpgOrPng = file.type === 'image/jpeg' || file.type === 'image/png'
     if (!isJpgOrPng) {
@@ -190,45 +176,50 @@ class EditUser extends React.Component {
       <EditUserWrapper>
         <div className='modal--title'>
           <h3 style={{ ...titleStyle }}>Chỉnh sửa thông tin</h3>
-          <Button style={{ width: 88 }} onClick={this.props.handleCancel} size='large' type='default'>
+          <Button
+            style={{ width: 88 }}
+            onClick={() => {
+              this.props.setVisibleEdituser(false)
+            }}
+            size='large'
+            type='default'
+          >
             Đóng
           </Button>
         </div>
         <div className='page--content'>
           <Row type='flex' style={{ flex: 1 }} gutter={8}>
             <Col xs={24} sm={3} lg={3}>
-              <Upload
-                style={{ width: '100%' }}
-                beforeUpload={this.beforeUpload}
-                name='file'
-                action='https://www.mocky.io/v2/5cc8019d300000980a055e76'
-                headers={{
-                  authorization: 'authorization-text'
-                }}
-                showUploadList={false}
-                onChange={this.handleOnChangeImage}
-              >
-                <div className='page--content--icon'>
-                  {!this.state.isLoadingImage && (
-                    <div className='avatar__border'>
-                      <Avatar
-                        src='/static/images/avatar_default.png'
-                        style={{ backgroundColor: '', cursor: 'pointer', width: '100%', height: '100%' }}
-                      />
-                    </div>
-                  )}
-                  {this.state.isLoadingImage && (
-                    <Icon style={{ fontSize: '4.625rem' }} type={this.state.loading ? 'loading' : 'loading'} />
-                  )}
+              <div className='page--content--icon'>
+                {!this.state.isLoadingImage && (
+                  <div className='avatar__border'>
+                    <Avatar src='/static/images/avatar_default.png' style={{ width: '100%', height: '100%' }} />
+                  </div>
+                )}
+                {this.state.isLoadingImage && (
+                  <Icon style={{ fontSize: '4.625rem' }} type={this.state.loading ? 'loading' : 'loading'} />
+                )}
 
-                  <Clearfix height={10} />
+                <Clearfix height={10} />
+                <Upload
+                  style={{ width: '100%' }}
+                  beforeUpload={this.beforeUpload}
+                  name='file'
+                  action='https://www.mocky.io/v2/5cc8019d300000980a055e76'
+                  headers={{
+                    authorization: 'authorization-text'
+                  }}
+                  showUploadList={false}
+                  onChange={this.handleOnChangeImage}
+                >
                   <div className='avatar__icon'>
                     <div>
                       <Icon style={{ fontSize: '1.5rem' }} component={Icons.camera} />
                     </div>
                   </div>
-                </div>
-              </Upload>
+                </Upload>
+                <Clearfix height={10} />
+              </div>
             </Col>
             {/* <Clearfix width={33} height={12} /> */}
             <Col xs={24} sm={21} lg={21}>

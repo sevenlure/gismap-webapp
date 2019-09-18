@@ -2,13 +2,21 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import styled from 'styled-components'
 // import { connect } from 'react-redux'
-import { Row, Col, Avatar, Icon, Radio, Skeleton, Button } from 'antd'
-import Icons from 'icons/index'
+import { Row, Col, Radio, Skeleton, Button } from 'antd'
 import AvatarUserv2 from 'src/containers/auth/avatar-user-v2.js'
 import DefaultLayout from 'src/layout/default'
 import Clearfix from 'src/components/elements/clearfix'
 import windowSize from 'react-window-size'
 import BookingItem from 'src/components/elements/booking-item'
+import { connect } from 'react-redux'
+import { paymentBooking, paymentBoked } from 'src/api/paymentApi'
+import { get as _get, map as _map, values as _values } from 'lodash-es'
+import moment from 'moment'
+import { HH_MM } from 'src/config/format'
+
+moment.updateLocale('en', {
+  weekdays: ['Chủ nhật', 'Thứ hai', 'Thứ ba', 'Thứ tư', 'Thứ năm', 'Thứ sáu', 'Thứ bảy']
+})
 
 const ProfilePageWrapper = styled.div`
   flex: 1;
@@ -68,50 +76,92 @@ const ProfilePageWrapper = styled.div`
     }
   }
 `
-
-// // const mapStateToProps = state => ({
-
-// // })
-
-// const mapDispatchToProps = {}
-
-// @connect(
-//   {},
-//   mapDispatchToProps
-// )
 const keyDefault = 'ticektBooking'
+const mapStateToProps = state => ({
+  userInfo: _get(state, 'GeneralStore.userInfo', null)
+})
 
+@connect(
+  mapStateToProps,
+  {}
+)
 @windowSize
 class ProfilePage extends React.Component {
   static propTypes = {
-    windowWidth: PropTypes.number
+    windowWidth: PropTypes.number,
+    userInfo: PropTypes.object
   }
 
   state = {
     keyTab: keyDefault,
     isLoading: false,
-    isHaveData: false
+    isHaveData: false,
+    dataList: []
   }
 
-  hanldeOnChange = e => {
+  componentDidMount = async () => {
     this.setState({
       isLoading: true,
-      isHaveData: true
+      isHaveData: false
+    })
+    const dataList = await this.fetchData(keyDefault)
+    this.setState({
+      keyTab: keyDefault,
+      isLoading: false,
+      dataList: dataList,
+      isHaveData: dataList && dataList.length > 0 ? true : false
+    })
+  }
+
+  hanldeOnChange = async e => {
+    this.setState({
+      isLoading: true,
+      isHaveData: false
     })
     const key = e.target.value
 
+    const dataList = await this.fetchData(key)
     setTimeout(() => {
       this.setState({
         keyTab: key,
-        isLoading: false
+        isLoading: false,
+        dataList: dataList,
+        isHaveData: dataList && dataList.length > 0 ? true : false
       })
     }, 500)
+  }
+
+  fetchData = async key => {
+    const { userInfo } = this.props
+    const token = _get(userInfo, 'phone', null)
+    try {
+      if (key === 'ticektBooking') {
+        if (token) {
+          const res = await paymentBooking({ token })
+          if (res.status === 200) {
+            console.log(res.data, 'Data')
+            return res.data
+          }
+        }
+      } else {
+        if (token) {
+          const res = await paymentBoked({ token })
+          if (res.status === 200) {
+            console.log(res.data, 'Data')
+            return res.data
+          }
+        }
+      }
+    } catch (ex) {
+      console.log(key, ex)
+      return []
+    }
   }
 
   render() {
     const backgroundColor = this.state.keyTab === keyDefault ? '#f2f3f7' : '#fff'
 
-    // console.log(backgroundColor, 'backgroundColor')
+    console.log(this.state, 'backgroundColor')
     return (
       <ProfilePageWrapper windowWidth={this.props.windowWidth}>
         <div className='page--content'>
@@ -148,45 +198,54 @@ class ProfilePage extends React.Component {
 
             {!this.state.isLoading && this.state.isHaveData && (
               <div>
-                <Col>
-                  <BookingItem
-                    timeFrom={'05:00'}
-                    timeTo={'07:00'}
-                    from={'Tây Ninh'}
-                    to='Quận 10, Hồ Chí Minh'
-                    typeCar='Xe giường nằm 2 tầng'
-                    seat='A5, B6, G7'
-                    dateStart='Thứ tư, ngày 18/08/2019'
-                    backgroundColor={backgroundColor}
-                  />
-                  <Clearfix height={20} />
-                </Col>
-                <Col>
-                  <BookingItem
-                    timeFrom={'05:00'}
-                    timeTo={'07:00'}
-                    from={'Tây Ninh'}
-                    to='Quận 10, Hồ Chí Minh'
-                    typeCar='Xe giường nằm 2 tầng'
-                    seat='A5, B6, G7'
-                    dateStart='Thứ tư, ngày 18/08/2019'
-                    backgroundColor={backgroundColor}
-                  />
-                  <Clearfix height={20} />
-                </Col>
-                <Col>
-                  <BookingItem
-                    timeFrom={'05:00'}
-                    timeTo={'07:00'}
-                    from={'Tây Ninh'}
-                    to='Quận 10, Hồ Chí Minh'
-                    typeCar='Xe giường nằm 2 tầng'
-                    seat='A5, B6, G7'
-                    dateStart='Thứ tư, ngày 18/08/2019'
-                    backgroundColor={backgroundColor}
-                  />
-                  <Clearfix height={20} />
-                </Col>
+                {_map(this.state.dataList, (item, index) => {
+                  const { bookingInfo } = item
+                  let timeTo, timeFrom, from, to, typeCar, dateStart
+                  if (bookingInfo.BookingNow) {
+                    const BookingNow = bookingInfo.BookingNow
+                    timeTo = BookingNow.timeStart
+                      ? moment(BookingNow.timeStart)
+                          .startOf('hour')
+                          .add(2, 'hour')
+                          .format(HH_MM)
+                      : ''
+                    timeFrom = BookingNow.timeStart
+                      ? moment(BookingNow.timeStart)
+                          .startOf('hour')
+                          .format(HH_MM)
+                      : ''
+                    from = _get(BookingNow, 'fromDeparture.name', '')
+                    to = _get(BookingNow, 'toDeparture.name', '')
+                    typeCar = _get(BookingNow, 'title', '')
+                    dateStart = BookingNow.timeStart
+                      ? moment(BookingNow.timeStart).format('dddd [, Ngày] DD/MM/YYYY')
+                      : ''
+                  } else {
+                    return null
+                  }
+                  let strSeat
+                  if (bookingInfo.BookingNowSeat) {
+                    const BookingNowSeat = bookingInfo.BookingNowSeat
+                    strSeat = _map(_values(BookingNowSeat), item => {
+                      return item.name
+                    }).join(', ')
+                  }
+                  return (
+                    <Col key={index}>
+                      <BookingItem
+                        timeFrom={timeFrom}
+                        timeTo={timeTo}
+                        from={from}
+                        to={to}
+                        typeCar={typeCar}
+                        seat={strSeat}
+                        dateStart={dateStart}
+                        backgroundColor={backgroundColor}
+                      />
+                      <Clearfix height={20} />
+                    </Col>
+                  )
+                })}
               </div>
             )}
             {!this.state.isLoading && !this.state.isHaveData && (

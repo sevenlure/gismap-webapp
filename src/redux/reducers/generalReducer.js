@@ -10,7 +10,8 @@ import {
   UPDATE_GENERAL_USER_INFO,
   CLEAR_GENERAL_USER_INFO,
   SET_GENERAL_IS_REGISTER,
-  SET_GENERAL_IS_LOGIN
+  SET_GENERAL_IS_LOGIN,
+  SET_GENERAL_IS_EDIT_USER
 } from '../actions/generalAction'
 
 import storage from 'redux-persist/lib/storage'
@@ -28,7 +29,8 @@ const InitialState = {
   listTourPopular: [],
   isLoadedListTourPopular: false,
   isRegister: false,
-  isLogin: false
+  isLogin: false,
+  isEditUser: false
 }
 
 // REDUCERS
@@ -42,6 +44,11 @@ const generalReducer = (state = InitialState, action) => {
     case SET_GENERAL_IS_LOGIN: {
       return update(state, {
         isLogin: { $set: action.payload }
+      })
+    }
+    case SET_GENERAL_IS_EDIT_USER: {
+      return update(state, {
+        isEditUser: { $set: action.payload }
       })
     }
     case GET_GENERAL_LIST_DEPARTURE: {

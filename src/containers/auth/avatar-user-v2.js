@@ -1,10 +1,11 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import styled from 'styled-components'
-import { Avatar, Icon, Modal } from 'antd'
+import { Avatar, Icon } from 'antd'
 import Icons from 'icons/index'
 import windowSize from 'react-window-size'
-import EditUser from 'src/containers/auth/edit-user'
+import { connect } from 'react-redux'
+import { setVisibleEdituser } from 'src/redux/actions/generalAction'
 
 // import { get as _get } from 'lodash-es'
 // import Router from 'next/router'
@@ -37,49 +38,27 @@ const AvatarUserWrapper = styled.div`
     border-radius: 50%;
   }
 `
+const mapDispathToProps = {
+  setVisibleEdituser
+}
+@connect(
+  () => ({}),
+  mapDispathToProps
+)
 @windowSize
 export default class AvatarUserV2 extends React.Component {
   static propTypes = {
-    windowWidth: PropTypes.number
+    windowWidth: PropTypes.number,
+    setVisibleEdituser: PropTypes.func
   }
 
-  state = {
-    isEdit: true
-  }
+  state = {}
 
   hanldeOnClickEdit = () => {
-    this.setState({
-      isEdit: true
-    })
-  }
-
-  getStyleReponsive = () => {
-    const { windowWidth } = this.props
-    let style
-    if (windowWidth >= 992) {
-      style = {
-        width: 968,
-        bodyStyle: {
-          padding: '30px 70px'
-        }
-      }
-    } else if (windowWidth >= 576) {
-      style = {
-        width: 500,
-        bodyStyle: {
-          padding: '30px 70px'
-        }
-      }
-    } else if (windowWidth < 576) {
-      style = {}
-    }
-    return {
-      ...style
-    }
+    this.props.setVisibleEdituser(true)
   }
 
   render() {
-    const { windowWidth } = this.props
     return (
       <AvatarUserWrapper>
         <div className='avatar__border'>
@@ -94,33 +73,6 @@ export default class AvatarUserV2 extends React.Component {
             </div>
           </div>
         </div>
-
-        <Modal
-          visible={this.state.isEdit}
-          footer={null}
-          centered
-          closeIcon={<span />}
-          // onCancel={
-          //   () => this.props.setVisibleRegister(false)
-          // }
-          // wrapClassName='register--modal'
-          closable={false}
-          {...this.getStyleReponsive()}
-          width='100%'
-          style={{
-            padding: windowWidth > 576 ? 24 : 12,
-            maxWidth: 968
-          }}
-        >
-          <EditUser
-            windowWidth={windowWidth}
-            handleCancel={() => {
-              this.setState({
-                isEdit: false
-              })
-            }}
-          />
-        </Modal>
       </AvatarUserWrapper>
     )
   }
