@@ -1,6 +1,8 @@
 import { concat as _concat } from 'lodash-es'
 import TourApi from 'src/api/TourApi'
 import categoryApi from 'src/api/categoryApi'
+import moment from 'moment'
+import { DATE_FORMAT } from 'src/config/format'
 
 // NOTE  Quản lý các store của danh mục
 export const GET_GENERAL_LIST_DEPARTURE = 'GENERAL/GET_GENERAL_LIST_DEPARTURE'
@@ -9,6 +11,11 @@ export const GET_GENERAL_LIST_TIME_SLOT = 'GENERAL/GET_GENERAL_LIST_TIME_SLOT'
 export const GET_GENERAL_LIST_PROMOTION = 'GENERAL/GET_GENERAL_LIST_PROMOTION'
 
 export const IS_LOADED_GENERAL_DANHMUC = 'GENERAL/IS_LOADED_GENERAL_DANHMUC'
+
+export const GET_GENERAL_LIST_SCHEDULE = 'GENERAL/GET_GENERAL_LIST_SCHEDULE'
+export const IS_LOADING_GENERAL_SCHEDULE = 'GENERAL/IS_LOADING_GENERAL_SCHEDULE'
+export const IS_LOADED_GENERAL_SCHEDULE = 'GENERAL/IS_LOADED_GENERAL_SCHEDULE'
+
 export function getListDeparture() {
   return async dispatch => {
     const res = await categoryApi.getListDepartureAll({})
@@ -113,5 +120,21 @@ export function setVisibleLogin(isVisible) {
 export function setVisibleEdituser(isVisible) {
   return dispatch => {
     dispatch({ type: SET_GENERAL_IS_EDIT_USER, payload: isVisible })
+  }
+}
+
+export function getListSchedule() {
+  return async dispatch => {
+    try {
+      dispatch({ type: IS_LOADING_GENERAL_SCHEDULE })
+      const response = await TourApi.getListTourSearch({
+        date: moment().format(DATE_FORMAT),
+        pageSize: 5
+      })
+      const { data } = response
+      dispatch({ type: GET_GENERAL_LIST_SCHEDULE, payload: data.list })
+    } finally {
+      dispatch({ type: IS_LOADED_GENERAL_SCHEDULE })
+    }
   }
 }

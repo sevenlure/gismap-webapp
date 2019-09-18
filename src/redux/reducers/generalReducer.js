@@ -11,7 +11,10 @@ import {
   CLEAR_GENERAL_USER_INFO,
   SET_GENERAL_IS_REGISTER,
   SET_GENERAL_IS_LOGIN,
-  SET_GENERAL_IS_EDIT_USER
+  SET_GENERAL_IS_EDIT_USER,
+  GET_GENERAL_LIST_SCHEDULE,
+  IS_LOADED_GENERAL_SCHEDULE,
+  IS_LOADING_GENERAL_SCHEDULE
 } from '../actions/generalAction'
 
 import storage from 'redux-persist/lib/storage'
@@ -30,7 +33,9 @@ const InitialState = {
   isLoadedListTourPopular: false,
   isRegister: false,
   isLogin: false,
-  isEditUser: false
+  isEditUser: false,
+  scheduleList: [],
+  scheduleIsLoading: false
 }
 
 // REDUCERS
@@ -97,6 +102,22 @@ const generalReducer = (state = InitialState, action) => {
         userInfo: { $set: null }
       })
     }
+    case IS_LOADING_GENERAL_SCHEDULE: {
+      return update(state, {
+        scheduleIsLoading: { $set: true }
+      })
+    }
+    case IS_LOADED_GENERAL_SCHEDULE: {
+      return update(state, {
+        scheduleIsLoading: { $set: false }
+      })
+    }
+    case GET_GENERAL_LIST_SCHEDULE: {
+      return update(state, {
+        scheduleList: { $set: action.payload }
+      })
+    }
+
     default:
       return state
   }
