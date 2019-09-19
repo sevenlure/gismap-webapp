@@ -9,10 +9,12 @@ import Icons from 'icons/index'
 import AddressSvg from 'static/images/icon/ic-address.svg'
 import Clearfix from 'src/components/elements/clearfix'
 // import { EditUserUser } from 'src/api/authApi'
+import { get as _get, pick as _pick } from 'lodash-es'
 import { connect } from 'react-redux'
 import { auth as authMess } from 'src/config/message'
 import icons from 'icons/index'
 import { setVisibleEdituser } from 'src/redux/actions/generalAction'
+import { UpdateUserInfo } from 'src/api/authApi'
 
 const registerMess = authMess.register
 
@@ -74,18 +76,25 @@ const EditUserWrapper = styled.div`
     }
   }
 `
+
+const mapStateToProps = state => ({
+  isAuthenticated: _get(state, 'AuthStore.isAuthenticated'),
+  userInfo: _get(state, 'GeneralStore.userInfo', '')
+})
 const mapDispatchToProps = {
   setVisibleEdituser
 }
 @connect(
-  () => ({}),
+  mapStateToProps,
   mapDispatchToProps
 )
 class EditUser extends React.Component {
   static propTypes = {
     form: PropTypes.any,
     windowWidth: PropTypes.number,
-    setVisibleEdituser: PropTypes.func
+    setVisibleEdituser: PropTypes.func,
+    userInfo: PropTypes.object,
+    isAuthenticated: PropTypes.bool
   }
 
   state = {
@@ -125,6 +134,19 @@ class EditUser extends React.Component {
     this.props.form.validateFields(async (err, values) => {
       if (!err) {
         console.log('Received values of form: ', values)
+        if (!this.state.isChangePass) {
+          try {
+            const data = _pick(values, ['email', 'name', 'phone', 'address'])
+            const token = this.props.userInfo.phone
+            console.log(data, token ,"-----")
+            const res = await UpdateUserInfo(data, token)
+            if (res.status === 200) {
+              console.log(res.data, 'ABC')
+            }
+          } catch (ex) {
+            console.log(ex)
+          }
+        }
         // try {
         //   const res = await otpApi.EditUser(values.phone)
         //   if (res.status) {
@@ -161,7 +183,7 @@ class EditUser extends React.Component {
 
   render() {
     const { getFieldDecorator, getFieldValue, getFieldsError } = this.props.form
-    const { windowWidth } = this.props
+    const { windowWidth, userInfo } = this.props
     let titleStyle = {
       marginBottom: 0
     }
@@ -226,6 +248,7 @@ class EditUser extends React.Component {
               <Form className='page--content--form' onSubmit={this.handleSubmit}>
                 <Form.Item>
                   {getFieldDecorator('fullName', {
+                    initialValue: _get(userInfo, 'name'),
                     rules: [
                       {
                         validator: (rule, value, callback) => {
@@ -257,6 +280,7 @@ class EditUser extends React.Component {
                 </Form.Item>
                 <Form.Item>
                   {getFieldDecorator('phone', {
+                    initialValue: _get(userInfo, 'phone'),
                     rules: [
                       { required: true, message: registerMess.phoneRequired },
                       {
@@ -277,6 +301,7 @@ class EditUser extends React.Component {
                 </Form.Item>
                 <Form.Item>
                   {getFieldDecorator('email', {
+                    initialValue: _get(userInfo, 'email'),
                     rules: [
                       {
                         required: true,
@@ -292,6 +317,7 @@ class EditUser extends React.Component {
                 </Form.Item>
                 <Form.Item>
                   {getFieldDecorator('address', {
+                    initialValue: _get(userInfo, 'address'),
                     rules: [
                       {
                         min: 10,

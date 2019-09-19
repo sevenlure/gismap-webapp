@@ -16,7 +16,6 @@ import { setVisibleRegister, setVisibleLogin } from 'src/redux/actions/generalAc
 import Router from 'next/router'
 import slug from 'src/routes'
 import windowSize from 'react-window-size'
-
 const registerMess = authMess.register
 
 const InfoCustomerWrapper = styled.div`
@@ -167,7 +166,18 @@ class InfoCustomer extends React.Component {
           </Form.Item>
           <Form.Item>
             {getFieldDecorator('email', {
-              initialValue: _get(userInfo, 'email')
+              initialValue: _get(userInfo, 'email'),
+              rules: [
+                {
+                  required: true,
+                  message: registerMess.emailRequired
+                },
+                {
+                  // type: 'email',
+                  pattern: /^.{5,}@.{2,}\..{2,}/,
+                  message: registerMess.emailValid
+                }
+              ]
             })(<Input size='large' prefix={<Icon component={EmaillSvg} />} placeholder='Email' />)}
           </Form.Item>
           <Form.Item>
