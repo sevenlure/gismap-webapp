@@ -36,8 +36,25 @@ export function registerUser({ email, name, phone, address, password, otp }) {
     otp
   })
 }
+
+export function UpdateUserInfo({ email, name, phone, address }, token) {
+  // console.log(data, 'data')
+  return fetch.post(
+    `${SLUG}/updateInfo`,
+    {
+      email,
+      name,
+      phone,
+      address
+    },
+    {
+      headers: { token: token }
+    }
+  )
+}
 export default {
   login,
   changePassword,
-  registerUser
+  registerUser,
+  UpdateUserInfo
 }
