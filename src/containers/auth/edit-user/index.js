@@ -138,7 +138,7 @@ class EditUser extends React.Component {
           try {
             const data = _pick(values, ['email', 'name', 'phone', 'address'])
             const token = this.props.userInfo.phone
-            console.log(data, token ,"-----")
+            console.log(data, token, '-----')
             const res = await UpdateUserInfo(data, token)
             if (res.status === 200) {
               console.log(res.data, 'ABC')

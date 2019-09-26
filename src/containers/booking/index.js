@@ -375,20 +375,18 @@ class Booking extends React.Component {
     return (
       <BookingContainer isVisibleFilter={isVisibleFilter}>
         {isVisibleFilter && <this.LeftBooking zIndex={2} />}
-        {this.state.isVisibleDrawer && (
-          <div id='drawerContainer' style={{ zIndex: this.state.isVisibleDrawer ? 10 : 1 }}>
-            <Drawer
-              {...drawerStyle}
-              onClose={() => this.setState({ isVisibleDrawer: false })}
-              visible={this.state.isVisibleDrawer}
-              getContainer={document.getElementById('drawerContainer')}
-              closable={false}
-              destroyOnClose={true}
-            >
-              <this.LeftBooking isVisibleDrawer={this.state.isVisibleDrawer} />
-            </Drawer>
-          </div>
-        )}
+        <div id='drawerContainer' style={{ zIndex: this.state.isVisibleDrawer ? 10 : 1 }}>
+          <Drawer
+            {...drawerStyle}
+            onClose={() => this.setState({ isVisibleDrawer: false })}
+            visible={this.state.isVisibleDrawer}
+            getContainer={document.getElementById('drawerContainer')}
+            closable={false}
+            destroyOnClose={true}
+          >
+            <this.LeftBooking isVisibleDrawer={this.state.isVisibleDrawer} />
+          </Drawer>
+        </div>
 
         <RightP pose={this.state.anim} className='right-booking'>
           <div className='right-booking--content'>

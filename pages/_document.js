@@ -36,6 +36,8 @@ class MyDocument extends Document {
           {/* <link rel='stylesheet' href='/static/css/nprogress.css' /> */}
           {/* <link rel='icon' href='/static/images/logo.png'></link> */}
           <link rel='stylesheet' href='/static/css/simplebar.min.css' />
+          <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.6.0/slick.min.css" />
+          <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.6.0/slick-theme.min.css" />
           <script src='/static/js/simplebar.min.js'></script>
         </Head>
         <body style={{ fontFamily: 'myFont', fontWeight: '300' }}>
