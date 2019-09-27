@@ -105,8 +105,8 @@ export default class ItemPromotion extends React.Component {
   state = {
     isDetail: false
   }
-  handleOnClick = (item)=>{
-    if(this.props.onChange){
+  handleOnClick = item => {
+    if (this.props.onChange) {
       this.props.onChange(item)
     }
   }
@@ -135,7 +135,9 @@ export default class ItemPromotion extends React.Component {
             >
               {labelButton}
             </Button>
-            <Button onClick={()=>this.handleOnClick(item)} type='primary'>Sử dụng</Button>
+            <Button onClick={() => this.handleOnClick(item)} type='primary'>
+              Sử dụng
+            </Button>
           </div>
         </div>
         <div className='half-circle left-rotated' />

@@ -80,7 +80,7 @@ class ResultPage extends React.Component {
             .startOf('hour')
             .format(HH_MM)
         : ''
-      dateStart = moment(BookingNow.timeStart).format('[Ngày,] DD [Tháng,] MM [Năm] YYYY, ')
+      dateStart = moment(BookingNow.timeStart).format('[Ngày] DD[, Tháng] MM[, Năm] YYYY ')
       from = _get(BookingNow, 'fromDeparture.name', '')
       to = _get(BookingNow, 'toDeparture.name', '')
     }

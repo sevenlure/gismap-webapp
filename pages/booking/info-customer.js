@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import styled from 'styled-components'
 import Clearfix from 'src/components/elements/clearfix'
 import { Form, Input, Icon, Button, Row, Col } from 'antd'
-import { get as _get } from 'lodash-es'
+import { get as _get, isEmpty as _isEmpty } from 'lodash-es'
 import PersonalSvg from 'static/images/icon/ic-personal.svg'
 import EmaillSvg from 'static/images/icon/ic-email.svg'
 import MobileSvg from 'static/images/icon/ic-mobile.svg'
@@ -49,7 +49,8 @@ const InfoCustomerWrapper = styled.div`
 
 const mapStateToProps = state => ({
   isAuthenticated: _get(state, 'AuthStore.isAuthenticated'),
-  userInfo: _get(state, 'GeneralStore.userInfo', '')
+  userInfo: _get(state, 'GeneralStore.userInfo', ''),
+  BookingNowSeat: _get(state, 'BookingStore.BookingNowSeat', null)
 })
 
 const mapDispatchToProps = {
@@ -73,7 +74,8 @@ class InfoCustomer extends React.Component {
     clearBookingNowInfoCustomer: PropTypes.func,
     setBookingNowInfoCustomer: PropTypes.func,
     setVisibleRegister: PropTypes.func,
-    setVisibleLogin: PropTypes.func
+    setVisibleLogin: PropTypes.func,
+    BookingNowSeat: PropTypes.object
   }
 
   state = {
@@ -98,6 +100,9 @@ class InfoCustomer extends React.Component {
     })
   }
   componentDidMount = () => {
+    if (_isEmpty(this.props.BookingNowSeat)) {
+      Router.push(slug.basic)
+    }
     this.props.clearBookingNowInfoCustomer()
   }
 

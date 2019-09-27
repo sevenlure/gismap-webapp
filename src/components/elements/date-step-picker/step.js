@@ -1,6 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import ScrollMenu from 'react-horizontal-scrolling-menu'
+// import ScrollMenu from 'react-horizontal-scrolling-menu'
 import { Avatar, Icon } from 'antd'
 import moment from 'moment'
 import IconSvg from 'icons'

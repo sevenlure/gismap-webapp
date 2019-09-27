@@ -7,7 +7,7 @@ export function setPaymentInfoTicket(data) {
     dispatch({ type: SET_PAYMENT_INFO_TICKET, payload: data })
   }
 }
-export function clearBookingNowInfoCustomer() {
+export function clearPaymentInfoTicket() {
   return async dispatch => {
     dispatch({ type: CLEAR_PAYMENT_INFO_TICKET })
   }
