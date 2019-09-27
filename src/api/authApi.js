@@ -52,9 +52,24 @@ export function UpdateUserInfo({ email, name, phone, address }, token) {
     }
   )
 }
+
+export function UpdatePasswordUserWithToken({ oldPassword, newPassword }, token) {
+  // console.log(data, 'data')
+  return fetch.post(
+    `${SLUG}/change-password-by-token`,
+    {
+      oldPassword,
+      newPassword
+    },
+    {
+      headers: { token: token }
+    }
+  )
+}
 export default {
   login,
   changePassword,
   registerUser,
-  UpdateUserInfo
+  UpdateUserInfo,
+  UpdatePasswordUserWithToken
 }
