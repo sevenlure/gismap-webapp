@@ -119,13 +119,13 @@ const bookingPersistConfig = {
   storage: storage,
   blacklist: [
     'listTourSearch',
-    'isLoadedlistTourSearch',
-    'BookingNow',
-    'isLoadedBookingNow',
-    'BookingNowSeat',
-    'BookingNowPoint',
-    'BookingNowInfoCustomer',
-    'filter'
+    'isLoadedlistTourSearch'
+    // 'BookingNow',
+    // 'isLoadedBookingNow',
+    // 'BookingNowSeat',
+    // 'BookingNowPoint',
+    // 'BookingNowInfoCustomer',
+    // 'filter'
   ]
 }
 
