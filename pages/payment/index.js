@@ -10,10 +10,18 @@ import { Form, Radio, Input, Icon, Button, Row, Col, Divider, Checkbox } from 'a
 import icons from 'icons'
 import AvatarUser from 'src/containers/auth/avatar-user'
 
-import { get as _get, map as _map, values as _values, isNumber as _isNumber, find as _find } from 'lodash-es'
+import {
+  get as _get,
+  map as _map,
+  values as _values,
+  isNumber as _isNumber,
+  find as _find,
+  isEmpty as _isEmpty
+} from 'lodash-es'
 import DefaultLayout from 'src/layout/default'
 import { connect } from 'react-redux'
-import { setPaymentInfoTicket, clearBookingNowInfoCustomer } from 'src/redux/actions/paymentAction'
+import { setPaymentInfoTicket } from 'src/redux/actions/paymentAction'
+import { clearBookingNowSeat, clearBookingNowPoint, clearBookingNowInfoCustomer } from 'src/redux/actions/BookingAction'
 import { HH_MM } from 'src/config/format'
 import moment from 'moment'
 import { getFormatNumber } from 'src/config/format'
@@ -106,7 +114,9 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = {
   setPaymentInfoTicket,
-  clearBookingNowInfoCustomer
+  clearBookingNowInfoCustomer,
+  clearBookingNowSeat,
+  clearBookingNowPoint
 }
 
 @connect(
@@ -119,13 +129,16 @@ class InfoCustomer extends React.Component {
   static propTypes = {
     form: PropTypes.any,
     isAuthenticated: PropTypes.bool,
+    windowWidth: PropTypes.number,
     userInfo: PropTypes.object,
     BookingNow: PropTypes.object,
     BookingNowSeat: PropTypes.object,
     BookingNowPoint: PropTypes.object,
     BookingNowInfoCustomer: PropTypes.object,
     setPaymentInfoTicket: PropTypes.func,
-    clearBookingNowInfoCustomer: PropTypes.func
+    clearBookingNowInfoCustomer: PropTypes.func,
+    clearBookingNowSeat: PropTypes.func,
+    clearBookingNowPoint: PropTypes.func
   }
 
   state = {
@@ -202,7 +215,6 @@ class InfoCustomer extends React.Component {
   }) => {
     this.props.form.validateFields(async (err, values) => {
       if (!err) {
-        this.props.clearBookingNowInfoCustomer()
         // console.log('Received values of form: ', values, BookingNow,BookingNowSeat, BookingNowPoint, BookingNowInfoCustomer,promotionCode,pricePromotion, totalPrice)
         const itemMethodPayment = _find(this.state.listPayments, item => {
           return item.id === values.paymentCode
@@ -229,7 +241,12 @@ class InfoCustomer extends React.Component {
           if (res.status) {
             // console.log(res, '---')
             this.props.setPaymentInfoTicket(res.data)
-            Router.push(slug.result.paymentSucces)
+
+            Router.push(slug.result.paymentSucces).then(() => {
+              this.props.clearBookingNowInfoCustomer()
+              this.props.clearBookingNowSeat()
+              this.props.clearBookingNowPoint()
+            })
           }
         } catch (e) {
           // console.log(e)
@@ -240,9 +257,15 @@ class InfoCustomer extends React.Component {
     })
   }
 
+  componentDidMount = () => {
+    if (_isEmpty(this.props.BookingNowSeat)) {
+      Router.push(slug.basic)
+    }
+  }
+
   render() {
     // md: '768px',
-    const { getFieldDecorator, getFieldValue } = this.props.form
+    const { getFieldDecorator } = this.props.form
     const { BookingNow, BookingNowSeat, BookingNowPoint, BookingNowInfoCustomer, windowWidth } = this.props
     const { PromotionInfo } = this.state
     const promotionCode = _get(PromotionInfo, 'code', '')
@@ -289,7 +312,7 @@ class InfoCustomer extends React.Component {
       nameCustomer = BookingNowInfoCustomer.fullName
       phone = BookingNowInfoCustomer.phone
     }
-    console.log('isViewMobile', isViewMobile)
+    // console.log('isViewMobile', isViewMobile)
 
     return (
       <PaymentWrapper isViewMobile>
@@ -462,7 +485,7 @@ class InfoCustomer extends React.Component {
                     <Clearfix height={24} />
                     <Col lg={24}>
                       <Button
-                        onClick={e => {
+                        onClick={ () => {
                           // e.preventDefault()
                           // console.log(BookingNow, 'BookingNow')
                           this.handleSubmit({
@@ -653,14 +676,12 @@ class InfoCustomer extends React.Component {
                     <Clearfix height={24} />
                     <Col lg={24}>
                       <Button
-                        onClick={e => {
+                        onClick={ () => {
                           // e.preventDefault()
                           // console.log(BookingNow, 'BookingNow')
                           this.handleSubmit({
                             BookingNow,
                             BookingNowSeat,
-                            BookingNowPoint,
-                            BookingNowInfoCustomer,
                             BookingNowPoint,
                             BookingNowInfoCustomer,
                             promotionCode,
