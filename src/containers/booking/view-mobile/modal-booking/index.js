@@ -5,7 +5,7 @@ import { Button, Modal, Divider } from 'antd'
 import PickupPointContainer from './pickup-point-container'
 import ChooseSeatContainer from './choose-seat.container'
 import { connect } from 'react-redux'
-import { get as _get, map as _map, values as _values, isEmpty as _isEmpty } from 'lodash-es'
+import { get as _get, map as _map, values as _values, isEmpty as _isEmpty, sortBy as _sortBy } from 'lodash-es'
 import moment from 'moment'
 import { HH_MM } from 'src/config/format'
 import { formatCurrency } from 'utils/format'
@@ -134,7 +134,7 @@ export default class ModalBooking extends React.Component {
 
     if (isConfirmOrderTicket) {
       let tamp = []
-      _map(BookingNowSeat, item => {
+      _map(_sortBy(BookingNowSeat, ['name']), item => {
         if (item && item.name) tamp.push(item.name)
       })
       nameSoVe = tamp.join(', ')
@@ -201,7 +201,7 @@ export default class ModalBooking extends React.Component {
                 </div>
               </div>
               <div className='footer-booking-right'>
-                <div style={{ width: 120, textAlign: 'right' }}>
+                <div style={{ width: 140, textAlign: 'right' }}>
                   <span>Tổng tiền</span>
                   <div>
                     <h3 style={{ color: colored }}>{tongTien}</h3>

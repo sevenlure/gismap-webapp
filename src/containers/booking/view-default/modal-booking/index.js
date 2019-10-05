@@ -5,12 +5,13 @@ import { Button, Modal, Divider } from 'antd'
 import PickupPointContainer from './pickup-point-container'
 import ChooseSeatContainer from './choose-seat.container'
 import { connect } from 'react-redux'
-import { get as _get, map as _map, values as _values, isEmpty as _isEmpty } from 'lodash-es'
+import { get as _get, map as _map, values as _values, isEmpty as _isEmpty, sortBy as _sortBy } from 'lodash-es'
 import moment from 'moment'
 import { HH_MM } from 'src/config/format'
 import { formatCurrency } from 'utils/format'
 import Router from 'next/router'
 import slug from 'src/routes'
+import { clearBookingNowInfoCustomer } from 'src/redux/actions/BookingAction'
 
 const BodyWrapper = styled.div`
   flex: 1;
@@ -54,7 +55,9 @@ const mapStateToProps = state => ({
   BookingNowPoint: _get(state, 'BookingStore.BookingNowPoint')
 })
 
-const mapDispatchToProps = {}
+const mapDispatchToProps = {
+  clearBookingNowInfoCustomer
+}
 
 // MARK  this.ModalBooking nắm ref của modal-booking
 @connect(
@@ -67,7 +70,8 @@ class ModalBooking extends React.Component {
     BookingNowSeat: PropTypes.object,
     BookingNowPoint: PropTypes.object,
     getRef: PropTypes.func,
-    windowWidth: PropTypes.number
+    windowWidth: PropTypes.number,
+    clearBookingNowInfoCustomer: PropTypes.func.isRequired
   }
 
   state = {
@@ -106,6 +110,7 @@ class ModalBooking extends React.Component {
         isErrorBookingNowPoint: true
       })
     } else {
+      this.props.clearBookingNowInfoCustomer()
       Router.push(slug.booking.infoCustomer)
     }
   }
@@ -140,7 +145,7 @@ class ModalBooking extends React.Component {
 
     if (isConfirmOrderTicket) {
       let tamp = []
-      _map(BookingNowSeat, item => {
+      _map(_sortBy(BookingNowSeat, ['name']), item => {
         if (item && item.name) tamp.push(item.name)
       })
       nameSoVe = tamp.join(', ')
@@ -163,7 +168,8 @@ class ModalBooking extends React.Component {
             maxWidth: 992
           }}
           bodyStyle={{
-            padding: '30px 5%'
+            padding: '30px 5%',
+            zoom: 0.8
           }}
           visible={this.state.isOpenModal}
           onOk={this.closeModal}
@@ -210,7 +216,7 @@ class ModalBooking extends React.Component {
                 </div>
               </div>
               <div className='footer-booking-right'>
-                <div style={{ width: 120, textAlign: 'right' }}>
+                <div style={{ width: 140, textAlign: 'right' }}>
                   <span>Tổng tiền</span>
                   <div>
                     <h3 style={{ color: colored }}>{tongTien}</h3>

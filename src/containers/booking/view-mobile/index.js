@@ -121,9 +121,9 @@ class BookingContentLaptop extends React.Component {
                             onClick={() => {
                               console.log('this.props.BookingNow', this.props.BookingNow)
                               if (this.props.BookingNow && this.props.BookingNow.id !== item.id) {
-                                this.props.clearBookingNowSeat()
                                 this.ModalBooking.resetData()
                               }
+                              this.props.clearBookingNowSeat()
                               this.props.setBookingNow(item)
                               this.ModalBooking.showModal()
                             }}

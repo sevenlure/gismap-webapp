@@ -265,7 +265,7 @@ class InfoCustomer extends React.Component {
 
   render() {
     // md: '768px',
-    const { getFieldDecorator } = this.props.form
+    const { getFieldDecorator, getFieldValue } = this.props.form
     const { BookingNow, BookingNowSeat, BookingNowPoint, BookingNowInfoCustomer, windowWidth } = this.props
     const { PromotionInfo } = this.state
     const promotionCode = _get(PromotionInfo, 'code', '')
@@ -485,7 +485,7 @@ class InfoCustomer extends React.Component {
                     <Clearfix height={24} />
                     <Col lg={24}>
                       <Button
-                        onClick={ () => {
+                        onClick={() => {
                           // e.preventDefault()
                           // console.log(BookingNow, 'BookingNow')
                           this.handleSubmit({
@@ -498,7 +498,7 @@ class InfoCustomer extends React.Component {
                             totalPrice
                           })
                         }}
-                        disabled={!this.state.isAgree}
+                        disabled={!this.state.isAgree || !getFieldValue('paymentCode')}
                         block
                         type='primary'
                       >
@@ -676,7 +676,7 @@ class InfoCustomer extends React.Component {
                     <Clearfix height={24} />
                     <Col lg={24}>
                       <Button
-                        onClick={ () => {
+                        onClick={() => {
                           // e.preventDefault()
                           // console.log(BookingNow, 'BookingNow')
                           this.handleSubmit({
@@ -689,7 +689,7 @@ class InfoCustomer extends React.Component {
                             totalPrice
                           })
                         }}
-                        disabled={!this.state.isAgree}
+                        disabled={!this.state.isAgree || !getFieldValue('paymentCode')}
                         block
                         type='primary'
                       >
