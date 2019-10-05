@@ -169,6 +169,7 @@ export default class PickupPointContainer extends React.Component {
                   this.setState({ pickupPointInput: value })
                   this.hanldeOnChangeData('from', value)
                 }}
+                maxLength={35}
                 value={this.state.pickupPointInput}
                 disabled={this.state.pickupPointVal === 2 ? false : true}
                 size='large'
@@ -178,8 +179,8 @@ export default class PickupPointContainer extends React.Component {
           </Radio.Group>
           {this.props.isErrorBookingNowPoint && _isEmpty(this.props.BookingNowPoint.from) && (
             <div className='.has-error'>
-              <div className='ant-form-explain' style={{ color: 'red' }}>
-                Vui lòng nhập điểm đón!
+              <div className='ant-form-explain' style={{ color: 'red', fontSize: 14 }}>
+                Vui lòng chọn hoặc nhập điểm đón.
               </div>
             </div>
           )}
@@ -212,6 +213,7 @@ export default class PickupPointContainer extends React.Component {
                   this.setState({ desPointInput: value })
                   this.hanldeOnChangeData('to', value)
                 }}
+                maxLength={35}
                 value={this.state.desPointInput}
                 disabled={this.state.desPointVal === 2 ? false : true}
                 size='large'
@@ -221,8 +223,8 @@ export default class PickupPointContainer extends React.Component {
           </Radio.Group>
           {this.props.isErrorBookingNowPoint && _isEmpty(this.props.BookingNowPoint.to) && (
             <div className='.has-error'>
-              <div className='ant-form-explain' style={{ color: 'red' }}>
-                Vui lòng nhập điểm trả!
+              <div className='ant-form-explain' style={{ color: 'red', fontSize: 14 }}>
+                Vui lòng chọn hoặc nhập điểm xuống.
               </div>
             </div>
           )}

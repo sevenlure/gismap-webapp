@@ -34,6 +34,9 @@ const BookingContentDefaultWrapper = styled.div`
         color: #4c4c4c;
         font-size: 1.125rem;
       }
+      .right-booking--content-body__tb-row-name {
+        font-size: 1.125rem;
+      }
       .right-booking--content-body--item__center {
         min-height: calc(112px - 16px - 16px);
         display: flex;
@@ -150,7 +153,9 @@ class BookingContentLaptop extends React.Component {
                       </Col>
                       <Col span={6}>
                         <div>
-                          <span>{_get(item, 'fromDeparture.name', '')}</span>
+                          <span className='right-booking--content-body__tb-row-name'>
+                            {_get(item, 'fromDeparture.name', '')}
+                          </span>
                         </div>
                         <div>
                           <Icon style={{ fontSize: '1.5rem' }} component={ArrowIconSvg} />
@@ -168,8 +173,8 @@ class BookingContentLaptop extends React.Component {
                         style={{ justifyContent: 'center' }}
                         className='right-booking--content-body--item__center'
                       >
-                        {!fullSeat && <strong style={{ color: '#ff7b66' }}>{`${item.seatBooked}/${item.seat}`}</strong>}
-                        {fullSeat && <span>{`Hết chỗ`}</span>}
+                        {!fullSeat && <span>{`${item.seatBooked}/${item.seat}`}</span>}
+                        {fullSeat && <strong style={{ color: '#ff7b66' }}>{`Hết chỗ`}</strong>}
                       </Col>
                       <Col
                         span={7}
@@ -188,10 +193,11 @@ class BookingContentLaptop extends React.Component {
                                 try {
                                   console.log('this.props.BookingNow', this.props.BookingNow)
                                   if (this.props.BookingNow && this.props.BookingNow.id !== item.id) {
-                                    this.props.clearBookingNowSeat()
                                     this.ModalBooking.resetData()
                                   }
+                                  this.props.clearBookingNowSeat()
                                   this.props.setBookingNow(item)
+
                                   this.ModalBooking.showModal()
                                 } catch (e) {
                                   console.log('loi this.ModalBooking.showModal()', e)

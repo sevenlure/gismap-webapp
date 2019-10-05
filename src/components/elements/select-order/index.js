@@ -92,7 +92,7 @@ export default class SelectOrder extends React.Component {
         visible={this.state.isVisible}
         trigger={['click']}
         overlay={<this.SelectOption />}
-        overlayStyle={{ padding: '12px 12px', zIndex: 1 }}
+        overlayStyle={{ zIndex: 1 }}
         getPopupContainer={trigger => trigger.parentNode}
         onVisibleChange={changed => {
           this.setState({ isVisible: changed })

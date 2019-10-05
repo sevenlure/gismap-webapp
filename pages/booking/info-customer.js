@@ -50,7 +50,8 @@ const InfoCustomerWrapper = styled.div`
 const mapStateToProps = state => ({
   isAuthenticated: _get(state, 'AuthStore.isAuthenticated'),
   userInfo: _get(state, 'GeneralStore.userInfo', ''),
-  BookingNowSeat: _get(state, 'BookingStore.BookingNowSeat', null)
+  BookingNowSeat: _get(state, 'BookingStore.BookingNowSeat', null),
+  BookingNowInfoCustomer: _get(state, 'BookingStore.BookingNowInfoCustomer', null)
 })
 
 const mapDispatchToProps = {
@@ -71,6 +72,7 @@ class InfoCustomer extends React.Component {
     form: PropTypes.any,
     isAuthenticated: PropTypes.bool,
     userInfo: PropTypes.object,
+    BookingNowInfoCustomer: PropTypes.object,
     clearBookingNowInfoCustomer: PropTypes.func,
     setBookingNowInfoCustomer: PropTypes.func,
     setVisibleRegister: PropTypes.func,
@@ -103,7 +105,7 @@ class InfoCustomer extends React.Component {
     if (_isEmpty(this.props.BookingNowSeat)) {
       Router.push(slug.basic)
     }
-    this.props.clearBookingNowInfoCustomer()
+    // this.props.clearBookingNowInfoCustomer() => chuyen sang nút dat ve sẽ clear
   }
 
   render() {
@@ -111,7 +113,8 @@ class InfoCustomer extends React.Component {
 
     // console.log(this.props, 'render')
     const title = this.props.isAuthenticated ? 'Xác nhận thông tin khách hàng' : 'Vui lòng nhập thông tin khách hàng'
-    const { userInfo } = this.props
+    const { userInfo, BookingNowInfoCustomer } = this.props
+    const infoObj = BookingNowInfoCustomer || userInfo
 
     return (
       <InfoCustomerWrapper windowWidth={this.props.windowWidth}>
@@ -123,7 +126,7 @@ class InfoCustomer extends React.Component {
           <Clearfix height={30} />
           <Form.Item>
             {getFieldDecorator('fullName', {
-              initialValue: _get(userInfo, 'name'),
+              initialValue: _get(infoObj, 'name') || _get(infoObj, 'fullName'),
               rules: [
                 {
                   validator: (rule, value, callback) => {
@@ -150,7 +153,7 @@ class InfoCustomer extends React.Component {
           </Form.Item>
           <Form.Item>
             {getFieldDecorator('phone', {
-              initialValue: _get(userInfo, 'phone'),
+              initialValue: _get(infoObj, 'phone'),
               rules: [
                 { required: true, message: registerMess.phoneRequired },
                 {
@@ -171,7 +174,7 @@ class InfoCustomer extends React.Component {
           </Form.Item>
           <Form.Item>
             {getFieldDecorator('email', {
-              initialValue: _get(userInfo, 'email'),
+              initialValue: _get(infoObj, 'email'),
               rules: [
                 {
                   required: true,
@@ -187,7 +190,7 @@ class InfoCustomer extends React.Component {
           </Form.Item>
           <Form.Item>
             {getFieldDecorator('address', {
-              initialValue: _get(userInfo, 'address'),
+              initialValue: _get(infoObj, 'address'),
               rules: [
                 {
                   min: 10,
