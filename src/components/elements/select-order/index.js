@@ -47,7 +47,7 @@ export default class SelectOrder extends React.Component {
           if (menuSelected && menuSelected.key) {
             const label = _get(menuSelected, 'item.props.label')
             this.setState({ value: menuSelected.key, label })
-            if (this.props.onChange) this.props.onChange(menuSelected.key)
+            // if (this.props.onChange) this.props.onChange(menuSelected.key)
           }
         }}
         defaultSelectedKeys={[this.props.defaultSelectedKeys]}
