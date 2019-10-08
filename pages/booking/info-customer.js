@@ -16,6 +16,9 @@ import { setVisibleRegister, setVisibleLogin } from 'src/redux/actions/generalAc
 import Router from 'next/router'
 import slug from 'src/routes'
 import windowSize from 'react-window-size'
+import Cleave from 'cleave.js'
+import { get as _get } from 'lodash-es'
+
 const registerMess = authMess.register
 
 const InfoCustomerWrapper = styled.div`
@@ -94,14 +97,27 @@ class InfoCustomer extends React.Component {
     this.props.form.validateFields(async (err, values) => {
       if (!err) {
         // console.log('Received values of form: ', values)
+        const phone = _get(values, 'phone', '').replace(/ /g, '')
         this.props.setBookingNowInfoCustomer({
-          ...values
+          ...values,
+          phone
         })
         Router.push(slug.payment.base)
       }
     })
   }
   componentDidMount = () => {
+    const { setFieldsValue } = this.props.form
+    new Cleave('#phone', {
+      numericOnly: true,
+      delimiter: ' ',
+      blocks: [3, 3, 4],
+      onValueChanged: ({ target }) => {
+        const value = _get(target, 'value', '')
+        setFieldsValue({ phone: value })
+      }
+    })
+
     if (_isEmpty(this.props.BookingNowSeat)) {
       Router.push(slug.basic)
     }
@@ -156,10 +172,10 @@ class InfoCustomer extends React.Component {
               initialValue: _get(infoObj, 'phone'),
               rules: [
                 { required: true, message: registerMess.phoneRequired },
-                {
-                  pattern: /^[0-9]*$/,
-                  message: registerMess.phoneOnlyNumber
-                },
+                // {
+                //   pattern: /^[0-9]*$/,
+                //   message: registerMess.phoneOnlyNumber
+                // },
                 { min: 10, max: 13, message: registerMess.phoneLen }
               ]
             })(

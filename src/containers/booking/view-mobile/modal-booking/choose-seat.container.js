@@ -97,7 +97,7 @@ const TitleCard = () => {
         <span style={{ marginLeft: 4, fontSize: '1rem' }}> Đang chọn</span>
       </Col>
       <Col span={6} style={{ display: 'flex', alignItems: 'center' }}>
-        <IconSeat zoom={0.8} matrix={{ status: 0 }} />
+        <IconSeat isDisabled zoom={0.8} matrix={{ status: 0 }} />
         <span style={{ marginLeft: 4, fontSize: '1rem' }}> Còn trống</span>
       </Col>
     </Row>

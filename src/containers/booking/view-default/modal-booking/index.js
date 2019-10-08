@@ -168,8 +168,8 @@ class ModalBooking extends React.Component {
             maxWidth: 992
           }}
           bodyStyle={{
-            padding: '30px 5%',
-            zoom: 0.8
+            padding: '30px 5%'
+            // zoom: 0.8
           }}
           visible={this.state.isOpenModal}
           onOk={this.closeModal}

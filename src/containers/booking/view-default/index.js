@@ -35,7 +35,7 @@ const BookingContentDefaultWrapper = styled.div`
         font-size: 1.125rem;
       }
       .right-booking--content-body__tb-row-name {
-        font-size: 1.125rem;
+        /* font-size: 1.125rem; */
       }
       .right-booking--content-body--item__center {
         min-height: calc(112px - 16px - 16px);

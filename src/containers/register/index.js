@@ -15,6 +15,8 @@ import { userLogin } from 'src/redux/actions/authAction'
 import { updateUserInfo } from 'src/redux/actions/generalAction.js'
 import { auth as authMess } from 'src/config/message'
 import OtpConfirm from 'src/containers/otp-confirm'
+import Cleave from 'cleave.js'
+import { get as _get } from 'lodash-es'
 
 const registerMess = authMess.register
 
@@ -123,8 +125,9 @@ class Register extends React.Component {
     this.props.form.validateFields(async (err, values) => {
       if (!err) {
         // console.log('Received values of form: ', values)
+        const phone = _get(values, 'phone', '').replace(/ /g, '')
         try {
-          const res = await otpApi.register(values.phone)
+          const res = await otpApi.register(phone)
           if (res.status) {
             this.getModal()
           }
@@ -135,7 +138,7 @@ class Register extends React.Component {
           if (data.code === 'Conflict' && data.message === 'Phone is registered') {
             this.props.form.setFields({
               phone: {
-                value: values.phone,
+                value: phone,
                 errors: [new Error(registerMess.phoneExist)]
               }
             })
@@ -172,6 +175,19 @@ class Register extends React.Component {
     } else {
       callback()
     }
+  }
+
+  componentDidMount() {
+    const { setFieldsValue } = this.props.form
+    new Cleave('#phone', {
+      numericOnly: true,
+      delimiter: ' ',
+      blocks: [3, 3, 4],
+      onValueChanged: ({ target }) => {
+        const value = _get(target, 'value', '')
+        setFieldsValue({ phone: value })
+      }
+    })
   }
 
   componentDidUpdate = prevprops => {
@@ -221,10 +237,10 @@ class Register extends React.Component {
             {getFieldDecorator('phone', {
               rules: [
                 { required: true, message: registerMess.phoneRequired },
-                {
-                  pattern: /^[0-9]*$/,
-                  message: registerMess.phoneOnlyNumber
-                },
+                // {
+                //   pattern: /^[0-9]*$/,
+                //   message: registerMess.phoneOnlyNumber
+                // },
                 { min: 10, max: 13, message: registerMess.phoneLen }
               ]
             })(
