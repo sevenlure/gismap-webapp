@@ -10,6 +10,8 @@ import OtpConfirm from 'src/containers/otp-confirm'
 import slug from 'src/routes'
 import { fotgotPassword } from 'src/api/otpApi'
 import { authFotgotPassword } from 'src/api/authApi'
+import Cleave from 'cleave.js'
+import { get as _get } from 'lodash-es'
 
 const ForgetPasswordWrapper = styled.div`
   margin-top: 45px;
@@ -63,12 +65,26 @@ class ForgetPasswordPage extends React.Component {
     }
   }
 
+  componentDidMount() {
+    const { setFieldsValue } = this.props.form
+    new Cleave('#phone', {
+      numericOnly: true,
+      delimiter: ' ',
+      blocks: [3, 3, 4],
+      onValueChanged: ({ target }) => {
+        const value = _get(target, 'value', '')
+        setFieldsValue({ phone: value })
+      }
+    })
+  }
+
   handleSubmit = e => {
     e.preventDefault()
     this.props.form.validateFields(async (err, values) => {
       if (!err) {
         // console.log('Received values of form: ', values)
-        const res = await fotgotPassword(values.phone)
+        const phone = _get(values, 'phone', '').replace(/ /g, '')
+        const res = await fotgotPassword(phone)
         // console.log(res, 'fotgotPassword')
         if (res.status === 200 && res.data) {
           this.setState({

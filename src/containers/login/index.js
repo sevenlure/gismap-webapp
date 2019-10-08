@@ -11,6 +11,7 @@ import { updateUserInfo } from 'src/redux/actions/generalAction.js'
 import { connect } from 'react-redux'
 import { get as _get } from 'lodash-es'
 import { auth as authMess } from 'src/config/message'
+import Cleave from 'cleave.js'
 
 const LoginWrapper = styled.div`
   .modal--title {
@@ -75,7 +76,18 @@ class Login extends React.Component {
     isLoading: false
   }
 
-  componentDidMount = () => {}
+  componentDidMount = () => {
+    const { setFieldsValue } = this.props.form
+    new Cleave('#phone', {
+      numericOnly: true,
+      delimiter: ' ',
+      blocks: [3, 3, 4],
+      onValueChanged: ({ target }) => {
+        const value = _get(target, 'value', '')
+        setFieldsValue({ phone: value })
+      }
+    })
+  }
   componentWillUnmount = () => {}
 
   handleSubmit = e => {
@@ -83,6 +95,7 @@ class Login extends React.Component {
     this.props.form.validateFields((err, values) => {
       if (!err) {
         // console.log('Received values of form: ', values)
+        const phone = _get(values, 'phone', '').replace(/ /g, '')
         // if (this.props.onSubmit) this.props.onSubmit(values)
         this.setState({
           isLoading: true
@@ -90,7 +103,7 @@ class Login extends React.Component {
 
         setTimeout(async () => {
           authApi
-            .login(values)
+            .login({ ...values, phone })
             .then(res => {
               // console.log('API', res)
               this.props.userLogin(_get(res, 'data', null))

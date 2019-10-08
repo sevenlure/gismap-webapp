@@ -17,6 +17,7 @@ import { setVisibleEdituser } from 'src/redux/actions/generalAction'
 import { updateUserInfo } from 'src/redux/actions/generalAction'
 import { UpdateUserInfo, UpdatePasswordUserWithToken } from 'src/api/authApi'
 import posed from 'react-pose'
+import Cleave from 'cleave.js'
 
 const ChangePassWrapper = posed.div({
   enter: { height: 'auto', opacity: 1, marginBottom: 0 },
@@ -111,6 +112,19 @@ class EditUser extends React.Component {
     isLoadingImage: false
   }
 
+  componentDidMount() {
+    const { setFieldsValue } = this.props.form
+    new Cleave('#phone', {
+      numericOnly: true,
+      delimiter: ' ',
+      blocks: [3, 3, 4],
+      onValueChanged: ({ target }) => {
+        const value = _get(target, 'value', '')
+        setFieldsValue({ phone: value })
+      }
+    })
+  }
+
   handleChangePassWord = () => {
     this.setState({
       isChangePass: true
@@ -143,9 +157,10 @@ class EditUser extends React.Component {
     this.props.form.validateFields(async (err, values) => {
       if (!err) {
         console.log('Received values of form: ', values)
+        const phone = _get(values, 'phone', '').replace(/ /g, '')
         if (!this.state.isChangePass) {
           try {
-            const data = _pick(values, ['email', 'name', 'phone', 'address'])
+            const data = _pick({ ...values, phone }, ['email', 'name', 'phone', 'address'])
             const token = this.props.userInfo.phone
             const res = await UpdateUserInfo(data, token)
             if (res.status === 200) {
@@ -291,10 +306,10 @@ class EditUser extends React.Component {
                     initialValue: _get(userInfo, 'phone'),
                     rules: [
                       { required: true, message: registerMess.phoneRequired },
-                      {
-                        pattern: /^[0-9]*$/,
-                        message: registerMess.phoneOnlyNumber
-                      },
+                      // {
+                      //   pattern: /^[0-9]*$/,
+                      //   message: registerMess.phoneOnlyNumber
+                      // },
                       { min: 10, max: 13, message: registerMess.phoneLen }
                     ]
                   })(

@@ -63,7 +63,8 @@ export default class IconSeat extends React.Component {
     price: PropTypes.number.isRequired,
     removeBookingNowSeat: PropTypes.func.isRequired,
     row: PropTypes.number,
-    zoom: PropTypes.number
+    zoom: PropTypes.number,
+    isDisabled: PropTypes.bool
   }
 
   static defaultProps = {
@@ -128,7 +129,7 @@ export default class IconSeat extends React.Component {
       <I
         onClick={() => {
           //NOTE dieu kien de thuc thi logic, ghế còn trống
-          if (status === 0) this.handleOnClick()
+          if (status === 0 && !this.props.isDisabled) this.handleOnClick()
         }}
         style={{ zoom: zoom }}
         className='anticon'

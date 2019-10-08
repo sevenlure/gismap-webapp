@@ -171,6 +171,10 @@ export default class PickupPointContainer extends React.Component {
           <Radio.Group onChange={this.onChangePickupPoint} value={this.state.pickupPointVal}>
             <Radio style={radioStyle} value={1}>
               <Select
+                dropdownAlign={{
+                  overflow: { adjustX: false, adjustY: false }
+                }}
+                getPopupContainer={trigger => trigger.parentNode}
                 onChange={value => this.hanldeOnChangeData('from', value)}
                 value={
                   this.state.pickupPointVal === 1 && this.state.dataPoint.from ? this.state.dataPoint.from : undefined
@@ -219,6 +223,10 @@ export default class PickupPointContainer extends React.Component {
           <Radio.Group onChange={this.onChangeDesPoint} value={this.state.desPointVal}>
             <Radio style={radioStyle} value={1}>
               <Select
+                dropdownAlign={{
+                  overflow: { adjustX: false, adjustY: false }
+                }}
+                getPopupContainer={trigger => trigger.parentNode}
                 onChange={value => this.hanldeOnChangeData('to', value)}
                 value={this.state.desPointVal === 1 && this.state.dataPoint.to ? this.state.dataPoint.to : undefined}
                 disabled={this.state.desPointVal === 1 ? false : true}

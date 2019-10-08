@@ -21,7 +21,7 @@ import {
 import DefaultLayout from 'src/layout/default'
 import { connect } from 'react-redux'
 import { setPaymentInfoTicket } from 'src/redux/actions/paymentAction'
-import { clearBookingNowSeat, clearBookingNowPoint, clearBookingNowInfoCustomer } from 'src/redux/actions/BookingAction'
+import { clearBookingNowSeat, clearBookingNowPoint, clearBookingNowInfoCustomer, clearFilter } from 'src/redux/actions/BookingAction'
 import { HH_MM } from 'src/config/format'
 import moment from 'moment'
 import { getFormatNumber } from 'src/config/format'
@@ -116,7 +116,8 @@ const mapDispatchToProps = {
   setPaymentInfoTicket,
   clearBookingNowInfoCustomer,
   clearBookingNowSeat,
-  clearBookingNowPoint
+  clearBookingNowPoint,
+  clearFilter
 }
 
 @connect(
@@ -246,6 +247,7 @@ class InfoCustomer extends React.Component {
               this.props.clearBookingNowInfoCustomer()
               this.props.clearBookingNowSeat()
               this.props.clearBookingNowPoint()
+              this.props.clearFilter()
             })
           }
         } catch (e) {
