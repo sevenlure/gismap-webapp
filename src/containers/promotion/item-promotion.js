@@ -126,6 +126,9 @@ export default class ItemPromotion extends React.Component {
             </div>
           </div>
           <div className='body-right'>
+            <CopyToClipboard text={item.code} onCopy={() => message.success('Chép mã thành công')}>
+              <Button type='primary'>Chép mã</Button>
+            </CopyToClipboard>
             <Button
               onClick={() => {
                 this.setState({ isDetail: !isDetail })
@@ -133,9 +136,6 @@ export default class ItemPromotion extends React.Component {
             >
               {labelButton}
             </Button>
-            <CopyToClipboard text={item.code} onCopy={() => message.success('Chép mã thành công')}>
-              <Button type='primary'>Chép mã</Button>
-            </CopyToClipboard>
           </div>
         </div>
         <div className='half-circle left-rotated' />

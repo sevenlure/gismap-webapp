@@ -61,7 +61,7 @@ class PromotionPage extends React.Component {
           {this.props.listPromotion.map(item => {
             return <ItemPromotion key={item.code} item={item} />
           })}
-          <ItemEmpty />
+          {!this.props.listPromotion && !(this.props.listPromotion.length < 0) && <ItemEmpty />}
         </div>
       </WrapperPage>
     )

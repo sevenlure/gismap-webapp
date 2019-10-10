@@ -1,5 +1,5 @@
 const loginFail = 'Thông tin đăng nhập không chính xác'
-
+const updateFail = 'Cập nhật không thành công'
 const register = {
   fullname: 'Thông tin chưa hợp lệ.',
 
@@ -17,9 +17,11 @@ const register = {
   emailRequired: 'Email là thông tin bắt buộc.',
   emailValid: 'Chưa đúng định dạng email.',
 
-  addressLen: 'Địa chỉ có độ dài từ 10 đến 200.'
+  addressLen: 'Địa chỉ có độ dài từ 10 đến 200.',
+  addressRequired: 'Vui lòng nhập địa chỉ.'
 }
 export default {
   loginFail,
-  register
+  register,
+  updateFail
 }

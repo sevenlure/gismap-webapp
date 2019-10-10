@@ -14,7 +14,8 @@ import {
   isLoadedDanhMuc,
   getListDeparture,
   setVisibleRegister,
-  setVisibleLogin
+  setVisibleLogin,
+  setVisibleEdituser
 } from 'src/redux/actions/generalAction.js'
 import { get as _get } from 'lodash-es'
 import Router, { withRouter } from 'next/router'
@@ -99,7 +100,8 @@ const ChildrenContainer = styled.div`
     isListTourPopular,
     isLoadedDanhMuc,
     setVisibleRegister,
-    setVisibleLogin
+    setVisibleLogin,
+    setVisibleEdituser
   }
 )
 // @hocProtectLogin
@@ -124,11 +126,13 @@ class AppWithLayout extends React.Component {
     windowWidth: PropTypes.number,
     isRegister: PropTypes.bool,
     isLogin: PropTypes.bool,
-    isEditUser: PropTypes.bool
+    isEditUser: PropTypes.bool,
+    setVisibleEdituser: PropTypes.func
   }
 
   state = {
-    isOnDrawer: false
+    isOnDrawer: false,
+    isLoaded: false
   }
 
   componentDidMount = async () => {
@@ -136,6 +140,7 @@ class AppWithLayout extends React.Component {
     this.props.isLoadedDanhMuc(false)
     this.props.isListTourPopular(false)
     await Promise.all([
+      this.props.setVisibleEdituser(false),
       this.props.getListTourPopular(),
       this.props.getListTypeSeat(),
       this.props.getListTimeSlot(),
@@ -148,6 +153,11 @@ class AppWithLayout extends React.Component {
       })
       .catch(e => {
         console.log(e, 'e')
+      })
+      .finally(() => {
+        this.setState({
+          isLoaded: true
+        })
       })
     try {
       /* eslint-disable */
@@ -177,10 +187,6 @@ class AppWithLayout extends React.Component {
   hanldeLogin = () => {
     this.props.setVisibleLogin(true)
     this.props.setVisibleRegister(false)
-    // this.setState({
-    //   isRegister: false,
-    //   isLogin: true
-    // })
   }
 
   hanldeRegister = () => {
@@ -375,92 +381,99 @@ class AppWithLayout extends React.Component {
                 </Menu.Item>
               ]}
             </Menu>
-            <Modal
-              visible={this.props.isRegister}
-              footer={null}
-              centered
-              closeIcon={<span />}
-              onCancel={
-                () => this.props.setVisibleRegister(false)
-                // this.setState({ isRegister: false })
-              }
-              // wrapClassName='register--modal'
-              closable={false}
-              {...this.getStyleReponsive()}
-              width='100%'
-              style={{
-                padding: windowWidth > 576 ? 24 : 12,
-                maxWidth: 680
-              }}
-            >
-              <Register
-                onSuccess={this.handleOnSucces}
-                isClearData={this.props.isRegister}
-                onLogin={this.hanldeLogin}
-                handleCancel={() => {
-                  this.props.setVisibleRegister(false)
-                  // this.setState({
-                  //   isRegister: false
-                  // })
+            {this.state.isLoaded && (
+              <Modal
+                visible={this.props.isRegister}
+                footer={null}
+                centered
+                closeIcon={<span />}
+                onCancel={
+                  () => this.props.setVisibleRegister(false)
+                  // this.setState({ isRegister: false })
+                }
+                // wrapClassName='register--modal'
+                closable={false}
+                {...this.getStyleReponsive()}
+                width='100%'
+                style={{
+                  padding: windowWidth > 576 ? 24 : 12,
+                  maxWidth: 680
                 }}
-              />
-            </Modal>
-            <Modal
-              visible={this.props.isLogin}
-              footer={null}
-              centered
-              closeIcon={<span />}
-              onCancel={
-                () => this.props.setVisibleLogin(false)
-                // this.setState({ isLogin: false })
-              }
-              // wrapClassName='register--modal'
-              closable={false}
-              {...this.getStyleReponsive()}
-              width='100%'
-              style={{
-                padding: windowWidth > 576 ? 24 : 12,
-                maxWidth: 680
-              }}
-            >
-              <Login
-                onRegister={this.handleOnRegister}
-                onForgotPass={this.handleOnForgetPass}
-                onCancel={() => {
-                  this.props.setVisibleLogin(false)
-                  // this.setState({
-                  //   isLogin: false
-                  // })
+              >
+                <Register
+                  onSuccess={this.handleOnSucces}
+                  isClearData={this.props.isRegister}
+                  onLogin={this.hanldeLogin}
+                  handleCancel={() => {
+                    this.props.setVisibleRegister(false)
+                    // this.setState({
+                    //   isRegister: false
+                    // })
+                  }}
+                />
+              </Modal>
+            )}
+            {this.state.isLoaded && (
+              <Modal
+                visible={this.props.isLogin}
+                footer={null}
+                centered
+                closeIcon={<span />}
+                onCancel={
+                  () => this.props.setVisibleLogin(false)
+                  // this.setState({ isLogin: false })
+                }
+                // wrapClassName='register--modal'
+                closable={false}
+                {...this.getStyleReponsive()}
+                width='100%'
+                style={{
+                  padding: windowWidth > 576 ? 24 : 12,
+                  maxWidth: 680
                 }}
-              />
-            </Modal>
+              >
+                <Login
+                  onRegister={this.handleOnRegister}
+                  onForgotPass={this.handleOnForgetPass}
+                  onCancel={() => {
+                    this.props.setVisibleLogin(false)
+                    // this.setState({
+                    //   isLogin: false
+                    // })
+                  }}
+                />
+              </Modal>
+            )}
+
             {/* NOTE Thông tin cá nhân */}
-            <Modal
-              visible={this.props.isEditUser}
-              footer={null}
-              centered
-              closeIcon={<span />}
-              // onCancel={
-              //   () => this.props.setVisibleRegister(false)
-              // }
-              // wrapClassName='register--modal'
-              closable={false}
-              {...this.getStyleReponsive()}
-              width='100%'
-              style={{
-                padding: windowWidth > 576 ? 24 : 12,
-                maxWidth: 968
-              }}
-            >
-              <EditUser
-                windowWidth={windowWidth}
-                handleCancel={() => {
-                  this.setState({
-                    isEdit: false
-                  })
+            {this.state.isLoaded && (
+              <Modal
+                visible={this.props.isEditUser}
+                footer={null}
+                centered
+                closeIcon={<span />}
+                // onCancel={
+                //   () => this.props.setVisibleRegister(false)
+                // }
+                // wrapClassName='register--modal'
+                closable={false}
+                {...this.getStyleReponsive()}
+                width='100%'
+                style={{
+                  padding: windowWidth > 576 ? 24 : 12,
+                  maxWidth: 968
                 }}
-              />
-            </Modal>
+              >
+                <EditUser
+                  windowWidth={windowWidth}
+                  handleCancel={() => {
+                    this.setState({
+                      isEdit: false
+                    })
+                  }}
+                />
+              </Modal>
+            )}
             <Drawer
               title='Travel'
               placement='left'

@@ -13,6 +13,8 @@ import { paymentBooking, paymentBoked } from 'src/api/paymentApi'
 import { get as _get, map as _map, values as _values } from 'lodash-es'
 import moment from 'moment'
 import { HH_MM } from 'src/config/format'
+import Router from 'next/router'
+import slug from 'src/routes'
 
 moment.updateLocale('en', {
   weekdays: ['Chủ nhật', 'Thứ hai', 'Thứ ba', 'Thứ tư', 'Thứ năm', 'Thứ sáu', 'Thứ bảy']
@@ -104,13 +106,24 @@ class ProfilePage extends React.Component {
       isLoading: true,
       isHaveData: false
     })
-    const dataList = await this.fetchData(keyDefault)
-    this.setState({
-      keyTab: keyDefault,
-      isLoading: false,
-      dataList: dataList,
-      isHaveData: dataList && dataList.length > 0 ? true : false
-    })
+    let dataList = await this.fetchData(keyDefault)
+    console.log(dataList, 'dataList')
+    if (dataList && dataList.length > 0) {
+      this.setState({
+        keyTab: keyDefault,
+        isLoading: false,
+        dataList: dataList,
+        isHaveData: dataList && dataList.length > 0 ? true : false
+      })
+    } else {
+      dataList = await this.fetchData('ticketBooked')
+      this.setState({
+        keyTab: 'ticketBooked',
+        isLoading: false,
+        dataList: dataList,
+        isHaveData: dataList && dataList.length > 0 ? true : false
+      })
+    }
   }
 
   hanldeOnChange = async e => {
@@ -139,7 +152,7 @@ class ProfilePage extends React.Component {
         if (token) {
           const res = await paymentBooking({ token })
           if (res.status === 200) {
-            console.log(res.data, 'Data')
+            // console.log(res.data, 'Data')
             return res.data
           }
         }
@@ -147,7 +160,7 @@ class ProfilePage extends React.Component {
         if (token) {
           const res = await paymentBoked({ token })
           if (res.status === 200) {
-            console.log(res.data, 'Data')
+            // console.log(res.data, 'Data')
             return res.data
           }
         }
@@ -160,8 +173,12 @@ class ProfilePage extends React.Component {
 
   render() {
     const backgroundColor = this.state.keyTab === keyDefault ? '#f2f3f7' : '#fff'
+    const messageNotHave =
+      this.state.keyTab === keyDefault
+        ? 'Quý khách đang không có vé chưa hoàn thành.'
+        : 'Bạn chưa đặt vé, hãy thử trải nghiệm.'
 
-    console.log(this.state, 'backgroundColor')
+    console.log(this.state.keyTab, 'backgroundColor')
     return (
       <ProfilePageWrapper windowWidth={this.props.windowWidth}>
         <div className='page--content'>
@@ -173,6 +190,7 @@ class ProfilePage extends React.Component {
                 <Row type={'flex'}>
                   <Radio.Group
                     defaultValue={this.state.keyTab}
+                    value={this.state.keyTab}
                     onChange={this.hanldeOnChange}
                     size='large'
                     buttonStyle='solid'
@@ -251,11 +269,17 @@ class ProfilePage extends React.Component {
             {!this.state.isLoading && !this.state.isHaveData && (
               <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
                 <div>
-                  <span>Bạn chưa đặt vé, hãy thử trải nghiệm</span>
+                  <span>{messageNotHave}</span>
                 </div>
                 <Clearfix height={20} />
                 <div>
-                  <Button type='default' size='large'>
+                  <Button
+                    type='default'
+                    size='large'
+                    onClick={() => {
+                      Router.push(slug.booking.base)
+                    }}
+                  >
                     Đặt vé ngay
                   </Button>
                 </div>
