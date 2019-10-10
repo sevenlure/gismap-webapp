@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import styled from 'styled-components'
-import { Form, Input, Icon, Button, Upload, message, Avatar, Row, Col } from 'antd'
+import { Form, Input, Icon, Button, Upload, message, Avatar, Row, Col, Modal } from 'antd'
 import PersonalSvg from 'static/images/icon/ic-personal.svg'
 import EmaillSvg from 'static/images/icon/ic-email.svg'
 import MobileSvg from 'static/images/icon/ic-mobile.svg'
@@ -15,9 +15,11 @@ import { auth as authMess } from 'src/config/message'
 import icons from 'icons/index'
 import { setVisibleEdituser } from 'src/redux/actions/generalAction'
 import { updateUserInfo } from 'src/redux/actions/generalAction'
-import { UpdateUserInfo, UpdatePasswordUserWithToken } from 'src/api/authApi'
+import { UpdateUserInfo as UpdateUserInfoApi, UpdatePasswordUserWithToken } from 'src/api/authApi'
 import posed from 'react-pose'
 import Cleave from 'cleave.js'
+import Router from 'next/router'
+import slug from 'src/routes'
 
 const ChangePassWrapper = posed.div({
   enter: { height: 'auto', opacity: 1, marginBottom: 0 },
@@ -109,7 +111,8 @@ class EditUser extends React.Component {
 
   state = {
     isChangePass: false,
-    isLoadingImage: false
+    isLoadingImage: false,
+    imageURL: '/static/images/avatar_default.png'
   }
 
   componentDidMount() {
@@ -134,6 +137,7 @@ class EditUser extends React.Component {
     this.setState({
       isChangePass: false
     })
+    this.props.form.resetFields()
   }
   handleOnChangeImage = info => {
     // console.log(info.file.status, 'info.file.status')
@@ -144,7 +148,10 @@ class EditUser extends React.Component {
     }
     if (info.file.status === 'done') {
       this.setState({ isLoadingImage: false })
-      // console.log(info,"info")
+      // console.log(info.file.response.url,"info")
+      // this.setState({
+      //   imageURL: info.file.response.url
+      // })
       message.success(`${info.file.name} file uploaded successfully`)
     } else if (info.file.status === 'error') {
       this.setState({ isLoadingImage: false })
@@ -162,14 +169,14 @@ class EditUser extends React.Component {
           try {
             const data = _pick({ ...values, phone }, ['email', 'name', 'phone', 'address'])
             const token = this.props.userInfo.phone
-            const res = await UpdateUserInfo(data, token)
+            const res = await UpdateUserInfoApi(data, token)
             if (res.status === 200) {
               message.success(`Cập nhật thành công`)
               this.props.updateUserInfo(res.data)
               this.props.setVisibleEdituser(false)
             }
           } catch (ex) {
-            message.error(authMess.loginFail)
+            message.error(authMess.updateFail)
           }
         } else {
           try {
@@ -177,13 +184,31 @@ class EditUser extends React.Component {
             const token = this.props.userInfo.phone
             const res = await UpdatePasswordUserWithToken(data, token)
             if (res.status === 200) {
-              message.success(`Đổi mật khẩu thành công`)
+              Modal.info({
+                title: 'Thông báo',
+                content: (
+                  <div>
+                    <p>Quý khách đã thay đổi mật khẩu thành công. Mời Quý khách quay trở lại để thực hiện mua vé.</p>
+                  </div>
+                ),
+                okText: 'Đóng',
+                onOk() {
+                  Router.push(slug.basic)
+                }
+              })
               this.props.setVisibleEdituser(false)
             }
           } catch (ex) {
-            console.log(ex)
+            // console.log(ex.response.data, 'ABC')
             if (ex.response.data.code === 'Unauthorized') {
-              message.error(authMess.loginFail)
+              this.props.form.setFields({
+                oldPassword: {
+                  value: values.oldPassword,
+                  errors: [new Error(ex.response.data.message)]
+                }
+              })
+            } else {
+              message.error(authMess.updateFail)
             }
           }
         }
@@ -204,6 +229,7 @@ class EditUser extends React.Component {
   }
 
   render() {
+    // console.log(this.state.isChangePass, 'isChangePass')
     const { getFieldDecorator, getFieldValue, getFieldsError } = this.props.form
     const { windowWidth, userInfo } = this.props
     let titleStyle = {
@@ -223,6 +249,7 @@ class EditUser extends React.Component {
           <Button
             style={{ width: 88 }}
             onClick={() => {
+              this.props.form.resetFields()
               this.props.setVisibleEdituser(false)
             }}
             size='large'
@@ -237,7 +264,7 @@ class EditUser extends React.Component {
               <div className='page--content--icon'>
                 {!this.state.isLoadingImage && (
                   <div className='avatar__border'>
-                    <Avatar src='/static/images/avatar_default.png' style={{ width: '100%', height: '100%' }} />
+                    <Avatar src={this.state.imageURL} style={{ width: '100%', height: '100%' }} />
                   </div>
                 )}
                 {this.state.isLoadingImage && (
@@ -350,6 +377,10 @@ class EditUser extends React.Component {
                     initialValue: _get(userInfo, 'address'),
                     rules: [
                       {
+                        required: true,
+                        message: registerMess.addressRequired
+                      },
+                      {
                         min: 10,
                         max: 200,
                         message: registerMess.addressLen
@@ -365,77 +396,84 @@ class EditUser extends React.Component {
                     />
                   )}
                 </Form.Item>
-                <ChangePassWrapper key='ChangePassword' pose={this.state.isChangePass ? 'enter' : 'exit'}>
-                  <Clearfix height={20} />
-                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                    <div>
-                      <strong style={{ fontWeight: 'bold' }}>Đổi mật khẩu</strong>
-                    </div>
-                    <div>
-                      <Button
-                        onClick={this.handleCancelChangePassWord}
-                        style={{ padding: '0px 22px' }}
-                        type='default'
-                        block={true}
-                      >
-                        Hủy
-                      </Button>
-                    </div>
-                  </div>
-                  <Clearfix height={20} />
-                  <Form.Item>
-                    {getFieldDecorator('oldPassword', {
-                      rules: [
-                        { required: true, message: registerMess.passwordRequired },
-                        { min: 8, message: registerMess.passwordMin },
-                        { max: 32, message: registerMess.passwordMax }
-                      ]
-                    })(
-                      <Input.Password
-                        size='large'
-                        maxLength={32}
-                        autoComplete='new-password'
-                        prefix={<Icon component={icons.password} />}
-                        placeholder='Mật khẩu cũ *'
-                      />
-                    )}
-                  </Form.Item>
-                  <Form.Item>
-                    {getFieldDecorator('newPassword', {
-                      rules: [
-                        { required: true, message: registerMess.passwordRequired },
-                        { min: 8, message: registerMess.passwordMin },
-                        { max: 32, message: registerMess.passwordMax }
-                      ]
-                    })(
-                      <Input.Password
-                        size='large'
-                        maxLength={32}
-                        autoComplete='new-password'
-                        prefix={<Icon component={icons.password} />}
-                        placeholder='Mật khẩu mới *'
-                      />
-                    )}
-                  </Form.Item>
-                  <Form.Item>
-                    {getFieldDecorator('confirm', {
-                      rules: [
-                        { required: true, message: registerMess.passwordConfirmRequied },
 
-                        {
-                          validator: this.compareToFirstPassword
-                        }
-                      ]
-                    })(
-                      <Input.Password
-                        size='large'
-                        maxLength={32}
-                        autoComplete='new-password'
-                        prefix={<Icon component={icons.password} />}
-                        placeholder='Nhập lại mật khẩu mới *'
-                      />
-                    )}
-                  </Form.Item>
+                <ChangePassWrapper key='ChangePassword' pose={this.state.isChangePass ? 'enter' : 'exit'}>
+                  {/* {this.state.isChangePass && ( */}
+                  <div>
+                    <Clearfix height={20} />
+                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                      <div>
+                        <strong style={{ fontWeight: 'bold' }}>Đổi mật khẩu</strong>
+                      </div>
+                      <div>
+                        <Button
+                          onClick={this.handleCancelChangePassWord}
+                          style={{ padding: '0px 22px' }}
+                          type='default'
+                          block={true}
+                        >
+                          Hủy
+                        </Button>
+                      </div>
+                    </div>
+                    <Clearfix height={20} />
+                    <Form.Item>
+                      {getFieldDecorator('oldPassword', {
+                        rules: [
+                          { required: this.state.isChangePass, message: registerMess.passwordRequired },
+                          { min: 8, message: registerMess.passwordMin },
+                          { max: 32, message: registerMess.passwordMax }
+                        ]
+                      })(
+                        <Input.Password
+                          size='large'
+                          maxLength={32}
+                          autoComplete='new-password'
+                          prefix={<Icon component={icons.password} />}
+                          placeholder='Mật khẩu cũ *'
+                        />
+                      )}
+                    </Form.Item>
+                    <Form.Item>
+                      {getFieldDecorator('newPassword', {
+                        rules: [
+                          { required: this.state.isChangePass, message: registerMess.passwordRequired },
+                          { min: 8, message: registerMess.passwordMin },
+                          { max: 32, message: registerMess.passwordMax }
+                        ]
+                      })(
+                        <Input.Password
+                          size='large'
+                          maxLength={32}
+                          autoComplete='new-password'
+                          prefix={<Icon component={icons.password} />}
+                          placeholder='Mật khẩu mới *'
+                        />
+                      )}
+                    </Form.Item>
+                    <Form.Item>
+                      {getFieldDecorator('confirm', {
+                        rules: [
+                          {
+                            required: this.state.isChangePass,
+                            message: registerMess.passwordConfirmRequied
+                          },
+
+                          {
+                            validator: this.compareToFirstPassword
+                          }
+                        ]
+                      })(
+                        <Input.Password
+                          size='large'
+                          maxLength={32}
+                          autoComplete='new-password'
+                          prefix={<Icon component={icons.password} />}
+                          placeholder='Nhập lại mật khẩu mới *'
+                        />
+                      )}
+                    </Form.Item>
+                  </div>
                 </ChangePassWrapper>
 
                 <Clearfix height={windowWidth < 576 ? 16 : 40} />
@@ -448,7 +486,10 @@ class EditUser extends React.Component {
 
                   <Clearfix width={24} />
                   <Button
-                    disabled={!getFieldValue('name') || this.hasErrors(getFieldsError())}
+                    disabled={
+                      (this.state.isChangePass ? !getFieldValue('oldPassword') : !getFieldValue('name')) ||
+                      this.hasErrors(getFieldsError())
+                    }
                     type='primary'
                     htmlType='submit'
                     block={true}
