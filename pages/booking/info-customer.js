@@ -17,7 +17,6 @@ import Router from 'next/router'
 import slug from 'src/routes'
 import windowSize from 'react-window-size'
 import Cleave from 'cleave.js'
-import { get as _get } from 'lodash-es'
 
 const registerMess = authMess.register
 
