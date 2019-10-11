@@ -8,7 +8,7 @@ import { persistStore } from 'redux-persist'
 import { PersistGate } from 'redux-persist/integration/react'
 import Loader from 'src/components/loading-screen'
 
-import 'src/less/font.less'
+// import 'src/less/font.less'
 import 'src/less/app.less'
 import 'src/less/responsive.less'
 
@@ -33,6 +33,7 @@ class MyApp extends App {
   render() {
     const { Component, pageProps } = this.props
     const Layout = Component.Layout
+    // console.log(this.persistor, 'this.persistor')
     return (
       <Container>
         <Provider store={reduxStore}>

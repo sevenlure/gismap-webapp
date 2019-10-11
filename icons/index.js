@@ -1,37 +1,5 @@
-import SearchIconSvg from 'static/images/icon/ic-search.svg'
-import RightIconSvg from 'static/images/icon/ic-right.svg'
-import CalendarIconSvg from 'static/images/icon/ic-calendar.svg'
-import ChoiseOffIconSvg from 'static/images/icon/ic-choice-off.svg'
-import ChoiseOnIconSvg from 'static/images/icon/ic-choice-on.svg'
-import SaleIconlSvg from 'static/images/icon/ic-sale.svg'
-import ArrowNextIconSvg from 'static/images/icon/ic-arrow-next.svg'
-import CheckIconSvg from 'static/images/icon/ic-check.svg'
-import EditIconSvg from 'static/images/icon/ic-edit.svg'
-import CameraIconSvg from 'static/images/icon/ic-camera.svg'
-import PassSvg from 'static/images/icon/ic-pass.svg'
-
-import SeatChooseIconSvg from 'static/images/icon/ic-seat-choose.svg'
-import SeatDisableIconSvg from 'static/images/icon/ic-seat-disable.svg'
-import SeatDriverIconSvg from 'static/images/icon/ic-seat-driver.svg'
-import SeatOffIconSvg from 'static/images/icon/ic-seat-off.svg'
-
-import Sale2IconSvg from 'static/images/icon/ic-sale2.svg'
+import LogoIcon from 'static/images/logo.svg'
 
 export default {
-  search: SearchIconSvg,
-  right: RightIconSvg,
-  calendar: CalendarIconSvg,
-  choiseOn: ChoiseOnIconSvg,
-  choiseOff: ChoiseOffIconSvg,
-  seatChoose: SeatChooseIconSvg,
-  seatDisable: SeatDisableIconSvg,
-  seatDriver: SeatDriverIconSvg,
-  seatOff: SeatOffIconSvg,
-  sale: SaleIconlSvg,
-  arrowNext: ArrowNextIconSvg,
-  check: CheckIconSvg,
-  edit: EditIconSvg,
-  camera: CameraIconSvg,
-  password: PassSvg,
-  sale2: Sale2IconSvg
+  logo: LogoIcon
 }

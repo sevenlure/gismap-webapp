@@ -32,19 +32,28 @@ class MyDocument extends Document {
     return (
       <Html>
         <Head>
-          {/* <style>{``}</style> */}
-          {/* <link rel='stylesheet' href='/static/css/nprogress.css' /> */}
-          {/* <link rel='icon' href='/static/images/logo.png'></link> */}
           <link rel='stylesheet' href='/static/css/simplebar.min.css' />
-          <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.6.0/slick.min.css" />
-          <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.6.0/slick-theme.min.css" />
-          <link rel="preload" href="/static/font/HelveticaNeue.otf" type="font/otf" as="font" crossOrigin="anonymous" />
-          <link rel="preload" href="/static/font/HelveticaNeue-Light.otf" type="font/otf" as="font" crossOrigin="anonymous" />
-          <link rel="preload" href="/static/font/HelveticaNeue-Bold.otf" type="font/otf" as="font" crossOrigin="anonymous" />
-          <link rel="preload" href="/static/font/HelveticaNeue-Medium.otf" type="font/otf" as="font" crossOrigin="anonymous" />
+          <link
+            rel='stylesheet'
+            type='text/css'
+            href='https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.6.0/slick.min.css'
+          />
+          <link
+            rel='stylesheet'
+            type='text/css'
+            href='https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.6.0/slick-theme.min.css'
+          />
           <script src='/static/js/simplebar.min.js'></script>
+          <style>
+            {`
+            #__next {     
+              display: flex;
+              min-height: 100% 
+            }
+          `}
+          </style>
         </Head>
-        <body style={{ fontFamily: 'myFont', fontWeight: '300' }}>
+        <body>
           <Main />
           <NextScript />
         </body>

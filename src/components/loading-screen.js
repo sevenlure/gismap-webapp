@@ -10,6 +10,7 @@ export default class LoadingScreen extends React.Component {
         </div>
         <style jsx>{`
           .container-loader {
+            flex: 1;
             display: flex;
             justify-content: center;
             align-items: center;
