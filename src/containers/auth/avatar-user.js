@@ -1,59 +1,61 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-// import styled from 'styled-components'
 import { Menu, Avatar, Dropdown, Icon } from 'antd'
 import { connect } from 'react-redux'
+import styled from 'styled-components'
 import { get as _get } from 'lodash-es'
 import { userLogout } from 'src/redux/actions/authAction'
 import { clearUserInfo } from 'src/redux/actions/generalAction.js'
-import { setVisibleEdituser } from 'src/redux/actions/generalAction'
+// import { setVisibleEdituser } from 'src/redux/actions/generalAction'
+import Router from 'next/router'
+import slug from 'src/routes'
 
-import Link from 'next/link'
+const AvatarUserWrapper = styled.div`
+  padding: 0px 12px;
 
-// import Router from 'next/router'
-// import slug from 'src/routes'
+  .user--info {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .name--user {
+    padding-right: 8px;
+  }
+`
 
 @connect(
   state => ({
-    name: _get(state, 'GeneralStore.userInfo.name', '')
+    FirstName: _get(state, 'GeneralStore.userInfo.FirstName', '')
   }),
   {
     userLogout,
-    clearUserInfo,
-    setVisibleEdituser
+    clearUserInfo
+    // setVisibleEdituser
   }
 )
 export default class AvatarUser extends React.Component {
   static propTypes = {
-    // name: PropTypes.string,
+    FirstName: PropTypes.string,
     userLogout: PropTypes.func,
     clearUserInfo: PropTypes.func,
-    setVisibleEdituser: PropTypes.func,
     disabled: PropTypes.bool
   }
 
-  state = {
-    isVisible: false
-  }
+  state = {}
 
   render() {
     // const { name } = this.props
     return (
-      <div>
+      <AvatarUserWrapper>
         <Dropdown
           trigger={['click']}
           disabled={this.props.disabled}
           overlay={
             <Menu>
-              <Menu.Item key='1'>
-                <Link href='/profile'>
-                  <a>Thông tin vé xe</a>
-                </Link>
-              </Menu.Item>
               <Menu.Item
                 key='2'
                 onClick={() => {
-                  this.props.setVisibleEdituser(true)
+                  // this.props.setVisibleEdituser(true)
                 }}
               >
                 Thông tin cá nhân
@@ -61,7 +63,7 @@ export default class AvatarUser extends React.Component {
               <Menu.Item
                 key='3'
                 onClick={() => {
-                  // Router.replace(slug.login)
+                  Router.replace(slug.login)
                   this.props.userLogout()
                   this.props.clearUserInfo()
                 }}
@@ -72,16 +74,16 @@ export default class AvatarUser extends React.Component {
             </Menu>
           }
         >
-          <div>
-            {/* <strong style={{ marginRight: 16, color: '#4c4c4c' }}>{name}</strong> */}
-            <Avatar
-              src='/static/images/avatar_default.png'
-              style={{ backgroundColor: '', cursor: 'pointer' }}
-              size={44}
-            />
+          <div className='user--info' style={{ cursor: 'pointer' }}>
+            <div>
+              <span className='name--user'>{this.props.FirstName}</span>
+            </div>
+            <div>
+              <Avatar src='/static/images/avatar_default.png' size={32} />
+            </div>
           </div>
         </Dropdown>
-      </div>
+      </AvatarUserWrapper>
     )
   }
 }

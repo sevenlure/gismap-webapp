@@ -5,7 +5,7 @@ import { Avatar, Icon } from 'antd'
 import Icons from 'icons/index'
 import windowSize from 'react-window-size'
 import { connect } from 'react-redux'
-import { setVisibleEdituser } from 'src/redux/actions/generalAction'
+// import { setVisibleEdituser } from 'src/redux/actions/generalAction'
 
 // import { get as _get } from 'lodash-es'
 // import Router from 'next/router'
@@ -39,7 +39,7 @@ const AvatarUserWrapper = styled.div`
   }
 `
 const mapDispathToProps = {
-  setVisibleEdituser
+  // setVisibleEdituser
 }
 @connect(
   () => ({}),
@@ -49,13 +49,13 @@ const mapDispathToProps = {
 export default class AvatarUserV2 extends React.Component {
   static propTypes = {
     windowWidth: PropTypes.number,
-    setVisibleEdituser: PropTypes.func
+    // setVisibleEdituser: PropTypes.func
   }
 
   state = {}
 
   hanldeOnClickEdit = () => {
-    this.props.setVisibleEdituser(true)
+    // this.props.setVisibleEdituser(true)
   }
 
   render() {

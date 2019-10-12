@@ -1,6 +1,6 @@
 {
   "isDev": true,
-  "HOST_API": "http://prtr.southeastasia.cloudapp.azure.com:8015/",
+  "HOST_API": "https://nprwork-api.gishouse.tech/admin/",
   "HOST_MEDIA": "https://i.ibb.co/",
   "GOOGLE_MAP_API_KEY":  "AIzaSyB8Lw-LWcdPxtz01j99UE44V9QUFw9vEO4"
 }
