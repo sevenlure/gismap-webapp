@@ -3,9 +3,11 @@ import PropTypes from 'prop-types'
 import Head from 'next/head'
 import styled from 'styled-components'
 import { Layout, Menu, Icon, Breadcrumb } from 'antd'
+import hocProtectLogin from 'src/hoc/is-authenticated'
 import { connect } from 'react-redux'
+import { updateKeyPath, updateSubMenu } from 'src/redux/actions/generalAction'
 import pathLogo from 'icons/index.js'
-import { get as _get } from 'lodash-es'
+import { get as _get, map as _map, last as _last, isEqual as _isEqual } from 'lodash-es'
 import { withRouter } from 'next/router'
 import windowSize from 'react-window-size'
 import AvatarUser from 'src/containers/auth/avatar-user'
@@ -44,6 +46,9 @@ const LayoutWrapper = styled.div`
     background: #fff;
     padding: 0;
 
+    .header--right {
+      padding-left: 24px;
+    }
     .header--left {
       display: flex;
       align-items: center;
@@ -59,23 +64,34 @@ const LayoutWrapper = styled.div`
 
 @connect(
   state => ({
-    isAuthenticated: _get(state, 'AuthStore.isAuthenticated', false)
+    isAuthenticated: _get(state, 'AuthStore.isAuthenticated', false),
+    token: _get(state, 'AuthStore.token', null),
+    subMenu: _get(state, 'GeneralStore.menu.subMenu', []),
+    keyPath: _get(state, 'GeneralStore.menu.keyPath', []),
+    breadcrumb: _get(state, 'GeneralStore.menu.breadcrumb', [])
   }),
-  {}
+  { updateKeyPath, updateSubMenu }
 )
-// @hocProtectLogin
+@hocProtectLogin
 @windowSize
 class AppWithLayout extends React.Component {
   static propTypes = {
     children: PropTypes.node,
     windowWidth: PropTypes.number,
-    isAuthenticated: PropTypes.bool
+    isAuthenticated: PropTypes.bool,
+    token: PropTypes.string,
+    updateKeyPath: PropTypes.func,
+    updateSubMenu: PropTypes.func,
+    subMenu: PropTypes.array,
+    keyPath: PropTypes.array,
+    breadcrumb: PropTypes.array
   }
 
   state = {
     isLoaded: false,
     collapsed: false,
-    broken: false
+    broken: false,
+    pageName: ''
   }
 
   onCollapse = collapsed => {
@@ -86,13 +102,37 @@ class AppWithLayout extends React.Component {
     const { isAuthenticated } = this.props
     if (!isAuthenticated) {
       Router.push(slug.login)
+    } else {
+      this.changePageName()
     }
   }
 
-  render() {
-    // console.log(this.props.isRegister, 'isRegister')
-    const { children, windowWidth, isAuthenticated } = this.props
+  componentDidUpdate = prevProps => {
+    if (!_isEqual(prevProps.breadcrumb, this.props.breadcrumb)) {
+      this.changePageName()
+    }
+  }
 
+  changePageName = () => {
+    const item = _last(this.props.breadcrumb)
+    // console.log(item, '------item----')
+    this.setState({
+      pageName: item ? item.name : 'Trang chủ'
+    })
+  }
+
+  hanldeOnSelect = ({ keyPath }) => {
+    this.props.updateKeyPath(keyPath)
+    Router.push(keyPath[0])
+  }
+
+  handleOnOpenChange = openKeys => {
+    this.props.updateSubMenu(openKeys)
+  }
+
+  render() {
+    const { children, windowWidth, isAuthenticated, subMenu, keyPath } = this.props
+    console.log(keyPath, 'keyPath')
     // NOTE  moible
     const styleMobile = {
       // position: 'absolute',
@@ -108,6 +148,7 @@ class AppWithLayout extends React.Component {
         <Layout>
           <Sider
             breakpoint='lg'
+            width={250}
             collapsedWidth={this.state.broken ? '0' : '80'}
             onBreakpoint={broken => {
               this.setState({ broken })
@@ -121,48 +162,47 @@ class AppWithLayout extends React.Component {
               <Icon style={{ fontSize: '2rem' }} component={pathLogo.logo} />
               {!this.state.collapsed && <h1>Company</h1>}
             </div>
-            <Menu theme='dark' defaultSelectedKeys={['1']} mode='inline'>
-              <Menu.Item key='1'>
-                <Icon type='pie-chart' />
-                <span>Option 1</span>
-              </Menu.Item>
-              <Menu.Item key='2'>
-                <Icon type='desktop' />
-                <span>Option 2</span>
-              </Menu.Item>
-              <SubMenu
-                key='sub2'
-                title={
-                  <span>
-                    <Icon type='team' />
-                    <span>Team</span>
-                  </span>
-                }
-              >
-                <Menu.Item key='6'>Team 1</Menu.Item>
-                <Menu.Item key='8'>Team 2</Menu.Item>
-              </SubMenu>
-              <Menu.Item key='9'>
-                <Icon type='file' />
-                <span>File</span>
+            <Menu
+              theme='dark'
+              openKeys={subMenu}
+              selectedKeys={keyPath}
+              mode='inline'
+              onSelect={this.hanldeOnSelect}
+              onOpenChange={this.handleOnOpenChange}
+            >
+              <Menu.Item key={slug.basic}>
+                <Icon type='home' />
+                <span>Trang chủ</span>
               </Menu.Item>
               <SubMenu
-                key='sub1'
+                key={slug.manager.basic}
                 title={
                   <span>
                     <Icon type='user' />
-                    <span>Tài khoản</span>
+                    <span>Thông tin công ty</span>
                   </span>
                 }
               >
-                <Menu.Item key='3'>Danh sách</Menu.Item>
-                <Menu.Item key='4'>Tạo tài khoản</Menu.Item>
+                <Menu.Item key={slug.manager.policy.base}>Chính sách công ty</Menu.Item>
+                <Menu.Item key={slug.manager.department.base}>Phòng ban</Menu.Item>
+                <Menu.Item key={slug.manager.user.base}>Nhân sự</Menu.Item>
+                <Menu.Item key={slug.manager.organization.base}>Sơ đồ tổ chức</Menu.Item>
               </SubMenu>
+              <Menu.Item key={slug.project.base}>
+                <Icon type='bank' />
+                <span>Dự án bất động sản</span>
+              </Menu.Item>
+              <Menu.Item key={slug.report.base}>
+                <Icon type='area-chart' />
+                <span>Thống kê báo cáo</span>
+              </Menu.Item>
             </Menu>
           </Sider>
           <Layout>
             <Header className='header' style={{}}>
-              <div className='header--right'></div>
+              <div className='header--right'>
+                <h2>{this.state.pageName}</h2>
+              </div>
               <div className='header--left'>
                 {isAuthenticated && (
                   <div>
@@ -173,12 +213,46 @@ class AppWithLayout extends React.Component {
             </Header>
             <Content style={{ margin: '0 16px' }}>
               <Breadcrumb style={{ margin: '16px 0' }}>
-                <Breadcrumb.Item>User</Breadcrumb.Item>
-                <Breadcrumb.Item>Bill</Breadcrumb.Item>
+                <Breadcrumb.Item>
+                  <a
+                    href='#'
+                    onClick={e => {
+                      e.preventDefault()
+                      this.hanldeOnSelect({
+                        keyPath: [slug.basic]
+                      })
+                    }}
+                  >
+                    Trang chủ
+                  </a>
+                </Breadcrumb.Item>
+
+                {this.props.breadcrumb &&
+                  _map(this.props.breadcrumb, (item, index) => {
+                    if (index < this.props.breadcrumb.length - 1) {
+                      return (
+                        <Breadcrumb.Item key={index}>
+                          <a
+                            href='#'
+                            onClick={e => {
+                              e.preventDefault()
+                              this.hanldeOnSelect({
+                                keyPath: [item.slug]
+                              })
+                            }}
+                          >
+                            {item.name}
+                          </a>
+                        </Breadcrumb.Item>
+                      )
+                    } else {
+                      return <Breadcrumb.Item key={index}>{item.name}</Breadcrumb.Item>
+                    }
+                  })}
               </Breadcrumb>
               <div style={{ padding: 24, background: '#fff', minHeight: 360 }}>{children}</div>
             </Content>
-            <Footer style={{ textAlign: 'center' }}>Ant Design ©2018 Created by Ant UED</Footer>
+            <Footer style={{ textAlign: 'center' }}>Ant Design ©2019 Created by Ant UED</Footer>
           </Layout>
         </Layout>
       </LayoutWrapper>

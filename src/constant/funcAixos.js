@@ -3,6 +3,7 @@ import { message } from 'antd'
 import { get as _get } from 'lodash-es'
 
 export function setAuthorizationforHeader(token) {
+  // console.log(token, 'token')
   fetch.defaults.headers.common['Authorization'] = `Bearer ${token}`
 }
 

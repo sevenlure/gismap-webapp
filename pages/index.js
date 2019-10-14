@@ -5,6 +5,8 @@ import { connect } from 'react-redux'
 import { Form } from 'antd'
 import DefaultLayout from 'src/layout/default'
 import windowSize from 'react-window-size'
+import { setBreadCrumb, updateKeyPath } from 'src/redux/actions/generalAction'
+import slug, { breadcrumb } from 'src/routes/index'
 
 const WrapperIndex = styled.div`
   display: flex;
@@ -13,7 +15,10 @@ const WrapperIndex = styled.div`
 `
 
 const mapStateToProps = () => ({})
-const mapDispatchToProps = {}
+const mapDispatchToProps = {
+  setBreadCrumb,
+  updateKeyPath
+}
 
 @connect(
   mapStateToProps,
@@ -22,11 +27,18 @@ const mapDispatchToProps = {}
 @windowSize
 class Index extends React.Component {
   static propTypes = {
-    windowWidth: PropTypes.number
+    windowWidth: PropTypes.number,
+    setBreadCrumb: PropTypes.func,
+    updateKeyPath: PropTypes.func
   }
 
   state = {
     querySearch: null
+  }
+  componentDidMount = () => {
+    const pathPage = slug.basic
+    this.props.setBreadCrumb(breadcrumb[pathPage])
+    this.props.updateKeyPath([pathPage])
   }
 
   render() {

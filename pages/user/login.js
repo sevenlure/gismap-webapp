@@ -4,7 +4,7 @@ import { Form, Input, Icon, Button, Layout, message } from 'antd'
 import styled from 'styled-components'
 import Clearfix from 'src/components/elements/clearfix'
 import authApi from 'src/api/authApi'
-import {getInfoErrorfetch} from 'src/constant/funcAixos.js'
+import { getInfoErrorfetch } from 'src/constant/funcAixos.js'
 import { connect } from 'react-redux'
 import pathLogo from 'icons/index'
 
@@ -131,16 +131,17 @@ class Login extends React.Component {
           }}
         >
           <CardCenter>
-            <Center style={{ marginBottom: 8 }}>
-              <Icon style={{ fontSize: '3rem' }} component={pathLogo.logo} />
-            </Center>
+            {/* <Center style={{ marginBottom: 8 }}>
+             
+            </Center> */}
             <Center
               style={{
                 color: 'rgba(0,0,0,.45)',
-                fontSize: 14
+                fontSize: '1.5rem',
+                marginBottom: 12
               }}
             >
-              Company Bat Dong San - Hồ Chí Minh
+              PNRword <Icon style={{ fontSize: '3rem', paddingLeft: 8 }} component={pathLogo.logo} />
             </Center>
             <Container>
               <Form.Item>
@@ -186,7 +187,7 @@ class Login extends React.Component {
                 </Button>
               </Form.Item>
             </Container>
-            <Footer style={{ textAlign: 'center' }}>App ©2019 Created by Happy Software</Footer>
+            <Footer style={{ textAlign: 'center' }}>PNRwork version 1.0.0</Footer>
           </CardCenter>
         </Layout>
       </Form>

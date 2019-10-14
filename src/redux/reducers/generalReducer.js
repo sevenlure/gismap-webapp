@@ -1,11 +1,22 @@
 import update from 'react-addons-update'
-import { UPDATE_GENERAL_USER_INFO, CLEAR_GENERAL_USER_INFO } from '../actions/generalAction'
+import {
+  UPDATE_GENERAL_USER_INFO,
+  CLEAR_GENERAL_USER_INFO,
+  UPDATE_GENERAL_SUB_MENU,
+  UPDATE_GENERAL_KEY_PATCH,
+  UPDATE_GENERAL_SET_BREADCRUMB
+} from '../actions/generalAction'
 
 import storage from 'redux-persist/lib/storage'
 import { persistReducer } from 'redux-persist'
 
 const InitialState = {
-  userInfo: null
+  userInfo: null,
+  menu: {
+    subMenu: [],
+    keyPath: [],
+    breadcrumb: []
+  }
 }
 
 // REDUCERS
@@ -19,6 +30,21 @@ const generalReducer = (state = InitialState, action) => {
     case CLEAR_GENERAL_USER_INFO: {
       return update(state, {
         userInfo: { $set: null }
+      })
+    }
+    case UPDATE_GENERAL_SUB_MENU: {
+      return update(state, {
+        menu: { subMenu: { $set: action.payload } }
+      })
+    }
+    case UPDATE_GENERAL_KEY_PATCH: {
+      return update(state, {
+        menu: { keyPath: { $set: action.payload } }
+      })
+    }
+    case UPDATE_GENERAL_SET_BREADCRUMB: {
+      return update(state, {
+        menu: { breadcrumb: { $set: action.payload } }
       })
     }
 

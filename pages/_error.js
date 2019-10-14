@@ -7,12 +7,13 @@ import Router from 'next/router'
 import slug from 'src/routes'
 
 const ErrorWrapper = styled.div`
-  display: flex;
   flex: 1;
+  min-width: 100vw;
+  min-height: 100vh;
+  display: flex;
   justify-content: center;
   flex-direction: column;
   align-items: center;
-  min-height: 100vh;
 `
 
 class Error extends React.Component {
