@@ -4,8 +4,8 @@
   "scripts": {
     "dev": "isDev=true next",
     "build": "next build",
-    "start": "NODE_ENV=production node server.js",
-    "withPm2": "pm2 start --name BOOKING-WEB npm -- start"
+    "start": "NODE_ENV=production PORT=3300 node server.js",
+    "withPm2": "pm2 start --name NPRwork-ADMIN npm -- start"
   },
   "dependencies": {
     "@react-google-maps/api": "^1.7.5",
