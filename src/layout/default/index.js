@@ -132,7 +132,7 @@ class AppWithLayout extends React.Component {
 
   render() {
     const { children, windowWidth, isAuthenticated, subMenu, keyPath } = this.props
-    console.log(keyPath, 'keyPath')
+    // console.log(keyPath, 'keyPath')
     // NOTE  moible
     const styleMobile = {
       // position: 'absolute',
