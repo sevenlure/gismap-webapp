@@ -1,9 +1,36 @@
-// import { concat as _concat } from 'lodash-es'
+import { get as _get } from 'lodash-es'
 // import TourApi from 'src/api/TourApi'
 // import categoryApi from 'src/api/categoryApi'
 // import moment from 'moment'
 // import { DATE_FORMAT } from 'src/config/format'
+import DepartmentApi from 'src/api/DepartmentApi'
 
+// NOTE Catelory Department
+
+export const GET_GENERAL_LIST_DEPARTURE = 'GENERAL/GET_GENERAL_LIST_DEPARTURE'
+export const IS_LOADED_GENERAL_DANHMUC = 'GENERAL/IS_LOADED_GENERAL_DANHMUC'
+
+export function isLoadedDanhMuc(isLoaded) {
+  return async dispatch => {
+    dispatch({ type: IS_LOADED_GENERAL_DANHMUC, payload: isLoaded })
+  }
+}
+export function getDepartment() {
+  return async dispatch => {
+    let dataSource = []
+    try {
+      const res = await DepartmentApi.getAll({})
+      if (res.status) {
+        dataSource = _get(res, 'data', [])
+      }
+    } catch (ex) {
+      console.log('GET_GENERAL_LIST_DEPARTURE', ex)
+    }
+    dispatch({ type: GET_GENERAL_LIST_DEPARTURE, payload: dataSource })
+  }
+}
+
+//  NOTE  AUTH
 export const UPDATE_GENERAL_USER_INFO = 'GENERAL/UPDATE_GENERAL_USER_INFO'
 export const CLEAR_GENERAL_USER_INFO = 'GENERAL/CLEAR_GENERAL_USER_INFO'
 

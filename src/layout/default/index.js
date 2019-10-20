@@ -5,7 +5,7 @@ import styled from 'styled-components'
 import { Layout, Menu, Icon, Breadcrumb } from 'antd'
 import hocProtectLogin from 'src/hoc/is-authenticated'
 import { connect } from 'react-redux'
-import { updateKeyPath, updateSubMenu } from 'src/redux/actions/generalAction'
+import { updateKeyPath, updateSubMenu, getDepartment, isLoadedDanhMuc } from 'src/redux/actions/generalAction'
 import pathLogo from 'icons/index.js'
 import { get as _get, map as _map, last as _last, isEqual as _isEqual } from 'lodash-es'
 import { withRouter } from 'next/router'
@@ -13,6 +13,7 @@ import windowSize from 'react-window-size'
 import AvatarUser from 'src/containers/auth/avatar-user'
 import Router from 'next/router'
 import slug from 'src/routes'
+import moment from 'moment'
 
 const { Header, Content, Footer, Sider } = Layout
 const { SubMenu } = Menu
@@ -70,7 +71,7 @@ const LayoutWrapper = styled.div`
     keyPath: _get(state, 'GeneralStore.menu.keyPath', []),
     breadcrumb: _get(state, 'GeneralStore.menu.breadcrumb', [])
   }),
-  { updateKeyPath, updateSubMenu }
+  { updateKeyPath, updateSubMenu, getDepartment, isLoadedDanhMuc }
 )
 @hocProtectLogin
 @windowSize
@@ -82,6 +83,8 @@ class AppWithLayout extends React.Component {
     token: PropTypes.string,
     updateKeyPath: PropTypes.func,
     updateSubMenu: PropTypes.func,
+    getDepartment: PropTypes.func,
+    isLoadedDanhMuc: PropTypes.func,
     subMenu: PropTypes.array,
     keyPath: PropTypes.array,
     breadcrumb: PropTypes.array
@@ -98,13 +101,22 @@ class AppWithLayout extends React.Component {
     // console.log(collapsed)
     this.setState({ collapsed })
   }
-  componentDidMount = () => {
+  componentDidMount = async () => {
     const { isAuthenticated } = this.props
     if (!isAuthenticated) {
       Router.push(slug.login)
     } else {
       this.changePageName()
     }
+
+    this.props.isLoadedDanhMuc(false)
+    await Promise.all([this.props.getDepartment()])
+      .then(() => {
+        this.props.isLoadedDanhMuc(true)
+      })
+      .catch(e => {
+        console.log(e, 'e')
+      })
   }
 
   componentDidUpdate = prevProps => {
@@ -252,7 +264,7 @@ class AppWithLayout extends React.Component {
               </Breadcrumb>
               <div style={{ padding: 24, background: '#fff', minHeight: 360 }}>{children}</div>
             </Content>
-            <Footer style={{ textAlign: 'center' }}>Ant Design ©2019 Created by Ant UED</Footer>
+            <Footer style={{ textAlign: 'center' }}>PNR ©{moment().format('YYYY')} Created by G.I.S Team</Footer>
           </Layout>
         </Layout>
       </LayoutWrapper>

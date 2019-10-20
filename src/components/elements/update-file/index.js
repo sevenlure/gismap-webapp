@@ -5,6 +5,13 @@ import { get as _get } from 'lodash-es'
 import windowSize from 'react-window-size'
 import { connect } from 'react-redux'
 import { Icon, Upload, message } from 'antd'
+import dynamic from 'next/dynamic'
+
+const FileViewer = dynamic(() => import('react-file-viewer'), {
+  ssr: false
+})
+// import FileViewer from 'react-file-viewer'
+
 import { getFilePrivate } from 'src/api/updateFileApi.js'
 // import { get as _get } from 'lodash-es'
 const { Dragger } = Upload
@@ -57,6 +64,12 @@ export default class SelectDeparture extends React.Component {
         }
       }
     }
+    let objImage = null
+    if (!this.state.isLoadingImage) {
+      // pathParse()
+      objImage = getFilePrivate(this.state.valueUrl, this.props.token)
+      console.log(objImage, 'objImage')
+    }
 
     return (
       <UpdateFileWrapper>
@@ -105,8 +118,13 @@ export default class SelectDeparture extends React.Component {
           <h3>Xem trước</h3>
 
           {!this.state.isLoadingImage && (
-            <div>
-              <img style={{ width: '100%' }} src={getFilePrivate(this.state.valueUrl, this.props.token)} />
+            <div style={{ width: '100%', height: '500px' }}>
+              <FileViewer
+                fileType={objImage.ext}
+                filePath={objImage.URL}
+                // errorComponent={CustomErrorComponent}
+                // onError={this.onError}
+              />
             </div>
           )}
         </div>

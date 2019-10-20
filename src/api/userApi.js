@@ -2,7 +2,7 @@ import fetch from './fetch'
 
 const SLUG = '/user'
 
-export function getList({ page = 1, pageSize = 20, ...querySearch }) {
+export function getList({ page = 1, pageSize = 200, ...querySearch }) {
   return fetch.get(`${SLUG}`, {
     params: {
       page,

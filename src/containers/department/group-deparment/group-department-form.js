@@ -1,16 +1,17 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import styled from 'styled-components'
-import { Form, Input, Button } from 'antd'
+import { Form, Input, Button, InputNumber } from 'antd'
+import SelectDepartment from 'src/components/elements/select-department'
+
 import { connect } from 'react-redux'
 import { userLogin } from 'src/redux/actions/authAction'
-import UpdateFile from 'src/components/elements/update-file/index.js'
 import { updateUserInfo } from 'src/redux/actions/generalAction.js'
-import { policyMess } from 'src/config/message'
+import { departmentMess } from 'src/config/message'
 import { get as _get, pick as _pick } from 'lodash-es'
-const errorMessage = policyMess.error
+const errorMessage = departmentMess.error
 
-const PolyciFormWrapper = styled.div`
+const GroupDepartmentFormWrapper = styled.div`
   flex: 1;
 `
 
@@ -25,13 +26,14 @@ const mapDispatchToProps = {
   mapStateToProps,
   mapDispatchToProps
 )
-class InfoPolicyForm extends React.Component {
+class GroupDepartmentForm extends React.Component {
   static propTypes = {
     form: PropTypes.any,
     getFieldError: PropTypes.any,
     initialData: PropTypes.object,
     onSubmit: PropTypes.func,
-    token: PropTypes.string
+    token: PropTypes.string,
+    isEdit: PropTypes.bool
   }
 
   state = {}
@@ -57,27 +59,28 @@ class InfoPolicyForm extends React.Component {
     const { initialData } = this.props
     console.log(initialData, 'initialData')
     setFieldsValue({
-      ..._pick(initialData, ['Name', 'Description', 'LinkFile'])
+      ..._pick(initialData, ['Name', 'Department', 'Order'])
     })
   }
 
   render() {
     const { getFieldDecorator } = this.props.form
     return (
-      <PolyciFormWrapper>
+      <GroupDepartmentFormWrapper>
         <Form layout='vertical' onSubmit={this.handleSubmit}>
-          <Form.Item label='Tên nhóm chính sách' extra=''>
+          <Form.Item label='Phòng ban'>
+            {getFieldDecorator('Department', {})(<SelectDepartment disabled placeholder='Nhập trưởng phòng' />)}
+          </Form.Item>
+          <Form.Item label='Tên nhóm' extra=''>
             {getFieldDecorator('Name', {
-              rules: [{ required: true, message: errorMessage.policyName }]
+              rules: [{ required: true, message: errorMessage.groupName }]
             })(<Input placeholder='Tên chính sách' />)}
           </Form.Item>
-          <Form.Item label='Mô tả' extra=''>
-            {getFieldDecorator('Description', {})(<Input placeholder='Tên chính sách' />)}
-          </Form.Item>
-          <Form.Item label='Các định dạng có thể tải lên *.png. Dung lượng không vượt quá 10MB' extra=''>
-            {getFieldDecorator('LinkFile', {
-              rules: [{ required: true, message: errorMessage.File }]
-            })(<UpdateFile />)}
+
+          <Form.Item label='Thứ tự hiển thị'>
+            {getFieldDecorator('Order', {
+              rules: [{ required: true, message: errorMessage.order }]
+            })(<InputNumber style={{ width: '100%' }} placeholder='Thứ tự hiển thị' />)}
           </Form.Item>
           <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
             <Button
@@ -87,13 +90,13 @@ class InfoPolicyForm extends React.Component {
               type='primary'
               htmlType='submit'
             >
-              Cập nhật
+              {this.props.isEdit ? 'Cập nhật' : 'Lưu'}
             </Button>
           </div>
         </Form>
-      </PolyciFormWrapper>
+      </GroupDepartmentFormWrapper>
     )
   }
 }
 
-export default Form.create({})(InfoPolicyForm)
+export default Form.create({})(GroupDepartmentForm)

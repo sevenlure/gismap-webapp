@@ -44,8 +44,8 @@ export const breadcrumb = {
   [slug.manager.user.edit]: [{ name: 'Nhân sự', slug: slug.manager.user.list }, { name: 'Cập nhật' }],
   // Policy
   [slug.manager.policy.list]: [{ name: 'Chính sách công ty' }],
-  [slug.manager.policy.create]: [{ name: 'Chính sách công ty', slug: slug.manager.policy.list }, { name: 'Thêm mới' }],
-  [slug.manager.policy.edit]: [{ name: 'Chính sách công ty', slug: slug.manager.policy.list }, { name: 'Cập nhật' }]
+  // Department
+  [slug.manager.department.list]: [{ name: 'Phòng ban' }]
 }
 
 export default slug

@@ -2,7 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import styled from 'styled-components'
 import DefaultLayout from 'src/layout/default'
-import { Table, Icon, Divider, Skeleton, Popconfirm, Modal, Checkbox, message } from 'antd'
+import { Table, Icon, Divider, Skeleton, Popconfirm, Modal, Checkbox, message, Button } from 'antd'
 import { get as _get } from 'lodash-es'
 import { connect } from 'react-redux'
 import { setBreadCrumb, updateKeyPath } from 'src/redux/actions/generalAction'
@@ -49,10 +49,6 @@ class ManagerPolicyList extends React.Component {
   getColumnGroupPolicy = () => {
     return [
       {
-        title: 'ID',
-        dataIndex: 'Key'
-      },
-      {
         title: 'Tên nhóm chính sách',
         dataIndex: 'Name'
       },
@@ -86,7 +82,7 @@ class ManagerPolicyList extends React.Component {
                 theme='twoTone'
                 type='edit'
               />
-              <Divider type='vertical' />
+              {/* <Divider type='vertical' />
               <Icon
                 onClick={() => {
                   this.setState({
@@ -97,7 +93,7 @@ class ManagerPolicyList extends React.Component {
                 style={{ cursor: 'pointer', fontSize: '1.5rem' }}
                 theme='twoTone'
                 type='plus-circle'
-              />
+              /> */}
             </div>
           )
         }
@@ -180,11 +176,26 @@ class ManagerPolicyList extends React.Component {
     this.getInitialValue()
   }
 
-  renderChildren = dataSource => {
+  renderChildren = record => {
+    const dataSource = _get(record, 'PolicyInfoList', [])
+    const parentID = _get(record, '_id')
     // console.log(dataSource, 'dataSource')
     if (dataSource && dataSource.length > 0) {
       return (
         <div>
+          <Button
+            onClick={() => {
+              this.setState({
+                isAddInfoPolicy: true,
+                PolicyInfoGroupKey: parentID
+              })
+            }}
+            type='primary'
+            icon='plus-circle'
+          >
+            Tạo chính sách
+          </Button>
+          <Clearfix height={16} />
           <Clearfix height={16} />
           <Table
             rowKey='_id'
@@ -210,7 +221,7 @@ class ManagerPolicyList extends React.Component {
               size='small'
               // scroll={{ y: 700 }}
               dataSource={this.state.dataSource}
-              expandedRowRender={record => this.renderChildren(record.PolicyInfoList)}
+              expandedRowRender={record => this.renderChildren(record)}
               columns={this.getColumnGroupPolicy()}
               pagination={{ position: 'bottom' }}
             />

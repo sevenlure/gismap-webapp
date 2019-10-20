@@ -4,7 +4,9 @@ import {
   CLEAR_GENERAL_USER_INFO,
   UPDATE_GENERAL_SUB_MENU,
   UPDATE_GENERAL_KEY_PATCH,
-  UPDATE_GENERAL_SET_BREADCRUMB
+  UPDATE_GENERAL_SET_BREADCRUMB,
+  GET_GENERAL_LIST_DEPARTURE,
+  IS_LOADED_GENERAL_DANHMUC
 } from '../actions/generalAction'
 
 import storage from 'redux-persist/lib/storage'
@@ -16,12 +18,28 @@ const InitialState = {
     subMenu: [],
     keyPath: [],
     breadcrumb: []
-  }
+  },
+  danhMuc: {
+    listDepartment: []
+  },
+  danhMucIsLoaded: false
 }
 
 // REDUCERS
 const generalReducer = (state = InitialState, action) => {
   switch (action.type) {
+    case GET_GENERAL_LIST_DEPARTURE: {
+      return update(state, {
+        danhMuc: {
+          listDepartment: { $set: action.payload }
+        }
+      })
+    }
+    case IS_LOADED_GENERAL_DANHMUC: {
+      return update(state, {
+        danhMucIsLoaded: { $set: action.payload }
+      })
+    }
     case UPDATE_GENERAL_USER_INFO: {
       return update(state, {
         userInfo: { $set: action.payload }

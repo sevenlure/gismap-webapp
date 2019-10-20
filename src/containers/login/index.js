@@ -95,15 +95,13 @@ class Login extends React.Component {
     this.props.form.validateFields((err, values) => {
       if (!err) {
         // console.log('Received values of form: ', values)
-        const phone = _get(values, 'phone', '').replace(/ /g, '')
-        // if (this.props.onSubmit) this.props.onSubmit(values)
         this.setState({
           isLoading: true
         })
 
         setTimeout(async () => {
           authApi
-            .login({ ...values, phone })
+            .login({ ...values })
             .then(res => {
               // console.log('API', res)
               this.props.userLogin(_get(res, 'data', null))
