@@ -68,7 +68,7 @@ export default class SelectDeparture extends React.Component {
     if (!this.state.isLoadingImage) {
       // pathParse()
       objImage = getFilePrivate(this.state.valueUrl, this.props.token)
-      // console.log(objImage, 'objImage')
+      console.log(this.state.valueUrl, 'objImage')
     }
 
     return (
