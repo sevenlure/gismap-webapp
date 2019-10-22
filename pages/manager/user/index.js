@@ -2,7 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import styled from 'styled-components'
 import DefaultLayout from 'src/layout/default'
-import { Table, Icon, Divider, Skeleton, Button, Popconfirm } from 'antd'
+import { Table, Icon, Divider, Skeleton, Button, Popconfirm, message } from 'antd'
 import userApi from 'src/api/userApi'
 import { getInfoErrorfetch } from 'src/constant/funcAixos.js'
 import { get as _get } from 'lodash-es'
@@ -11,72 +11,10 @@ import { setBreadCrumb, updateKeyPath } from 'src/redux/actions/generalAction'
 import slug, { breadcrumb } from 'src/routes/index'
 import Link from 'next/link'
 import Clearfix from 'src/components/elements/clearfix'
+// import { DateTime } from 'luxon'
+// import { DATE_FORMAT_LUXON } from 'src/config/format.js'
 
 const ManagerUserWrapper = styled.div``
-const columns = [
-  {
-    title: 'ID',
-    dataIndex: 'UserId'
-  },
-  {
-    title: 'Phòng ban',
-    dataIndex: ''
-  },
-  {
-    title: 'Chức vụ',
-    dataIndex: ''
-  },
-  {
-    title: 'Nhóm'
-  },
-  {
-    title: 'Họ tên',
-    render: (text, row) => {
-      const fullName = _get(row, 'LastName', '') + ' ' + _get(row, 'FirstName', '')
-      return <span>{fullName}</span>
-    }
-  },
-  {
-    title: 'Năm sinh',
-    dataIndex: ''
-  },
-  {
-    title: 'Email',
-    dataIndex: 'Email'
-  },
-  {
-    title: 'SĐT',
-    dataIndex: ''
-  },
-  {
-    title: '',
-    width: 70,
-    render: (text, record) => {
-      return (
-        <div>
-          <Link href={slug.manager.user.edit} as={`${slug.manager.user.base}/${_get(record, '_id')}`}>
-            <a>
-              <Icon style={{ cursor: 'pointer' }} theme='twoTone' type='edit' />
-            </a>
-          </Link>
-          <Divider type='vertical' />
-          <Popconfirm
-            title='Bạn chắc chắc muốn xoá?'
-            placement='left'
-            okText='Đồng ý'
-            cancelText='Hủy'
-            onConfirm={() => {
-              console.log(_get(record, '_id'))
-              // this.handleDelete(get(record, '_id'))
-            }}
-          >
-            <Icon style={{ cursor: 'pointer' }} theme='twoTone' type='delete' />
-          </Popconfirm>
-        </div>
-      )
-    }
-  }
-]
 
 const mapStateToProps = () => ({})
 
@@ -99,16 +37,12 @@ class ManagerUser extends React.Component {
     dataSource: []
   }
 
-  componentDidMount = async () => {
+  getDataSource = async () => {
     try {
-      const pathPage = slug.manager.user.list
-      this.props.setBreadCrumb(breadcrumb[pathPage])
-      this.props.updateKeyPath([pathPage])
       const res = await userApi.getList({
         page: 1,
         pageSize: 50
       })
-      console.log(res, 'res')
       if (res.status === 200) {
         this.setState({
           dataSource: _get(res, 'data.list', [])
@@ -123,6 +57,80 @@ class ManagerUser extends React.Component {
         isLoading: false
       })
     }
+  }
+
+  componentDidMount = async () => {
+    const pathPage = slug.manager.user.list
+    this.props.setBreadCrumb(breadcrumb[pathPage])
+    this.props.updateKeyPath([pathPage])
+    this.getDataSource()
+  }
+
+  getColumn = () => {
+    return [
+      {
+        title: 'Phòng ban',
+        dataIndex: 'Department.Name'
+      },
+      {
+        title: 'Chức vụ',
+        dataIndex: 'PosittionName'
+      },
+      {
+        title: 'Nhóm'
+      },
+      {
+        title: 'Họ tên',
+        dataIndex: 'FullName'
+      },
+      // {
+      //   title: 'Năm sinh',
+      //   dataIndex: 'Birthday',
+      //   render: text => {
+      //     // console.log(typeof text, DateTime.fromISO(text).toFormat(DATE_FORMAT_LUXON))
+      //     if (typeof text === 'string') {
+      //       return <div>{DateTime.fromISO(text).toFormat(DATE_FORMAT_LUXON)}</div>
+      //     } else {
+      //       return null
+      //     }
+      //   }
+      // },
+      {
+        title: 'Email',
+        dataIndex: 'Email'
+      },
+      {
+        title: 'SĐT',
+        dataIndex: 'Phone'
+      },
+      {
+        title: '',
+        width: 100,
+        render: (text, record) => {
+          return (
+            <div>
+              <Link href={slug.manager.user.edit} as={`${slug.manager.user.base}/${_get(record, '_id')}`}>
+                <a>
+                  <Icon style={{ cursor: 'pointer', fontSize: '1.5rem' }} theme='twoTone' type='edit' />
+                </a>
+              </Link>
+              <Divider type='vertical' />
+              <Popconfirm
+                title='Bạn chắc chắc muốn xoá?'
+                placement='left'
+                okText='Đồng ý'
+                cancelText='Hủy'
+                onConfirm={() => {
+                  this.handleDelete(_get(record, '_id'))
+                }}
+              >
+                <Icon style={{ cursor: 'pointer', fontSize: '1.5rem' }} theme='twoTone' type='delete' />
+              </Popconfirm>
+            </div>
+          )
+        }
+      }
+    ]
   }
 
   render() {
@@ -142,12 +150,31 @@ class ManagerUser extends React.Component {
             size='small'
             // scroll={{ y: 700 }}
             dataSource={this.state.dataSource}
-            columns={columns}
+            columns={this.getColumn()}
             pagination={{ position: 'bottom' }}
           />
         )}
       </ManagerUserWrapper>
     )
+  }
+
+  handleDelete = async key => {
+    // console.log(key)
+    try {
+      const res = await userApi.deleteById(key)
+      if (res.status === 200) {
+        message.success('Xóa thành công!')
+        this.getDataSource()
+      }
+    } catch (ex) {
+      const { response } = ex
+      // console.log('catch', response)
+      getInfoErrorfetch(response)
+    } finally {
+      this.setState({
+        isLoading: false
+      })
+    }
   }
 }
 

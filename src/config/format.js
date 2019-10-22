@@ -4,6 +4,8 @@ export const DATETIME_FORMAT_v2 = 'DD/MM/YYYY, HH:mm'
 
 export const HH_MM = 'HH:mm'
 
+export const DATE_FORMAT_LUXON = 'dd/MM/yyyy'
+
 export const FORMAT_LOCAL = 'en'
 export const ROUND_DIGIT = 2 // Làm tròn số thap phan
 

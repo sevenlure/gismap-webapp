@@ -1,24 +1,16 @@
 const loginFail = 'Thông tin đăng nhập không chính xác'
 const updateFail = 'Cập nhật không thành công'
 const register = {
-  fullname: 'Thông tin chưa hợp lệ.',
-
-  comparePassword: 'Mật khẩu xác nhận chưa giống mật khẩu.',
-  passwordRequired: 'Vui lòng nhâp mật khẩu.',
-  passwordMin: 'Độ dài tối thiểu 8 ký tự',
-  passwordMax: 'Độ dài tối đa 32 ký tự',
-  passwordConfirmRequied: 'Vui lòng nhập mật khẩu xác nhận.',
-
-  phoneRequired: 'Vui lòng nhập số điện thoại.',
-  phoneOnlyNumber: 'Chỉ đuợc nhập số.',
-  phoneLen: 'Số điện thoại độ dài từ 10 đến 13 số.',
-  phoneExist: 'Số điện thoại đã được đăng ký',
-
-  emailRequired: 'Email là thông tin bắt buộc.',
-  emailValid: 'Chưa đúng định dạng email.',
-
-  addressLen: 'Địa chỉ có độ dài từ 10 đến 200.',
-  addressRequired: 'Vui lòng nhập địa chỉ.'
+  fullName: 'Vui lòng nhập tên nhân sự',
+  email: 'Vui lòng nhập email',
+  emailFormat: 'Dữ liệu nhập không đúng định dạng email',
+  phone: 'Vui lòng nhập số điện thoại',
+  phoneLenght: 'Số điện thoại từ 9 đến 11 chữ số',
+  department: 'Vui lòng nhập phòng ban',
+  password: 'Vui lòng nhập mật khẩu',
+  passwordConfirm: 'Mật khẩu xác nhận không chính xác',
+  min: 'Độ dài tối thiểu 8 ký tự',
+  max: 'Độ dài tối đa 32 ký tự'
 }
 export default {
   loginFail,

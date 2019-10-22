@@ -4,6 +4,7 @@ import pathParse from 'path-parse'
 
 export function getFilePrivate(url, token) {
   const URL = `${SLUG}${url}?token=${token}`
+  // console.log("getFilePrivate",url)
   const result = pathParse(url)
 
   return {

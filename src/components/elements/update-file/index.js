@@ -80,7 +80,7 @@ export default class SelectDeparture extends React.Component {
             this.setState({
               isLoadingImage: true
             })
-            console.log(info, '----')
+            // console.log(info, '----')
             message.success(`${info.filename} tập tin cập nhật thành công.`)
             const value = _get(info, 'link', null)
             this.setState({
