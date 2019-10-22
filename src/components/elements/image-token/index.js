@@ -34,10 +34,14 @@ export default class ImageToken extends React.PureComponent {
   render() {
     return (
       <ImageWrapper>
-        <Avatar shape='square' style={{
-            width:'100%',
+        <Avatar
+          shape='square'
+          style={{
+            width: '100%',
             height: '100%'
-        }} src={this.state.urlToken} />
+          }}
+          src={this.state.urlToken}
+        />
       </ImageWrapper>
     )
   }
