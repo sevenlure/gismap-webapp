@@ -120,7 +120,7 @@ class UserForm extends React.Component {
             <Col span={12}>
               <Form.Item label='Tên nhân sự'>
                 {getFieldDecorator('FullName', { rules: [{ required: true, message: userMess.fullName }] })(
-                  <Input size='large'  placeholder='Tên nhân sự *' />
+                  <Input size='large' placeholder='Tên nhân sự *' />
                 )}
               </Form.Item>
             </Col>
@@ -141,7 +141,7 @@ class UserForm extends React.Component {
                     { required: true, message: userMess.phone },
                     { min: 10, max: 13, message: userMess.phoneLenght }
                   ]
-                })(<Input size='large'  placeholder='Số điện thoại *' />)}
+                })(<Input size='large' placeholder='Số điện thoại *' />)}
               </Form.Item>
             </Col>
             <Col span={12}>

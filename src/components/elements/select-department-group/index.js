@@ -45,7 +45,7 @@ export default class SelectDepartmentToGroup extends React.Component {
       isLoading: false
     })
 
-    if(this.props.value){
+    if (this.props.value) {
       this.onChange
     }
   }
