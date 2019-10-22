@@ -105,7 +105,7 @@ class UserForm extends React.Component {
       Birthday: initialValue.Birthday ? momnent(initialValue.Birthday) : null,
       optionDepartment: optionDepartment
     }
-    console.log(data, 'initialData')
+    // console.log(data, 'initialData')
     setFieldsValue({
       ...data
     })

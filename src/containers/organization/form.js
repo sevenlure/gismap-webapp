@@ -64,7 +64,7 @@ class EditForm extends React.Component {
     e.preventDefault()
     this.props.form.validateFields(async (err, values) => {
       if (!err) {
-        console.log('Received values of form: ', values)
+        // console.log('Received values of form: ', values)
 
         const dataOmit = _omit(values, ['LinkFile'])
         // console.log(_values(data), '_values')

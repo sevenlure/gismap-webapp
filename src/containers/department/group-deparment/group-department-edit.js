@@ -35,7 +35,7 @@ class GroupDepartmentEdit extends React.Component {
   }
 
   hanldeOnSubmit = async values => {
-    console.log('hanldeOnSubmit', values)
+    // console.log('hanldeOnSubmit', values)
 
     try {
       const res = await GroupApi.updateGroup(this.state.key, {

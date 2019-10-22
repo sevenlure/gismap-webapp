@@ -33,7 +33,7 @@ class GroupPolicyEdit extends React.Component {
   }
 
   hanldeOnSubmit = async values => {
-    console.log('hanldeOnSubmit', values)
+    // console.log('hanldeOnSubmit', values)
     // const key = _get(this.props.dataSource, '_id', null)
     // if (!key) return
 

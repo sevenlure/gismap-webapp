@@ -40,7 +40,7 @@ class InfoPolicyForm extends React.Component {
     e.preventDefault()
     this.props.form.validateFields(async (err, values) => {
       if (!err) {
-        console.log('Received values of form: ', values)
+        // console.log('Received values of form: ', values)
         const data = {
           ...values
         }
@@ -55,7 +55,7 @@ class InfoPolicyForm extends React.Component {
     this.props.form.resetFields()
     const { setFieldsValue } = this.props.form
     const { initialData } = this.props
-    console.log(initialData, 'initialData')
+    // console.log(initialData, 'initialData')
     setFieldsValue({
       ..._pick(initialData, ['Name', 'Description', 'LinkFile'])
     })

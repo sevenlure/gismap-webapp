@@ -51,7 +51,7 @@ class GroupPolicyForm extends React.Component {
     this.props.form.resetFields()
     const { setFieldsValue } = this.props.form
     const { initialData } = this.props
-    console.log(_pick(initialData, ['Name', 'HeadPerson', 'Order']), 'initialData')
+    // console.log(_pick(initialData, ['Name', 'HeadPerson', 'Order']), 'initialData')
     setFieldsValue({
       ..._pick(initialData, ['Name', 'HeadPerson', 'Order'])
     })
