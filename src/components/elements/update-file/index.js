@@ -68,7 +68,7 @@ export default class SelectDeparture extends React.Component {
     if (!this.state.isLoadingImage) {
       // pathParse()
       objImage = getFilePrivate(this.state.valueUrl, this.props.token)
-      console.log(objImage, 'objImage')
+      // console.log(objImage, 'objImage')
     }
 
     return (
@@ -118,12 +118,15 @@ export default class SelectDeparture extends React.Component {
           <h3>Xem trước</h3>
 
           {!this.state.isLoadingImage && (
-            <div style={{ width: '100%', height: '500px' }}>
+            <div style={{ width: '100%', maxHeight: '500px' }}>
+              {/* <img src={objImage.URL}/> */}
               <FileViewer
                 fileType={objImage.ext}
                 filePath={objImage.URL}
                 // errorComponent={CustomErrorComponent}
-                // onError={this.onError}
+                // onError={(e)=>{
+                //   console.log("error",e)
+                // }}
               />
             </div>
           )}

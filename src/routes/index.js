@@ -16,7 +16,8 @@ const slug = {
     },
     organization: {
       base: '/manager/organization',
-      list: '/manager/organization'
+      info: '/manager/organization',
+      edit: '/manager/organization/edit'
     },
     policy: {
       base: '/manager/policy',
@@ -45,7 +46,13 @@ export const breadcrumb = {
   // Policy
   [slug.manager.policy.list]: [{ name: 'Chính sách công ty' }],
   // Department
-  [slug.manager.department.list]: [{ name: 'Phòng ban' }]
+  [slug.manager.department.list]: [{ name: 'Phòng ban' }],
+  // Sơ đồ tổ chức organization
+  [slug.manager.organization.info]: [{ name: 'Sơ đồ tổ chức' }],
+  [slug.manager.organization.edit]: [
+    { name: 'Sơ đồ tổ chức', slug: slug.manager.organization.info },
+    { name: 'Cập nhật' }
+  ]
 }
 
 export default slug

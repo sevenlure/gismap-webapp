@@ -11,6 +11,9 @@ export function getList({ page = 1, pageSize = 200, ...querySearch }) {
     }
   })
 }
+export function getAll() {
+  return fetch.get(`${SLUG}/getAll`)
+}
 
 export function getById(_id) {
   return fetch.get(`${SLUG}/${_id}`)
@@ -30,6 +33,7 @@ export function deleteById(_id) {
 
 export default {
   getList,
+  getAll,
   create,
   getById,
   updateById,
