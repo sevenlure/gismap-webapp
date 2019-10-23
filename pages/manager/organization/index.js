@@ -9,7 +9,7 @@ import { get as _get, map as _map } from 'lodash-es'
 import { connect } from 'react-redux'
 import { setBreadCrumb, updateKeyPath } from 'src/redux/actions/generalAction'
 import slug, { breadcrumb } from 'src/routes/index'
-import ImageToken from '/Users/mac/Documents/Project/outSource/BDS/web-admin/src/components/elements/image-token'
+import ImageToken from 'src/components/elements/image-token'
 import Link from 'next/link'
 import Clearfix from 'src/components/elements/clearfix'
 
