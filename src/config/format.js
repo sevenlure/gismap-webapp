@@ -21,3 +21,8 @@ export function getFormatNumber(value, numberToFixed = 0) {
     return '0'
   }
 }
+
+export const UNIT_CURRENCY = {
+  TY: 'Tỷ',
+  TRIEU: 'Triệu'
+}

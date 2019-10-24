@@ -1,5 +1,5 @@
 import fetch from 'src/api/fetch'
-import { message } from 'antd'
+import { message, Modal } from 'antd'
 import { get as _get } from 'lodash-es'
 
 export function setAuthorizationforHeader(token) {
@@ -16,6 +16,13 @@ export function getInfoErrorfetch(response) {
   switch (status) {
     case 401: {
       message.error(_get(data, 'messageDisplay', 'something wrong'))
+      break
+    }
+    case 400: {
+      Modal.error({
+        title: 'Thất bại',
+        content: _get(data, 'messageDisplay', 'something wrong')
+      })
       break
     }
     case 409: {

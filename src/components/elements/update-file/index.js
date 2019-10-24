@@ -118,8 +118,7 @@ export default class SelectDeparture extends React.Component {
           <h3>Xem trước</h3>
 
           {!this.state.isLoadingImage && (
-            <div style={{ width: '100%', maxHeight: '500px' }}>
-              {/* <img src={objImage.URL}/> */}
+            <div style={{ width: '100%', maxHeight: '500px', overflowY: 'auto' }}>
               <FileViewer
                 fileType={objImage.ext}
                 filePath={objImage.URL}

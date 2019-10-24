@@ -26,9 +26,10 @@ const slug = {
       edit: '/manager/policy/[_id]'
     }
   },
-
   project: {
-    base: '/real-estate-project'
+    base: '/real-estate-project',
+    list: '/real-estate-project',
+    edit: '/real-estate-project/[_id]'
   },
   report: {
     base: '/report'
@@ -52,7 +53,9 @@ export const breadcrumb = {
   [slug.manager.organization.edit]: [
     { name: 'Sơ đồ tổ chức', slug: slug.manager.organization.info },
     { name: 'Cập nhật' }
-  ]
+  ],
+  // Dự án bất động sản
+  [slug.project.list]: [{ name: 'Dự án bất động sản' }]
 }
 
 export default slug

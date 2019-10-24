@@ -105,16 +105,42 @@ export default class SelectDepartmentToGroup extends React.Component {
     // console.log(value, selectedOptions, 'onChange')
   }
 
+  // loadData = selectedOptions => {
+  //   const targetOption = selectedOptions[selectedOptions.length - 1]
+  //   targetOption.loading = true
+  //   console.log(targetOption, 'targetOption')
+
+  //   // load options lazily
+  //   setTimeout(() => {
+  //     targetOption.loading = false
+  //     targetOption.children = [
+  //       {
+  //         label: `${targetOption.label} Dynamic 1`,
+  //         value: 'dynamic1'
+  //       },
+  //       {
+  //         label: `${targetOption.label} Dynamic 2`,
+  //         value: 'dynamic2'
+  //       }
+  //     ]
+  //     this.setState({
+  //       data: [...this.state.data]
+  //     })
+  //   }, 1000)
+  // }
+
   render() {
     return (
       <SelectUserWrapper windowWidth={this.props.windowWidth}>
         <Spin spinning={this.state.isLoading}>
           <Cascader
             size='large'
+            // loadData={this.loadData}
             value={this.state.value ? this.state.value : this.props.value}
             options={this.state.data}
             onChange={this.onChange}
             placeholder={this.props.placeholder}
+            changeOnSelect
           />
         </Spin>
       </SelectUserWrapper>

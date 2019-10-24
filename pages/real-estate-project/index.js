@@ -2,8 +2,8 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import styled from 'styled-components'
 import DefaultLayout from 'src/layout/default'
-import { Table, Icon, Divider, Skeleton, Button, Popconfirm, message } from 'antd'
-import userApi from 'src/api/userApi'
+import { Table, Icon, Divider, Skeleton, Button, Popconfirm, message, Checkbox} from 'antd'
+import RealEstateProjectApi from 'src/api/RealEstateProjectApi'
 import { getInfoErrorfetch } from 'src/constant/funcAixos.js'
 import { get as _get } from 'lodash-es'
 import { connect } from 'react-redux'
@@ -11,8 +11,8 @@ import { setBreadCrumb, updateKeyPath } from 'src/redux/actions/generalAction'
 import slug, { breadcrumb } from 'src/routes/index'
 import Link from 'next/link'
 import Clearfix from 'src/components/elements/clearfix'
-// import { DateTime } from 'luxon'
-// import { DATE_FORMAT_LUXON } from 'src/config/format.js'
+import { UNIT_CURRENCY } from 'src/config/format.js'
+import RealEstateProjectSearch from 'src/containers/real-estate-project/search.js'
 
 const RealEstateProjectWrapper = styled.div``
 
@@ -39,7 +39,7 @@ class RealEstateProject extends React.Component {
 
   getDataSource = async () => {
     try {
-      const res = await userApi.getList({
+      const res = await RealEstateProjectApi.getList({
         page: 1,
         pageSize: 50
       })
@@ -69,40 +69,42 @@ class RealEstateProject extends React.Component {
   getColumn = () => {
     return [
       {
-        title: 'Phòng ban',
-        dataIndex: 'Department.Name'
+        title: 'Tên dự án',
+        dataIndex: 'Name'
       },
       {
-        title: 'Nhóm',
-        dataIndex: 'Group.Name'
+        title: 'Tình trạng',
+        dataIndex: 'Status',
+        sorter: (a, b) => a.Status.length - b.Status.length,
+        sortDirections: ['descend', 'ascend']
       },
       {
-        title: 'Chức vụ',
-        dataIndex: 'PosittionName'
+        title: 'Vị trí',
+        dataIndex: 'Address'
       },
       {
-        title: 'Họ tên',
-        dataIndex: 'FullName'
+        title: 'Giá sản phẩm',
+        sorter: (a, b) => a.PriceWithUnit - b.PriceWithUnit,
+        sortDirections: ['descend', 'ascend'],
+        render: (value, record) => {
+          let strPrice = _get(record, 'PriceWithUnit', '')
+          if (strPrice) {
+            const UnitCount = _get(record, 'UnitCount', '')
+            // console.log(UnitCount)
+            strPrice = `${strPrice} ${_get(UNIT_CURRENCY, [UnitCount], '')}`
+          }
+
+          return <div>{strPrice}</div>
+        }
       },
-      // {
-      //   title: 'Năm sinh',
-      //   dataIndex: 'Birthday',
-      //   render: text => {
-      //     // console.log(typeof text, DateTime.fromISO(text).toFormat(DATE_FORMAT_LUXON))
-      //     if (typeof text === 'string') {
-      //       return <div>{DateTime.fromISO(text).toFormat(DATE_FORMAT_LUXON)}</div>
-      //     } else {
-      //       return null
-      //     }
-      //   }
-      // },
+      // UNIT_CURRENCY
       {
-        title: 'Email',
-        dataIndex: 'Email'
-      },
-      {
-        title: 'SĐT',
-        dataIndex: 'Phone'
+        title: 'Cho phép hiển thị',
+        dataIndex: 'IsShow',
+        align: 'center',
+        render: value => {
+          return <Checkbox checked={value} />
+        }
       },
       {
         title: '',
@@ -110,7 +112,7 @@ class RealEstateProject extends React.Component {
         render: (text, record) => {
           return (
             <div>
-              <Link href={slug.manager.user.edit} as={`${slug.manager.user.base}/${_get(record, '_id')}`}>
+              <Link href={slug.project.edit} as={`${slug.project.base}/${_get(record, '_id')}`}>
                 <a>
                   <Icon style={{ cursor: 'pointer', fontSize: '1.5rem' }} theme='twoTone' type='edit' />
                 </a>
@@ -135,8 +137,13 @@ class RealEstateProject extends React.Component {
   }
 
   render() {
+
     return (
       <RealEstateProjectWrapper>
+        <div>
+          <RealEstateProjectSearch />
+        </div>
+        <Clearfix height={8} />
         <Link href={slug.manager.user.create}>
           <Button type='primary' icon='plus-circle'>
             Tạo mới
@@ -162,7 +169,7 @@ class RealEstateProject extends React.Component {
   handleDelete = async key => {
     // console.log(key)
     try {
-      const res = await userApi.deleteById(key)
+      const res = await RealEstateProjectApi.deleteById(key)
       if (res.status === 200) {
         message.success('Xóa thành công!')
         this.getDataSource()
