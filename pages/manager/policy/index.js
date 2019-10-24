@@ -180,23 +180,22 @@ class ManagerPolicyList extends React.Component {
     const dataSource = _get(record, 'PolicyInfoList', [])
     const parentID = _get(record, '_id')
     // console.log(dataSource, 'dataSource')
-    if (dataSource && dataSource.length > 0) {
-      return (
-        <div>
-          <Button
-            onClick={() => {
-              this.setState({
-                isAddInfoPolicy: true,
-                PolicyInfoGroupKey: parentID
-              })
-            }}
-            type='primary'
-            icon='plus-circle'
-          >
-            Tạo chính sách
-          </Button>
-          <Clearfix height={16} />
-          <Clearfix height={16} />
+    return (
+      <div>
+        <Button
+          onClick={() => {
+            this.setState({
+              isAddInfoPolicy: true,
+              PolicyInfoGroupKey: parentID
+            })
+          }}
+          type='primary'
+          icon='plus-circle'
+        >
+          Tạo chính sách
+        </Button>
+        <Clearfix height={16} />
+        {dataSource && dataSource.length > 0 ? (
           <Table
             rowKey='_id'
             size='small'
@@ -204,10 +203,11 @@ class ManagerPolicyList extends React.Component {
             dataSource={dataSource}
             columns={this.getColumnChildrenPolicy()}
           />
-        </div>
-      )
-    }
-    return <h4>Không có dữ liệu</h4>
+        ) : (
+          <h4>Không có dữ liệu</h4>
+        )}
+      </div>
+    )
   }
 
   render() {
