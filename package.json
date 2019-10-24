@@ -5,7 +5,9 @@
     "dev": "isDev=true next",
     "build": "next build",
     "start": "NODE_ENV=production PORT=3300 node server.js",
-    "withPm2": "pm2 start --name NPRwork-ADMIN npm -- start"
+    "withPm2": "pm2 start --name NPRwork-ADMIN npm -- start",
+    "deploy:setup:dev": "pm2 deploy ser_dev setup",
+    "deploy:dev": "pm2 deploy ecosystem.config.js ser_dev"
   },
   "dependencies": {
     "@react-google-maps/api": "^1.7.5",
