@@ -1,39 +1,41 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import styled from 'styled-components'
-import DefaultLayout from 'src/layout/default'
-import { Table, Icon, Divider, Skeleton, Button, Popconfirm, message, Checkbox, Row, Col, Form, Input } from 'antd'
-import RealEstateProjectApi from 'src/api/RealEstateProjectApi'
-import { getInfoErrorfetch } from 'src/constant/funcAixos.js'
-import { get as _get } from 'lodash-es'
-import { connect } from 'react-redux'
-import { setBreadCrumb, updateKeyPath } from 'src/redux/actions/generalAction'
-import slug, { breadcrumb } from 'src/routes/index'
-import Link from 'next/link'
-import Clearfix from 'src/components/elements/clearfix'
-import { UNIT_CURRENCY } from 'src/config/format.js'
+import { Row, Col, Form, Input, Button } from 'antd'
+import {} from 'lodash-es'
+import SelectStatus from 'src/components/elements/select-status'
 
-const RealEstateProjectSearchWrapper = styled.div``
+const RealEstateProjectSearchWrapper = styled.div`
+  .button--search {
+    padding-left: 8px;
+    padding-top: 8px;
+  }
+`
 
-const mapStateToProps = () => ({})
-
-const mapDispatchToProps = {
-  setBreadCrumb,
-  updateKeyPath
-}
-
-@connect(
-  mapStateToProps,
-  mapDispatchToProps
-)
 class RealEstateProjectSearch extends React.Component {
   static propTypes = {
     getFieldDecorator: PropTypes.func,
-    form: PropTypes.any
+    form: PropTypes.any,
+    onSubmit: PropTypes.func
   }
   state = {}
 
-  handleSubmit = () => {}
+  handleSubmit = e => {
+    e.preventDefault()
+    this.props.form.validateFields((errors, values) => {
+      if (!errors) {
+        // console.log('validateFields', values)
+        let data = {}
+        if (values.Search) {
+          data.Search = values.Search
+        }
+        if (values.Status) {
+          data.Status = values.Status
+        }
+        if (this.props.onSubmit) this.props.onSubmit(data)
+      }
+    })
+  }
 
   render() {
     const { getFieldDecorator } = this.props.form
@@ -42,10 +44,23 @@ class RealEstateProjectSearch extends React.Component {
       <RealEstateProjectSearchWrapper>
         <Form layout='horizontal' onSubmit={this.handleSubmit}>
           <Row gutter={8}>
-            <Col span={12}>
-              <Form.Item label='Tên dự án'>
-                {getFieldDecorator('FullName', {})(<Input size='large' placeholder='Tên dự án' />)}
+            <Col span={10}>
+              <Form.Item label='Tên dự án' labelCol={{ span: 4 }} wrapperCol={{ span: 20 }}>
+                {getFieldDecorator('Search', {})(<Input size='large' placeholder='Tên dự án' />)}
               </Form.Item>
+            </Col>
+            <Col span={10}>
+              <Form.Item label='Tên dự án' labelCol={{ span: 4 }} wrapperCol={{ span: 20 }}>
+                {getFieldDecorator('Status', {
+                  initialValue: ''
+                })(<SelectStatus />)}
+              </Form.Item>
+            </Col>
+
+            <Col span={4}>
+              <div className='button--search'>
+                <Button type='primary' shape='circle' icon='search' size='small' htmlType='submit' />
+              </div>
             </Col>
             <Col span={12}></Col>
           </Row>

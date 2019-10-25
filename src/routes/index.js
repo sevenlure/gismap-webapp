@@ -42,8 +42,8 @@ const slug = {
 export const breadcrumb = {
   // nhân sự
   [slug.manager.user.list]: [{ name: 'Danh sách nhân sự' }],
-  [slug.manager.user.create]: [{ name: 'Nhân sự', slug: slug.manager.user.list }, { name: 'Thêm mới' }],
-  [slug.manager.user.edit]: [{ name: 'Nhân sự', slug: slug.manager.user.list }, { name: 'Cập nhật' }],
+  [slug.manager.user.create]: [{ name: 'Nhân sự', slug: slug.manager.user.list }, { name: 'Thêm mới nhân sự' }],
+  [slug.manager.user.edit]: [{ name: 'Nhân sự', slug: slug.manager.user.list }, { name: 'Cập nhật nhân sự' }],
   // Policy
   [slug.manager.policy.list]: [{ name: 'Chính sách công ty' }],
   // Department
@@ -52,10 +52,11 @@ export const breadcrumb = {
   [slug.manager.organization.info]: [{ name: 'Sơ đồ tổ chức' }],
   [slug.manager.organization.edit]: [
     { name: 'Sơ đồ tổ chức', slug: slug.manager.organization.info },
-    { name: 'Cập nhật' }
+    { name: 'Cập nhật sơ đồ tổ chức' }
   ],
   // Dự án bất động sản
-  [slug.project.list]: [{ name: 'Dự án bất động sản' }]
+  [slug.project.list]: [{ name: 'Dự án bất động sản' }],
+  [slug.project.edit]: [{ name: 'Dự án bất động sản', slug: slug.project.list }, { name: 'Cập nhật bất động sản' }]
 }
 
 export default slug

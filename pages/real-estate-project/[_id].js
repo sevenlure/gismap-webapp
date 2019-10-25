@@ -5,9 +5,10 @@ import Router from 'next/router'
 import slug, { breadcrumb } from 'src/routes'
 import { connect } from 'react-redux'
 import { setBreadCrumb, updateKeyPath } from 'src/redux/actions/generalAction'
-import UserForm from 'src/containers/user/form.js'
+import EditForm from 'src/containers/real-estate-project/form'
 import DefaultLayout from 'src/layout/default'
-import UserApi from 'src/api/userApi'
+// import UserApi from 'src/api/userApi'
+import RealEstateProjectApi from 'src/api/RealEstateProjectApi'
 import { get as _get } from 'lodash-es'
 import { getInfoErrorfetch } from 'src/constant/funcAixos.js'
 
@@ -38,10 +39,10 @@ class RealEstateProjectEdit extends React.Component {
   }
 
   componentDidMount = async () => {
-    this.props.setBreadCrumb(breadcrumb[slug.manager.user.edit])
-    this.props.updateKeyPath([slug.manager.user.base])
+    this.props.setBreadCrumb(breadcrumb[slug.project.edit])
+    this.props.updateKeyPath([slug.project.base])
     try {
-      const res = await UserApi.getById(this.props._id)
+      const res = await RealEstateProjectApi.getById(this.props._id)
       if (res.status === 200) {
         this.setState({
           initialValue: _get(res, 'data', null)
@@ -61,10 +62,10 @@ class RealEstateProjectEdit extends React.Component {
   hanldeOnSubmit = async values => {
     // console.log('hanldeOnSubmit', values)
     try {
-      const res = await UserApi.updateById(this.props._id, values)
+      const res = await RealEstateProjectApi.updateById(this.props._id, values)
       if (res.status === 200) {
         message.success('Cập nhật thành công!')
-        Router.push(slug.manager.user.list)
+        Router.push(slug.project.list)
       }
     } catch (ex) {
       console.log(ex)
@@ -79,7 +80,7 @@ class RealEstateProjectEdit extends React.Component {
     return (
       <div>
         {!this.state.isLoading && (
-          <UserForm onSubmit={this.hanldeOnSubmit} isEdit initialValue={this.state.initialValue} />
+          <EditForm onSubmit={this.hanldeOnSubmit} isEdit initialValue={this.state.initialValue} />
         )}
       </div>
     )

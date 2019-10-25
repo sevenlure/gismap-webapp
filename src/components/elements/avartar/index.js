@@ -1,11 +1,11 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import styled from 'styled-components'
-import { get as _get, map as _map, find as _find, pick as _pick } from 'lodash-es'
-import windowSize from 'react-window-size'
+import { get as _get } from 'lodash-es'
+// import windowSize from 'react-window-size'
 import { connect } from 'react-redux'
-import { Upload, Avatar, Icon, message } from 'antd'
-import Clearfix from 'src/components/elements/clearfix'
+import { Upload, Icon, message } from 'antd'
+// import Clearfix from 'src/components/elements/clearfix'
 import { getFilePrivate } from 'src/api/updateFileApi.js'
 
 const AvatarWrapper = styled.div`
@@ -16,7 +16,7 @@ const AvatarWrapper = styled.div`
 @connect(state => ({
   token: _get(state, 'AuthStore.token')
 }))
-export default class SelectDepartmentToGroup extends React.PureComponent {
+export default class AvatarImage extends React.PureComponent {
   static propTypes = {
     onChange: PropTypes.func.isRequired,
     value: PropTypes.string,

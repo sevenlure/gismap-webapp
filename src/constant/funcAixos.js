@@ -25,6 +25,13 @@ export function getInfoErrorfetch(response) {
       })
       break
     }
+    case 503: {
+      Modal.error({
+        title: 'Thông báo server',
+        content: 'Máy chủ quá “bận” hoặc trang web đang trong quá trình bảo trì'
+      })
+      break
+    }
     case 409: {
       console.log('Error', data)
       break

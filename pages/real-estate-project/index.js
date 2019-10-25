@@ -2,7 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import styled from 'styled-components'
 import DefaultLayout from 'src/layout/default'
-import { Table, Icon, Divider, Skeleton, Button, Popconfirm, message, Checkbox} from 'antd'
+import { Table, Icon, Divider, Skeleton, Button, Popconfirm, message, Checkbox } from 'antd'
 import RealEstateProjectApi from 'src/api/RealEstateProjectApi'
 import { getInfoErrorfetch } from 'src/constant/funcAixos.js'
 import { get as _get } from 'lodash-es'
@@ -34,15 +34,16 @@ class RealEstateProject extends React.Component {
   }
   state = {
     isLoading: true,
-    dataSource: []
+    dataSource: [],
+    pagination: {
+      page: 1,
+      pageSize: 50
+    }
   }
 
   getDataSource = async () => {
     try {
-      const res = await RealEstateProjectApi.getList({
-        page: 1,
-        pageSize: 50
-      })
+      const res = await RealEstateProjectApi.getList(this.state.pagination)
       if (res.status === 200) {
         this.setState({
           dataSource: _get(res, 'data.list', [])
@@ -136,12 +137,36 @@ class RealEstateProject extends React.Component {
     ]
   }
 
-  render() {
+  hanldeSearch = async values => {
+    try {
+      this.setState({
+        isLoading: true
+      })
+      const res = await RealEstateProjectApi.getList({
+        ...this.state.pagination,
+        ...values
+      })
+      if (res.status === 200) {
+        this.setState({
+          dataSource: _get(res, 'data.list', [])
+        })
+      }
+    } catch (ex) {
+      const { response } = ex
+      console.log(ex)
+      getInfoErrorfetch(response)
+    } finally {
+      this.setState({
+        isLoading: false
+      })
+    }
+  }
 
+  render() {
     return (
       <RealEstateProjectWrapper>
         <div>
-          <RealEstateProjectSearch />
+          <RealEstateProjectSearch onSubmit={this.hanldeSearch} />
         </div>
         <Clearfix height={8} />
         <Link href={slug.manager.user.create}>
