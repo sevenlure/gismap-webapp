@@ -9,7 +9,7 @@ import { setBreadCrumb, updateKeyPath } from 'src/redux/actions/generalAction'
 import DefaultLayout from 'src/layout/default'
 // import UserApi from 'src/api/userApi'
 import RealEstateProjectApi from 'src/api/RealEstateProjectApi'
-import { get as _get } from 'lodash-es'
+import { get as _get, pick as _pick } from 'lodash-es'
 import { getInfoErrorfetch } from 'src/constant/funcAixos.js'
 
 import dynamic from 'next/dynamic'
@@ -41,17 +41,21 @@ class RealEstateProjectEdit extends React.Component {
 
   state = {
     isLoading: true,
-    initialValue: null
+    initialValue: null,
+    Title: ''
   }
 
   componentDidMount = async () => {
     this.props.setBreadCrumb(breadcrumb[slug.project.content])
     this.props.updateKeyPath([slug.project.base])
+
     try {
       const res = await RealEstateProjectApi.getById(this.props._id)
       if (res.status === 200) {
+        const data = _get(res, 'data', null)
         this.setState({
-          initialValue: _get(res, 'data', null)
+          initialValue: _pick(data, ['TongQuan']),
+          Title: _get(data, 'Name', '')
         })
       }
     } catch (ex) {
@@ -59,44 +63,69 @@ class RealEstateProjectEdit extends React.Component {
       // console.log('catch', response)
       getInfoErrorfetch(response)
     } finally {
-      this.setState({
-        isLoading: false
-      })
+      this.setState(
+        {
+          isLoading: false
+        },
+        () => {
+          this.props.form.resetFields()
+          const { setFieldsValue } = this.props.form
+          setFieldsValue({
+            ...this.state.initialValue
+          })
+        }
+      )
     }
   }
 
   handleSubmit = async e => {
     e.preventDefault()
     this.props.form.validateFields(async (err, values) => {
-      console.log('Received values of form: ', values)
+      // console.log('Received values of form: ', values)
       if (!err) {
-        console.log('Received values of form: ', values)
+        // console.log('Received values of form: ', {
+        //   ...values,
+        //   Name: this.state.Title
+        // })
+
+        try {
+          const res = await RealEstateProjectApi.updateById(this.props._id, {
+            ...values,
+            Name: this.state.Title
+          })
+          if (res.status === 200) {
+            message.success('Cập nhật thành công!')
+            Router.push(slug.project.list)
+          }
+        } catch (ex) {
+          console.log(ex)
+          const { response } = ex
+          // console.log('catch', response)
+          getInfoErrorfetch(response)
+        }
       }
     })
-    // try {
-    //   const res = await RealEstateProjectApi.updateById(this.props._id, values)
-    //   if (res.status === 200) {
-    //     message.success('Cập nhật thành công!')
-    //     Router.push(slug.project.list)
-    //   }
-    // } catch (ex) {
-    //   console.log(ex)
-    //   const { response } = ex
-    //   // console.log('catch', response)
-    //   getInfoErrorfetch(response)
-    // }
   }
 
   render() {
     const { getFieldDecorator } = this.props.form
-    // console.log(this.state.initialValue, 'initialValue')
+    // console.log(this.state.isLoading, 'initialValue')
     return (
       <div>
         {!this.state.isLoading && (
           <Form onSubmit={this.handleSubmit}>
+            <Row>
+              <Col>
+                <h2>{this.state.Title}</h2>
+              </Col>
+            </Row>
             <Row gutter={8}>
               <Col span={24}>
-                <Form.Item label='Nội dung'>{getFieldDecorator('TongQuan', {})(<EditorCustom />)}</Form.Item>
+                <Form.Item label='Nội dung'>
+                  {getFieldDecorator('TongQuan', {
+                    // initialValue: _get(this.initialValue, ['TongQuan'], '')
+                  })(<EditorCustom />)}
+                </Form.Item>
               </Col>
             </Row>
             <Affix offsetBottom={20}>
