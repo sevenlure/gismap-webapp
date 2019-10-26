@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import styled from 'styled-components'
-import { Spin, Modal } from 'antd'
+import { Spin, Menu, Dropdown } from 'antd'
 import { GoogleMap, LoadScript, Marker } from '@react-google-maps/api'
 
 const MapWrapper = styled.div`
@@ -17,6 +17,7 @@ const center = {
   lat: 10.7553411,
   lng: 106.4150285
 }
+
 export default class Map extends React.Component {
   static propTypes = {
     onChange: PropTypes.func,
@@ -27,7 +28,6 @@ export default class Map extends React.Component {
     isLoadedMap: false,
     pointTemp: null,
     point: null,
-    visible: false,
     locationCenter: center
   }
 
@@ -38,7 +38,6 @@ export default class Map extends React.Component {
         point: this.state.pointTemp
       },
       () => {
-        this.visibleModal(false)
         if (this.props.onChange) this.props.onChange(this.state.point)
       }
     )
@@ -57,22 +56,16 @@ export default class Map extends React.Component {
     }
   }
 
-  visibleModal = blnVisible => {
-    this.setState({
-      visible: blnVisible
-    })
-  }
-
   handleOnRightClickMap = (...args) => {
-    // console.log('onClick args: ', args[0].latLng.lat(), args[0].latLng.lng())
+    console.log('onClick args: ', args)
     this.setState({
-      visible: true,
       pointTemp: {
         lat: args[0].latLng.lat(),
         lng: args[0].latLng.lng()
       }
     })
   }
+
   render() {
     // console.log(this.props.value, this.state.point, 'render')
 
@@ -80,44 +73,45 @@ export default class Map extends React.Component {
     return (
       <MapWrapper>
         <Spin spinning={!this.state.isLoadedMap}>
-          <div className='map--container'>
-            <LoadScript
-              id='script-loader'
-              googleMapsApiKey={process.env.GOOGLE_MAP_API_KEY}
-              loadingElement={<div></div>}
-              onLoad={() => this.setState({ isLoadedMap: true })}
-            >
-              <GoogleMap
-                zoom={zoom}
-                center={this.state.locationCenter}
-                mapContainerStyle={{ height: '100%', width: '100%' }}
-                id='BSD-map'
-                streetView={false}
-                onRightClick={this.handleOnRightClickMap}
-                options={{
-                  zoomControl: false,
-                  mapTypeControl: false,
-                  scaleControl: false,
-                  streetViewControl: false,
-                  rotateControl: false,
-                  fullscreenControl: false
-                }}
+          <Dropdown
+            overlay={
+              <Menu>
+                <Menu.Item key='0' onClick={this.changePoint}>
+                  Cập nhật vị trí
+                </Menu.Item>
+              </Menu>
+            }
+            trigger={['contextMenu']}
+          >
+            <div style={{ userSelect: 'none' }} className='map--container'>
+              <LoadScript
+                id='script-loader'
+                googleMapsApiKey={process.env.GOOGLE_MAP_API_KEY}
+                loadingElement={<div></div>}
+                onLoad={() => this.setState({ isLoadedMap: true })}
               >
-                {this.state.point && <Marker position={this.state.point} />}
-              </GoogleMap>
-            </LoadScript>
-          </div>
+                <GoogleMap
+                  zoom={zoom}
+                  center={this.state.locationCenter}
+                  mapContainerStyle={{ height: '100%', width: '100%' }}
+                  id='BSD-map'
+                  streetView={false}
+                  onRightClick={this.handleOnRightClickMap}
+                  options={{
+                    zoomControl: false,
+                    mapTypeControl: false,
+                    scaleControl: false,
+                    streetViewControl: false,
+                    rotateControl: false,
+                    fullscreenControl: false
+                  }}
+                >
+                  {this.state.point && <Marker position={this.state.point} />}
+                </GoogleMap>
+              </LoadScript>
+            </div>
+          </Dropdown>
         </Spin>
-        <Modal
-          title='Vị trí tọa độ'
-          visible={this.state.visible}
-          onOk={this.changePoint}
-          onCancel={() => this.visibleModal(false)}
-          okText='Đồng ý'
-          cancelText='Hủy'
-        >
-          <p>Bạn có muốn cập nhật vị trí mơi</p>
-        </Modal>
       </MapWrapper>
     )
   }
