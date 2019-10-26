@@ -60,7 +60,7 @@ class RealEstateProject extends React.Component {
   }
 
   componentDidMount = async () => {
-    const pathPage = slug.project.list
+    const pathPage = slug.manager.user.list
     this.props.setBreadCrumb(breadcrumb[pathPage])
     this.props.updateKeyPath([pathPage])
     this.getDataSource()
@@ -110,12 +110,12 @@ class RealEstateProject extends React.Component {
         render: (text, record) => {
           return (
             <div>
-              <Link href={slug.manager.user.edit} as={`${slug.manager.user.base}/${_get(record, '_id')}`}>
+              {/* <Link href={slug.manager.user.edit} as={`${slug.manager.user.base}/${_get(record, '_id')}`}>
                 <a>
                   <Icon style={{ cursor: 'pointer', fontSize: '1.5rem' }} theme='twoTone' type='edit' />
                 </a>
               </Link>
-              <Divider type='vertical' />
+              <Divider type='vertical' /> */}
               <Popconfirm
                 title='Bạn chắc chắc muốn xoá?'
                 placement='left'
