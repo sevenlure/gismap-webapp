@@ -161,7 +161,7 @@ class ManagerManagerList extends React.Component {
                   this.handleDeleteGroup(_get(record, '_id'))
                 }}
               >
-                <Icon style={{ cursor: 'pointer' }} theme='twoTone' type='delete' />
+                <Icon style={{ cursor: 'pointer' }} twoToneColor='red' theme='twoTone' type='delete' />
               </Popconfirm>
             </div>
           )

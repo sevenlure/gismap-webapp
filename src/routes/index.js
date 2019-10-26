@@ -30,6 +30,8 @@ const slug = {
     base: '/real-estate-project',
     list: '/real-estate-project',
     edit: '/real-estate-project/[_id]',
+    contentWidthId: '/real-estate-project/content',
+    content: '/real-estate-project/content/[_id]',
     create: '/real-estate-project/create'
   },
   report: {
@@ -58,7 +60,11 @@ export const breadcrumb = {
   // Dự án bất động sản
   [slug.project.list]: [{ name: 'Dự án bất động sản' }],
   [slug.project.edit]: [{ name: 'Dự án bất động sản', slug: slug.project.list }, { name: 'Cập nhật bất động sản' }],
-  [slug.project.create]: [{ name: 'Dự án bất động sản', slug: slug.project.list }, { name: 'Thêm mới bất động sản' }]
+  [slug.project.create]: [{ name: 'Dự án bất động sản', slug: slug.project.list }, { name: 'Thêm mới bất động sản' }],
+  [slug.project.content]: [
+    { name: 'Dự án bất động sản', slug: slug.project.list },
+    { name: 'Tạo nội dung bất động sản' }
+  ]
 }
 
 export default slug

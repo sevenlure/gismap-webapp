@@ -4,7 +4,7 @@ import styled from 'styled-components'
 import { Form, Input, Button, Affix, Row, Col, InputNumber, Checkbox } from 'antd'
 import { connect } from 'react-redux'
 import { userLogin } from 'src/redux/actions/authAction'
-import { pick as _pick } from 'lodash-es'
+import { pick as _pick, last as _last } from 'lodash-es'
 import { updateUserInfo } from 'src/redux/actions/generalAction.js'
 import AvatarImage from 'src/components/elements/avartar'
 import UpdatFile from 'src/components/elements/update-file-2'
@@ -80,10 +80,13 @@ class UserForm extends React.Component {
       console.log('Received values of form: ', values)
       if (!err) {
         // console.log('Received values of form: ', values)
-
+        const data = {
+          ...values,
+          IsShow: _last(values.IsShow) ? _last(values.IsShow) : false
+        }
         if (this.props.onSubmit) {
           this.props.onSubmit({
-            ...values
+            ...data
           })
         }
       }
@@ -99,9 +102,10 @@ class UserForm extends React.Component {
       return
     }
 
-    // console.log(data, 'initialData')
+    // console.log(_pick(initialValue, this.state.pickFlieds), 'initialData')
     setFieldsValue({
-      ..._pick(initialValue, this.state.pickFlieds)
+      ..._pick(initialValue, this.state.pickFlieds),
+      IsShow: initialValue ? [initialValue.IsShow] : []
     })
   }
 

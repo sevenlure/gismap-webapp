@@ -125,7 +125,12 @@ class RealEstateProject extends React.Component {
                   this.handleDelete(_get(record, '_id'))
                 }}
               >
-                <Icon style={{ cursor: 'pointer', fontSize: '1.5rem' }} theme='twoTone' type='delete' />
+                <Icon
+                  style={{ cursor: 'pointer', fontSize: '1.5rem' }}
+                  twoToneColor='red'
+                  theme='twoTone'
+                  type='delete'
+                />
               </Popconfirm>
             </div>
           )

@@ -109,15 +109,22 @@ class RealEstateProject extends React.Component {
       },
       {
         title: '',
-        width: 100,
+        width: 130,
         render: (text, record) => {
           return (
             <div>
+              <Link href={slug.project.content} as={`${slug.project.contentWidthId}/${_get(record, '_id')}`}>
+                <a>
+                  <Icon style={{ cursor: 'pointer', fontSize: '1.5rem' }} theme='twoTone' type='highlight' />
+                </a>
+              </Link>
+              <Divider type='vertical' />
               <Link href={slug.project.edit} as={`${slug.project.base}/${_get(record, '_id')}`}>
                 <a>
                   <Icon style={{ cursor: 'pointer', fontSize: '1.5rem' }} theme='twoTone' type='edit' />
                 </a>
               </Link>
+
               <Divider type='vertical' />
               <Popconfirm
                 title='Bạn chắc chắc muốn xoá?'
@@ -128,7 +135,12 @@ class RealEstateProject extends React.Component {
                   this.handleDelete(_get(record, '_id'))
                 }}
               >
-                <Icon style={{ cursor: 'pointer', fontSize: '1.5rem' }} theme='twoTone' type='delete' />
+                <Icon
+                  style={{ cursor: 'pointer', fontSize: '1.5rem' }}
+                  twoToneColor='red'
+                  theme='twoTone'
+                  type='delete'
+                />
               </Popconfirm>
             </div>
           )
