@@ -10,6 +10,9 @@ import AvatarImage from 'src/components/elements/avartar'
 import UpdatFile from 'src/components/elements/update-file-2'
 import SelectUnitPrice from 'src/components/elements/select-unit-price'
 import { realEstateProjectMess } from 'src/config/message'
+import SelectStatus from 'src/components/elements/select-status'
+import Map from 'src/containers/real-estate-project/component/map.js'
+
 const errorForm = realEstateProjectMess.form
 
 const EditFormWrapper = styled.div`
@@ -66,13 +69,15 @@ class UserForm extends React.Component {
       'CSBH_NhanVien',
       'CSBH_KhachHang',
       'Brochure',
-      'IsShow'
+      'IsShow',
+      'DinhVi'
     ]
   }
 
   handleSubmit = e => {
     e.preventDefault()
     this.props.form.validateFields(async (err, values) => {
+      console.log('Received values of form: ', values)
       if (!err) {
         // console.log('Received values of form: ', values)
 
@@ -117,11 +122,11 @@ class UserForm extends React.Component {
               <Form.Item label='Tình trạng'>
                 {getFieldDecorator('Status', {
                   rules: [{ required: true, message: errorForm.status }]
-                })(<Input size='large' placeholder='Tình trạng *' />)}
+                })(<SelectStatus placeholder='Tình trạng *' />)}
               </Form.Item>
             </Col>
             <Col span={2}>
-              <Form.Item wrapperCol={{ offset: 12 }} label='Cho phép hiển thị'>
+              <Form.Item wrapperCol={{ offset: 6 }} label='Hiển thị'>
                 {getFieldDecorator('IsShow', {})(
                   <Checkbox.Group>
                     <Checkbox value={true} />
@@ -184,6 +189,16 @@ class UserForm extends React.Component {
             </Col>
             <Col span={12}>
               <Form.Item label='Brochure'>{getFieldDecorator('Brochure', {})(<UpdatFile />)}</Form.Item>
+            </Col>
+          </Row>
+          <Row gutter={8}>
+            <Col span={24}>
+              <Form.Item label='Vị trí tọa độ'>
+                {getFieldDecorator('DinhVi', {
+                  rules: [{ required: true, message: errorForm.dinhVi }]
+                })(<Map />)}
+              </Form.Item>
+              {/* <Map /> */}
             </Col>
           </Row>
           <Affix offsetBottom={20}>

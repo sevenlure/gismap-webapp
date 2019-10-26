@@ -169,7 +169,7 @@ class RealEstateProject extends React.Component {
           <RealEstateProjectSearch onSubmit={this.hanldeSearch} />
         </div>
         <Clearfix height={8} />
-        <Link href={slug.manager.user.create}>
+        <Link href={slug.project.create}>
           <Button type='primary' icon='plus-circle'>
             Tạo mới
           </Button>

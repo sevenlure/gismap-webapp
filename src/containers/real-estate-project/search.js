@@ -39,30 +39,38 @@ class RealEstateProjectSearch extends React.Component {
 
   render() {
     const { getFieldDecorator } = this.props.form
-
+    const formItemLayout = {
+      labelCol: {
+        xs: { span: 24 },
+        sm: { span: 8 }
+      },
+      wrapperCol: {
+        xs: { span: 24 },
+        sm: { span: 16 }
+      }
+    }
     return (
       <RealEstateProjectSearchWrapper>
-        <Form layout='horizontal' onSubmit={this.handleSubmit}>
+        <Form {...formItemLayout} onSubmit={this.handleSubmit}>
           <Row gutter={8}>
-            <Col span={10}>
-              <Form.Item label='Tên dự án' labelCol={{ span: 4 }} wrapperCol={{ span: 20 }}>
+            <Col span={11}>
+              <Form.Item label='Tên dự án'>
                 {getFieldDecorator('Search', {})(<Input size='large' placeholder='Tên dự án' />)}
               </Form.Item>
             </Col>
-            <Col span={10}>
-              <Form.Item label='Tên dự án' labelCol={{ span: 4 }} wrapperCol={{ span: 20 }}>
+            <Col span={11}>
+              <Form.Item label='Tên dự án'>
                 {getFieldDecorator('Status', {
                   initialValue: ''
                 })(<SelectStatus />)}
               </Form.Item>
             </Col>
 
-            <Col span={4}>
+            <Col span={2}>
               <div className='button--search'>
                 <Button type='primary' shape='circle' icon='search' size='small' htmlType='submit' />
               </div>
             </Col>
-            <Col span={12}></Col>
           </Row>
         </Form>
       </RealEstateProjectSearchWrapper>

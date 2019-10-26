@@ -3,7 +3,8 @@ const form = {
   status: 'Vui lòng nhập tình thái',
   address: 'Vui lòng nhập địa chỉ',
   price: 'Vui lòng nhập giá',
-  image: 'Vui lòng chọn ảnh đại diện'
+  image: 'Vui lòng chọn ảnh đại diện',
+  dinhVi: 'Vui lòng chọn vị trí tọa độ'
 }
 export default {
   form
