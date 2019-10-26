@@ -5,9 +5,10 @@ import DefaultLayout from 'src/layout/default'
 import { Skeleton, message } from 'antd'
 import organizationApi from 'src/api/organizationApi'
 import { getInfoErrorfetch } from 'src/constant/funcAixos.js'
+
 import { get as _get } from 'lodash-es'
 import { connect } from 'react-redux'
-import { setBreadCrumb, updateKeyPath } from 'src/redux/actions/generalAction'
+import { setBreadCrumb, updateKeyPath, getDepartment, isLoadedDanhMuc  } from 'src/redux/actions/generalAction'
 import slug, { breadcrumb } from 'src/routes/index'
 import OrganizationForm from 'src/containers/organization/form.js'
 import Router from 'next/router'
@@ -25,7 +26,9 @@ const mapStateToProps = () => ({})
 
 const mapDispatchToProps = {
   setBreadCrumb,
-  updateKeyPath
+  updateKeyPath,
+  getDepartment,
+  isLoadedDanhMuc
 }
 
 @connect(
@@ -35,7 +38,9 @@ const mapDispatchToProps = {
 class ManagerOrganizationEdit extends React.Component {
   static propTypes = {
     setBreadCrumb: PropTypes.func,
-    updateKeyPath: PropTypes.func
+    updateKeyPath: PropTypes.func,
+    getDepartment: PropTypes.func,
+    isLoadedDanhMuc: PropTypes.func
   }
   state = {
     isLoading: true,
@@ -66,6 +71,14 @@ class ManagerOrganizationEdit extends React.Component {
     this.props.setBreadCrumb(breadcrumb[pathPage])
     this.props.updateKeyPath([pathPage])
     this.getInitial()
+    this.props.isLoadedDanhMuc(false)
+    await Promise.all([this.props.getDepartment()])
+      .then(() => {
+        this.props.isLoadedDanhMuc(true)
+      })
+      .catch(e => {
+        console.log(e, 'e')
+      })
   }
   hanldeOnSubmit = async values => {
     // console.log('hanldeOnSubmit', values)

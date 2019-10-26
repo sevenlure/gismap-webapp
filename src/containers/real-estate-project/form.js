@@ -125,6 +125,7 @@ class UserForm extends React.Component {
             <Col span={10}>
               <Form.Item label='Tình trạng'>
                 {getFieldDecorator('Status', {
+                  initialValue: 'Đang triển khai',
                   rules: [{ required: true, message: errorForm.status }]
                 })(<SelectStatus placeholder='Tình trạng *' />)}
               </Form.Item>

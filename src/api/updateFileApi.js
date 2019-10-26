@@ -14,6 +14,19 @@ export function getFilePrivate(src, token) {
   }
 }
 
+export function getFilePublic(src) {
+  const URL = `${SLUG}${src}`
+  // console.log("getFilePrivate",token)
+  const result = pathParse(src)
+
+  return {
+    URL,
+    ...result,
+    ext: result.ext.replace('.', '')
+  }
+}
+
 export default {
-  getFilePrivate
+  getFilePrivate,
+  getFilePublic
 }

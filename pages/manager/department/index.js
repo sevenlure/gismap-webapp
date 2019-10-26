@@ -82,7 +82,21 @@ class ManagerManagerList extends React.Component {
         render: (text, record) => {
           const Type = _get(record, 'Type', '')
           if (Type !== 'SALE') {
-            return null
+            return (
+              <div>
+                <Icon
+                  onClick={() => {
+                    this.setState({
+                      isEditDeparment: true,
+                      GroupPolicyData: record
+                    })
+                  }}
+                  style={{ cursor: 'pointer', fontSize: '1.5rem' }}
+                  theme='twoTone'
+                  type='edit'
+                />
+              </div>
+            )
           }
           return (
             <div>

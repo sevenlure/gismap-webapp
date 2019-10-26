@@ -2,21 +2,25 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import styled from 'styled-components'
 import DefaultLayout from 'src/layout/default'
-import { Table, Icon, Divider, Skeleton, Button, Popconfirm, message } from 'antd'
+import { Table, Icon, Divider, Skeleton, Button, Popconfirm, message, Avatar } from 'antd'
 import userApi from 'src/api/userApi'
 import { getInfoErrorfetch } from 'src/constant/funcAixos.js'
-import { get as _get } from 'lodash-es'
+import { get as _get, sortBy as _sortBy } from 'lodash-es'
 import { connect } from 'react-redux'
 import { setBreadCrumb, updateKeyPath } from 'src/redux/actions/generalAction'
 import slug, { breadcrumb } from 'src/routes/index'
 import Link from 'next/link'
 import Clearfix from 'src/components/elements/clearfix'
+import { getFilePrivate } from 'src/api/updateFileApi.js'
+
 // import { DateTime } from 'luxon'
 // import { DATE_FORMAT_LUXON } from 'src/config/format.js'
 
 const RealEstateProjectWrapper = styled.div``
 
-const mapStateToProps = () => ({})
+const mapStateToProps = state => ({
+  token: _get(state, 'AuthStore.token')
+})
 
 const mapDispatchToProps = {
   setBreadCrumb,
@@ -30,7 +34,8 @@ const mapDispatchToProps = {
 class RealEstateProject extends React.Component {
   static propTypes = {
     setBreadCrumb: PropTypes.func,
-    updateKeyPath: PropTypes.func
+    updateKeyPath: PropTypes.func,
+    token: PropTypes.string
   }
   state = {
     isLoading: true,
@@ -44,8 +49,12 @@ class RealEstateProject extends React.Component {
         pageSize: 50
       })
       if (res.status === 200) {
+        const listData = _sortBy(_get(res, 'data.list', []), item => {
+          return _get(item, 'Department.Name', '')
+        })
+
         this.setState({
-          dataSource: _get(res, 'data.list', [])
+          dataSource: listData
         })
       }
     } catch (ex) {
@@ -69,8 +78,31 @@ class RealEstateProject extends React.Component {
   getColumn = () => {
     return [
       {
+        title: '',
+        dataIndex: '',
+        render: (value, record) => {
+          const url = _get(record, 'Avatar', null)
+          if (url) {
+            const objImage = getFilePrivate(url, this.props.token)
+            return (
+              <div>
+                <Avatar src={objImage.URL} />
+              </div>
+            )
+          } else {
+            return null
+          }
+        }
+      },
+      {
+        title: 'Họ tên',
+        dataIndex: 'FullName'
+      },
+      {
         title: 'Phòng ban',
-        dataIndex: 'Department.Name'
+        dataIndex: 'Department.Name',
+        sorter: (a, b) => a.Department.Name.length - b.Department.Name.length,
+        sortDirections: ['descend', 'ascend']
       },
       {
         title: 'Nhóm',
@@ -79,26 +111,6 @@ class RealEstateProject extends React.Component {
       {
         title: 'Chức vụ',
         dataIndex: 'PosittionName'
-      },
-      {
-        title: 'Họ tên',
-        dataIndex: 'FullName'
-      },
-      // {
-      //   title: 'Năm sinh',
-      //   dataIndex: 'Birthday',
-      //   render: text => {
-      //     // console.log(typeof text, DateTime.fromISO(text).toFormat(DATE_FORMAT_LUXON))
-      //     if (typeof text === 'string') {
-      //       return <div>{DateTime.fromISO(text).toFormat(DATE_FORMAT_LUXON)}</div>
-      //     } else {
-      //       return null
-      //     }
-      //   }
-      // },
-      {
-        title: 'Email',
-        dataIndex: 'Email'
       },
       {
         title: 'SĐT',
@@ -110,12 +122,12 @@ class RealEstateProject extends React.Component {
         render: (text, record) => {
           return (
             <div>
-              {/* <Link href={slug.manager.user.edit} as={`${slug.manager.user.base}/${_get(record, '_id')}`}>
+              <Link href={slug.manager.user.edit} as={`${slug.manager.user.base}/${_get(record, '_id')}`}>
                 <a>
                   <Icon style={{ cursor: 'pointer', fontSize: '1.5rem' }} theme='twoTone' type='edit' />
                 </a>
               </Link>
-              <Divider type='vertical' /> */}
+              <Divider type='vertical' />
               <Popconfirm
                 title='Bạn chắc chắc muốn xoá?'
                 placement='left'

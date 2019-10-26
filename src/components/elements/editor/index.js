@@ -24,13 +24,11 @@ export default class EditorCustom extends React.Component {
     // plugins: [ Base64UploadAdapter, ... ],
     // toolbar: [ ... ]
     // })
-    this.Tamp = require('@ckeditor/ckeditor5-upload/src/adapters/base64uploadadapter')
   }
   state = {}
 
   render() {
     return (
-      // <div id='tamp'></div>
       <div>
         <EditorWrapper>
           <CKEditor

@@ -6,7 +6,7 @@ import { get as _get } from 'lodash-es'
 import { connect } from 'react-redux'
 import { Upload, Icon, message } from 'antd'
 // import Clearfix from 'src/components/elements/clearfix'
-import { getFilePrivate } from 'src/api/updateFileApi.js'
+import { getFilePublic } from 'src/api/updateFileApi.js'
 
 const AvatarWrapper = styled.div`
   flex: 1;
@@ -53,7 +53,7 @@ export default class AvatarImage extends React.PureComponent {
     // console.log(imageUrl,"imageUrl")
     if (imageUrl) {
       // pathParse()
-      objImage = getFilePrivate(imageUrl, this.props.token)
+      objImage = getFilePublic(imageUrl, this.props.token)
       // console.log(objImage, 'objImage')
     }
 
@@ -65,7 +65,7 @@ export default class AvatarImage extends React.PureComponent {
           showUploadList={false}
           name={'file'}
           multiple={false}
-          action={`${process.env.HOST_API}/upload/private`}
+          action={`${process.env.HOST_API}/upload/public`}
           headers={{
             Authorization: `Bearer ${this.props.token}`
           }}

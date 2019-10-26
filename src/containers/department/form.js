@@ -6,7 +6,7 @@ import { connect } from 'react-redux'
 import { userLogin } from 'src/redux/actions/authAction'
 import { updateUserInfo } from 'src/redux/actions/generalAction.js'
 import { departmentMess } from 'src/config/message'
-import { pick as _pick } from 'lodash-es'
+import { pick as _pick, get as _get } from 'lodash-es'
 import SelectDepartment from 'src/components/elements/select-user-by-department'
 
 const errorMessage = departmentMess.error
@@ -32,7 +32,9 @@ class GroupPolicyForm extends React.Component {
     isEdit: PropTypes.bool
   }
 
-  state = {}
+  state = {
+    isDisable: false
+  }
 
   handleSubmit = e => {
     e.preventDefault()
@@ -51,9 +53,18 @@ class GroupPolicyForm extends React.Component {
     this.props.form.resetFields()
     const { setFieldsValue } = this.props.form
     const { initialData } = this.props
-    // console.log(_pick(initialData, ['Name', 'HeadPerson', 'Order']), 'initialData')
+    // console.log(initialData, 'initialData')
+    if (this.props.isEdit && _get(initialData, 'Type', '') !== 'SALE') {
+      this.setState({
+        isDisable: true
+      })
+    }
+    const data = {
+      ..._pick(initialData, ['Name', 'HeadPerson', 'Order']),
+      HeadPerson: _get(initialData, 'HeadPerson._id', '')
+    }
     setFieldsValue({
-      ..._pick(initialData, ['Name', 'HeadPerson', 'Order'])
+      ...data
     })
   }
 
@@ -65,7 +76,7 @@ class GroupPolicyForm extends React.Component {
           <Form.Item label='Tên phòng ban'>
             {getFieldDecorator('Name', {
               rules: [{ required: true, message: errorMessage.name }]
-            })(<Input placeholder='Tên nhóm chính sách' />)}
+            })(<Input disabled={this.state.isDisable} placeholder='Tên nhóm chính sách' />)}
           </Form.Item>
           <Form.Item label='Trưởng phòng'>
             {getFieldDecorator('HeadPerson', {})(
