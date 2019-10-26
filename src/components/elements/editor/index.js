@@ -2,8 +2,6 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import styled from 'styled-components'
 import CKEditor from '@ckeditor/ckeditor5-react'
-import ClassicEditor from '@ckeditor/ckeditor5-build-classic'
-// const Base64UploadAdapter = require('@ckeditor/ckeditor5-upload/src/adapters/base64uploadadapter')
 
 const EditorWrapper = styled.div`
   flex: 1;
@@ -19,24 +17,12 @@ export default class EditorCustom extends React.Component {
     isLoaded: false
   }
 
-  componentDidMount() {
-    // ClassicEditor.create(document.querySelector('#tamp'), {
-    // plugins: [ Base64UploadAdapter, ... ],
-    // toolbar: [ ... ]
-    // })
-    this.Tamp = require('@ckeditor/ckeditor5-upload/src/adapters/base64uploadadapter')
-  }
-  state = {}
-
   render() {
     return (
-      // <div id='tamp'></div>
       <div>
         <EditorWrapper>
           <CKEditor
-            // config={{
-            //   plugins: [Base64UploadAdapter]
-            // }}
+            // eslint-disable-next-line
             editor={ClassicEditor}
             data='<p>Hello from CKEditor 5!</p>'
             onInit={editor => {
@@ -45,16 +31,9 @@ export default class EditorCustom extends React.Component {
             }}
             onChange={(event, editor) => {
               const data = editor.getData()
-              // console.log("--------", data)
               if (this.props.onChange) this.props.onChange(data)
               // console.log({ event, editor, data })
             }}
-            // onBlur={(event, editor) => {
-            //   // console.log('Blur.', editor)
-            // }}
-            // onFocus={(event, editor) => {
-            //   // console.log('Focus.', editor)
-            // }}
           />
         </EditorWrapper>
       </div>
