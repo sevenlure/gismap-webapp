@@ -35,10 +35,12 @@ const slug = {
     create: '/real-estate-project/create'
   },
   report: {
-    base: '/report'
+    base: '/report',
+    list:'/report'
   },
   trip: {
-    base: '/trip'
+    base: '/trip',
+    list:'trip'
   }
 }
 
@@ -67,7 +69,9 @@ export const breadcrumb = {
   [slug.project.content]: [
     { name: 'Dự án bất động sản', slug: slug.project.list },
     { name: 'Tạo nội dung bất động sản' }
-  ]
+  ],
+  // Kết quả kinh doanh REPORT
+  [slug.report.base]: [{ name: 'Kết quả kinh doanh' }]
 }
 
 export default slug

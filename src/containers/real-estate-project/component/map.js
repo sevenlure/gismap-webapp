@@ -2,7 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import styled from 'styled-components'
 import { Spin, Menu, Dropdown } from 'antd'
-import { GoogleMap, LoadScript, Marker } from '@react-google-maps/api'
+import { GoogleMap, LoadScript, Marker, useLoadScript } from '@react-google-maps/api'
 
 const MapWrapper = styled.div`
   flex: 1;
@@ -88,7 +88,9 @@ export default class Map extends React.Component {
                 id='script-loader'
                 googleMapsApiKey={process.env.GOOGLE_MAP_API_KEY}
                 loadingElement={<div></div>}
-                onLoad={() => this.setState({ isLoadedMap: true })}
+                onLoad={() => {
+                  this.setState({ isLoadedMap: true })
+                }}
               >
                 <GoogleMap
                   zoom={zoom}
@@ -98,13 +100,15 @@ export default class Map extends React.Component {
                   streetView={false}
                   onRightClick={this.handleOnRightClickMap}
                   options={{
-                    zoomControl: false,
-                    mapTypeControl: false,
-                    scaleControl: false,
-                    streetViewControl: false,
-                    rotateControl: false,
-                    fullscreenControl: false
+                    zoomControl: true,
+                    mapTypeControl: true,
+                    scaleControl: true,
+                    streetViewControl: true,
+                    rotateControl: true,
+                    fullscreenControl: true,
+                    mapTypeId:'satellite'
                   }}
+                 
                 >
                   {this.state.point && <Marker position={this.state.point} />}
                 </GoogleMap>
