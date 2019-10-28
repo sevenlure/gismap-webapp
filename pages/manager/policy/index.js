@@ -80,6 +80,7 @@ class ManagerPolicyList extends React.Component {
                 }}
                 style={{ cursor: 'pointer', fontSize: '1.5rem' }}
                 theme='twoTone'
+                twoToneColor='#F2C94C'
                 type='edit'
               />
               {/* <Divider type='vertical' />
@@ -91,7 +92,7 @@ class ManagerPolicyList extends React.Component {
                   })
                 }}
                 style={{ cursor: 'pointer', fontSize: '1.5rem' }}
-                theme='twoTone'
+                theme='twoTone' twoToneColor='#F2C94C'
                 type='plus-circle'
               /> */}
             </div>
@@ -125,8 +126,9 @@ class ManagerPolicyList extends React.Component {
                   })
                 }}
                 style={{ cursor: 'pointer' }}
-                theme='twoTone'
                 type='edit'
+                theme='twoTone'
+                twoToneColor='#F2C94C'
               />
               <Divider type='vertical' />
               <Popconfirm
@@ -139,6 +141,7 @@ class ManagerPolicyList extends React.Component {
                 }}
               >
                 <Icon style={{ cursor: 'pointer' }} twoToneColor='red' theme='twoTone' type='delete' />
+
               </Popconfirm>
             </div>
           )

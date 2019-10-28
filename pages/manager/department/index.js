@@ -93,6 +93,7 @@ class ManagerManagerList extends React.Component {
                   }}
                   style={{ cursor: 'pointer', fontSize: '1.5rem' }}
                   theme='twoTone'
+                  twoToneColor='#F2C94C'
                   type='edit'
                 />
               </div>
@@ -109,6 +110,7 @@ class ManagerManagerList extends React.Component {
                 }}
                 style={{ cursor: 'pointer', fontSize: '1.5rem' }}
                 theme='twoTone'
+                twoToneColor='#F2C94C'
                 type='edit'
               />
               <Divider type='vertical' />
@@ -121,13 +123,18 @@ class ManagerManagerList extends React.Component {
                   this.handleDeleteDepartment(_get(record, '_id'))
                 }}
               >
-                <Icon style={{ cursor: 'pointer', fontSize: '1.5rem' }} theme='twoTone' type='delete' />
+                <Icon
+                  style={{ cursor: 'pointer', fontSize: '1.5rem' }}
+                  twoToneColor='red'
+                  theme='twoTone'
+                  type='delete'
+                />
               </Popconfirm>
               {/* <Divider type='vertical' />
               <Icon
                
                 style={{ cursor: 'pointer', fontSize: '1.5rem' }}
-                theme='twoTone'
+                theme='twoTone' twoToneColor='#F2C94C'
                 type='plus-circle'
               /> */}
             </div>
@@ -163,6 +170,7 @@ class ManagerManagerList extends React.Component {
                 }}
                 style={{ cursor: 'pointer' }}
                 theme='twoTone'
+                twoToneColor='#F2C94C'
                 type='edit'
               />
               <Divider type='vertical' />

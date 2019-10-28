@@ -206,7 +206,12 @@ class AppWithLayout extends React.Component {
               </Menu.Item>
               <Menu.Item key={slug.report.base}>
                 <Icon type='area-chart' />
+
                 <span>Thống kê báo cáo</span>
+              </Menu.Item>
+              <Menu.Item key={slug.trip.base}>
+                <Icon type='car' />
+                <span>Chuyến công tác</span>
               </Menu.Item>
             </Menu>
           </Sider>

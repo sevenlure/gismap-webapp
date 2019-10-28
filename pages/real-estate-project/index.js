@@ -115,13 +115,23 @@ class RealEstateProject extends React.Component {
             <div>
               <Link href={slug.project.content} as={`${slug.project.contentWidthId}/${_get(record, '_id')}`}>
                 <a>
-                  <Icon style={{ cursor: 'pointer', fontSize: '1.5rem' }} theme='twoTone' type='highlight' />
+                  <Icon
+                    style={{ cursor: 'pointer', fontSize: '1.5rem' }}
+                    theme='twoTone'
+                    twoToneColor='#F2C94C'
+                    type='highlight'
+                  />
                 </a>
               </Link>
               <Divider type='vertical' />
               <Link href={slug.project.edit} as={`${slug.project.base}/${_get(record, '_id')}`}>
                 <a>
-                  <Icon style={{ cursor: 'pointer', fontSize: '1.5rem' }} theme='twoTone' type='edit' />
+                  <Icon
+                    style={{ cursor: 'pointer', fontSize: '1.5rem' }}
+                    theme='twoTone'
+                    twoToneColor='#F2C94C'
+                    type='edit'
+                  />
                 </a>
               </Link>
 

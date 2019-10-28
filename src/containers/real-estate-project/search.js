@@ -8,7 +8,7 @@ import SelectStatus from 'src/components/elements/select-status'
 const RealEstateProjectSearchWrapper = styled.div`
   .button--search {
     padding-left: 8px;
-    padding-top: 8px;
+    padding-top: 4px;
   }
 `
 
@@ -68,7 +68,7 @@ class RealEstateProjectSearch extends React.Component {
 
             <Col span={2}>
               <div className='button--search'>
-                <Button type='primary' shape='circle' icon='search' size='small' htmlType='submit' />
+                <Button type='primary' shape='circle' icon='search' size='default' htmlType='submit' />
               </div>
             </Col>
           </Row>

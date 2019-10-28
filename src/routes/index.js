@@ -36,6 +36,9 @@ const slug = {
   },
   report: {
     base: '/report'
+  },
+  trip: {
+    base: '/trip'
   }
 }
 
