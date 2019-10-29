@@ -2,7 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import styled from 'styled-components'
 import { Spin, Menu, Dropdown } from 'antd'
-import { GoogleMap, LoadScript, Marker, useLoadScript } from '@react-google-maps/api'
+import { GoogleMap, LoadScript, Marker } from '@react-google-maps/api'
 
 const MapWrapper = styled.div`
   flex: 1;
@@ -106,9 +106,8 @@ export default class Map extends React.Component {
                     streetViewControl: true,
                     rotateControl: true,
                     fullscreenControl: true,
-                    mapTypeId:'satellite'
+                    mapTypeId: 'satellite'
                   }}
-                 
                 >
                   {this.state.point && <Marker position={this.state.point} />}
                 </GoogleMap>

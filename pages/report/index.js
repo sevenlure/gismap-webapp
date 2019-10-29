@@ -38,7 +38,7 @@ class ReportPage extends React.Component {
     dataSource: [],
     pagination: {
       page: 1,
-      pageSize: 50
+      pageSize: 20
     }
   }
 
@@ -94,16 +94,6 @@ class ReportPage extends React.Component {
         render: (text, record) => {
           return (
             <div>
-              <Link href={slug.project.content} as={`${slug.project.contentWidthId}/${_get(record, '_id')}`}>
-                <a>
-                  <Icon
-                    style={{ cursor: 'pointer', fontSize: '1.5rem' }}
-                    theme='twoTone'
-                    twoToneColor='#F2C94C'
-                    type='highlight'
-                  />
-                </a>
-              </Link>
               <Divider type='vertical' />
               <Link href={slug.project.edit} as={`${slug.project.base}/${_get(record, '_id')}`}>
                 <a>
@@ -115,7 +105,6 @@ class ReportPage extends React.Component {
                   />
                 </a>
               </Link>
-
               <Divider type='vertical' />
               <Popconfirm
                 title='Bạn chắc chắc muốn xoá?'
@@ -141,17 +130,17 @@ class ReportPage extends React.Component {
   }
 
   hanldeSearch = async values => {
+    // console.log(values, 'hanldeSearch')
     try {
       this.setState({
         isLoading: true
       })
-      const res = await reportApi.getList({
-        ...this.state.pagination,
+      const res = await reportApi.getListByYearWeek({
         ...values
       })
       if (res.status === 200) {
         this.setState({
-          dataSource: _get(res, 'data.list', [])
+          dataSource: _get(res, 'data', [])
         })
       }
     } catch (ex) {
@@ -166,6 +155,7 @@ class ReportPage extends React.Component {
   }
 
   render() {
+    // console.log(this.state,"render")
     return (
       <RepportWrapper>
         <div>
@@ -187,7 +177,8 @@ class ReportPage extends React.Component {
             // scroll={{ y: 700 }}
             dataSource={this.state.dataSource}
             columns={this.getColumn()}
-            pagination={{ position: 'bottom' }}
+            // pagination={{ position: 'bottom' }}
+            pagination={{ ...this.state.pagination, position: 'bottom' }}
           />
         )}
       </RepportWrapper>

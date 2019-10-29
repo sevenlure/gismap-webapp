@@ -1,6 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { Form, Input, Icon, Button, Layout, message } from 'antd'
+import { Form, Input, Icon, Button, Layout, message, Avatar } from 'antd'
 import styled from 'styled-components'
 import Clearfix from 'src/components/elements/clearfix'
 import authApi from 'src/api/authApi'
@@ -141,7 +141,9 @@ class Login extends React.Component {
                 marginBottom: 12
               }}
             >
-              PNRword <Icon style={{ fontSize: '3rem', paddingLeft: 8 }} component={pathLogo.logo} />
+              PNRwork
+              {/* <Icon style={{ fontSize: '3rem', paddingLeft: 8 }} component={pathLogo.logo} /> */}
+              <Avatar src={'/static/images/logo.png'} size={64} />
             </Center>
             <Container>
               <Form.Item>

@@ -2,7 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import Head from 'next/head'
 import styled from 'styled-components'
-import { Layout, Menu, Icon, Breadcrumb } from 'antd'
+import { Layout, Menu, Icon, Breadcrumb, Avatar } from 'antd'
 import hocProtectLogin from 'src/hoc/is-authenticated'
 import { connect } from 'react-redux'
 import { updateKeyPath, updateSubMenu, getDepartment, isLoadedDanhMuc } from 'src/redux/actions/generalAction'
@@ -171,8 +171,10 @@ class AppWithLayout extends React.Component {
             onCollapse={this.onCollapse}
           >
             <div className='sider-menu-logo'>
-              <Icon style={{ fontSize: '2rem' }} component={pathLogo.logo} />
-              {!this.state.collapsed && <h1>Company</h1>}
+              {/* <Icon style={{ fontSize: '2rem' }} component={pathLogo.logo} /> */}
+              <Avatar src={'/static/images/logo.png'} size={64} />
+
+              {!this.state.collapsed && <h1>PNRwork</h1>}
             </div>
             <Menu
               theme='dark'

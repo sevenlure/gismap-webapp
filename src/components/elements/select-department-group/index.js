@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import styled from 'styled-components'
-import { get as _get, map as _map } from 'lodash-es'
+import { get as _get, map as _map, compact as _compact } from 'lodash-es'
 import windowSize from 'react-window-size'
 import { connect } from 'react-redux'
 import { Spin, Cascader } from 'antd'
@@ -30,7 +30,8 @@ export default class SelectDepartmentToGroup extends React.Component {
     value: PropTypes.any,
     listDepartment: PropTypes.array,
     danhMucIsLoaded: PropTypes.bool,
-    disabled: PropTypes.bool
+    disabled: PropTypes.bool,
+    isFillterSale: PropTypes.bool
   }
 
   state = {
@@ -67,6 +68,10 @@ export default class SelectDepartmentToGroup extends React.Component {
   tranferData = () => {
     const data = _get(this.props, 'listDepartment', [])
     const result = _map(data, level1 => {
+      // console.log(level1, 'level1')
+      if (this.props.isFillterSale && _get(level1, 'Type', '') !== 'SALE') {
+        return null
+      }
       const children = _map(level1.GroupList, level2 => {
         return {
           value: level2._id,
@@ -80,7 +85,7 @@ export default class SelectDepartmentToGroup extends React.Component {
       }
     })
 
-    return result
+    return _compact(result)
   }
 
   tranderDataReturn = selectedOptions => {
@@ -96,7 +101,7 @@ export default class SelectDepartmentToGroup extends React.Component {
     return result
   }
 
-  onChange = (value, selectedOptions) => {
+  onChange = value => {
     // let result = this.tranderDataReturn(selectedOptions)
     this.setState({
       value: value

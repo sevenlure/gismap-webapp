@@ -2,6 +2,14 @@ import fetch from './fetch'
 
 const SLUG = '/revenue'
 
+export function getListByYearWeek({ year, week, ...querySearch }) {
+  return fetch.get(`${SLUG}/year/${year}/week/${week}`, {
+    params: {
+      ...querySearch
+    }
+  })
+}
+
 export function getList({ page = 1, pageSize = 100, ...querySearch }) {
   return fetch.get(`${SLUG}`, {
     params: {
@@ -32,6 +40,7 @@ export function deleteById(_id) {
 }
 
 export default {
+  getListByYearWeek,
   getList,
   getAll,
   create,
