@@ -155,6 +155,7 @@ class AppWithLayout extends React.Component {
       <LayoutWrapper windowWidth={windowWidth}>
         <Head>
           <title>Bất động sản</title>
+          <link rel='shortcut icon' type='image/x-icon' href='/static/images/logo.png' />
         </Head>
 
         <Layout>
