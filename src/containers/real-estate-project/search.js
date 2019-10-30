@@ -26,7 +26,7 @@ class RealEstateProjectSearch extends React.Component {
     e.preventDefault()
     this.props.form.validateFields((errors, values) => {
       if (!errors) {
-        console.log('validateFields', values)
+        // console.log('validateFields', values)
 
         const week = moment(values.DateWeek).week()
         const year = moment(values.DateWeek).year()

@@ -2,18 +2,18 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import styled from 'styled-components'
 import DefaultLayout from 'src/layout/default'
-import { Table, Icon, Divider, Skeleton, Button, Popconfirm, message, Checkbox } from 'antd'
+import { Table, Icon, Input, Skeleton, Button, Modal } from 'antd'
 import reportApi from 'src/api/reportApi'
 import { getInfoErrorfetch } from 'src/constant/funcAixos.js'
 import { get as _get } from 'lodash-es'
 import { connect } from 'react-redux'
 import { setBreadCrumb, updateKeyPath } from 'src/redux/actions/generalAction'
 import slug, { breadcrumb } from 'src/routes/index'
-import Link from 'next/link'
 import Clearfix from 'src/components/elements/clearfix'
 import { DATE_FORMAT, getFormatNumber } from 'src/config/format.js'
 import moment from 'moment'
 import ReportPageSearch from 'src/containers/real-estate-project/search.js'
+import EditRevenues from 'src/containers/revenue/edit.js'
 
 const RepportWrapper = styled.div``
 
@@ -39,7 +39,10 @@ class ReportPage extends React.Component {
     pagination: {
       page: 1,
       pageSize: 20
-    }
+    },
+    searchText: '',
+    isEdit: false,
+    editData: null
   }
 
   getDataSource = async () => {
@@ -72,61 +75,92 @@ class ReportPage extends React.Component {
     return [
       {
         title: 'Họ tên',
-        dataIndex: 'ByUser.FullName'
+        dataIndex: 'ByUser.FullName',
+        filterIcon: filtered => <Icon type='search' style={{ color: filtered ? '#1890ff' : undefined }} />,
+        filterDropdown: ({ setSelectedKeys, selectedKeys, confirm, clearFilters }) => (
+          <div style={{ padding: 8 }}>
+            <Input
+              ref={node => {
+                this.searchInput = node
+              }}
+              placeholder={`Search Họ tên`}
+              value={selectedKeys[0]}
+              onChange={e => setSelectedKeys(e.target.value ? [e.target.value] : [])}
+              onPressEnter={() => this.handleSearch(selectedKeys, confirm)}
+              style={{ width: 188, marginBottom: 8, display: 'block' }}
+            />
+            <Button
+              type='primary'
+              onClick={() => this.handleSearch(selectedKeys, confirm)}
+              icon='search'
+              size='small'
+              style={{ width: 90, marginRight: 8 }}
+            >
+              Search
+            </Button>
+            <Button onClick={() => this.handleReset(clearFilters)} size='small' style={{ width: 90 }}>
+              Reset
+            </Button>
+          </div>
+        ),
+        onFilter: (value, record) => {
+          // console.log(record, value, 'record')
+          const name = _get(record, 'ByUser.FullName', '')
+          return name
+            .toString()
+            .toLowerCase()
+            .includes(value.toLowerCase())
+        }
       },
       {
         title: 'Doanh thu',
         dataIndex: 'Revenue',
         render: value => {
           return getFormatNumber(value)
-        }
+        },
+        editable: true
       },
       {
         title: 'Ngày tính doanh thu',
         dataIndex: 'DateRevenue',
         render: value => {
           return moment(value).format(DATE_FORMAT)
-        }
+        },
+        editable: true
       },
       {
         title: '',
-        width: 130,
+        // width: 130,
         render: (text, record) => {
           return (
             <div>
-              <Divider type='vertical' />
-              <Link href={slug.project.edit} as={`${slug.project.base}/${_get(record, '_id')}`}>
-                <a>
-                  <Icon
-                    style={{ cursor: 'pointer', fontSize: '1.5rem' }}
-                    theme='twoTone'
-                    twoToneColor='#F2C94C'
-                    type='edit'
-                  />
-                </a>
-              </Link>
-              <Divider type='vertical' />
-              <Popconfirm
-                title='Bạn chắc chắc muốn xoá?'
-                placement='left'
-                okText='Đồng ý'
-                cancelText='Hủy'
-                onConfirm={() => {
-                  this.handleDelete(_get(record, '_id'))
+              <Icon
+                onClick={() => {
+                  this.setState({
+                    isEdit: true,
+                    editData: record
+                  })
                 }}
-              >
-                <Icon
-                  style={{ cursor: 'pointer', fontSize: '1.5rem' }}
-                  twoToneColor='red'
-                  theme='twoTone'
-                  type='delete'
-                />
-              </Popconfirm>
+                style={{ cursor: 'pointer', fontSize: '1.5rem' }}
+                theme='twoTone'
+                twoToneColor='#F2C94C'
+                type='edit'
+              />
             </div>
           )
         }
       }
     ]
+  }
+
+  handleReset = clearFilters => {
+    clearFilters()
+    this.setState({ searchText: '' })
+  }
+
+  handleSearch = (selectedKeys, confirm) => {
+    confirm()
+    this.setState({ searchText: selectedKeys[0] })
   }
 
   hanldeSearch = async values => {
@@ -161,12 +195,6 @@ class ReportPage extends React.Component {
         <div>
           <ReportPageSearch onSubmit={this.hanldeSearch} />
         </div>
-        <Clearfix height={8} />
-        <Link href={slug.project.create}>
-          <Button type='primary' icon='plus-circle'>
-            Tạo mới
-          </Button>
-        </Link>
 
         <Clearfix height={8} />
         {this.state.isLoading && <Skeleton paragraph={{ rows: 7 }} />}
@@ -181,27 +209,37 @@ class ReportPage extends React.Component {
             pagination={{ ...this.state.pagination, position: 'bottom' }}
           />
         )}
+        <Modal
+          // width='70%'
+          visible={this.state.isEdit}
+          footer={null}
+          centered
+          closeIcon={<span />}
+          closable={false}
+        >
+          {/* // NOTE edit */}
+          {this.state.isEdit && this.state.editData && (
+            <EditRevenues
+              onCancel={this.hanldleOnCancel}
+              onSuccess={this.hanldleOnSuccess}
+              initialData={{
+                ...this.state.editData,
+                Name: _get(this.state.editData, 'ByUser.FullName', '')
+              }}
+            />
+          )}
+        </Modal>
       </RepportWrapper>
     )
   }
-
-  handleDelete = async key => {
-    // console.log(key)
-    try {
-      const res = await ReportPageApi.deleteById(key)
-      if (res.status === 200) {
-        message.success('Xóa thành công!')
-        this.getDataSource()
-      }
-    } catch (ex) {
-      const { response } = ex
-      // console.log('catch', response)
-      getInfoErrorfetch(response)
-    } finally {
-      this.setState({
-        isLoading: false
-      })
-    }
+  hanldleOnCancel = () => {
+    this.setState({
+      isEdit: false
+    })
+  }
+  hanldleOnSuccess = () => {
+    this.hanldleOnCancel()
+    this.getDataSource()
   }
 }
 
