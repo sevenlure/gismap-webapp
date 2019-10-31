@@ -32,6 +32,7 @@ class MyDocument extends Document {
     return (
       <Html>
         <Head>
+          <link rel='shortcut icon' type='image/x-icon' href='/static/images/logo.png' />
           <link rel='stylesheet' href='/static/css/simplebar.min.css' />
           <link
             rel='stylesheet'
