@@ -4,17 +4,18 @@ import styled from 'styled-components'
 import { Row, Col, Form, DatePicker, Button } from 'antd'
 import { get as _get } from 'lodash-es'
 import SelectDepartmentToGroup from 'src/components/elements/select-department-group'
+import SelectUser from 'src/components/elements/select-user-all'
 import moment from 'moment'
 const { WeekPicker } = DatePicker
 
-const RealEstateProjectSearchWrapper = styled.div`
+const TripSearchWrapper = styled.div`
   .button--search {
     padding-left: 8px;
     padding-top: 4px;
   }
 `
 
-class RealEstateProjectSearch extends React.Component {
+class TripSearch extends React.Component {
   static propTypes = {
     getFieldDecorator: PropTypes.func,
     form: PropTypes.any,
@@ -63,8 +64,24 @@ class RealEstateProjectSearch extends React.Component {
       }
     }
     return (
-      <RealEstateProjectSearchWrapper>
+      <TripSearchWrapper>
         <Form {...formItemLayout} onSubmit={this.handleSubmit}>
+          <Row gutter={8}>
+            <Col span={10}>
+              <Form.Item label='Đăng ký'>
+                {getFieldDecorator('name1', {
+                  rules: [{ required: true, message: 'Vui lòng chọn người đăng ký' }]
+                })(<SelectUser size='default' placeholder='Người đăng ký' />)}
+              </Form.Item>
+            </Col>
+            <Col span={10}>
+              <Form.Item label='Đăng duyệt'>
+                {getFieldDecorator('name2', {
+                  rules: [{ required: true, message: 'Vui lòng chọn người đăng duyệt' }]
+                })(<SelectUser size='default' placeholder='Người đăng duyệt' />)}
+              </Form.Item>
+            </Col>
+          </Row>
           <Row gutter={8}>
             <Col span={10}>
               <Form.Item label='Phòng ban'>
@@ -90,9 +107,9 @@ class RealEstateProjectSearch extends React.Component {
             </Col>
           </Row>
         </Form>
-      </RealEstateProjectSearchWrapper>
+      </TripSearchWrapper>
     )
   }
 }
 
-export default Form.create({})(RealEstateProjectSearch)
+export default Form.create({})(TripSearch)

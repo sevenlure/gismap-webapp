@@ -5,7 +5,8 @@ import {
   UPDATE_GENERAL_SUB_MENU,
   UPDATE_GENERAL_KEY_PATCH,
   UPDATE_GENERAL_SET_BREADCRUMB,
-  GET_GENERAL_LIST_DEPARTURE,
+  GET_GENERAL_LIST_DEPARTMENT,
+  GET_GENERAL_LIST_USER,
   IS_LOADED_GENERAL_DANHMUC
 } from '../actions/generalAction'
 
@@ -20,7 +21,8 @@ const InitialState = {
     breadcrumb: []
   },
   danhMuc: {
-    listDepartment: []
+    listDepartment: [],
+    listUser: []
   },
   danhMucIsLoaded: false
 }
@@ -28,7 +30,14 @@ const InitialState = {
 // REDUCERS
 const generalReducer = (state = InitialState, action) => {
   switch (action.type) {
-    case GET_GENERAL_LIST_DEPARTURE: {
+    case GET_GENERAL_LIST_USER: {
+      return update(state, {
+        danhMuc: {
+          listUser: { $set: action.payload }
+        }
+      })
+    }
+    case GET_GENERAL_LIST_DEPARTMENT: {
       return update(state, {
         danhMuc: {
           listDepartment: { $set: action.payload }

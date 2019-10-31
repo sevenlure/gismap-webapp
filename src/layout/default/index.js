@@ -5,7 +5,13 @@ import styled from 'styled-components'
 import { Layout, Menu, Icon, Breadcrumb, Avatar } from 'antd'
 import hocProtectLogin from 'src/hoc/is-authenticated'
 import { connect } from 'react-redux'
-import { updateKeyPath, updateSubMenu, getDepartment, isLoadedDanhMuc } from 'src/redux/actions/generalAction'
+import {
+  updateKeyPath,
+  updateSubMenu,
+  getDepartment,
+  getListUser,
+  isLoadedDanhMuc
+} from 'src/redux/actions/generalAction'
 // import pathLogo from 'icons/index.js'
 import { get as _get, map as _map, last as _last, isEqual as _isEqual } from 'lodash-es'
 import { withRouter } from 'next/router'
@@ -71,7 +77,7 @@ const LayoutWrapper = styled.div`
     keyPath: _get(state, 'GeneralStore.menu.keyPath', []),
     breadcrumb: _get(state, 'GeneralStore.menu.breadcrumb', [])
   }),
-  { updateKeyPath, updateSubMenu, getDepartment, isLoadedDanhMuc }
+  { updateKeyPath, updateSubMenu, getDepartment, getListUser, isLoadedDanhMuc }
 )
 @hocProtectLogin
 @windowSize
@@ -84,6 +90,7 @@ class AppWithLayout extends React.Component {
     updateKeyPath: PropTypes.func,
     updateSubMenu: PropTypes.func,
     getDepartment: PropTypes.func,
+    getListUser: PropTypes.func,
     isLoadedDanhMuc: PropTypes.func,
     subMenu: PropTypes.array,
     keyPath: PropTypes.array,
@@ -110,7 +117,7 @@ class AppWithLayout extends React.Component {
     }
 
     this.props.isLoadedDanhMuc(false)
-    await Promise.all([this.props.getDepartment()])
+    await Promise.all([this.props.getDepartment(), this.props.getListUser()])
       .then(() => {
         this.props.isLoadedDanhMuc(true)
       })

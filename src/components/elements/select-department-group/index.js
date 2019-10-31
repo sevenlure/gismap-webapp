@@ -31,7 +31,8 @@ export default class SelectDepartmentToGroup extends React.Component {
     listDepartment: PropTypes.array,
     danhMucIsLoaded: PropTypes.bool,
     disabled: PropTypes.bool,
-    isFillterSale: PropTypes.bool
+    isFillterSale: PropTypes.bool,
+    size: PropTypes.string
   }
 
   state = {
@@ -58,7 +59,7 @@ export default class SelectDepartmentToGroup extends React.Component {
 
   componentDidUpdate = () => {
     // console.log('this.props.danhMucIsLoaded', ' this.state.isLoading')
-    // console.log(!this.props.danhMucIsLoaded, this.state.isLoading, prevState.isLoading)
+    // console.log(this.props.danhMucIsLoaded, this.state.isLoading)
 
     if (this.props.danhMucIsLoaded && this.state.isLoading) {
       this.getInitialData()
@@ -93,7 +94,7 @@ export default class SelectDepartmentToGroup extends React.Component {
     if (selectedOptions[0]) {
       result.Department = _get(selectedOptions[0], 'value', null)
     }
-    console.log(selectedOptions[1], 'selectedOptions[1]')
+    // console.log(selectedOptions[1], 'selectedOptions[1]')
     if (selectedOptions[1]) {
       result.Group = _get(selectedOptions[1], 'value', null)
     }
@@ -110,36 +111,13 @@ export default class SelectDepartmentToGroup extends React.Component {
     // console.log(value, selectedOptions, 'onChange')
   }
 
-  // loadData = selectedOptions => {
-  //   const targetOption = selectedOptions[selectedOptions.length - 1]
-  //   targetOption.loading = true
-  //   console.log(targetOption, 'targetOption')
-
-  //   // load options lazily
-  //   setTimeout(() => {
-  //     targetOption.loading = false
-  //     targetOption.children = [
-  //       {
-  //         label: `${targetOption.label} Dynamic 1`,
-  //         value: 'dynamic1'
-  //       },
-  //       {
-  //         label: `${targetOption.label} Dynamic 2`,
-  //         value: 'dynamic2'
-  //       }
-  //     ]
-  //     this.setState({
-  //       data: [...this.state.data]
-  //     })
-  //   }, 1000)
-  // }
-
   render() {
     return (
       <SelectUserWrapper windowWidth={this.props.windowWidth}>
         <Spin spinning={this.state.isLoading}>
           <Cascader
-            size='large'
+            // size='large'
+            size={this.props.size ? this.props.size : 'large'}
             // loadData={this.loadData}
             value={this.state.value ? this.state.value : this.props.value}
             options={this.state.data}

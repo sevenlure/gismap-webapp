@@ -1,6 +1,6 @@
 {
   "isDev": true,
-  "HOST_API": "https://nprwork-api.gishouse.tech/admin",
-  "HOST_MEDIA": "https://nprwork-api.gishouse.tech",
+  "HOST_API": "https://pnrwork-api.gishouse.tech/admin",
+  "HOST_MEDIA": "https://pnrwork-api.gishouse.tech",
   "GOOGLE_MAP_API_KEY": "AIzaSyD9Ex0KMj1jp8f7iBsVf6M7RDwxASuXMCQ"
 }

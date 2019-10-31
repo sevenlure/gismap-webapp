@@ -1,13 +1,11 @@
 import { get as _get } from 'lodash-es'
-// import TourApi from 'src/api/TourApi'
-// import categoryApi from 'src/api/categoryApi'
-// import moment from 'moment'
-// import { DATE_FORMAT } from 'src/config/format'
 import DepartmentApi from 'src/api/DepartmentApi'
+import UserApi from 'src/api/userApi.js'
 
 // NOTE Catelory Department
 
-export const GET_GENERAL_LIST_DEPARTURE = 'GENERAL/GET_GENERAL_LIST_DEPARTURE'
+export const GET_GENERAL_LIST_DEPARTMENT = 'GENERAL/GET_GENERAL_LIST_DEPARTMENT'
+export const GET_GENERAL_LIST_USER = 'GENERAL/GET_GENERAL_LIST_USER'
 export const IS_LOADED_GENERAL_DANHMUC = 'GENERAL/IS_LOADED_GENERAL_DANHMUC'
 
 export function isLoadedDanhMuc(isLoaded) {
@@ -24,9 +22,23 @@ export function getDepartment() {
         dataSource = _get(res, 'data', [])
       }
     } catch (ex) {
-      console.log('GET_GENERAL_LIST_DEPARTURE', ex)
+      console.log('GET_GENERAL_LIST_DEPARTMENT', ex)
     }
-    dispatch({ type: GET_GENERAL_LIST_DEPARTURE, payload: dataSource })
+    dispatch({ type: GET_GENERAL_LIST_DEPARTMENT, payload: dataSource })
+  }
+}
+export function getListUser() {
+  return async dispatch => {
+    let dataSource = []
+    try {
+      const res = await UserApi.getAll()
+      if (res.status) {
+        dataSource = _get(res, 'data', [])
+      }
+    } catch (ex) {
+      console.log('GET_GENERAL_LIST_USER', ex)
+    }
+    dispatch({ type: GET_GENERAL_LIST_USER, payload: dataSource })
   }
 }
 
