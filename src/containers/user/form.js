@@ -67,12 +67,10 @@ class UserForm extends React.Component {
         const optionDepartment = _get(values, 'optionDepartment', [])
         let result = {}
         if (optionDepartment[0]) {
-          result.Department = optionDepartment[0]
+          result.Department = optionDepartment[0] ? optionDepartment[0] : null
+          result.Group = optionDepartment[1] ? optionDepartment[1] : null
         }
-
-        if (optionDepartment[1]) {
-          result.Group = optionDepartment[1]
-        }
+        console.log(result, 'result')
 
         if (this.props.onSubmit) {
           this.props.onSubmit({

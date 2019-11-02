@@ -4,7 +4,7 @@ import styled from 'styled-components'
 import { get as _get } from 'lodash-es'
 // import windowSize from 'react-window-size'
 import { connect } from 'react-redux'
-import { Upload, Icon, message } from 'antd'
+import { Upload, Icon, message, Avatar } from 'antd'
 // import Clearfix from 'src/components/elements/clearfix'
 import { getFilePublic } from 'src/api/updateFileApi.js'
 
@@ -53,7 +53,7 @@ export default class AvatarImage extends React.PureComponent {
     // console.log(imageUrl,"imageUrl")
     if (imageUrl) {
       // pathParse()
-      objImage = getFilePublic(imageUrl, this.props.token)
+      objImage = getFilePublic(imageUrl)
       // console.log(objImage, 'objImage')
     }
 
@@ -93,7 +93,7 @@ export default class AvatarImage extends React.PureComponent {
           }}
         >
           {imageUrl ? (
-            <img src={objImage.URL} alt='avatar' style={{ width: '100px', height: '100px' }} />
+            <Avatar shape='square' src={objImage.URL} style={{ width: '100px', height: '100px' }} />
           ) : (
             this.uploadButton()
           )}

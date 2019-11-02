@@ -179,7 +179,7 @@ class AppWithLayout extends React.Component {
           >
             <div className='sider-menu-logo'>
               {/* <Icon style={{ fontSize: '2rem' }} component={pathLogo.logo} /> */}
-              <Avatar src={'/static/images/logo.png'} size={64} />
+              <Avatar src={'/static/images/logo.png'} size={40} />
 
               {!this.state.collapsed && <h1>PNRwork</h1>}
             </div>

@@ -53,14 +53,6 @@ export default class AvatarUser extends React.Component {
           overlay={
             <Menu>
               <Menu.Item
-                key='2'
-                onClick={() => {
-                  // this.props.setVisibleEdituser(true)
-                }}
-              >
-                Thông tin cá nhân
-              </Menu.Item>
-              <Menu.Item
                 key='3'
                 onClick={() => {
                   Router.replace(slug.login)
@@ -76,7 +68,7 @@ export default class AvatarUser extends React.Component {
         >
           <div className='user--info' style={{ cursor: 'pointer' }}>
             <div>
-              <span className='name--user'>{this.props.FirstName}</span>
+              <span className='name--user antd-pro-components-global-header-index-name'>{this.props.FirstName}</span>
             </div>
             <div>
               <Avatar src='/static/images/avatar_default.png' size={32} />

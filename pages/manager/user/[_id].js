@@ -59,7 +59,7 @@ class UserEdit extends React.Component {
   }
 
   hanldeOnSubmit = async values => {
-    // console.log('hanldeOnSubmit', values)
+    console.log('hanldeOnSubmit', values)
     try {
       const res = await UserApi.updateById(this.props._id, values)
       if (res.status === 200) {

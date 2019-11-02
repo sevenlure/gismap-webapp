@@ -11,7 +11,7 @@ import { setBreadCrumb, updateKeyPath } from 'src/redux/actions/generalAction'
 import slug, { breadcrumb } from 'src/routes/index'
 import Link from 'next/link'
 import Clearfix from 'src/components/elements/clearfix'
-import { getFilePrivate } from 'src/api/updateFileApi.js'
+import { getFilePrivate, getFilePublic } from 'src/api/updateFileApi.js'
 
 // import { DateTime } from 'luxon'
 // import { DATE_FORMAT_LUXON } from 'src/config/format.js'
@@ -83,10 +83,10 @@ class RealEstateProject extends React.Component {
         render: (value, record) => {
           const url = _get(record, 'Avatar', null)
           if (url) {
-            const objImage = getFilePrivate(url, this.props.token)
+            const objImage = getFilePublic(url)
             return (
               <div>
-                <Avatar src={objImage.URL} />
+                <Avatar  src={objImage.URL} />
               </div>
             )
           } else {
