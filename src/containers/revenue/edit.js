@@ -44,12 +44,13 @@ class Edit extends React.Component {
       if (actionUpdate) {
         res = await reportApi.updateById(key, {
           ...values,
-          ByUser: _get(this.props.initialData, 'ByUser._id', null)
+          ByUser: _get(this.props.initialData, 'User._id', null)
         })
       } else {
+        //nếu thêm mới thì _id cjinhs là của User
         res = await reportApi.create({
           ...values,
-          ByUser: _get(this.props.initialData, 'ByUser._id', null)
+          ByUser: _get(this.props.initialData, '_id', null)
         })
       }
 

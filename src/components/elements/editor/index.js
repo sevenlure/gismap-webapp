@@ -17,18 +17,7 @@ export default class EditorCustom extends React.Component {
   state = {
     isLoaded: false
   }
-
-  // componentDidMount() {
-  //   // ClassicEditor.create(document.querySelector('#tamp'), {
-  //   // plugins: [ Base64UploadAdapter, ... ],
-  //   // toolbar: [ ... ]
-  //   // })
-  // }
-  state = {}
-
-  componentDidMount = () =>{
-    // console.log(this.props.value, "componentDidMount")
-  }
+  componentDidMount = () => {}
 
   render() {
     console.log(this.props.value, 'render')

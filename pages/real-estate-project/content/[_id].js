@@ -82,7 +82,7 @@ class RealEstateProjectEdit extends React.Component {
   handleSubmit = async e => {
     e.preventDefault()
     this.props.form.validateFields(async (err, values) => {
-      // console.log('Received values of form: ', values)
+      console.log('Received values of form: ', values, err)
       if (!err) {
         // console.log('Received values of form: ', {
         //   ...values
@@ -90,7 +90,7 @@ class RealEstateProjectEdit extends React.Component {
 
         try {
           const res = await RealEstateProjectApi.updateById(this.props._id, {
-            ...values,
+            TongQuan: values.TongQuan,
             Name: this.state.Title
           })
           if (res.status === 200) {
@@ -124,7 +124,7 @@ class RealEstateProjectEdit extends React.Component {
                 <Col span={24}>
                   <Form.Item label='Nội dung'>
                     {getFieldDecorator('TongQuan', {
-                      // initialValue: _get(this.initialValue, ['TongQuan'], '')
+                      rules: [{ required: true, message: 'Vui lòng nhập nội dung' }]
                     })(<EditorCustom />)}
                   </Form.Item>
                 </Col>
