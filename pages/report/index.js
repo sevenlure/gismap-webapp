@@ -75,7 +75,7 @@ class ReportPage extends React.Component {
     return [
       {
         title: 'Họ tên',
-        dataIndex: 'ByUser.FullName',
+        dataIndex: 'FullName',
         align: 'center',
         filterIcon: filtered => <Icon type='search' style={{ color: filtered ? '#1890ff' : undefined }} />,
         filterDropdown: ({ setSelectedKeys, selectedKeys, confirm, clearFilters }) => (
@@ -106,7 +106,7 @@ class ReportPage extends React.Component {
         ),
         onFilter: (value, record) => {
           // console.log(record, value, 'record')
-          const name = _get(record, 'ByUser.FullName', '')
+          const name = _get(record, 'FullName', '')
           return name
             .toString()
             .toLowerCase()
@@ -230,7 +230,7 @@ class ReportPage extends React.Component {
               onSuccess={this.hanldleOnSuccess}
               initialData={{
                 ...this.state.editData,
-                Name: _get(this.state.editData, 'ByUser.FullName', '')
+                Name: _get(this.state.editData, 'FullName', '')
               }}
             />
           )}

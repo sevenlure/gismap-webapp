@@ -70,6 +70,7 @@ class RealEstateProjectEdit extends React.Component {
         () => {
           this.props.form.resetFields()
           const { setFieldsValue } = this.props.form
+          // console.log("setFieldsValue", this.state.initialValue)
           setFieldsValue({
             ...this.state.initialValue
           })
@@ -84,8 +85,7 @@ class RealEstateProjectEdit extends React.Component {
       // console.log('Received values of form: ', values)
       if (!err) {
         // console.log('Received values of form: ', {
-        //   ...values,
-        //   Name: this.state.Title
+        //   ...values
         // })
 
         try {
@@ -109,40 +109,42 @@ class RealEstateProjectEdit extends React.Component {
 
   render() {
     const { getFieldDecorator } = this.props.form
-    // console.log(this.state.isLoading, 'initialValue')
+    // console.log(this.state, 'initialValue')
     return (
       <div>
-        {!this.state.isLoading && (
-          <Form onSubmit={this.handleSubmit}>
-            <Row>
-              <Col>
-                <h2>{this.state.Title}</h2>
-              </Col>
-            </Row>
-            <Row gutter={8}>
-              <Col span={24}>
-                <Form.Item label='Nội dung'>
-                  {getFieldDecorator('TongQuan', {
-                    // initialValue: _get(this.initialValue, ['TongQuan'], '')
-                  })(<EditorCustom />)}
-                </Form.Item>
-              </Col>
-            </Row>
-            <Affix offsetBottom={20}>
-              <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
-                <Button
-                  loading={this.state.isLoading}
-                  size='large'
-                  style={{ marginRight: 8, width: 120 }}
-                  type='primary'
-                  htmlType='submit'
-                >
-                  Cập nhật
-                </Button>
-              </div>
-            </Affix>
-          </Form>
-        )}
+        <Form onSubmit={this.handleSubmit}>
+          {!this.state.isLoading && (
+            <div>
+              <Row>
+                <Col>
+                  <h2>{this.state.Title}</h2>
+                </Col>
+              </Row>
+              <Row gutter={8}>
+                <Col span={24}>
+                  <Form.Item label='Nội dung'>
+                    {getFieldDecorator('TongQuan', {
+                      // initialValue: _get(this.initialValue, ['TongQuan'], '')
+                    })(<EditorCustom />)}
+                  </Form.Item>
+                </Col>
+              </Row>
+              <Affix offsetBottom={20}>
+                <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
+                  <Button
+                    loading={this.state.isLoading}
+                    size='large'
+                    style={{ marginRight: 8, width: 120 }}
+                    type='primary'
+                    htmlType='submit'
+                  >
+                    Cập nhật
+                  </Button>
+                </div>
+              </Affix>
+            </div>
+          )}
+        </Form>
       </div>
     )
   }

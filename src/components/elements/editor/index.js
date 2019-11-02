@@ -26,8 +26,12 @@ export default class EditorCustom extends React.Component {
   // }
   state = {}
 
+  componentDidMount = () =>{
+    // console.log(this.props.value, "componentDidMount")
+  }
+
   render() {
-    // console.log(this.props, 'render')
+    console.log(this.props.value, 'render')
     return (
       <div>
         <EditorWrapper>
@@ -42,6 +46,7 @@ export default class EditorCustom extends React.Component {
             }}
             onChange={(event, editor) => {
               const data = editor.getData()
+              console.log('data', data)
               if (this.props.onChange) this.props.onChange(data)
               console.log({ event, editor, data })
             }}
