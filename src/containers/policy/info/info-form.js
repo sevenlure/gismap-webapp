@@ -66,7 +66,7 @@ class InfoPolicyForm extends React.Component {
     return (
       <PolyciFormWrapper>
         <Form layout='vertical' onSubmit={this.handleSubmit}>
-          <Form.Item label='Tên nhóm chính sách' extra=''>
+          <Form.Item label='Tên chính sách' extra=''>
             {getFieldDecorator('Name', {
               rules: [{ required: true, message: errorMessage.policyName }]
             })(<Input placeholder='Tên chính sách' />)}
@@ -74,7 +74,10 @@ class InfoPolicyForm extends React.Component {
           <Form.Item label='Mô tả' extra=''>
             {getFieldDecorator('Description', {})(<Input placeholder='Tên chính sách' />)}
           </Form.Item>
-          <Form.Item label='Các định dạng có thể tải lên *.png. Dung lượng không vượt quá 10MB' extra=''>
+          <Form.Item
+            label='Các định dạng có thể tải lên *.png, *.jpeg, *.jpg, *.pdf. Dung lượng không vượt quá 20 MB.'
+            extra=''
+          >
             {getFieldDecorator('LinkFile', {
               rules: [{ required: true, message: errorMessage.File }]
             })(<UpdateFile />)}

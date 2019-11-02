@@ -1,10 +1,11 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import styled from 'styled-components'
-import { Row, Col, Form, Button, Input } from 'antd'
+import { Row, Col, Form, DatePicker, Button } from 'antd'
 import { get as _get } from 'lodash-es'
+import SelectDepartmentToGroup from 'src/components/elements/select-department-group'
 import moment from 'moment'
-import SelectStatus from 'src/components/elements/select-status'
+const { WeekPicker } = DatePicker
 
 const RealEstateProjectSearchWrapper = styled.div`
   .button--search {
@@ -26,14 +27,25 @@ class RealEstateProjectSearch extends React.Component {
     this.props.form.validateFields((errors, values) => {
       if (!errors) {
         // console.log('validateFields', values)
-        let data = {}
-        if (values.Search) {
-          data.Search = values.Search
+
+        const week = moment(values.DateWeek).week()
+        const year = moment(values.DateWeek).year()
+        // console.log(year, week, 'year-week')
+        let result = {}
+        const optionDepartment = _get(values, 'optionDepartment', [])
+        if (optionDepartment[0]) {
+          result.Department = optionDepartment[0]
         }
-        if (values.Status) {
-          data.Status = values.Status
+
+        if (optionDepartment[1]) {
+          result.Group = optionDepartment[1]
         }
-        if (this.props.onSubmit) this.props.onSubmit(data)
+        if (this.props.onSubmit)
+          this.props.onSubmit({
+            ...result,
+            year,
+            week
+          })
       }
     })
   }
@@ -55,15 +67,20 @@ class RealEstateProjectSearch extends React.Component {
         <Form {...formItemLayout} onSubmit={this.handleSubmit}>
           <Row gutter={8}>
             <Col span={10}>
-              <Form.Item label='Tên dự án'>
-                {getFieldDecorator('Search', {})(<Input size='default' placeholder='Tên dự án' />)}
+              <Form.Item label='Phòng ban'>
+                {getFieldDecorator('optionDepartment', {
+                  rules: [{ required: true, message: 'Vui lòng chọn phòng ban' }]
+                })(<SelectDepartmentToGroup size='default' isFillterSale />)}
               </Form.Item>
             </Col>
             <Col span={10}>
-              <Form.Item label='Tên dự án'>
-                {getFieldDecorator('Status', {})(<SelectStatus size='default' />)}
+              <Form.Item label='Tuần'>
+                {getFieldDecorator('DateWeek', {
+                  rules: [{ required: true, message: 'Vui lòng chọn tuần' }]
+                })(<WeekPicker style={{ width: '100%' }} size='default' placeholder='Select week' />)}
               </Form.Item>
             </Col>
+
             <Col span={2}>
               <div className='button--search'>
                 <Button type='primary' icon='search' size='default' htmlType='submit'>

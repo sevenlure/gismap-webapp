@@ -22,7 +22,7 @@ const SelectUserWrapper = styled.div`
     transform: translate(25%, 35%);
   }
 `
-@connect(state => ({
+@connect(() => ({
   // listDeparture: _get(state, 'GeneralStore.danhMuc.listDeparture', [])
 }))
 @windowSize

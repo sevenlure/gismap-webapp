@@ -47,7 +47,8 @@ export default class SelectStatus extends React.Component {
     windowWidth: PropTypes.number,
     placeholder: PropTypes.string,
     value: PropTypes.string,
-    disabled: PropTypes.bool
+    disabled: PropTypes.bool,
+    size: PropTypes.string
   }
 
   state = {
@@ -86,7 +87,7 @@ export default class SelectStatus extends React.Component {
             placeholder={this.props.placeholder}
             showSearch
             style={{ width: '100%', fontFamily: 'myFont-Light' }}
-            size='large'
+            size={this.props.size ? this.props.size : 'large'}
             onChange={this.props.onChange}
           >
             {_map(this.state.data, item => {

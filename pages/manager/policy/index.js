@@ -141,7 +141,6 @@ class ManagerPolicyList extends React.Component {
                 }}
               >
                 <Icon style={{ cursor: 'pointer' }} twoToneColor='red' theme='twoTone' type='delete' />
-
               </Popconfirm>
             </div>
           )

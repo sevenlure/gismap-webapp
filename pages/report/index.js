@@ -12,7 +12,7 @@ import slug, { breadcrumb } from 'src/routes/index'
 import Clearfix from 'src/components/elements/clearfix'
 import { DATE_FORMAT, getFormatNumber } from 'src/config/format.js'
 import moment from 'moment'
-import ReportPageSearch from 'src/containers/real-estate-project/search.js'
+import ReportPageSearch from 'src/containers/report/search'
 import EditRevenues from 'src/containers/revenue/edit.js'
 
 const RepportWrapper = styled.div``
@@ -47,12 +47,12 @@ class ReportPage extends React.Component {
 
   getDataSource = async () => {
     try {
-      const res = await reportApi.getList(this.state.pagination)
-      if (res.status === 200) {
-        this.setState({
-          dataSource: _get(res, 'data.list', [])
-        })
-      }
+      // const res = await reportApi.getList(this.state.pagination)
+      // if (res.status === 200) {
+      //   this.setState({
+      //     dataSource: _get(res, 'data.list', [])
+      //   })
+      // }
     } catch (ex) {
       const { response } = ex
       // console.log('catch', response)
@@ -76,6 +76,7 @@ class ReportPage extends React.Component {
       {
         title: 'Họ tên',
         dataIndex: 'ByUser.FullName',
+        align: 'center',
         filterIcon: filtered => <Icon type='search' style={{ color: filtered ? '#1890ff' : undefined }} />,
         filterDropdown: ({ setSelectedKeys, selectedKeys, confirm, clearFilters }) => (
           <div style={{ padding: 8 }}>
@@ -94,12 +95,12 @@ class ReportPage extends React.Component {
               onClick={() => this.handleSearch(selectedKeys, confirm)}
               icon='search'
               size='small'
-              style={{ width: 90, marginRight: 8 }}
+              style={{ marginRight: 8 }}
             >
-              Search
+              Tìm kiếm
             </Button>
             <Button onClick={() => this.handleReset(clearFilters)} size='small' style={{ width: 90 }}>
-              Reset
+              Hủy
             </Button>
           </div>
         ),
@@ -110,27 +111,31 @@ class ReportPage extends React.Component {
             .toString()
             .toLowerCase()
             .includes(value.toLowerCase())
+        },
+        render: value => {
+          return <div style={{ textAlign: 'left' }}>{value}</div>
         }
       },
       {
         title: 'Doanh thu',
         dataIndex: 'Revenue',
+        align: 'center',
         render: value => {
-          return getFormatNumber(value)
-        },
-        editable: true
+          return <div style={{ textAlign: 'right' }}>{getFormatNumber(value)}</div>
+        }
       },
       {
         title: 'Ngày tính doanh thu',
         dataIndex: 'DateRevenue',
+        align: 'center',
         render: value => {
-          return moment(value).format(DATE_FORMAT)
-        },
-        editable: true
+          value = value ? moment(value).format(DATE_FORMAT) : 'Chưa xác định'
+          return <div>{value}</div>
+        }
       },
       {
         title: '',
-        // width: 130,
+        align: 'center',
         render: (text, record) => {
           return (
             <div>
@@ -202,6 +207,7 @@ class ReportPage extends React.Component {
           <Table
             rowKey={'_id'}
             size='small'
+            bordered
             // scroll={{ y: 700 }}
             dataSource={this.state.dataSource}
             columns={this.getColumn()}

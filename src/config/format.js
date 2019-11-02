@@ -18,7 +18,7 @@ export function getFormatNumber(value, numberToFixed = 0) {
     })
     return value === 0 ? '0' : tempNumber
   } else {
-    return '0'
+    return '-'
   }
 }
 

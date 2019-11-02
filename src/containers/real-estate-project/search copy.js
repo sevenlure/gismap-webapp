@@ -6,6 +6,8 @@ import { get as _get } from 'lodash-es'
 import moment from 'moment'
 import SelectStatus from 'src/components/elements/select-status'
 
+
+
 const RealEstateProjectSearchWrapper = styled.div`
   .button--search {
     padding-left: 8px;
@@ -26,14 +28,25 @@ class RealEstateProjectSearch extends React.Component {
     this.props.form.validateFields((errors, values) => {
       if (!errors) {
         // console.log('validateFields', values)
-        let data = {}
-        if (values.Search) {
-          data.Search = values.Search
+
+        const week = moment(values.DateWeek).week()
+        const year = moment(values.DateWeek).year()
+        // console.log(year, week, 'year-week')
+        let result = {}
+        const optionDepartment = _get(values, 'optionDepartment', [])
+        if (optionDepartment[0]) {
+          result.Department = optionDepartment[0]
         }
-        if (values.Status) {
-          data.Status = values.Status
+
+        if (optionDepartment[1]) {
+          result.Group = optionDepartment[1]
         }
-        if (this.props.onSubmit) this.props.onSubmit(data)
+        if (this.props.onSubmit)
+          this.props.onSubmit({
+            ...result,
+            year,
+            week
+          })
       }
     })
   }
@@ -54,16 +67,19 @@ class RealEstateProjectSearch extends React.Component {
       <RealEstateProjectSearchWrapper>
         <Form {...formItemLayout} onSubmit={this.handleSubmit}>
           <Row gutter={8}>
-            <Col span={10}>
+            <Col span={11}>
               <Form.Item label='Tên dự án'>
-                {getFieldDecorator('Search', {})(<Input size='default' placeholder='Tên dự án' />)}
+                {getFieldDecorator('Search', {})(<Input size='large' placeholder='Tên dự án' />)}
               </Form.Item>
             </Col>
-            <Col span={10}>
+            <Col span={11}>
               <Form.Item label='Tên dự án'>
-                {getFieldDecorator('Status', {})(<SelectStatus size='default' />)}
+                {getFieldDecorator('Status', {
+                  initialValue: ''
+                })(<SelectStatus />)}
               </Form.Item>
             </Col>
+
             <Col span={2}>
               <div className='button--search'>
                 <Button type='primary' icon='search' size='default' htmlType='submit'>

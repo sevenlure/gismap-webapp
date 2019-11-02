@@ -109,7 +109,7 @@ class RealEstateProject extends React.Component {
       },
       {
         title: '',
-        width: 130,
+        width: '15%',
         render: (text, record) => {
           return (
             <div>

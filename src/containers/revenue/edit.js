@@ -34,15 +34,25 @@ class Edit extends React.Component {
   }
 
   hanldeOnSubmit = async values => {
-    // console.log(values, 'hanldeOnSubmit')
+    console.log(values, 'hanldeOnSubmit')
     const key = _get(this.props.initialData, '_id', null)
+    const actionUpdate = _get(this.props.initialData, 'DateRevenue', null) ? true : false
     if (!key) return
 
     try {
-      const res = await reportApi.updateById(key, {
-        ...values,
-        ByUser: _get(this.props.initialData, 'ByUser._id', null)
-      })
+      let res
+      if (actionUpdate) {
+        res = await reportApi.updateById(key, {
+          ...values,
+          ByUser: _get(this.props.initialData, 'ByUser._id', null)
+        })
+      } else {
+        res = await reportApi.create({
+          ...values,
+          ByUser: _get(this.props.initialData, 'ByUser._id', null)
+        })
+      }
+
       //   console.log('data update', res)
       if (res.status === 200) {
         message.success('Cập nhật thành công!')

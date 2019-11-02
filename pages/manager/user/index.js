@@ -2,7 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import styled from 'styled-components'
 import DefaultLayout from 'src/layout/default'
-import { Table, Icon, Divider, Skeleton, Button, Popconfirm, message, Avatar } from 'antd'
+import { Table, Icon, Divider, Skeleton, Button, Popconfirm, message, Avatar, Input } from 'antd'
 import userApi from 'src/api/userApi'
 import { getInfoErrorfetch } from 'src/constant/funcAixos.js'
 import { get as _get, sortBy as _sortBy } from 'lodash-es'
@@ -39,7 +39,8 @@ class RealEstateProject extends React.Component {
   }
   state = {
     isLoading: true,
-    dataSource: []
+    dataSource: [],
+    searchText: ''
   }
 
   getDataSource = async () => {
@@ -86,7 +87,7 @@ class RealEstateProject extends React.Component {
             const objImage = getFilePublic(url)
             return (
               <div>
-                <Avatar  src={objImage.URL} />
+                <Avatar src={objImage.URL} />
               </div>
             )
           } else {
@@ -96,7 +97,42 @@ class RealEstateProject extends React.Component {
       },
       {
         title: 'Họ tên',
-        dataIndex: 'FullName'
+        dataIndex: 'FullName',
+        filterIcon: filtered => <Icon type='search' style={{ color: filtered ? '#1890ff' : undefined }} />,
+        filterDropdown: ({ setSelectedKeys, selectedKeys, confirm, clearFilters }) => (
+          <div style={{ padding: 8 }}>
+            <Input
+              ref={node => {
+                this.searchInput = node
+              }}
+              placeholder={`Search Họ tên`}
+              value={selectedKeys[0]}
+              onChange={e => setSelectedKeys(e.target.value ? [e.target.value] : [])}
+              onPressEnter={() => this.handleSearch(selectedKeys, confirm)}
+              style={{ width: 188, marginBottom: 8, display: 'block' }}
+            />
+            <Button
+              type='primary'
+              onClick={() => this.handleSearch(selectedKeys, confirm)}
+              icon='search'
+              size='small'
+              style={{ marginRight: 8 }}
+            >
+              Tìm kiếm
+            </Button>
+            <Button onClick={() => this.handleReset(clearFilters)} size='small' style={{ width: 90 }}>
+              Hủy
+            </Button>
+          </div>
+        ),
+        onFilter: (value, record) => {
+          // console.log(record, value, 'record')
+          const name = _get(record, 'SearchName', '')
+          return name
+            .toString()
+            .toLowerCase()
+            .includes(value.toLowerCase())
+        }
       },
       {
         title: 'Phòng ban',
@@ -117,11 +153,21 @@ class RealEstateProject extends React.Component {
         dataIndex: 'Phone'
       },
       {
-        title: '',
-        width: 100,
+        width: '15%',
         render: (text, record) => {
           return (
             <div>
+              <Link href={slug.manager.user.edit} as={`${slug.manager.user.base}/${_get(record, '_id')}`}>
+                <a>
+                  <Icon
+                    style={{ cursor: 'pointer', fontSize: '1.5rem' }}
+                    type='lock'
+                    twoToneColor='#F2C94C'
+                    theme='twoTone'
+                  />
+                </a>
+              </Link>
+              <Divider type='vertical' />
               <Link href={slug.manager.user.edit} as={`${slug.manager.user.base}/${_get(record, '_id')}`}>
                 <a>
                   <Icon
@@ -179,6 +225,16 @@ class RealEstateProject extends React.Component {
         )}
       </RealEstateProjectWrapper>
     )
+  }
+
+  handleReset = clearFilters => {
+    clearFilters()
+    this.setState({ searchText: '' })
+  }
+
+  handleSearch = (selectedKeys, confirm) => {
+    confirm()
+    this.setState({ searchText: selectedKeys[0] })
   }
 
   handleDelete = async key => {
