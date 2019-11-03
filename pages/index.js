@@ -2,11 +2,12 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import styled from 'styled-components'
 import { connect } from 'react-redux'
-import { Form } from 'antd'
+import {} from 'antd'
 import DefaultLayout from 'src/layout/default'
 import windowSize from 'react-window-size'
-import { setBreadCrumb, updateKeyPath } from 'src/redux/actions/generalAction'
+import { setBreadCrumb, updateKeyPath, updateBackgroundColor } from 'src/redux/actions/generalAction'
 import slug, { breadcrumb } from 'src/routes/index'
+import DashBoard from 'src/containers/dashboard'
 
 const WrapperIndex = styled.div`
   display: flex;
@@ -17,7 +18,8 @@ const WrapperIndex = styled.div`
 const mapStateToProps = () => ({})
 const mapDispatchToProps = {
   setBreadCrumb,
-  updateKeyPath
+  updateKeyPath,
+  updateBackgroundColor
 }
 
 @connect(
@@ -29,7 +31,8 @@ class Index extends React.Component {
   static propTypes = {
     windowWidth: PropTypes.number,
     setBreadCrumb: PropTypes.func,
-    updateKeyPath: PropTypes.func
+    updateKeyPath: PropTypes.func,
+    updateBackgroundColor: PropTypes.func
   }
 
   state = {
@@ -37,6 +40,7 @@ class Index extends React.Component {
   }
   componentDidMount = () => {
     const pathPage = slug.basic
+    this.props.updateBackgroundColor('none')
     this.props.setBreadCrumb(breadcrumb[pathPage])
     this.props.updateKeyPath([pathPage])
   }
@@ -44,11 +48,12 @@ class Index extends React.Component {
   render() {
     return (
       <WrapperIndex windowWidth={this.props.windowWidth}>
-        <div>index</div>
+        <DashBoard />
       </WrapperIndex>
     )
   }
 }
+
 Index.Layout = DefaultLayout
 
-export default Form.create({})(Index)
+export default Index

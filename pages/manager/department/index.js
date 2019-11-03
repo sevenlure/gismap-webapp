@@ -15,7 +15,7 @@ import {
 } from 'antd'
 import { get as _get } from 'lodash-es'
 import { connect } from 'react-redux'
-import { setBreadCrumb, updateKeyPath } from 'src/redux/actions/generalAction'
+import { setBreadCrumb, updateKeyPath, updateBackgroundColor } from 'src/redux/actions/generalAction'
 import slug, { breadcrumb } from 'src/routes'
 import Clearfix from 'src/components/elements/clearfix'
 import windowSize from 'react-window-size'
@@ -33,7 +33,8 @@ const mapStateToProps = () => ({})
 
 const mapDispatchToProps = {
   setBreadCrumb,
-  updateKeyPath
+  updateKeyPath,
+  updateBackgroundColor
 }
 
 @connect(
@@ -45,7 +46,8 @@ class ManagerManagerList extends React.Component {
   static propTypes = {
     setBreadCrumb: PropTypes.func,
     updateKeyPath: PropTypes.func,
-    windowWidth: PropTypes.number
+    windowWidth: PropTypes.number,
+    updateBackgroundColor: PropTypes.func
   }
   state = {
     isLoading: true,
@@ -217,6 +219,7 @@ class ManagerManagerList extends React.Component {
 
   componentDidMount = () => {
     const pathPage = slug.manager.department.list
+    this.props.updateBackgroundColor('#fff')
     this.props.setBreadCrumb(breadcrumb[pathPage])
     this.props.updateKeyPath([pathPage])
     this.getInitialValue()

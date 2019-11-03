@@ -8,7 +8,13 @@ import { getInfoErrorfetch } from 'src/constant/funcAixos.js'
 
 import { get as _get } from 'lodash-es'
 import { connect } from 'react-redux'
-import { setBreadCrumb, updateKeyPath, getDepartment, isLoadedDanhMuc  } from 'src/redux/actions/generalAction'
+import {
+  setBreadCrumb,
+  updateKeyPath,
+  getDepartment,
+  isLoadedDanhMuc,
+  updateBackgroundColor
+} from 'src/redux/actions/generalAction'
 import slug, { breadcrumb } from 'src/routes/index'
 import OrganizationForm from 'src/containers/organization/form.js'
 import Router from 'next/router'
@@ -28,7 +34,8 @@ const mapDispatchToProps = {
   setBreadCrumb,
   updateKeyPath,
   getDepartment,
-  isLoadedDanhMuc
+  isLoadedDanhMuc,
+  updateBackgroundColor
 }
 
 @connect(
@@ -40,7 +47,8 @@ class ManagerOrganizationEdit extends React.Component {
     setBreadCrumb: PropTypes.func,
     updateKeyPath: PropTypes.func,
     getDepartment: PropTypes.func,
-    isLoadedDanhMuc: PropTypes.func
+    isLoadedDanhMuc: PropTypes.func,
+    updateBackgroundColor: PropTypes.func
   }
   state = {
     isLoading: true,
@@ -68,6 +76,7 @@ class ManagerOrganizationEdit extends React.Component {
 
   componentDidMount = async () => {
     const pathPage = slug.manager.organization.edit
+    this.props.updateBackgroundColor('#fff')
     this.props.setBreadCrumb(breadcrumb[pathPage])
     this.props.updateKeyPath([pathPage])
     this.getInitial()

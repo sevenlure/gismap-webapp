@@ -7,7 +7,7 @@ import userApi from 'src/api/userApi'
 import { getInfoErrorfetch } from 'src/constant/funcAixos.js'
 import { get as _get, sortBy as _sortBy } from 'lodash-es'
 import { connect } from 'react-redux'
-import { setBreadCrumb, updateKeyPath } from 'src/redux/actions/generalAction'
+import { setBreadCrumb, updateKeyPath, updateBackgroundColor } from 'src/redux/actions/generalAction'
 import slug, { breadcrumb } from 'src/routes/index'
 import Link from 'next/link'
 import Clearfix from 'src/components/elements/clearfix'
@@ -25,7 +25,8 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = {
   setBreadCrumb,
-  updateKeyPath
+  updateKeyPath,
+  updateBackgroundColor
 }
 
 @connect(
@@ -36,6 +37,7 @@ class RealEstateProject extends React.Component {
   static propTypes = {
     setBreadCrumb: PropTypes.func,
     updateKeyPath: PropTypes.func,
+    updateBackgroundColor: PropTypes.func,
     token: PropTypes.string
   }
   state = {
@@ -74,6 +76,7 @@ class RealEstateProject extends React.Component {
 
   componentDidMount = async () => {
     const pathPage = slug.manager.user.list
+    this.props.updateBackgroundColor('#fff')
     this.props.setBreadCrumb(breadcrumb[pathPage])
     this.props.updateKeyPath([pathPage])
     this.getDataSource()

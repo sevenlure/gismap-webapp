@@ -75,7 +75,8 @@ const LayoutWrapper = styled.div`
     token: _get(state, 'AuthStore.token', null),
     subMenu: _get(state, 'GeneralStore.menu.subMenu', []),
     keyPath: _get(state, 'GeneralStore.menu.keyPath', []),
-    breadcrumb: _get(state, 'GeneralStore.menu.breadcrumb', [])
+    breadcrumb: _get(state, 'GeneralStore.menu.breadcrumb', []),
+    backgroundColor: _get(state, 'GeneralStore.them.backgroundColor', [])
   }),
   { updateKeyPath, updateSubMenu, getDepartment, getListUser, isLoadedDanhMuc }
 )
@@ -94,7 +95,8 @@ class AppWithLayout extends React.Component {
     isLoadedDanhMuc: PropTypes.func,
     subMenu: PropTypes.array,
     keyPath: PropTypes.array,
-    breadcrumb: PropTypes.array
+    breadcrumb: PropTypes.array,
+    backgroundColor: PropTypes.string
   }
 
   state = {
@@ -276,7 +278,7 @@ class AppWithLayout extends React.Component {
                     }
                   })}
               </Breadcrumb>
-              <div style={{ padding: 24, background: '#fff', minHeight: 360 }}>{children}</div>
+              <div style={{ padding: 24, background: this.props.backgroundColor, minHeight: 360 }}>{children}</div>
             </Content>
             <Footer style={{ textAlign: 'center' }}>PNR ©{moment().format('YYYY')} Created by G.I.S Team</Footer>
           </Layout>

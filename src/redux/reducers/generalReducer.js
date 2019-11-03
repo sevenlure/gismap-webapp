@@ -7,7 +7,8 @@ import {
   UPDATE_GENERAL_SET_BREADCRUMB,
   GET_GENERAL_LIST_DEPARTMENT,
   GET_GENERAL_LIST_USER,
-  IS_LOADED_GENERAL_DANHMUC
+  IS_LOADED_GENERAL_DANHMUC,
+  UPDATE_THEM_BACKGROUND_COLOR
 } from '../actions/generalAction'
 
 import storage from 'redux-persist/lib/storage'
@@ -24,12 +25,20 @@ const InitialState = {
     listDepartment: [],
     listUser: []
   },
+  them: {
+    backgroundColor: '#fff'
+  },
   danhMucIsLoaded: false
 }
 
 // REDUCERS
 const generalReducer = (state = InitialState, action) => {
   switch (action.type) {
+    case UPDATE_THEM_BACKGROUND_COLOR: {
+      return update(state, {
+        them: { backgroundColor: { $set: action.payload } }
+      })
+    }
     case GET_GENERAL_LIST_USER: {
       return update(state, {
         danhMuc: {

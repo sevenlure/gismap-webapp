@@ -7,7 +7,7 @@ import reportApi from 'src/api/reportApi'
 import { getInfoErrorfetch } from 'src/constant/funcAixos.js'
 import { get as _get } from 'lodash-es'
 import { connect } from 'react-redux'
-import { setBreadCrumb, updateKeyPath } from 'src/redux/actions/generalAction'
+import { setBreadCrumb, updateKeyPath, updateBackgroundColor } from 'src/redux/actions/generalAction'
 import slug, { breadcrumb } from 'src/routes/index'
 import Clearfix from 'src/components/elements/clearfix'
 import { DATE_FORMAT } from 'src/config/format.js'
@@ -20,7 +20,8 @@ const mapStateToProps = () => ({})
 
 const mapDispatchToProps = {
   setBreadCrumb,
-  updateKeyPath
+  updateKeyPath,
+  updateBackgroundColor
 }
 
 @connect(
@@ -30,7 +31,8 @@ const mapDispatchToProps = {
 class TripPage extends React.Component {
   static propTypes = {
     setBreadCrumb: PropTypes.func,
-    updateKeyPath: PropTypes.func
+    updateKeyPath: PropTypes.func,
+    updateBackgroundColor: PropTypes.func
   }
   state = {
     isLoading: true,
@@ -63,6 +65,7 @@ class TripPage extends React.Component {
 
   componentDidMount = async () => {
     const pathPage = slug.trip.list
+    this.props.updateBackgroundColor('#fff')
     this.props.setBreadCrumb(breadcrumb[pathPage])
     this.props.updateKeyPath([pathPage])
     this.getDataSource()

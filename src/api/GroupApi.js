@@ -10,7 +10,6 @@ export function updateGroup(key, { Department, Name, Order }) {
   return fetch.put(`${SLUG_GROUP}/${key}`, { Department, Name, Order })
 }
 
-
 export function DeleteGroup(key) {
   return fetch.delete(`${SLUG_GROUP}/${key}`)
 }

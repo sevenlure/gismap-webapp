@@ -4,7 +4,7 @@ import { message, Form, Affix, Row, Col, Button } from 'antd'
 import Router from 'next/router'
 import slug, { breadcrumb } from 'src/routes'
 import { connect } from 'react-redux'
-import { setBreadCrumb, updateKeyPath } from 'src/redux/actions/generalAction'
+import { setBreadCrumb, updateKeyPath, updateBackgroundColor } from 'src/redux/actions/generalAction'
 // import EditForm from 'src/containers/real-estate-project/form'
 import DefaultLayout from 'src/layout/default'
 // import UserApi from 'src/api/userApi'
@@ -21,7 +21,8 @@ const EditorCustom = dynamic(() => import('src/components/elements/editor'), {
   null,
   {
     setBreadCrumb,
-    updateKeyPath
+    updateKeyPath,
+    updateBackgroundColor
   }
 )
 class RealEstateProjectEdit extends React.Component {
@@ -29,7 +30,8 @@ class RealEstateProjectEdit extends React.Component {
     _id: PropTypes.string,
     setBreadCrumb: PropTypes.func,
     updateKeyPath: PropTypes.func,
-    form: PropTypes.any
+    form: PropTypes.any,
+    updateBackgroundColor: PropTypes.func
   }
 
   static getInitialProps = ({ query }) => {
@@ -46,6 +48,7 @@ class RealEstateProjectEdit extends React.Component {
   }
 
   componentDidMount = async () => {
+    this.props.updateBackgroundColor('#fff')
     this.props.setBreadCrumb(breadcrumb[slug.project.content])
     this.props.updateKeyPath([slug.project.base])
 

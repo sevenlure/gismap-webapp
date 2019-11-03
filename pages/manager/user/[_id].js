@@ -4,7 +4,7 @@ import { message } from 'antd'
 import Router from 'next/router'
 import slug, { breadcrumb } from 'src/routes'
 import { connect } from 'react-redux'
-import { setBreadCrumb, updateKeyPath } from 'src/redux/actions/generalAction'
+import { setBreadCrumb, updateKeyPath, updateBackgroundColor } from 'src/redux/actions/generalAction'
 import UserForm from 'src/containers/user/form.js'
 import DefaultLayout from 'src/layout/default'
 import UserApi from 'src/api/userApi'
@@ -15,14 +15,16 @@ import { getInfoErrorfetch } from 'src/constant/funcAixos.js'
   null,
   {
     setBreadCrumb,
-    updateKeyPath
+    updateKeyPath,
+    updateBackgroundColor
   }
 )
 class UserEdit extends React.Component {
   static propTypes = {
     _id: PropTypes.string,
     setBreadCrumb: PropTypes.func,
-    updateKeyPath: PropTypes.func
+    updateKeyPath: PropTypes.func,
+    updateBackgroundColor: PropTypes.func
   }
 
   static getInitialProps = ({ query }) => {
@@ -38,6 +40,7 @@ class UserEdit extends React.Component {
   }
 
   componentDidMount = async () => {
+    this.props.updateBackgroundColor('#fff')
     this.props.setBreadCrumb(breadcrumb[slug.manager.user.edit])
     this.props.updateKeyPath([slug.manager.user.base])
     try {
