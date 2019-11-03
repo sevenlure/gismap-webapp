@@ -4,7 +4,12 @@ import { Row, Col } from 'antd'
 import Clearfix from 'src/components/elements/clearfix'
 import styled from 'styled-components'
 
-const DashBoardWrapper = styled.div``
+const DashBoardWrapper = styled.div`
+  .card {
+    background: #fff;
+    margin-right: 10px;
+  }
+`
 
 class DashBoard extends React.Component {
   static propTypes = {}
@@ -12,13 +17,19 @@ class DashBoard extends React.Component {
   render() {
     return (
       <DashBoardWrapper>
-        <Row gutter={8}>
-          <Col span='12'>á ư</Col>
-          <Col span='12'>á ư</Col>
+        <Row>
+          <Col span={12}>
+            <div className='card'></div>
+          </Col>
+          <Col span={12}>
+            <div className='card'></div>
+          </Col>
         </Row>
         <Clearfix height={16} />
         <Row gutter={8}>
-          <Col span='24'>á ư</Col>
+          <Col span={24}>
+            <div className='card'></div>
+          </Col>
         </Row>
       </DashBoardWrapper>
     )

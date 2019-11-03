@@ -3,16 +3,15 @@ import PropTypes from 'prop-types'
 import styled from 'styled-components'
 import { connect } from 'react-redux'
 import {} from 'antd'
-import DefaultLayout from 'src/layout/default'
+import LayoutDashboard from 'src/layout/dashboard'
 import windowSize from 'react-window-size'
 import { setBreadCrumb, updateKeyPath, updateBackgroundColor } from 'src/redux/actions/generalAction'
 import slug, { breadcrumb } from 'src/routes/index'
-import DashBoard from 'src/containers/dashboard'
+// import DashBoard from 'src/containers/dashboard'
 
 const WrapperIndex = styled.div`
   display: flex;
   flex-direction: column;
-  background: white;
 `
 
 const mapStateToProps = () => ({})
@@ -48,12 +47,13 @@ class Index extends React.Component {
   render() {
     return (
       <WrapperIndex windowWidth={this.props.windowWidth}>
-        <DashBoard />
+        {/* <DashBoard /> */}
+        Đang phát triển
       </WrapperIndex>
     )
   }
 }
 
-Index.Layout = DefaultLayout
+Index.Layout = LayoutDashboard
 
 export default Index
