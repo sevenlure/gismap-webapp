@@ -2,7 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import styled from 'styled-components'
 import DefaultLayout from 'src/layout/default'
-import { Table, Icon, Divider, Skeleton, Button, Popconfirm, message, Avatar, Input } from 'antd'
+import { Table, Icon, Divider, Skeleton, Button, Popconfirm, message, Avatar, Input, Modal } from 'antd'
 import userApi from 'src/api/userApi'
 import { getInfoErrorfetch } from 'src/constant/funcAixos.js'
 import { get as _get, sortBy as _sortBy } from 'lodash-es'
@@ -11,7 +11,8 @@ import { setBreadCrumb, updateKeyPath } from 'src/redux/actions/generalAction'
 import slug, { breadcrumb } from 'src/routes/index'
 import Link from 'next/link'
 import Clearfix from 'src/components/elements/clearfix'
-import { getFilePrivate, getFilePublic } from 'src/api/updateFileApi.js'
+import { getFilePublic } from 'src/api/updateFileApi.js'
+import ChangePassword from 'src/containers/change-password/index'
 
 // import { DateTime } from 'luxon'
 // import { DATE_FORMAT_LUXON } from 'src/config/format.js'
@@ -40,7 +41,9 @@ class RealEstateProject extends React.Component {
   state = {
     isLoading: true,
     dataSource: [],
-    searchText: ''
+    searchText: '',
+    isChangePassWord: false,
+    initialData: {}
   }
 
   getDataSource = async () => {
@@ -157,16 +160,18 @@ class RealEstateProject extends React.Component {
         render: (text, record) => {
           return (
             <div>
-              <Link href={slug.manager.user.edit} as={`${slug.manager.user.base}/${_get(record, '_id')}`}>
-                <a>
-                  <Icon
-                    style={{ cursor: 'pointer', fontSize: '1.5rem' }}
-                    type='lock'
-                    twoToneColor='#F2C94C'
-                    theme='twoTone'
-                  />
-                </a>
-              </Link>
+              <Icon
+                onClick={() => {
+                  this.setState({
+                    isChangePassWord: true,
+                    initialData: record
+                  })
+                }}
+                style={{ cursor: 'pointer', fontSize: '1.5rem' }}
+                type='lock'
+                twoToneColor='#F2C94C'
+                theme='twoTone'
+              />
               <Divider type='vertical' />
               <Link href={slug.manager.user.edit} as={`${slug.manager.user.base}/${_get(record, '_id')}`}>
                 <a>
@@ -223,10 +228,33 @@ class RealEstateProject extends React.Component {
             pagination={{ position: 'bottom' }}
           />
         )}
+        <Modal
+          // width='70%'
+          visible={this.state.isChangePassWord}
+          footer={null}
+          centered
+          closeIcon={<span />}
+          closable={false}
+        >
+          {/* // NOTE edit */}
+          <ChangePassword
+            rule={this.state.rule}
+            isUser={true}
+            onCancel={this.hanldleOnCancel}
+            onSuccess={this.hanldleOnCancel}
+            initialData={this.state.initialData}
+          />
+        </Modal>
       </RealEstateProjectWrapper>
     )
   }
 
+  hanldleOnCancel = () => {
+    this.setState({
+      isChangePassWord: false,
+      initialData: {}
+    })
+  }
   handleReset = clearFilters => {
     clearFilters()
     this.setState({ searchText: '' })

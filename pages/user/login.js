@@ -6,7 +6,6 @@ import Clearfix from 'src/components/elements/clearfix'
 import authApi from 'src/api/authApi'
 import { getInfoErrorfetch } from 'src/constant/funcAixos.js'
 import { connect } from 'react-redux'
-import pathLogo from 'icons/index'
 
 import { userLogin, userLogout } from 'src/redux/actions/authAction'
 import { updateUserInfo } from 'src/redux/actions/generalAction.js'

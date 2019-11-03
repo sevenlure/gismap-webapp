@@ -30,8 +30,12 @@ export function updateById(_id, data) {
 export function deleteById(_id) {
   return fetch.delete(`${SLUG}/${_id}`)
 }
+export function changePassWord(_id, data) {
+  return fetch.patch(`${SLUG}/change-password/${_id}`, data)
+}
 
 export default {
+  changePassWord,
   getList,
   getAll,
   create,
