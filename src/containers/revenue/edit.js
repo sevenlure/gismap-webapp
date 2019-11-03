@@ -20,7 +20,8 @@ class Edit extends React.Component {
   static propTypes = {
     onCancel: PropTypes.func,
     onSuccess: PropTypes.func,
-    initialData: PropTypes.object.isRequired
+    initialData: PropTypes.object.isRequired,
+    rule: PropTypes.object
   }
 
   state = {
@@ -34,7 +35,7 @@ class Edit extends React.Component {
   }
 
   hanldeOnSubmit = async values => {
-    console.log(values, 'hanldeOnSubmit')
+    // console.log(values, 'hanldeOnSubmit')
     const key = _get(this.props.initialData, '_id', null)
     const actionUpdate = _get(this.props.initialData, 'DateRevenue', null) ? true : false
     if (!key) return
@@ -81,7 +82,12 @@ class Edit extends React.Component {
           </Button>
         </div>
         {!this.state.isLoading && (
-          <Form isEdit={true} initialData={this.props.initialData} onSubmit={this.hanldeOnSubmit} />
+          <Form
+            rule={this.props.rule}
+            isEdit={true}
+            initialData={this.props.initialData}
+            onSubmit={this.hanldeOnSubmit}
+          />
         )}
       </PolicyEditWrapper>
     )

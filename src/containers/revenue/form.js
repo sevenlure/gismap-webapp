@@ -30,7 +30,8 @@ class GroupPolicyForm extends React.Component {
     getFieldError: PropTypes.any,
     initialData: PropTypes.object,
     onSubmit: PropTypes.func,
-    isEdit: PropTypes.bool
+    isEdit: PropTypes.bool,
+    rule: PropTypes.object
   }
 
   state = {
@@ -41,7 +42,7 @@ class GroupPolicyForm extends React.Component {
     e.preventDefault()
     this.props.form.validateFields(async (err, values) => {
       if (!err) {
-        console.log('Received values of form: ', values)
+        // console.log('Received values of form: ', values)
         values = {
           ...values,
           DateRevenue: moment(values.DateRevenue).format('YYYY/MM/DD')
@@ -70,6 +71,7 @@ class GroupPolicyForm extends React.Component {
   }
 
   render() {
+    // console.log(this.props.rule, 'this.props.rule')
     const { getFieldDecorator } = this.props.form
     return (
       <PolyciFormWrapper>
@@ -93,7 +95,14 @@ class GroupPolicyForm extends React.Component {
           <Form.Item label='Ngày tính doanh thu'>
             {getFieldDecorator('DateRevenue', {
               rules: [{ required: true, message: errorMessage.dateRevenue }]
-            })(<DatePicker size='large' placeholder='Ngày tính doanh thu *' format={DATE_FORMAT} />)}
+            })(
+              <DatePicker
+                disabledDate={this.disabledDate}
+                size='large'
+                placeholder='Ngày tính doanh thu *'
+                format={DATE_FORMAT}
+              />
+            )}
           </Form.Item>
           <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
             <Button
@@ -109,6 +118,16 @@ class GroupPolicyForm extends React.Component {
         </Form>
       </PolyciFormWrapper>
     )
+  }
+  disabledDate = current => {
+    const { rule } = this.props
+    // console.log(current, "current")
+    const week = moment(current).week()
+    const year = moment(current).year()
+    // console.log(week, year, 'disabledDate')
+    // console.log(!(week === rule.week), !(year === rule.year), 'disabledDate')
+    // Can not select days before today and today
+    return !(week === rule.week) && rule.year - 1 < year < rule.year + 1
   }
 }
 

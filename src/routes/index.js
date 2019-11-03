@@ -71,7 +71,7 @@ export const breadcrumb = {
     { name: 'Tạo nội dung bất động sản' }
   ],
   // Kết quả kinh doanh REPORT
-  [slug.report.base]: [{ name: 'Kết quả kinh doanh' }],
+  [slug.report.base]: [{ name: 'Cập nhật kết quả kinh doanh' }],
   // Chuyến công tác TRIP
   [slug.trip.list]: [{ name: 'Chuyến công tác' }]
 }

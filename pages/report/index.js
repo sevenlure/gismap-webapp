@@ -42,7 +42,8 @@ class ReportPage extends React.Component {
     },
     searchText: '',
     isEdit: false,
-    editData: null
+    editData: null,
+    rule: {}
   }
 
   getDataSource = async () => {
@@ -168,7 +169,7 @@ class ReportPage extends React.Component {
     this.setState({ searchText: selectedKeys[0] })
   }
 
-  hanldeSearch = async values => {
+  hanldeSearchReport = async values => {
     // console.log(values, 'hanldeSearch')
     try {
       this.setState({
@@ -179,7 +180,10 @@ class ReportPage extends React.Component {
       })
       if (res.status === 200) {
         this.setState({
-          dataSource: _get(res, 'data', [])
+          dataSource: _get(res, 'data', []),
+          rule: {
+            ...values
+          }
         })
       }
     } catch (ex) {
@@ -198,7 +202,7 @@ class ReportPage extends React.Component {
     return (
       <RepportWrapper>
         <div>
-          <ReportPageSearch onSubmit={this.hanldeSearch} />
+          <ReportPageSearch onSubmit={this.hanldeSearchReport} />
         </div>
 
         <Clearfix height={8} />
@@ -224,16 +228,15 @@ class ReportPage extends React.Component {
           closable={false}
         >
           {/* // NOTE edit */}
-          {this.state.isEdit && this.state.editData && (
-            <EditRevenues
-              onCancel={this.hanldleOnCancel}
-              onSuccess={this.hanldleOnSuccess}
-              initialData={{
-                ...this.state.editData,
-                Name: _get(this.state.editData, 'FullName', '')
-              }}
-            />
-          )}
+          <EditRevenues
+            rule={this.state.rule}
+            onCancel={this.hanldleOnCancel}
+            onSuccess={this.hanldleOnSuccess}
+            initialData={{
+              ...this.state.editData,
+              Name: _get(this.state.editData, 'FullName', '')
+            }}
+          />
         </Modal>
       </RepportWrapper>
     )
@@ -245,7 +248,7 @@ class ReportPage extends React.Component {
   }
   hanldleOnSuccess = () => {
     this.hanldleOnCancel()
-    this.getDataSource()
+    this.hanldeSearchReport(this.state.rule)
   }
 }
 
