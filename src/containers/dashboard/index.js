@@ -62,7 +62,7 @@ class DashBoard extends React.Component {
     return {
       colors: colors,
       title: {
-        text: 'Biểu đồ kết quả kinh doanh tuần'
+        text: 'Doanh thu tuần các phòng kinh doanh'
       },
       yAxis: {
         title: {
@@ -87,12 +87,13 @@ class DashBoard extends React.Component {
       return {
         name: _get(item, 'Name'),
         y: RevenueTotal,
-        sliced: true
+        sliced: true,
+        selected: true
       }
     })
     return {
       title: {
-        text: 'Biểu đồ kết quả kinh doanh tuần'
+        text: 'Tỷ lệ doanh thu các phòng kinh doanh so với tổng doanh thu theo tuần'
       },
       colors: colors,
       yAxis: {
@@ -105,6 +106,16 @@ class DashBoard extends React.Component {
       },
       chart: {
         type: 'pie'
+      },
+      plotOptions: {
+        pie: {
+          allowPointSelect: true,
+          cursor: 'pointer',
+          dataLabels: {
+            enabled: true,
+            format: '<b>{point.name}</b>: {point.percentage:.1f} VNĐ'
+          }
+        }
       },
       series: [
         {
