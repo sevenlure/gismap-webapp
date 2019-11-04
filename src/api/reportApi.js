@@ -2,6 +2,14 @@ import fetch from './fetch'
 
 const SLUG = '/revenue'
 
+export function getListWithDepartment({ year, week }) {
+  return fetch.get(`${SLUG}/object-category/year/${year}/week/${week}?type=DEPARTMENT`)
+}
+
+export function getListSaleTop() {
+  return fetch.get(`${SLUG}/object-category/top`)
+}
+
 export function getListByYearWeek({ year, week, ...querySearch }) {
   return fetch.get(`${SLUG}/year/${year}/week/${week}`, {
     params: {
@@ -40,6 +48,8 @@ export function deleteById(_id) {
 }
 
 export default {
+  getListWithDepartment,
+  getListSaleTop,
   getListByYearWeek,
   getList,
   getAll,
