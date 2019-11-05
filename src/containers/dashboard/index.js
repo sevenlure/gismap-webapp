@@ -69,6 +69,9 @@ class DashBoard extends React.Component {
           text: ''
         }
       },
+      tooltip: {
+        pointFormat: '{series.name}: <b>{point.y} VNĐ</b>'
+      },
       xAxis: {
         categories: ['Tuần 44 năm 2019']
       },
@@ -107,18 +110,22 @@ class DashBoard extends React.Component {
       chart: {
         type: 'pie'
       },
+      tooltip: {
+        pointFormat: '{series.name}: <b>{point.y} VNĐ</b>'
+      },
       plotOptions: {
         pie: {
           allowPointSelect: true,
           cursor: 'pointer',
           dataLabels: {
             enabled: true,
-            format: '<b>{point.name}</b>: {point.percentage:.1f} VNĐ'
+            format: '<b>{point.name}</b>: {point.percentage:.1f} %'
           }
         }
       },
       series: [
         {
+          name: 'Doanh thu',
           data: seriesData
         }
       ]

@@ -2,8 +2,15 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import styled from 'styled-components'
 import DefaultLayout from 'src/layout/default'
-import { Table, Icon, Input, Skeleton, Button } from 'antd'
-import reportApi from 'src/api/reportApi'
+import {
+  Table,
+  Icon,
+  Input,
+  Skeleton,
+  Button
+  // Badge
+} from 'antd'
+import workingTicketApi from 'src/api/workingTicketApi'
 import { getInfoErrorfetch } from 'src/constant/funcAixos.js'
 import { get as _get } from 'lodash-es'
 import { connect } from 'react-redux'
@@ -46,7 +53,7 @@ class TripPage extends React.Component {
 
   getDataSource = async () => {
     try {
-      const res = await reportApi.getList(this.state.pagination)
+      const res = await workingTicketApi.getList(this.state.pagination)
       if (res.status === 200) {
         this.setState({
           dataSource: _get(res, 'data.list', [])
@@ -75,7 +82,7 @@ class TripPage extends React.Component {
     return [
       {
         title: 'Dự án',
-        dataIndex: 'ByUser.FullName',
+        dataIndex: 'ProjectBDS.Name',
         filterIcon: filtered => <Icon type='search' style={{ color: filtered ? '#1890ff' : undefined }} />,
         filterDropdown: ({ setSelectedKeys, selectedKeys, confirm, clearFilters }) => (
           <div style={{ padding: 8 }}>
@@ -105,7 +112,7 @@ class TripPage extends React.Component {
         ),
         onFilter: (value, record) => {
           // console.log(record, value, 'record')
-          const name = _get(record, 'ByUser.FullName', '')
+          const name = _get(record, 'ProjectBDS.Name', '')
           return name
             .toString()
             .toLowerCase()
@@ -114,27 +121,41 @@ class TripPage extends React.Component {
       },
       {
         title: 'Người đăng ký',
-        dataIndex: 'ByUser.FullName'
+        dataIndex: 'OpenBy.FullName'
       },
       {
         title: 'Người duyệt',
-        dataIndex: 'ByUser.FullName'
+        dataIndex: 'ApproveBy.FullName'
       },
       {
         title: 'Ngày đăng ký',
-        dataIndex: 'DateRevenue',
+        dataIndex: 'CreatedAt',
         render: value => {
           return moment(value).format(DATE_FORMAT)
         }
       },
       {
-        title: 'Ngày hoàn thành',
-        dataIndex: 'DateRevenue',
+        title: 'Ngày duyệt',
+        dataIndex: 'ApprovedAt',
         render: value => {
           return moment(value).format(DATE_FORMAT)
-        },
-        editable: true
+        }
       }
+      // {
+      //   title: 'Trạng thái',
+      //   dataIndex: 'Status',
+      //   render: (value) => {
+
+      //     const ListStatus = {
+      //       success: 'COMPLETED',
+      //       cancel: 'REJECTED',
+      //       Status:''
+      //     }
+      //     switch (value){
+      //       case
+      //     }
+      //   }
+      // }
     ]
   }
 
@@ -149,17 +170,18 @@ class TripPage extends React.Component {
   }
 
   hanldeSearch = async values => {
-    // console.log(values, 'hanldeSearch')
+    console.log(values, 'hanldeSearch')
     try {
       this.setState({
         isLoading: true
       })
-      const res = await reportApi.getListByYearWeek({
+      const res = await workingTicketApi.getList({
+        ...this.state.pagination,
         ...values
       })
       if (res.status === 200) {
         this.setState({
-          dataSource: _get(res, 'data', [])
+          dataSource: _get(res, 'data.list', [])
         })
       }
     } catch (ex) {

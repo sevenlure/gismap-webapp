@@ -1,9 +1,8 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import styled from 'styled-components'
-import { Row, Col, Form, DatePicker, Button } from 'antd'
-import { get as _get } from 'lodash-es'
-import SelectDepartmentToGroup from 'src/components/elements/select-department-group'
+import { Row, Col, Form, DatePicker, Button, Input } from 'antd'
+import {} from 'lodash-es'
 import SelectUser from 'src/components/elements/select-user-all'
 import moment from 'moment'
 const { WeekPicker } = DatePicker
@@ -29,23 +28,13 @@ class TripSearch extends React.Component {
       if (!errors) {
         // console.log('validateFields', values)
 
-        const week = moment(values.DateWeek).week()
-        const year = moment(values.DateWeek).year()
         // console.log(year, week, 'year-week')
-        let result = {}
-        const optionDepartment = _get(values, 'optionDepartment', [])
-        if (optionDepartment[0]) {
-          result.Department = optionDepartment[0]
-        }
-
-        if (optionDepartment[1]) {
-          result.Group = optionDepartment[1]
-        }
         if (this.props.onSubmit)
           this.props.onSubmit({
-            ...result,
-            year,
-            week
+            Search: values.Search ? values.Search : undefined,
+            CreatedAt: values.DateWeek ? moment(values.DateWeek).format('WW-GGGG') : undefined,
+            OpenBy: values.OpenBy ? values.OpenBy : undefined,
+            ApproveBy: values.ApproveBy ? values.ApproveBy : undefined
           })
       }
     })
@@ -69,32 +58,25 @@ class TripSearch extends React.Component {
           <Row gutter={8}>
             <Col span={10}>
               <Form.Item label='Đăng ký'>
-                {getFieldDecorator('name1', {
-                  rules: [{ required: true, message: 'Vui lòng chọn người đăng ký' }]
-                })(<SelectUser size='default' placeholder='Người đăng ký' />)}
+                {getFieldDecorator('OpenBy', {})(<SelectUser size='default' placeholder='Người đăng ký' />)}
               </Form.Item>
             </Col>
             <Col span={10}>
               <Form.Item label='Đăng duyệt'>
-                {getFieldDecorator('name2', {
-                  rules: [{ required: true, message: 'Vui lòng chọn người đăng duyệt' }]
-                })(<SelectUser size='default' placeholder='Người đăng duyệt' />)}
+                {getFieldDecorator('ApproveBy', {})(<SelectUser size='default' placeholder='Người đăng duyệt' />)}
               </Form.Item>
             </Col>
           </Row>
+
           <Row gutter={8}>
             <Col span={10}>
-              <Form.Item label='Phòng ban'>
-                {getFieldDecorator('optionDepartment', {
-                  rules: [{ required: true, message: 'Vui lòng chọn phòng ban' }]
-                })(<SelectDepartmentToGroup size='default' isFillterSale />)}
-              </Form.Item>
+              <Form.Item label='Dự án'>{getFieldDecorator('Search', {})(<Input size='default' />)}</Form.Item>
             </Col>
             <Col span={10}>
               <Form.Item label='Tuần'>
-                {getFieldDecorator('DateWeek', {
-                  rules: [{ required: true, message: 'Vui lòng chọn tuần' }]
-                })(<WeekPicker style={{ width: '100%' }} size='default' placeholder='Select week' />)}
+                {getFieldDecorator('DateWeek', {})(
+                  <WeekPicker style={{ width: '100%' }} size='default' placeholder='Select week' />
+                )}
               </Form.Item>
             </Col>
 

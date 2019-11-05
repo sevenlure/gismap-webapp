@@ -56,6 +56,10 @@ class GroupPolicyForm extends React.Component {
   }
 
   componentDidMount = () => {
+    this.getInitialValue()
+  }
+
+  getInitialValue = () => {
     this.props.form.resetFields()
     const { setFieldsValue } = this.props.form
     const { initialData } = this.props
@@ -68,6 +72,12 @@ class GroupPolicyForm extends React.Component {
     setFieldsValue({
       ...data
     })
+  }
+
+  componentDidUpdate = prevProps => {
+    if (this.props.initialData !== prevProps.initialData) {
+      this.getInitialValue()
+    }
   }
 
   render() {
