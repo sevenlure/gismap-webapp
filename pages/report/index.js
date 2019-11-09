@@ -258,5 +258,4 @@ class ReportPage extends React.Component {
 }
 
 ReportPage.Layout = DefaultLayout
-ReportPage.key = 'report'
 export default ReportPage

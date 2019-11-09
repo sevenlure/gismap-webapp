@@ -34,13 +34,14 @@ class MyApp extends App {
     const { Component, pageProps, router } = this.props
     const Layout = Component.Layout
 
+    // console.log(router,"router.router")
     return (
       <Container>
         <Provider store={reduxStore}>
           <PersistGate loading={<Loader />} persistor={this.persistor}>
             <Layout>
               <PageTransition timeout={200} classNames='page-transition'>
-                <Component {...pageProps} key={router.router} />
+                <Component {...pageProps} key={router.route} />
               </PageTransition>
             </Layout>
           </PersistGate>

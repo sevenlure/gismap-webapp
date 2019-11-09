@@ -234,5 +234,4 @@ class TripPage extends React.Component {
 }
 
 TripPage.Layout = DefaultLayout
-TripPage.key = 'trip'
 export default TripPage
