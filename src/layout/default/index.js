@@ -20,6 +20,7 @@ import AvatarUser from 'src/containers/auth/avatar-user'
 import Router from 'next/router'
 import slug from 'src/routes'
 import moment from 'moment'
+import Ink from 'react-ink'
 
 const { Header, Content, Footer, Sider } = Layout
 const { SubMenu } = Menu
@@ -196,6 +197,13 @@ class AppWithLayout extends React.Component {
               <Menu.Item key={slug.basic}>
                 <Icon type='home' />
                 <span>Trang chủ</span>
+                <Ink
+                  style={{
+                    color: '#d35400',
+                    background: true,
+                    duration: 1000
+                  }}
+                />
               </Menu.Item>
               <SubMenu
                 key={slug.manager.basic}
@@ -206,23 +214,80 @@ class AppWithLayout extends React.Component {
                   </span>
                 }
               >
-                <Menu.Item key={slug.manager.policy.base}>Chính sách công ty</Menu.Item>
-                <Menu.Item key={slug.manager.department.base}>Phòng ban</Menu.Item>
-                <Menu.Item key={slug.manager.user.base}>Nhân sự</Menu.Item>
-                <Menu.Item key={slug.manager.organization.base}>Sơ đồ tổ chức</Menu.Item>
+                <Menu.Item key={slug.manager.policy.base}>
+                  Chính sách công ty
+                  <Ink
+                    style={{
+                      color: '#d35400',
+                      background: true,
+                      duration: 1000
+                    }}
+                  />
+                </Menu.Item>
+                <Menu.Item key={slug.manager.department.base}>
+                  Phòng ban
+                  <Ink
+                    style={{
+                      color: '#d35400',
+                      background: true,
+                      duration: 1000
+                    }}
+                  />
+                </Menu.Item>
+                <Menu.Item key={slug.manager.user.base}>
+                  Nhân sự
+                  <Ink
+                    style={{
+                      color: '#d35400',
+                      background: true,
+                      duration: 1000
+                    }}
+                  />
+                </Menu.Item>
+                <Menu.Item key={slug.manager.organization.base}>
+                  Sơ đồ tổ chức
+                  <Ink
+                    style={{
+                      color: '#d35400',
+                      background: true,
+                      duration: 1000
+                    }}
+                  />
+                </Menu.Item>
               </SubMenu>
               <Menu.Item key={slug.project.base}>
                 <Icon type='bank' />
                 <span>Dự án bất động sản</span>
+                <Ink
+                  style={{
+                    color: '#d35400',
+                    background: true,
+                    duration: 1000
+                  }}
+                />
               </Menu.Item>
               <Menu.Item key={slug.report.base}>
                 <Icon type='area-chart' />
 
                 <span>Thống kê báo cáo</span>
+                <Ink
+                  style={{
+                    color: '#d35400',
+                    background: true,
+                    duration: 1000
+                  }}
+                />
               </Menu.Item>
               <Menu.Item key={slug.trip.base}>
                 <Icon type='car' />
                 <span>Chuyến công tác</span>
+                <Ink
+                  style={{
+                    color: '#d35400',
+                    background: true,
+                    duration: 1000
+                  }}
+                />
               </Menu.Item>
             </Menu>
           </Sider>

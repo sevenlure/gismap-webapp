@@ -1419,7 +1419,7 @@
     extracted-loader "1.0.4"
     find-up "2.1.0"
     ignore-loader "0.1.2"
-    mini-css-extract-plugin "0.4.1"
+    mini-css-extract-plugin "0.4.3"
     postcss-loader "3.0.0"
 
 "@zeit/next-less@^1.0.1":
@@ -5224,7 +5224,7 @@ mimic-fn@^1.0.0:
   integrity sha512-jf84uxzwiuiIVKiOLpfYk7N46TSy8ubTonmneY9vrpHNAnp0QBt2BxWV9dO3/j+BoVAb+a5G6YDPW3M5HOdMWQ==
 
 mini-css-extract-plugin@0.4.1:
-  version "0.4.1"
+  version "0.4.3"
   resolved "https://registry.yarnpkg.com/mini-css-extract-plugin/-/mini-css-extract-plugin-0.4.3.tgz#98d60fcc5d228c3e36a9bd15a1d6816d6580beb8"
   integrity sha512-Mxs0nxzF1kxPv4TRi2NimewgXlJqh0rGE30vviCU2WHrpbta6wklnUV9dr9FUtoAHmB3p3LeXEC+ZjgHvB0Dzg==
   dependencies:
@@ -7213,6 +7213,11 @@ react-horizontal-scrolling-menu@^0.7.3:
   version "0.7.3"
   resolved "https://registry.yarnpkg.com/react-horizontal-scrolling-menu/-/react-horizontal-scrolling-menu-0.7.3.tgz#78f05d0cbcf50dad5bc18e0eb0db6b3162ef5944"
   integrity sha512-U+RkMg1LRtvECjIU6x/krvPPjiqqAHSHynE/cYONYWMB66a0RmD5qQuS1I0H44Os5ox6b64l3SFBgCYprcVDOg==
+
+react-ink@^6.4.0:
+  version "6.4.0"
+  resolved "https://registry.yarnpkg.com/react-ink/-/react-ink-6.4.0.tgz#fa1573104237d3c08bcbf06108f3197b16762f76"
+  integrity sha512-CucEgFtGVFd0yJ8a+fic7FRHPv8QDba7UOoTvg4ezaRLGA7/FitwiQMIydBfiaZ7v+mrCsqWaH2ZpmthZRMxgQ==
 
 react-is@16.8.6, react-is@^16.6.0, react-is@^16.7.0, react-is@^16.8.1:
   version "16.8.6"

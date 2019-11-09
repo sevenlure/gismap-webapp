@@ -6,6 +6,8 @@ import {} from 'lodash-es'
 import SelectUser from 'src/components/elements/select-user-all'
 import SelectStatus from 'src/components/elements/select-status-trip'
 import moment from 'moment'
+import Ink from 'react-ink'
+
 const { WeekPicker } = DatePicker
 
 const TripSearchWrapper = styled.div`
@@ -85,6 +87,11 @@ class TripSearch extends React.Component {
               <div className='button--search'>
                 <Button type='primary' icon='search' size='default' htmlType='submit'>
                   Tìm kiếm
+                  <Ink
+                    style={{
+                      color: '#d35400'
+                    }}
+                  />
                 </Button>
               </div>
             </Col>
