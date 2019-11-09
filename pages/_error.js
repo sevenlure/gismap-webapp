@@ -7,7 +7,6 @@ import Router from 'next/router'
 import slug from 'src/routes'
 import Button from 'src/components/elements/button'
 
-
 const ErrorWrapper = styled.div`
   flex: 1;
   min-width: 100vw;
