@@ -60,7 +60,7 @@ class RealEstateProjectSearch extends React.Component {
               </Form.Item>
             </Col>
             <Col span={10}>
-              <Form.Item label='Tên dự án'>
+              <Form.Item label='Tình trạng'>
                 {getFieldDecorator('Status', {})(<SelectStatus size='default' />)}
               </Form.Item>
             </Col>

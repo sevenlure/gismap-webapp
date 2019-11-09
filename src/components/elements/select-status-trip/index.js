@@ -1,17 +1,17 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import styled from 'styled-components'
-import { get as _get, map as _map, find as _find } from 'lodash-es'
+import { map as _map } from 'lodash-es'
 import windowSize from 'react-window-size'
-import { connect } from 'react-redux'
 import { Spin, Select } from 'antd'
 // import { replaceVietnameseStr } from 'utils/string'
 // import userApi from 'src/api/userApi.js'
 // import { getInfoErrorfetch } from 'src/constant/funcAixos.js'
+import { STATUS } from 'src/constant/dataDM.js'
 
 const { Option } = Select
 
-const SelectUserWrapper = styled.div`
+const SelectStatusWrapper = styled.div`
   flex: 1;
   width: 100%;
   position: relative;
@@ -22,19 +22,15 @@ const SelectUserWrapper = styled.div`
     transform: translate(25%, 35%);
   }
 `
-@connect(state => ({
-  listUser: _get(state, 'GeneralStore.danhMuc.listUser', []),
-  danhMucIsLoaded: _get(state, 'GeneralStore.danhMucIsLoaded', false)
-}))
+
 @windowSize
-export default class SelectDepartment extends React.Component {
+export default class SelectStatus extends React.Component {
   static propTypes = {
     onChange: PropTypes.func.isRequired,
     windowWidth: PropTypes.number,
     placeholder: PropTypes.string,
-    value: PropTypes.any,
-    listUser: PropTypes.array,
-    danhMucIsLoaded: PropTypes.bool,
+    value: PropTypes.string,
+    disabled: PropTypes.bool,
     size: PropTypes.string
   }
 
@@ -43,36 +39,33 @@ export default class SelectDepartment extends React.Component {
     isLoading: true
   }
 
-  componentDidUpdate = () => {
-    if (this.props.danhMucIsLoaded && this.state.isLoading) {
-      this.setState({
-        data: _get(this.props, 'listUser', []),
-        isLoading: false
-      })
-    }
-  }
-
-  getValue = () => {
-    const result = _find(this.state.data, item => {
-      return item._id === this.props.value
+  componentDidMount = async () => {
+    this.setState({
+      data: STATUS,
+      isLoading: false
     })
-
-    if (result) {
-      return result._id
-    }
   }
+
+  // getValue = () => {
+  //   const result = _find(this.state.data, item => {
+  //     return item.key === this.props.value
+  //   })
+  //   if (result) {
+  //     return result.key
+  //   }
+  // }
 
   render() {
-    // const { listUser } = this.props
-    // console.log('listUser', listUser)
     return (
-      <SelectUserWrapper windowWidth={this.props.windowWidth}>
+      <SelectStatusWrapper windowWidth={this.props.windowWidth}>
         <Spin spinning={this.state.isLoading}>
           <Select
+            mode='multiple'
             allowClear={true}
+            disabled={this.props.disabled}
             className='custom-select'
             showArrow={false}
-            value={this.getValue()}
+            // value={this.getValue()}
             placeholder={this.props.placeholder}
             showSearch
             style={{ width: '100%', fontFamily: 'myFont-Light' }}
@@ -81,14 +74,14 @@ export default class SelectDepartment extends React.Component {
           >
             {_map(this.state.data, item => {
               return (
-                <Option key={item._id} value={item._id}>
-                  {item.FullName}
+                <Option key={item.key} value={item.key}>
+                  {item.Name}
                 </Option>
               )
             })}
           </Select>
         </Spin>
-      </SelectUserWrapper>
+      </SelectStatusWrapper>
     )
   }
 }

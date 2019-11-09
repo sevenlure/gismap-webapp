@@ -7,12 +7,13 @@ import {
   Icon,
   Input,
   Skeleton,
-  Button
+  Button,
+  Tag
   // Badge
 } from 'antd'
 import workingTicketApi from 'src/api/workingTicketApi'
 import { getInfoErrorfetch } from 'src/constant/funcAixos.js'
-import { get as _get } from 'lodash-es'
+import { get as _get, find as _find } from 'lodash-es'
 import { connect } from 'react-redux'
 import { setBreadCrumb, updateKeyPath, updateBackgroundColor } from 'src/redux/actions/generalAction'
 import slug, { breadcrumb } from 'src/routes/index'
@@ -20,6 +21,7 @@ import Clearfix from 'src/components/elements/clearfix'
 import { DATE_FORMAT } from 'src/config/format.js'
 import moment from 'moment'
 import TripPageSearch from 'src/containers/trip/search'
+import { STATUS } from 'src/constant/dataDM.js'
 
 const TripWrapper = styled.div``
 
@@ -140,22 +142,23 @@ class TripPage extends React.Component {
         render: value => {
           return moment(value).format(DATE_FORMAT)
         }
-      }
-      // {
-      //   title: 'Trạng thái',
-      //   dataIndex: 'Status',
-      //   render: (value) => {
+      },
+      {
+        title: 'Trạng thái',
+        dataIndex: 'Status',
+        render: value => {
+          const itemFind = _find(STATUS, item => {
+            return item.key === value
+          })
 
-      //     const ListStatus = {
-      //       success: 'COMPLETED',
-      //       cancel: 'REJECTED',
-      //       Status:''
-      //     }
-      //     switch (value){
-      //       case
-      //     }
-      //   }
-      // }
+          if (itemFind) {
+            return <Tag color={itemFind.color}>{itemFind.Name}</Tag>
+          } else {
+            console.log(itemFind, value, '------')
+            return null
+          }
+        }
+      }
     ]
   }
 

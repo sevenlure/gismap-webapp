@@ -4,12 +4,13 @@ import styled from 'styled-components'
 import { Row, Col, Form, DatePicker, Button, Input } from 'antd'
 import {} from 'lodash-es'
 import SelectUser from 'src/components/elements/select-user-all'
+import SelectStatus from 'src/components/elements/select-status-trip'
 import moment from 'moment'
 const { WeekPicker } = DatePicker
 
 const TripSearchWrapper = styled.div`
   .button--search {
-    padding-left: 8px;
+    // padding-left: 8px;
     padding-top: 4px;
   }
 `
@@ -34,7 +35,8 @@ class TripSearch extends React.Component {
             Search: values.Search ? values.Search : undefined,
             CreatedAt: values.DateWeek ? moment(values.DateWeek).format('WW-GGGG') : undefined,
             OpenBy: values.OpenBy ? values.OpenBy : undefined,
-            ApproveBy: values.ApproveBy ? values.ApproveBy : undefined
+            ApproveBy: values.ApproveBy ? values.ApproveBy : undefined,
+            Status: values.Status ? values.Status : undefined
           })
       }
     })
@@ -42,45 +44,44 @@ class TripSearch extends React.Component {
 
   render() {
     const { getFieldDecorator } = this.props.form
-    const formItemLayout = {
-      labelCol: {
-        xs: { span: 24 },
-        sm: { span: 8 }
-      },
-      wrapperCol: {
-        xs: { span: 24 },
-        sm: { span: 16 }
-      }
-    }
     return (
       <TripSearchWrapper>
-        <Form {...formItemLayout} onSubmit={this.handleSubmit}>
+        <Form onSubmit={this.handleSubmit}>
           <Row gutter={8}>
-            <Col span={10}>
-              <Form.Item label='Đăng ký'>
-                {getFieldDecorator('OpenBy', {})(<SelectUser size='default' placeholder='Người đăng ký' />)}
+            <Col span={8}>
+              <Form.Item label=''>
+                {getFieldDecorator('Search', {})(<Input size='default' placeholder='Dự án' />)}
               </Form.Item>
             </Col>
-            <Col span={10}>
-              <Form.Item label='Đăng duyệt'>
-                {getFieldDecorator('ApproveBy', {})(<SelectUser size='default' placeholder='Người đăng duyệt' />)}
+            <Col span={8}>
+              <Form.Item label=''>
+                {getFieldDecorator('DateWeek', {})(
+                  <WeekPicker style={{ width: '100%' }} size='default' placeholder='Chọn tuần' />
+                )}
+              </Form.Item>
+            </Col>
+
+            <Col span={8}>
+              <Form.Item label=''>
+                {getFieldDecorator('Status', {
+                  // initialValue: null
+                })(<SelectStatus style={{ width: '100%' }} size='default' placeholder='Trạng thái' />)}
               </Form.Item>
             </Col>
           </Row>
 
           <Row gutter={8}>
-            <Col span={10}>
-              <Form.Item label='Dự án'>{getFieldDecorator('Search', {})(<Input size='default' />)}</Form.Item>
-            </Col>
-            <Col span={10}>
-              <Form.Item label='Tuần'>
-                {getFieldDecorator('DateWeek', {})(
-                  <WeekPicker style={{ width: '100%' }} size='default' placeholder='Select week' />
-                )}
+            <Col span={8}>
+              <Form.Item label=''>
+                {getFieldDecorator('OpenBy', {})(<SelectUser size='default' placeholder='Người đăng ký' />)}
               </Form.Item>
             </Col>
-
-            <Col span={2}>
+            <Col span={8}>
+              <Form.Item label=''>
+                {getFieldDecorator('ApproveBy', {})(<SelectUser size='default' placeholder='Người đăng duyệt' />)}
+              </Form.Item>
+            </Col>
+            <Col span={8}>
               <div className='button--search'>
                 <Button type='primary' icon='search' size='default' htmlType='submit'>
                   Tìm kiếm

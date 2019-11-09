@@ -73,6 +73,7 @@ export default class SelectDeparture extends React.Component {
           </div>
 
           <Select
+            allowClear={true}
             className='custom-select'
             // defaultActiveFirstOption={false}
             showArrow={false}

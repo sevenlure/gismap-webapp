@@ -73,8 +73,6 @@ export default class SelectDepartment extends React.Component {
 
     if (result) {
       return result._id
-    } else {
-      return ''
     }
   }
 
@@ -84,6 +82,7 @@ export default class SelectDepartment extends React.Component {
       <SelectUserWrapper windowWidth={this.props.windowWidth}>
         <Spin spinning={this.state.isLoading}>
           <Select
+            allowClear={true}
             className='custom-select'
             // defaultActiveFirstOption={false}
             showArrow={false}

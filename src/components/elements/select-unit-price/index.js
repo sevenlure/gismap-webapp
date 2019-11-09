@@ -57,8 +57,6 @@ export default class SelectUnitPrice extends React.Component {
     })
     if (result) {
       return result.key
-    } else {
-      return ''
     }
   }
 
@@ -68,6 +66,7 @@ export default class SelectUnitPrice extends React.Component {
       <SelectUnitPriceWrapper>
         <Spin spinning={this.state.isLoading}>
           <Select
+            allowClear={true}
             disabled={this.props.disabled}
             className='custom-select'
             showArrow={false}
