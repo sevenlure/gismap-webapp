@@ -10,7 +10,6 @@ import {
   Popconfirm,
   Modal,
   message,
-  Button,
   Tooltip
   // , Checkbox,
 } from 'antd'
@@ -27,6 +26,8 @@ import GroupDepartmentCreate from 'src/containers/department/group-deparment/gro
 import { getAll, DeleteDepartment } from 'src/api/DepartmentApi'
 import { DeleteGroup } from 'src/api/GroupApi'
 import { getInfoErrorfetch } from 'src/constant/funcAixos.js'
+import Button from 'src/components/elements/button'
+
 
 const ManagerPolicyWrapper = styled.div``
 

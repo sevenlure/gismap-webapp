@@ -1,12 +1,13 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import styled from 'styled-components'
-import { Button, message } from 'antd'
+import { message } from 'antd'
 import { get as _get } from 'lodash-es'
 import { getInfoErrorfetch } from 'src/constant/funcAixos.js'
 import Form from './form'
 import userApi from 'src/api/userApi'
 import AuthApi from 'src/api/authApi'
+import Button from 'src/components/elements/button'
 
 const PolicyEditWrapper = styled.div`
   flex: 1;

@@ -1,11 +1,12 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import styled from 'styled-components'
-import { Button, message } from 'antd'
+import { message } from 'antd'
 import { get as _get } from 'lodash-es'
 import GroupDepartmentForm from './group-department-form'
 import { getInfoErrorfetch } from 'src/constant/funcAixos.js'
 import GroupApi from 'src/api/GroupApi'
+import Button from 'src/components/elements/button'
 
 const PolicyCreateWrapper = styled.div`
   flex: 1;

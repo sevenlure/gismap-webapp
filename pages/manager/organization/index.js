@@ -2,7 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import styled from 'styled-components'
 import DefaultLayout from 'src/layout/default'
-import { Skeleton, Row, Col, Collapse, Button, Affix } from 'antd'
+import { Skeleton, Row, Col, Collapse, Affix } from 'antd'
 import organizationApi from 'src/api/organizationApi'
 import { getInfoErrorfetch } from 'src/constant/funcAixos.js'
 import { get as _get, map as _map } from 'lodash-es'
@@ -12,6 +12,8 @@ import slug, { breadcrumb } from 'src/routes/index'
 import ImageToken from 'src/components/elements/image-token'
 import Link from 'next/link'
 import Clearfix from 'src/components/elements/clearfix'
+import Button from 'src/components/elements/button'
+
 
 const { Panel } = Collapse
 const ManagerOrganizationWrapper = styled.div`

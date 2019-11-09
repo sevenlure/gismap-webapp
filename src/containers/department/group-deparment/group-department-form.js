@@ -1,8 +1,9 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import styled from 'styled-components'
-import { Form, Input, Button, InputNumber } from 'antd'
+import { Form, Input, InputNumber } from 'antd'
 import SelectDepartment from 'src/components/elements/select-department'
+import Button from 'src/components/elements/button'
 
 import { connect } from 'react-redux'
 import { userLogin } from 'src/redux/actions/authAction'

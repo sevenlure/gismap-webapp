@@ -2,7 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import styled from 'styled-components'
 import DefaultLayout from 'src/layout/default'
-import { Table, Icon, Input, Skeleton, Button, Modal, Tooltip } from 'antd'
+import { Table, Icon, Input, Skeleton, Modal, Tooltip } from 'antd'
 import reportApi from 'src/api/reportApi'
 import { getInfoErrorfetch } from 'src/constant/funcAixos.js'
 import { get as _get } from 'lodash-es'
@@ -14,6 +14,8 @@ import { DATE_FORMAT, getFormatNumber } from 'src/config/format.js'
 import moment from 'moment'
 import ReportPageSearch from 'src/containers/report/search'
 import EditRevenues from 'src/containers/revenue/edit.js'
+import Button from 'src/components/elements/button'
+
 
 const RepportWrapper = styled.div``
 

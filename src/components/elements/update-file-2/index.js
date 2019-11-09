@@ -4,7 +4,8 @@ import styled from 'styled-components'
 import { get as _get } from 'lodash-es'
 import windowSize from 'react-window-size'
 import { connect } from 'react-redux'
-import { Icon, Upload, message, Button } from 'antd'
+import { Icon, Upload, message } from 'antd'
+import Button from 'src/components/elements/button'
 
 // import FileViewer from 'react-file-viewer'
 

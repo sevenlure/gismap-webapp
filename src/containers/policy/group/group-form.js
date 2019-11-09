@@ -1,12 +1,13 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import styled from 'styled-components'
-import { Form, Input, Button, InputNumber, Checkbox } from 'antd'
+import { Form, Input, InputNumber, Checkbox } from 'antd'
 import { connect } from 'react-redux'
 import { userLogin } from 'src/redux/actions/authAction'
 import { updateUserInfo } from 'src/redux/actions/generalAction.js'
 import { policyMess } from 'src/config/message'
 import { last as _last } from 'lodash-es'
+import Button from 'src/components/elements/button'
 
 const errorMessage = policyMess.error
 

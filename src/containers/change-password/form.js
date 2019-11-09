@@ -1,12 +1,14 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import styled from 'styled-components'
-import { Form, Input, Button, Affix, Row, Col } from 'antd'
+import { Form, Input, Affix, Row, Col } from 'antd'
 import { connect } from 'react-redux'
 import { userLogin } from 'src/redux/actions/authAction'
 import { pick as _pick } from 'lodash-es'
 import { updateUserInfo } from 'src/redux/actions/generalAction.js'
 import { authMess } from 'src/config/message'
+import Button from 'src/components/elements/button'
+
 const userMess = authMess.register
 
 const UserFormWrapper = styled.div`

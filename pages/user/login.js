@@ -1,11 +1,13 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { Form, Input, Icon, Button, Layout, message, Avatar } from 'antd'
+import { Form, Input, Icon, Layout, message, Avatar } from 'antd'
 import styled from 'styled-components'
 import Clearfix from 'src/components/elements/clearfix'
 import authApi from 'src/api/authApi'
 import { getInfoErrorfetch } from 'src/constant/funcAixos.js'
 import { connect } from 'react-redux'
+import Button from 'src/components/elements/button'
+
 
 import { userLogin, userLogout } from 'src/redux/actions/authAction'
 import { updateUserInfo } from 'src/redux/actions/generalAction.js'

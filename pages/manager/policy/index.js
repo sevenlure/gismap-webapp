@@ -2,7 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import styled from 'styled-components'
 import DefaultLayout from 'src/layout/default'
-import { Table, Icon, Divider, Skeleton, Popconfirm, Modal, Checkbox, message, Button, Tooltip } from 'antd'
+import { Table, Icon, Divider, Skeleton, Popconfirm, Modal, Checkbox, message, Tooltip } from 'antd'
 import { get as _get } from 'lodash-es'
 import { connect } from 'react-redux'
 import { setBreadCrumb, updateKeyPath, updateBackgroundColor } from 'src/redux/actions/generalAction'
@@ -14,6 +14,8 @@ import InfoPolicyEdit from 'src/containers/policy/info/info-edit.js'
 import InfoPolicyCreate from 'src/containers/policy/info/info-create.js'
 import { deleteInfoPolicy, getAll } from 'src/api/PolicyApi.js'
 import { getInfoErrorfetch } from 'src/constant/funcAixos.js'
+import Button from 'src/components/elements/button'
+
 
 const ManagerPolicyWrapper = styled.div``
 

@@ -1,6 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { message, Form, Affix, Row, Col, Button } from 'antd'
+import { message, Form, Affix, Row, Col } from 'antd'
 import Router from 'next/router'
 import slug, { breadcrumb } from 'src/routes'
 import { connect } from 'react-redux'
@@ -11,6 +11,8 @@ import DefaultLayout from 'src/layout/default'
 import RealEstateProjectApi from 'src/api/RealEstateProjectApi'
 import { get as _get, pick as _pick } from 'lodash-es'
 import { getInfoErrorfetch } from 'src/constant/funcAixos.js'
+import Button from 'src/components/elements/button'
+
 
 import dynamic from 'next/dynamic'
 const EditorCustom = dynamic(() => import('src/components/elements/editor'), {

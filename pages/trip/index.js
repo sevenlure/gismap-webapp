@@ -7,7 +7,6 @@ import {
   Icon,
   Input,
   Skeleton,
-  Button,
   Tag
   // Badge
 } from 'antd'
@@ -22,6 +21,7 @@ import { DATE_FORMAT } from 'src/config/format.js'
 import moment from 'moment'
 import TripPageSearch from 'src/containers/trip/search'
 import { STATUS } from 'src/constant/dataDM.js'
+import Button from 'src/components/elements/button'
 
 const TripWrapper = styled.div``
 
@@ -173,7 +173,7 @@ class TripPage extends React.Component {
   }
 
   hanldeSearch = async values => {
-    console.log(values, 'hanldeSearch')
+    // console.log(values, 'hanldeSearch')
     try {
       this.setState({
         isLoading: true

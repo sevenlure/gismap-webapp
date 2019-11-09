@@ -2,7 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import styled from 'styled-components'
 import DefaultLayout from 'src/layout/default'
-import { Table, Icon, Divider, Skeleton, Button, Popconfirm, message, Checkbox, Tooltip } from 'antd'
+import { Table, Icon, Divider, Skeleton, Popconfirm, message, Checkbox, Tooltip } from 'antd'
 import RealEstateProjectApi from 'src/api/RealEstateProjectApi'
 import { getInfoErrorfetch } from 'src/constant/funcAixos.js'
 import { get as _get } from 'lodash-es'
@@ -13,6 +13,8 @@ import Link from 'next/link'
 import Clearfix from 'src/components/elements/clearfix'
 import { UNIT_CURRENCY } from 'src/config/format.js'
 import RealEstateProjectSearch from 'src/containers/real-estate-project/search.js'
+import Button from 'src/components/elements/button'
+
 
 const RealEstateProjectWrapper = styled.div``
 
