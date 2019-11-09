@@ -2,7 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import styled from 'styled-components'
 import DefaultLayout from 'src/layout/default'
-import { Table, Icon, Divider, Skeleton, Popconfirm, Modal, Checkbox, message, Button } from 'antd'
+import { Table, Icon, Divider, Skeleton, Popconfirm, Modal, Checkbox, message, Button, Tooltip } from 'antd'
 import { get as _get } from 'lodash-es'
 import { connect } from 'react-redux'
 import { setBreadCrumb, updateKeyPath, updateBackgroundColor } from 'src/redux/actions/generalAction'
@@ -73,30 +73,20 @@ class ManagerPolicyList extends React.Component {
         render: (text, record) => {
           return (
             <div>
-              <Icon
-                onClick={() => {
-                  this.setState({
-                    isEditGroupPolicy: true,
-                    GroupPolicyData: record
-                  })
-                }}
-                style={{ cursor: 'pointer', fontSize: '1.5rem' }}
-                theme='twoTone'
-                twoToneColor='#F2C94C'
-                type='edit'
-              />
-              {/* <Divider type='vertical' />
-              <Icon
-                onClick={() => {
-                  this.setState({
-                    isAddInfoPolicy: true,
-                    PolicyInfoGroupKey: _get(record, '_id', null)
-                  })
-                }}
-                style={{ cursor: 'pointer', fontSize: '1.5rem' }}
-                theme='twoTone' twoToneColor='#F2C94C'
-                type='plus-circle'
-              /> */}
+              <Tooltip title='Chỉnh sửa'>
+                <Icon
+                  onClick={() => {
+                    this.setState({
+                      isEditGroupPolicy: true,
+                      GroupPolicyData: record
+                    })
+                  }}
+                  style={{ cursor: 'pointer', fontSize: '1.5rem' }}
+                  theme='twoTone'
+                  twoToneColor='#F2C94C'
+                  type='edit'
+                />
+              </Tooltip>
             </div>
           )
         }

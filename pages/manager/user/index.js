@@ -2,7 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import styled from 'styled-components'
 import DefaultLayout from 'src/layout/default'
-import { Table, Icon, Divider, Skeleton, Button, Popconfirm, message, Avatar, Input, Modal } from 'antd'
+import { Table, Icon, Divider, Skeleton, Button, Popconfirm, message, Avatar, Input, Modal, Tooltip } from 'antd'
 import userApi from 'src/api/userApi'
 import { getInfoErrorfetch } from 'src/constant/funcAixos.js'
 import { get as _get, sortBy as _sortBy } from 'lodash-es'
@@ -163,27 +163,32 @@ class RealEstateProject extends React.Component {
         render: (text, record) => {
           return (
             <div>
-              <Icon
-                onClick={() => {
-                  this.setState({
-                    isChangePassWord: true,
-                    initialData: record
-                  })
-                }}
-                style={{ cursor: 'pointer', fontSize: '1.5rem' }}
-                type='lock'
-                twoToneColor='#F2C94C'
-                theme='twoTone'
-              />
+              <Tooltip title='Đổi mật khẩu'>
+                <Icon
+                  onClick={() => {
+                    this.setState({
+                      isChangePassWord: true,
+                      initialData: record
+                    })
+                  }}
+                  style={{ cursor: 'pointer', fontSize: '1.5rem' }}
+                  type='lock'
+                  twoToneColor='#F2C94C'
+                  theme='twoTone'
+                />
+              </Tooltip>
+
               <Divider type='vertical' />
               <Link href={slug.manager.user.edit} as={`${slug.manager.user.base}/${_get(record, '_id')}`}>
                 <a>
-                  <Icon
-                    style={{ cursor: 'pointer', fontSize: '1.5rem' }}
-                    theme='twoTone'
-                    twoToneColor='#F2C94C'
-                    type='edit'
-                  />
+                  <Tooltip title='Chỉnh sửa'>
+                    <Icon
+                      style={{ cursor: 'pointer', fontSize: '1.5rem' }}
+                      theme='twoTone'
+                      twoToneColor='#F2C94C'
+                      type='edit'
+                    />
+                  </Tooltip>
                 </a>
               </Link>
               <Divider type='vertical' />
@@ -196,12 +201,14 @@ class RealEstateProject extends React.Component {
                   this.handleDelete(_get(record, '_id'))
                 }}
               >
-                <Icon
-                  style={{ cursor: 'pointer', fontSize: '1.5rem' }}
-                  twoToneColor='red'
-                  theme='twoTone'
-                  type='delete'
-                />
+                <Tooltip title='Xóa'>
+                  <Icon
+                    style={{ cursor: 'pointer', fontSize: '1.5rem' }}
+                    twoToneColor='red'
+                    theme='twoTone'
+                    type='delete'
+                  />
+                </Tooltip>
               </Popconfirm>
             </div>
           )

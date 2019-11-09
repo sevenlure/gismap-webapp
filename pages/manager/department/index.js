@@ -10,7 +10,8 @@ import {
   Popconfirm,
   Modal,
   message,
-  Button
+  Button,
+  Tooltip
   // , Checkbox,
 } from 'antd'
 import { get as _get } from 'lodash-es'
@@ -86,6 +87,26 @@ class ManagerManagerList extends React.Component {
           if (Type !== 'SALE') {
             return (
               <div>
+                <Tooltip title='Chỉnh sửa'>
+                  <Icon
+                    onClick={() => {
+                      this.setState({
+                        isEditDeparment: true,
+                        GroupPolicyData: record
+                      })
+                    }}
+                    style={{ cursor: 'pointer', fontSize: '1.5rem' }}
+                    theme='twoTone'
+                    twoToneColor='#F2C94C'
+                    type='edit'
+                  />
+                </Tooltip>
+              </div>
+            )
+          }
+          return (
+            <div>
+              <Tooltip title='Chỉnh sửa'>
                 <Icon
                   onClick={() => {
                     this.setState({
@@ -98,23 +119,8 @@ class ManagerManagerList extends React.Component {
                   twoToneColor='#F2C94C'
                   type='edit'
                 />
-              </div>
-            )
-          }
-          return (
-            <div>
-              <Icon
-                onClick={() => {
-                  this.setState({
-                    isEditDeparment: true,
-                    GroupPolicyData: record
-                  })
-                }}
-                style={{ cursor: 'pointer', fontSize: '1.5rem' }}
-                theme='twoTone'
-                twoToneColor='#F2C94C'
-                type='edit'
-              />
+              </Tooltip>
+
               <Divider type='vertical' />
               <Popconfirm
                 title='Bạn chắc chắc muốn xoá?'
@@ -125,12 +131,14 @@ class ManagerManagerList extends React.Component {
                   this.handleDeleteDepartment(_get(record, '_id'))
                 }}
               >
-                <Icon
-                  style={{ cursor: 'pointer', fontSize: '1.5rem' }}
-                  twoToneColor='red'
-                  theme='twoTone'
-                  type='delete'
-                />
+                <Tooltip title='Xóa'>
+                  <Icon
+                    style={{ cursor: 'pointer', fontSize: '1.5rem' }}
+                    twoToneColor='red'
+                    theme='twoTone'
+                    type='delete'
+                  />
+                </Tooltip>
               </Popconfirm>
               {/* <Divider type='vertical' />
               <Icon

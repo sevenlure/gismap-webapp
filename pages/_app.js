@@ -38,7 +38,7 @@ class MyApp extends App {
         <Provider store={reduxStore}>
           <PersistGate loading={<Loader />} persistor={this.persistor}>
             <Layout>
-              <PageTransition timeout={200} key={router.route} classNames='page-transition'>
+              <PageTransition timeout={200} key={router.router} classNames='page-transition'>
                 <Component {...pageProps} />
               </PageTransition>
             </Layout>

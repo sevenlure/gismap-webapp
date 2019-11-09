@@ -2,7 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import styled from 'styled-components'
 import DefaultLayout from 'src/layout/default'
-import { Table, Icon, Input, Skeleton, Button, Modal } from 'antd'
+import { Table, Icon, Input, Skeleton, Button, Modal, Tooltip } from 'antd'
 import reportApi from 'src/api/reportApi'
 import { getInfoErrorfetch } from 'src/constant/funcAixos.js'
 import { get as _get } from 'lodash-es'
@@ -143,18 +143,20 @@ class ReportPage extends React.Component {
         render: (text, record) => {
           return (
             <div>
-              <Icon
-                onClick={() => {
-                  this.setState({
-                    isEdit: true,
-                    editData: record
-                  })
-                }}
-                style={{ cursor: 'pointer', fontSize: '1.5rem' }}
-                theme='twoTone'
-                twoToneColor='#F2C94C'
-                type='edit'
-              />
+              <Tooltip title='Sửa'>
+                <Icon
+                  onClick={() => {
+                    this.setState({
+                      isEdit: true,
+                      editData: record
+                    })
+                  }}
+                  style={{ cursor: 'pointer', fontSize: '1.5rem' }}
+                  theme='twoTone'
+                  twoToneColor='#F2C94C'
+                  type='edit'
+                />
+              </Tooltip>
             </div>
           )
         }

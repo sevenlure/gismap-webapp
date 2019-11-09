@@ -2,7 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import styled from 'styled-components'
 import DefaultLayout from 'src/layout/default'
-import { Table, Icon, Divider, Skeleton, Button, Popconfirm, message, Checkbox } from 'antd'
+import { Table, Icon, Divider, Skeleton, Button, Popconfirm, message, Checkbox, Tooltip } from 'antd'
 import RealEstateProjectApi from 'src/api/RealEstateProjectApi'
 import { getInfoErrorfetch } from 'src/constant/funcAixos.js'
 import { get as _get } from 'lodash-es'
@@ -118,23 +118,27 @@ class RealEstateProject extends React.Component {
             <div>
               <Link href={slug.project.content} as={`${slug.project.contentWidthId}/${_get(record, '_id')}`}>
                 <a>
-                  <Icon
-                    style={{ cursor: 'pointer', fontSize: '1.5rem' }}
-                    theme='twoTone'
-                    twoToneColor='#F2C94C'
-                    type='highlight'
-                  />
+                  <Tooltip title='Nội dung'>
+                    <Icon
+                      style={{ cursor: 'pointer', fontSize: '1.5rem' }}
+                      theme='twoTone'
+                      twoToneColor='#F2C94C'
+                      type='highlight'
+                    />
+                  </Tooltip>
                 </a>
               </Link>
               <Divider type='vertical' />
               <Link href={slug.project.edit} as={`${slug.project.base}/${_get(record, '_id')}`}>
                 <a>
-                  <Icon
-                    style={{ cursor: 'pointer', fontSize: '1.5rem' }}
-                    theme='twoTone'
-                    twoToneColor='#F2C94C'
-                    type='edit'
-                  />
+                  <Tooltip title='Chỉnh sửa'>
+                    <Icon
+                      style={{ cursor: 'pointer', fontSize: '1.5rem' }}
+                      theme='twoTone'
+                      twoToneColor='#F2C94C'
+                      type='edit'
+                    />
+                  </Tooltip>
                 </a>
               </Link>
 
@@ -148,12 +152,14 @@ class RealEstateProject extends React.Component {
                   this.handleDelete(_get(record, '_id'))
                 }}
               >
-                <Icon
-                  style={{ cursor: 'pointer', fontSize: '1.5rem' }}
-                  twoToneColor='red'
-                  theme='twoTone'
-                  type='delete'
-                />
+                <Tooltip title='Xóa'>
+                  <Icon
+                    style={{ cursor: 'pointer', fontSize: '1.5rem' }}
+                    twoToneColor='red'
+                    theme='twoTone'
+                    type='delete'
+                  />
+                </Tooltip>
               </Popconfirm>
             </div>
           )
