@@ -55,7 +55,8 @@
     "redux-devtools-extension": "^2.13.2",
     "redux-persist": "^5.10.0",
     "redux-thunk": "^2.1.0",
-    "styled-components": "^4.3.2"
+    "styled-components": "^4.3.2",
+    "webpack-strip": "^0.1.0"
   },
   "license": "ISC",
   "devDependencies": {

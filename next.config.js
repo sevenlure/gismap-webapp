@@ -7,6 +7,8 @@ const fs = require('fs')
 const path = require('path')
 const CompressionPlugin = require('compression-webpack-plugin')
 const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin')
+const WebpackStrip = require('webpack-strip')
+
 
 // const env = require("./env.json")
 const env = process.env.isDev ? require('./.env/dev.json') : require('./.env/production.json')
@@ -24,6 +26,12 @@ const nextConfig = {
         options: {
           emitWarning: true
         }
+      })
+    }else{
+      config.module.rules.push({
+        test: /\.js$/,
+        exclude: ['/node_modules/', '/.next/'],
+        loader: WebpackStrip.loader('debug', 'console.log'),
       })
     }
     config.module.rules.push({
