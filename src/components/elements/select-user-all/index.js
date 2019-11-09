@@ -63,8 +63,8 @@ export default class SelectDepartment extends React.Component {
   }
 
   render() {
-    const { listUser } = this.props
-    console.log('listUser', listUser)
+    // const { listUser } = this.props
+    // console.log('listUser', listUser)
     return (
       <SelectUserWrapper windowWidth={this.props.windowWidth}>
         <Spin spinning={this.state.isLoading}>
