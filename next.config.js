@@ -8,6 +8,7 @@ const path = require('path')
 const CompressionPlugin = require('compression-webpack-plugin')
 const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin')
 const WebpackStrip = require('webpack-strip')
+const DashboardPlugin = require("webpack-dashboard/plugin");
 
 
 // const env = require("./env.json")
@@ -27,6 +28,7 @@ const nextConfig = {
           emitWarning: true
         }
       })
+      config.plugins.push(new DashboardPlugin())
     }else{
       config.module.rules.push({
         test: /\.js$/,
