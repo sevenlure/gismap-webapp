@@ -15,7 +15,7 @@ module.exports = {
       host: '35.234.205.100',
       ref: 'origin/master',
       repo: 'git@gitlab.com:pnrwork/web-admin.git',
-      path: '/home/sevenlure/NPRwork/web-admin',
+      path: '/root/web-admin',
       'post-setup': 'sudo npm i -g yarn',
       'post-deploy': 'yarn install && yarn run build && pm2 startOrRestart ecosystem.config.js',
       env: {
