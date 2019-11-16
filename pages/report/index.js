@@ -248,7 +248,7 @@ class ReportPage extends React.Component {
           />
         </Modal>
         <Clearfix height={32} />
-        {/* <Affix offsetBottom={20}>
+        <Affix offsetBottom={20}>
           {this.state.isExportExcel && (
             <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
               <Link href={slug.report.edit} as={`${slug.report.edit}`}>
@@ -258,7 +258,7 @@ class ReportPage extends React.Component {
               </Link>
             </div>
           )}
-        </Affix> */}
+        </Affix>
       </RepportWrapper>
     )
   }

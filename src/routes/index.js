@@ -73,6 +73,10 @@ export const breadcrumb = {
   ],
   // Kết quả kinh doanh REPORT
   [slug.report.base]: [{ name: 'Cập nhật kết quả kinh doanh' }],
+  [slug.report.edit]: [
+    { name: 'Cập nhật kết quả kinh doanh', slug: slug.report.list },
+    { name: 'Cập nhật dữ liệu excel' }
+  ],
   // Chuyến công tác TRIP
   [slug.trip.list]: [{ name: 'Chuyến công tác' }]
 }

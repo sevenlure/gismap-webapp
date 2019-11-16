@@ -2,8 +2,8 @@
   "name": "with-ant-design-less",
   "version": "1.0.0",
   "scripts": {
-    "dev": "isDev=true webpack-dashboard next",
-    "dev2": "isDev=true next",
+    "dev": "isDev=true next",
+    "dev2": "isDev=true webpack-dashboard next",
     "build": "next build",
     "start": "NODE_ENV=production PORT=3300 node server.js",
     "withPm2": "pm2 start --name NPRwork-ADMIN npm -- start",
@@ -70,7 +70,6 @@
     "eslint-config-prettier": "^6.0.0",
     "eslint-plugin-prettier": "^3.1.0",
     "eslint-plugin-react": "^7.14.2",
-    "prettier": "^1.18.2",
-    "webpack-dashboard": "^3.2.0"
+    "prettier": "^1.18.2"
   }
 }

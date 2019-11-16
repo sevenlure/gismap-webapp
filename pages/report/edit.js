@@ -2,22 +2,14 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import styled from 'styled-components'
 import DefaultLayout from 'src/layout/default'
-import { Skeleton, message } from 'antd'
-import organizationApi from 'src/api/organizationApi'
-import { getInfoErrorfetch } from 'src/constant/funcAixos.js'
-
-import { get as _get } from 'lodash-es'
+import { Skeleton } from 'antd'
+// import organizationApi from 'src/api/organizationApi'
+// import { getInfoErrorfetch } from 'src/constant/funcAixos.js'
+import ReactDataSheet from 'react-datasheet'
+// import { get as _get } from 'lodash-es'
 import { connect } from 'react-redux'
-import {
-  setBreadCrumb,
-  updateKeyPath,
-  getDepartment,
-  isLoadedDanhMuc,
-  updateBackgroundColor
-} from 'src/redux/actions/generalAction'
+import { setBreadCrumb, updateKeyPath, updateBackgroundColor } from 'src/redux/actions/generalAction'
 import slug, { breadcrumb } from 'src/routes/index'
-import OrganizationForm from 'src/containers/organization/form.js'
-import Router from 'next/router'
 
 const PageReportEditWrapper = styled.div`
   display: flex;
@@ -33,8 +25,6 @@ const mapStateToProps = () => ({})
 const mapDispatchToProps = {
   setBreadCrumb,
   updateKeyPath,
-  getDepartment,
-  isLoadedDanhMuc,
   updateBackgroundColor
 }
 
@@ -46,73 +36,48 @@ class PageReportEdit extends React.Component {
   static propTypes = {
     setBreadCrumb: PropTypes.func,
     updateKeyPath: PropTypes.func,
-    getDepartment: PropTypes.func,
-    isLoadedDanhMuc: PropTypes.func,
     updateBackgroundColor: PropTypes.func
   }
   state = {
     isLoading: true,
-    dataSource: null
-  }
-
-  getInitial = async () => {
-    try {
-      const res = await organizationApi.getInfo()
-      if (res.status === 200) {
-        this.setState({
-          dataSource: _get(res, 'data', [])
-        })
-      }
-    } catch (ex) {
-      const { response } = ex
-      // console.log('catch', response)
-      getInfoErrorfetch(response)
-    } finally {
-      this.setState({
-        isLoading: false
-      })
-    }
+    grid: [
+      [
+        { value: 'Column 1', readOnly: true },
+        { value: 'Column 2', readOnly: true },
+        { value: 'Column 3', readOnly: true },
+        { value: 'Column 4', readOnly: true },
+        { value: 'Column 5', readOnly: true }
+      ],
+      [{ readOnly: true, value: 1 }, { value: 1 }, { value: 3 }, { value: 3 }, { value: 3 }],
+      [{ readOnly: true, value: 2 }, { value: 2 }, { value: 4 }, { value: 4 }, { value: 4 }],
+      [{ readOnly: true, value: 3 }, { value: 1 }, { value: 3 }, { value: 3 }, { value: 3 }],
+      [{ readOnly: true, value: 4 }, { value: 2 }, { value: 4 }, { value: 4 }, { value: 4 }]
+    ]
   }
 
   componentDidMount = async () => {
-    const pathPage = slug.manager.organization.edit
+    const pathPage = slug.report.edit
     this.props.updateBackgroundColor('#fff')
     this.props.setBreadCrumb(breadcrumb[pathPage])
     this.props.updateKeyPath([pathPage])
-    this.getInitial()
-    this.props.isLoadedDanhMuc(false)
-    await Promise.all([this.props.getDepartment()])
-      .then(() => {
-        this.props.isLoadedDanhMuc(true)
-      })
-      .catch(e => {
-        console.log(e, 'e')
-      })
-  }
-  hanldeOnSubmit = async values => {
-    // console.log('hanldeOnSubmit', values)
-    try {
-      const res = await organizationApi.updateInfo(values)
-      if (res.status === 200) {
-        message.success('Cập nhật thành công!')
-        Router.push(slug.manager.organization.base)
-      }
-    } catch (ex) {
-      console.log(ex)
-      const { response } = ex
-      // console.log('catch', response)
-      getInfoErrorfetch(response)
-    }
   }
 
   render() {
     // console.log('render', this.state.dataSource)
     return (
       <PageReportEditWrapper>
-        {this.state.isLoading && <Skeleton paragraph={{ rows: 7 }} />}
-        {!this.state.isLoading && (
-          <OrganizationForm onSubmit={this.hanldeOnSubmit} initialValue={this.state.dataSource} />
-        )}
+        {/* {this.state.isLoading && <Skeleton paragraph={{ rows: 7 }} />} */}
+        <ReactDataSheet
+          data={this.state.grid}
+          valueRenderer={cell => cell.value}
+          onCellsChanged={changes => {
+            const grid = this.state.grid.map(row => [...row])
+            changes.forEach(({ cell, row, col, value }) => {
+              grid[row][col] = { ...grid[row][col], value }
+            })
+            this.setState({ grid })
+          }}
+        />
       </PageReportEditWrapper>
     )
   }
