@@ -59,13 +59,13 @@
     "redux-persist": "^5.10.0",
     "redux-thunk": "^2.1.0",
     "styled-components": "^4.3.2",
-    "webpack-strip": "^0.1.0"
+    "webpack-strip": "^0.1.0",
+    "babel-plugin-module-resolver": "^3.2.0"
   },
   "license": "ISC",
   "devDependencies": {
     "@babel/plugin-proposal-decorators": "^7.4.4",
     "babel-eslint": "^10.0.2",
-    "babel-plugin-module-resolver": "^3.2.0",
     "eslint": "^6.0.1",
     "eslint-config-prettier": "^6.0.0",
     "eslint-plugin-prettier": "^3.1.0",
