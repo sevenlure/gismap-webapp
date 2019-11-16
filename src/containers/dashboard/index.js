@@ -174,6 +174,7 @@ class DashBoard extends React.Component {
         .weeks(week)
         .year(year)
     }
+    
 
     return (
       <DashBoardWrapper>
