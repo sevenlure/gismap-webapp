@@ -27,7 +27,10 @@ const mapDispatchToProps = {
   updateBackgroundColor
 }
 
-@connect(mapStateToProps, mapDispatchToProps)
+@connect(
+  mapStateToProps,
+  mapDispatchToProps
+)
 class ReportPage extends React.Component {
   static propTypes = {
     setBreadCrumb: PropTypes.func,
