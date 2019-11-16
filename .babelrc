@@ -2,15 +2,19 @@
   "presets": ["next/babel"],
   "plugins": [
     [
-      "import", {
+      "import",
+      {
         "libraryName": "antd",
         "style": true
       }
     ],
-    ["module-resolver", {
-      "root": ["./"],
-    }],
+    [
+      "module-resolver",
+      {
+        "root": ["./"]
+      }
+    ],
     ["@babel/plugin-proposal-decorators", { "legacy": true }],
-    ["styled-components", { "ssr": true }],
+    ["styled-components", { "ssr": true }]
   ]
 }
