@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "scripts": {
     "dev": "isDev=true webpack-dashboard next",
+    "dev2": "isDev=true next",
     "build": "next build",
     "start": "NODE_ENV=production PORT=3300 node server.js",
     "withPm2": "pm2 start --name NPRwork-ADMIN npm -- start",
@@ -42,6 +43,7 @@
     "react": "^16.8.6",
     "react-addons-update": "^15.6.2",
     "react-copy-to-clipboard": "^5.0.1",
+    "react-datasheet": "^1.4.0",
     "react-dom": "^16.8.6",
     "react-file-viewer": "^1.1.0",
     "react-highcharts": "^16.1.0",

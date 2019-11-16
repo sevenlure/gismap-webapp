@@ -11,6 +11,11 @@ import { getInfoErrorfetch } from 'src/constant/funcAixos.js'
 import moment from 'moment'
 
 const DashBoardWrapper = styled.div`
+  .title {
+    text-align: center;
+    background: #fff;
+    padding: 8px;
+  }
   .card {
     background: #fff;
     margin-right: 10px;
@@ -26,27 +31,52 @@ class DashBoard extends React.Component {
     isLoading: true,
     dataSource: [],
     year: moment().year(),
-    week: moment().week()
+    week: moment().weeks(),
+    totalDeep: 5
   }
-  componentDidMount = async () => {
+  componentDidMount = () => {
+    // console.log(this.state, 'componentDidMount')
+    this.getDoanhThuGanNhat()
+  }
+
+  getDoanhThuGanNhat = async () => {
     try {
       const res = await reportApi.getListWithDepartment({
         year: this.state.year,
         week: this.state.week
       })
       if (res.status === 200) {
-        this.setState({
-          dataSource: _get(res, 'data', [])
-        })
+        const countData = _get(res, 'data', [])
+        if (countData.length > 0) {
+          this.setState({
+            dataSource: _get(res, 'data', []),
+            isLoading: false
+          })
+        } else if (this.state.totalDeep > 0) {
+          this.setState(
+            {
+              year: moment()
+                .subtract(1, 'weeks')
+                .year(),
+              week: moment()
+                .subtract(1, 'weeks')
+                .weeks(),
+              totalDeep: this.state.totalDeep - 1
+            },
+            () => {
+              this.getDoanhThuGanNhat()
+            }
+          )
+        } else {
+          this.setState({
+            isLoading: false
+          })
+        }
       }
     } catch (ex) {
       const { response } = ex
       // console.log('catch', response)
       getInfoErrorfetch(response)
-    } finally {
-      this.setState({
-        isLoading: false
-      })
     }
   }
 
@@ -73,7 +103,7 @@ class DashBoard extends React.Component {
         pointFormat: '{series.name}: <b>{point.y} VNĐ</b>'
       },
       xAxis: {
-        categories: ['Tuần 44 năm 2019']
+        categories: [`Tuần ${this.state.week} năm ${this.state.year}`]
       },
 
       series: seriesData
@@ -105,7 +135,7 @@ class DashBoard extends React.Component {
         }
       },
       xAxis: {
-        categories: ['Tuần 44 năm 2019']
+        categories: [`Tuần ${this.state.week} năm ${this.state.year}`]
       },
       chart: {
         type: 'pie'
@@ -136,9 +166,22 @@ class DashBoard extends React.Component {
   }
 
   render() {
-    console.log(this.state.dataSource, 'dataSource')
+    // console.log(this.state.dataSource, 'dataSource')
+    const { year, week } = this.state
+    let date
+    if (year && week) {
+      date = moment()
+        .weeks(week)
+        .year(year)
+    }
+
     return (
       <DashBoardWrapper>
+        <div className='title'>
+          <h2>{`Dữ liệu tuần ${week} (Từ ngày ${date.startOf('week').format('DD/MM')} đến ngày ${date
+            .endOf('week')
+            .format('DD/MM')})`}</h2>
+        </div>
         {this.state.isLoading && (
           <div className='card'>
             <Skeleton paragraph={{ rows: 7 }} />

@@ -7432,6 +7432,11 @@ react-data-grid@^5.0.5:
   resolved "https://registry.yarnpkg.com/react-data-grid/-/react-data-grid-5.0.5.tgz#529f5acd4750ae0461e9da66f9f30d6f597eed76"
   integrity sha512-OR4LDoOpN4yj3NexaxYFS2OEIYFUk2V5lascPTHgtTMwwkb163tEPqQSertkv2YAJu+YBzIm8epW8+UMip1LPw==
 
+react-datasheet@^1.4.0:
+  version "1.4.0"
+  resolved "https://registry.yarnpkg.com/react-datasheet/-/react-datasheet-1.4.0.tgz#da251307137a12de3b113c0a1ef62baf114bc3fc"
+  integrity sha512-MiBYQtvZYAEWN/2gJS84SEL4jNAOIJjdFI5i7AZ7BIx06p2PbjUMN7wgT9QTlhrfgFHAfM5tfgBA6ibDLMyVvA==
+
 react-dom@^16.8.6:
   version "16.8.6"
   resolved "https://registry.yarnpkg.com/react-dom/-/react-dom-16.8.6.tgz#71d6303f631e8b0097f56165ef608f051ff6e10f"

@@ -28,7 +28,6 @@ import { DeleteGroup } from 'src/api/GroupApi'
 import { getInfoErrorfetch } from 'src/constant/funcAixos.js'
 import Button from 'src/components/elements/button'
 
-
 const ManagerPolicyWrapper = styled.div``
 
 const mapStateToProps = () => ({})
