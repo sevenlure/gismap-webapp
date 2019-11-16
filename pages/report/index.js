@@ -2,7 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import styled from 'styled-components'
 import DefaultLayout from 'src/layout/default'
-import { Table, Icon, Input, Skeleton, Modal, Tooltip } from 'antd'
+import { Table, Icon, Input, Skeleton, Modal, Tooltip, Affix } from 'antd'
 import reportApi from 'src/api/reportApi'
 import { getInfoErrorfetch } from 'src/constant/funcAixos.js'
 import { get as _get } from 'lodash-es'
@@ -15,7 +15,7 @@ import moment from 'moment'
 import ReportPageSearch from 'src/containers/report/search'
 import EditRevenues from 'src/containers/revenue/edit.js'
 import Button from 'src/components/elements/button'
-
+import Link from 'next/link'
 
 const RepportWrapper = styled.div``
 
@@ -47,7 +47,8 @@ class ReportPage extends React.Component {
     searchText: '',
     isEdit: false,
     editData: null,
-    rule: {}
+    rule: {},
+    isExportExcel: false
   }
 
   getDataSource = async () => {
@@ -199,7 +200,8 @@ class ReportPage extends React.Component {
       getInfoErrorfetch(response)
     } finally {
       this.setState({
-        isLoading: false
+        isLoading: false,
+        isExportExcel: true
       })
     }
   }
@@ -245,6 +247,18 @@ class ReportPage extends React.Component {
             }}
           />
         </Modal>
+        <Clearfix height={32} />
+        {/* <Affix offsetBottom={20}>
+          {this.state.isExportExcel && (
+            <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
+              <Link href={slug.report.edit} as={`${slug.report.edit}`}>
+                <Button type='primary' icon='export'>
+                  Export excel
+                </Button>
+              </Link>
+            </div>
+          )}
+        </Affix> */}
       </RepportWrapper>
     )
   }

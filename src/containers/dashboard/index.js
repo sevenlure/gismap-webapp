@@ -1,6 +1,7 @@
 import React from 'react'
 // import PropTypes from 'prop-types'
 import { Row, Col, Skeleton } from 'antd'
+import Button from 'src/components/elements/button'
 import Clearfix from 'src/components/elements/clearfix'
 import styled from 'styled-components'
 import ReactHighcharts from 'react-highcharts'
@@ -174,7 +175,6 @@ class DashBoard extends React.Component {
         .weeks(week)
         .year(year)
     }
-    
 
     return (
       <DashBoardWrapper>
@@ -210,6 +210,7 @@ class DashBoard extends React.Component {
             </div>
           </Col>
         </Row>
+        
       </DashBoardWrapper>
     )
   }
