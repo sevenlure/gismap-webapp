@@ -123,7 +123,12 @@ class TripPage extends React.Component {
       },
       {
         title: 'Người đăng ký',
-        dataIndex: 'OpenBy.FullName'
+        // dataIndex: 'OpenBy.FullName',
+        render: (value, record) => {
+          const fullName = _get(record, 'OpenBy.FullName', '')
+          const maNV = _get(record, 'OpenBy.MaNV', '')
+          return <div>{`${maNV ? maNV + ' - ' : ''}${fullName}`}</div>
+        }
       },
       {
         title: 'Người duyệt',

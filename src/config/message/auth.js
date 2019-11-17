@@ -2,6 +2,7 @@ const loginFail = 'Thông tin đăng nhập không chính xác'
 const updateFail = 'Cập nhật không thành công'
 const register = {
   fullName: 'Vui lòng nhập tên nhân sự',
+  maNV: 'Vui lòng nhập mã nhân viên',
   email: 'Vui lòng nhập email',
   emailFormat: 'Dữ liệu nhập không đúng định dạng email',
   phone: 'Vui lòng nhập số điện thoại',

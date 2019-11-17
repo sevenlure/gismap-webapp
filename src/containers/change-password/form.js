@@ -13,7 +13,7 @@ const userMess = authMess.register
 
 const UserFormWrapper = styled.div`
   flex: 1;
-  .form--button {
+  .form--button {s
     text-align: center;
     height: 50px;
     button {

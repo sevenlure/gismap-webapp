@@ -20,10 +20,7 @@ const mapDispatchToProps = {
   userLogin,
   updateUserInfo
 }
-@connect(
-  () => ({}),
-  mapDispatchToProps
-)
+@connect(() => ({}), mapDispatchToProps)
 class GroupPolicyForm extends React.Component {
   static propTypes = {
     Departmentkey: PropTypes.string,

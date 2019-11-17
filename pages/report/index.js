@@ -81,6 +81,10 @@ class ReportPage extends React.Component {
   getColumn = () => {
     return [
       {
+        title: 'Mã NV',
+        dataIndex: 'MaNV'
+      },
+      {
         title: 'Họ tên',
         dataIndex: 'FullName',
         align: 'center',

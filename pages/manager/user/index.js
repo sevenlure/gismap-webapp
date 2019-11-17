@@ -15,7 +15,6 @@ import { getFilePublic } from 'src/api/updateFileApi.js'
 import ChangePassword from 'src/containers/change-password/index'
 import Button from 'src/components/elements/button'
 
-
 // import { DateTime } from 'luxon'
 // import { DATE_FORMAT_LUXON } from 'src/config/format.js'
 
@@ -102,6 +101,10 @@ class RealEstateProject extends React.Component {
             return null
           }
         }
+      },
+      {
+        title: 'Mã NV',
+        dataIndex: 'MaNV'
       },
       {
         title: 'Họ tên',

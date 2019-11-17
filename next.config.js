@@ -8,6 +8,7 @@ const path = require('path')
 const CompressionPlugin = require('compression-webpack-plugin')
 const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin')
 const WebpackStrip = require('webpack-strip')
+const withCSS = require('@zeit/next-css')
 
 const DashboardPlugin = process.env.isDev ? require('webpack-dashboard/plugin') : null
 // const env = require("./env.json")
@@ -92,10 +93,21 @@ const nextConfig = {
     GOOGLE_MAP_API_KEY: env.GOOGLE_MAP_API_KEY
   }
 }
-
+// module.exports = withCSS({
+//   cssLoaderOptions: {
+//     url: false
+//   }
+// })
 module.exports = withPlugins(
   // MARK  multi plugin nextjs
   [
+    [withCSS, {
+      cssModules: false, // setting to false to prevent any extra stuff added to the class name apart of localIdentName
+      cssLoaderOptions: {
+        importLoaders: 1,
+        localIdentName: "[name]__[local]___[hash:base64:5]", // this was taken from amplify ui webpack config
+      }
+    }],
     [
       withLess,
       {
@@ -109,3 +121,5 @@ module.exports = withPlugins(
   ],
   nextConfig
 )
+
+

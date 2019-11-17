@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import styled from 'styled-components'
-import { Form, Input, Affix, Row, Col, DatePicker } from 'antd'
+import { Form, Input, InputNumber, Affix, Row, Col, DatePicker } from 'antd'
 import Button from 'src/components/elements/button'
 import { connect } from 'react-redux'
 import { userLogin } from 'src/redux/actions/authAction'
@@ -56,7 +56,7 @@ class UserForm extends React.Component {
   }
 
   state = {
-    pickFlieds: ['Email', 'FullName', 'Birthday', 'PosittionName', 'Avatar', 'Phone']
+    pickFlieds: ['Email', 'MaNV', 'FullName', 'Birthday', 'PosittionName', 'Avatar', 'Phone']
   }
 
   handleSubmit = e => {
@@ -68,10 +68,10 @@ class UserForm extends React.Component {
         const optionDepartment = _get(values, 'optionDepartment', [])
         let result = {}
         if (optionDepartment[0]) {
-          result.Department = optionDepartment[0] ? optionDepartment[0] : null
-          result.Group = optionDepartment[1] ? optionDepartment[1] : null
+          result.Department = optionDepartment[0] ? optionDepartment[0] : undefined
+          result.Group = optionDepartment[1] ? optionDepartment[1] : undefined
         }
-        console.log(result, 'result')
+        // console.log(result, 'result')
 
         if (this.props.onSubmit) {
           this.props.onSubmit({
@@ -117,12 +117,23 @@ class UserForm extends React.Component {
         <Form onSubmit={this.handleSubmit}>
           <Row gutter={8}>
             <Col span={12}>
+              <Form.Item label='Mã NV'>
+                {getFieldDecorator('MaNV', { rules: [{ required: true, message: userMess.maNV }] })(
+                  <Input disabled={this.props.isEdit ? true : false} size='large' placeholder='Mã NV *' />
+                )}
+              </Form.Item>
+            </Col>
+            <Col span={12}>
               <Form.Item label='Tên nhân sự'>
                 {getFieldDecorator('FullName', { rules: [{ required: true, message: userMess.fullName }] })(
                   <Input size='large' placeholder='Tên nhân sự *' />
                 )}
               </Form.Item>
             </Col>
+
+          </Row>
+
+          <Row gutter={8}>
             <Col span={12}>
               <Form.Item label='Email'>
                 {getFieldDecorator('Email', {
@@ -130,24 +141,21 @@ class UserForm extends React.Component {
                 })(<Input size='large' placeholder='Email *' />)}
               </Form.Item>
             </Col>
-          </Row>
-
-          <Row gutter={8}>
-            <Col span={12}>
+            <Col span={6}>
               <Form.Item label='Số điện thoại'>
                 {getFieldDecorator('Phone', {
                   rules: [
                     { required: true, message: userMess.phone },
                     { min: 10, max: 13, message: userMess.phoneLenght }
                   ]
-                })(<Input size='large' placeholder='Số điện thoại *' />)}
+                })(<Input style={{ width: '100%' }} size='large' placeholder='Số điện thoại *' />)}
               </Form.Item>
             </Col>
-            <Col span={12}>
+            <Col span={6}>
               <Form.Item label='Năm sinh'>
                 {getFieldDecorator('Birthday', {
                   // initialValue: moment()
-                })(<DatePicker size='large' placeholder='Năm sinh' format={DATE_FORMAT} />)}
+                })(<DatePicker style={{ width: '100%' }} size='large' placeholder='Năm sinh' format={DATE_FORMAT} />)}
               </Form.Item>
             </Col>
           </Row>

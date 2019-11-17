@@ -33,7 +33,7 @@ class DashBoard extends React.Component {
     dataSource: [],
     year: moment().year(),
     week: moment().weeks(),
-    totalDeep: 5
+    totalDeep: 1
   }
   componentDidMount = () => {
     // console.log(this.state, 'componentDidMount')
@@ -53,16 +53,16 @@ class DashBoard extends React.Component {
             dataSource: _get(res, 'data', []),
             isLoading: false
           })
-        } else if (this.state.totalDeep > 0) {
+        } else if (this.state.totalDeep < 5) {
           this.setState(
             {
               year: moment()
-                .subtract(1, 'weeks')
+                .subtract(this.state.totalDeep, 'weeks')
                 .year(),
               week: moment()
-                .subtract(1, 'weeks')
+                .subtract(this.state.totalDeep, 'weeks')
                 .weeks(),
-              totalDeep: this.state.totalDeep - 1
+              totalDeep: this.state.totalDeep + 1
             },
             () => {
               this.getDoanhThuGanNhat()
@@ -210,7 +210,6 @@ class DashBoard extends React.Component {
             </div>
           </Col>
         </Row>
-        
       </DashBoardWrapper>
     )
   }
