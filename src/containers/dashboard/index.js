@@ -1,7 +1,7 @@
 import React from 'react'
 // import PropTypes from 'prop-types'
 import { Row, Col, Skeleton } from 'antd'
-import Button from 'src/components/elements/button'
+// import Button from 'src/components/elements/button'
 import Clearfix from 'src/components/elements/clearfix'
 import styled from 'styled-components'
 import ReactHighcharts from 'react-highcharts'

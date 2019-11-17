@@ -13,8 +13,8 @@ const userMess = authMess.register
 
 const UserFormWrapper = styled.div`
   flex: 1;
-  .form--button {s
-    text-align: center;
+  .form--button {
+    stext-align: center;
     height: 50px;
     button {
       max-width: 250px;
@@ -39,10 +39,7 @@ const mapDispatchToProps = {
   userLogin,
   updateUserInfo
 }
-@connect(
-  () => ({}),
-  mapDispatchToProps
-)
+@connect(() => ({}), mapDispatchToProps)
 class UserForm extends React.Component {
   static propTypes = {
     form: PropTypes.any,

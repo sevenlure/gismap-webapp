@@ -1,4 +1,4 @@
-root: true 
+root: true
 
 env: # https://eslint.org/docs/user-guide/configuring#specifying-environments
   es6: true
@@ -10,7 +10,7 @@ plugins:
   - react
   - prettier
 
-extends: 
+extends:
   - eslint:recommended
   - plugin:prettier/recommended
   - plugin:react/recommended
@@ -20,13 +20,11 @@ rules:
 
 ###--------------------------------------------
 
-
-
 overrides:
   - files:
-    - "*.js"
-    - "*.jsx"
-    parser: "babel-eslint"
+      - '*.js'
+      - '*.jsx'
+    parser: 'babel-eslint'
     parserOptions:
       sourceType: module
       ecmaVersion: 2015
