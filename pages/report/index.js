@@ -254,7 +254,7 @@ class ReportPage extends React.Component {
             <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
               <Link href={slug.report.edit} as={`${slug.report.edit}`}>
                 <Button type='primary' icon='export'>
-                  Export excel
+                  Import excel
                 </Button>
               </Link>
             </div>
