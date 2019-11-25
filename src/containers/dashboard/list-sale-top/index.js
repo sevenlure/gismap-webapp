@@ -11,6 +11,7 @@ import { getFormatNumber } from 'src/config/format.js'
 
 const ListSaleTopWrapper = styled.div`
   flex: 1;
+  padding: 8px;
 `
 
 class ListSaleTop extends React.Component {
@@ -82,19 +83,23 @@ class ListSaleTop extends React.Component {
   render() {
     return (
       <ListSaleTopWrapper>
-        <h3>Nhân viên kinh doanh suất sắc</h3>
-        {this.state.isLoading && <Skeleton paragraph={{ rows: 7 }} />}
-        {!this.state.isLoading && (
-          <div>
-            <Clearfix height={8} />
-            <Table
-              rowKey={'_id'}
-              size='small'
-              bordered
-              dataSource={this.state.dataSource}
-              columns={this.getColums()}
-              pagination={{ position: 'bottom' }}
-            />
+        {this.state.dataSource && this.state.dataSource.length > 0 && (
+          <div style={{ background: '#fff' }}>
+            <h3>Nhân viên kinh doanh suất sắc</h3>
+            {this.state.isLoading && <Skeleton paragraph={{ rows: 7 }} />}
+            {!this.state.isLoading && (
+              <div>
+                <Clearfix height={8} />
+                <Table
+                  rowKey={'_id'}
+                  size='small'
+                  bordered
+                  dataSource={this.state.dataSource}
+                  columns={this.getColums()}
+                  pagination={{ position: 'bottom' }}
+                />
+              </div>
+            )}
           </div>
         )}
       </ListSaleTopWrapper>

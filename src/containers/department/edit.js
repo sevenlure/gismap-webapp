@@ -64,7 +64,7 @@ class GroupPolicyEdit extends React.Component {
       <PolicyEditWrapper>
         <div className='modal--title'>
           <h3 style={{ marginBottom: 0 }}>Cập nhật phòng ban</h3>
-          <Button style={{ width: 88 }} onClick={this.props.onCancel} size='large' type='default'>
+          <Button style={{ width: 88, float: 'right' }} onClick={this.props.onCancel} size='large' type='default'>
             Đóng
           </Button>
         </div>

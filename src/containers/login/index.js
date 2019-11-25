@@ -57,10 +57,7 @@ const mapDispatchToProps = {
   userLogin,
   updateUserInfo
 }
-@connect(
-  mapStateToProps,
-  mapDispatchToProps
-)
+@connect(mapStateToProps, mapDispatchToProps)
 class Login extends React.Component {
   static propTypes = {
     form: PropTypes.any,
@@ -139,7 +136,7 @@ class Login extends React.Component {
       <LoginWrapper>
         <div className='modal--title'>
           <h3 style={{ marginBottom: 0 }}>Đăng nhập</h3>
-          <Button style={{ width: 88 }} onClick={this.props.onCancel} size='large' type='default'>
+          <Button style={{ width: 88, float: 'right' }} onClick={this.props.onCancel} size='large' type='default'>
             Đóng
           </Button>
         </div>

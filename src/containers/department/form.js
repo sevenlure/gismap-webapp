@@ -19,10 +19,7 @@ const mapDispatchToProps = {
   userLogin,
   updateUserInfo
 }
-@connect(
-  () => ({}),
-  mapDispatchToProps
-)
+@connect(() => ({}), mapDispatchToProps)
 class GroupPolicyForm extends React.Component {
   static propTypes = {
     Departmentkey: PropTypes.string,
@@ -77,12 +74,13 @@ class GroupPolicyForm extends React.Component {
           <Form.Item label='Tên phòng ban'>
             {getFieldDecorator('Name', {
               rules: [{ required: true, message: errorMessage.name }]
-            })(<Input disabled={this.state.isDisable} placeholder='Tên nhóm chính sách' />)}
+            })(<Input disabled={this.state.isDisable} placeholder='Tên phòng ban' />)}
           </Form.Item>
           <Form.Item label='Trưởng phòng'>
-            {getFieldDecorator('HeadPerson', {})(
-              <SelectDepartment Departmentkey={this.props.Departmentkey} placeholder='Nhập trưởng phòng' />
-            )}
+            {getFieldDecorator(
+              'HeadPerson',
+              {}
+            )(<SelectDepartment Departmentkey={this.props.Departmentkey} placeholder='Nhập trưởng phòng' />)}
           </Form.Item>
           <Form.Item label='Thứ tự hiển thị'>
             {getFieldDecorator('Order', {

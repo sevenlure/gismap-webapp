@@ -60,7 +60,7 @@ class GroupDepartmentEdit extends React.Component {
       <PolicyCreateWrapper>
         <div className='modal--title'>
           <h3 style={{ marginBottom: 0 }}>Thêm nhóm</h3>
-          <Button style={{ width: 88 }} onClick={this.props.onCancel} size='large' type='default'>
+          <Button style={{ width: 88, float: 'right' }} onClick={this.props.onCancel} size='large' type='default'>
             Đóng
           </Button>
         </div>

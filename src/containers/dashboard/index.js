@@ -18,7 +18,6 @@ const DashBoardWrapper = styled.div`
     padding: 8px;
   }
   .card {
-    background: #fff;
     margin-right: 10px;
     padding: 8px;
   }
@@ -184,19 +183,19 @@ class DashBoard extends React.Component {
             .format('DD/MM')})`}</h2>
         </div>
         {this.state.isLoading && (
-          <div className='card'>
+          <div className='card' style={{ background: '#fff' }}>
             <Skeleton paragraph={{ rows: 7 }} />
           </div>
         )}
         {!this.state.isLoading && (
           <Row>
             <Col span={12}>
-              <div className='card'>
+              <div className='card' style={{ background: '#fff' }}>
                 <ReactHighcharts config={this.getConfigColumns()}></ReactHighcharts>
               </div>
             </Col>
             <Col span={12}>
-              <div className='card'>
+              <div className='card' style={{ background: '#fff' }}>
                 <ReactHighcharts config={this.getConfigPie()}></ReactHighcharts>
               </div>
             </Col>
@@ -205,9 +204,7 @@ class DashBoard extends React.Component {
         <Clearfix height={16} />
         <Row gutter={8}>
           <Col span={24}>
-            <div className='card'>
-              <ListSaleTop />
-            </div>
+            <ListSaleTop />
           </Col>
         </Row>
       </DashBoardWrapper>
