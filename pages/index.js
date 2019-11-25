@@ -21,10 +21,7 @@ const mapDispatchToProps = {
   updateBackgroundColor
 }
 
-@connect(
-  mapStateToProps,
-  mapDispatchToProps
-)
+@connect(mapStateToProps, mapDispatchToProps)
 @windowSize
 class Index extends React.Component {
   static propTypes = {
