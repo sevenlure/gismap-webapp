@@ -38,10 +38,7 @@ const mapDispatchToProps = {
   updateBackgroundColor
 }
 
-@connect(
-  mapStateToProps,
-  mapDispatchToProps
-)
+@connect(mapStateToProps, mapDispatchToProps)
 @windowSize
 class ManagerManagerList extends React.Component {
   static propTypes = {

@@ -42,10 +42,7 @@ const mapDispatchToProps = {
   userLogin,
   updateUserInfo
 }
-@connect(
-  () => ({}),
-  mapDispatchToProps
-)
+@connect(() => ({}), mapDispatchToProps)
 class UserForm extends React.Component {
   static propTypes = {
     form: PropTypes.any,
@@ -130,14 +127,16 @@ class UserForm extends React.Component {
                 )}
               </Form.Item>
             </Col>
-
           </Row>
 
           <Row gutter={8}>
             <Col span={12}>
               <Form.Item label='Email'>
                 {getFieldDecorator('Email', {
-                  rules: [{ required: true, message: userMess.email }, { type: 'email', message: userMess.emailFormat }]
+                  rules: [
+                    { required: true, message: userMess.email },
+                    { type: 'email', message: userMess.emailFormat }
+                  ]
                 })(<Input size='large' placeholder='Email *' />)}
               </Form.Item>
             </Col>
@@ -146,7 +145,7 @@ class UserForm extends React.Component {
                 {getFieldDecorator('Phone', {
                   rules: [
                     { required: true, message: userMess.phone },
-                    { min: 10, max: 13, message: userMess.phoneLenght }
+                    { min: 9, max: 11, message: userMess.phoneLenght }
                   ]
                 })(<Input style={{ width: '100%' }} size='large' placeholder='Số điện thoại *' />)}
               </Form.Item>

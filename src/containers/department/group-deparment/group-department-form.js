@@ -23,10 +23,7 @@ const mapDispatchToProps = {
   userLogin,
   updateUserInfo
 }
-@connect(
-  mapStateToProps,
-  mapDispatchToProps
-)
+@connect(mapStateToProps, mapDispatchToProps)
 class GroupDepartmentForm extends React.Component {
   static propTypes = {
     form: PropTypes.any,
