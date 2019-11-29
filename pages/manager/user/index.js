@@ -51,12 +51,9 @@ class RealEstateProject extends React.Component {
 
   getDataSource = async () => {
     try {
-      const res = await userApi.getList({
-        page: 1,
-        pageSize: 50
-      })
+      const res = await userApi.getAll()
       if (res.status === 200) {
-        const listData = _sortBy(_get(res, 'data.list', []), item => {
+        const listData = _sortBy(_get(res, 'data', []), item => {
           return _get(item, 'Department.Name', '')
         })
 
