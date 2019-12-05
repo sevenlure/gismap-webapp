@@ -7,7 +7,7 @@ import LayoutDashboard from 'src/layout/dashboard'
 import windowSize from 'react-window-size'
 import { setBreadCrumb, updateKeyPath, updateBackgroundColor } from 'src/redux/actions/generalAction'
 import slug, { breadcrumb } from 'src/routes/index'
-import DashBoard from 'src/containers/dashboard'
+// import DashBoard from 'src/containers/dashboard'
 
 const WrapperIndex = styled.div`
   display: flex;
@@ -44,7 +44,8 @@ class Index extends React.Component {
   render() {
     return (
       <WrapperIndex windowWidth={this.props.windowWidth}>
-        <DashBoard />
+        {/* <DashBoard /> */}
+        dashboar
       </WrapperIndex>
     )
   }

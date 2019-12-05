@@ -1,6 +1,6 @@
 const slug = {
   basic: '/',
-  login: '/user/login',
+  login: '/auth/login',
   register: '/user/register',
   manager: {
     basic: '/manager',

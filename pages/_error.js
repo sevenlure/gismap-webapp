@@ -1,11 +1,11 @@
 import React from 'react'
 import styled from 'styled-components'
-// import { Button } from 'antd'
+import { Button } from 'antd'
 import Clearfix from 'src/components/elements/clearfix'
 import EmptyLayout from 'src/layout/empty'
 import Router from 'next/router'
 import slug from 'src/routes'
-import Button from 'src/components/elements/button'
+// import Button from 'src/components/elements/button'
 
 const ErrorWrapper = styled.div`
   flex: 1;
@@ -24,7 +24,7 @@ class Error extends React.Component {
         <div>
           <img src='/static/images/404.svg/' />
         </div>
-        <Clearfix height={8} />
+        {/* <Clearfix height={8} /> */}
         <div>
           <h2>404</h2>
         </div>
@@ -33,14 +33,14 @@ class Error extends React.Component {
         </div>
         <Clearfix height={8} />
         <div>
-          <Button
+          {/* <Button
             type='primary'
             onClick={() => {
               Router.push(slug.basic)
             }}
           >
             Về trang chủ
-          </Button>
+          </Button> */}
         </div>
       </ErrorWrapper>
     )

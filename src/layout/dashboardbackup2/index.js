@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import Head from 'next/head'
 import styled from 'styled-components'
 import { Layout, Menu, Icon, Avatar } from 'antd'
-import hocProtectLogin from 'src/hoc/is-authenticated'
+import hocProtectLogin from './node_modules/src/hoc/is-authenticated'
 import { connect } from 'react-redux'
 import {
   updateKeyPath,
@@ -11,14 +11,14 @@ import {
   // getDepartment,
   getListUser,
   isLoadedDanhMuc
-} from 'src/redux/actions/generalAction'
+} from './node_modules/src/redux/actions/generalAction'
 // import pathLogo from 'icons/index.js'
 import { get as _get, last as _last, isEqual as _isEqual } from 'lodash-es'
 import { withRouter } from 'next/router'
 import windowSize from 'react-window-size'
 // import AvatarUser from 'src/containers/auth/avatar-user'
 import Router from 'next/router'
-import slug from 'src/routes'
+import slug from './node_modules/src/routes'
 import moment from 'moment'
 
 const { Header, Content, Footer, Sider } = Layout
@@ -108,7 +108,6 @@ class AppWithLayout extends React.Component {
   }
   componentDidMount = async () => {
     const { isAuthenticated } = this.props
-    console.log('isAuthenticated',isAuthenticated)
     if (!isAuthenticated) {
       Router.push(slug.login)
     } else {
@@ -153,6 +152,8 @@ class AppWithLayout extends React.Component {
         <Head>
           <title>Bất động sản</title>
         </Head>
+
+      
       </LayoutWrapper>
     )
   }

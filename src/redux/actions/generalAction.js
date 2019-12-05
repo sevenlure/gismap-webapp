@@ -1,5 +1,5 @@
 import { get as _get } from 'lodash-es'
-import DepartmentApi from 'src/api/DepartmentApi'
+// import DepartmentApi from 'src/api/DepartmentApi'
 import UserApi from 'src/api/userApi.js'
 
 // NOTE  THEM
@@ -21,20 +21,20 @@ export function isLoadedDanhMuc(isLoaded) {
     dispatch({ type: IS_LOADED_GENERAL_DANHMUC, payload: isLoaded })
   }
 }
-export function getDepartment() {
-  return async dispatch => {
-    let dataSource = []
-    try {
-      const res = await DepartmentApi.getAll({})
-      if (res.status) {
-        dataSource = _get(res, 'data', [])
-      }
-    } catch (ex) {
-      console.log('GET_GENERAL_LIST_DEPARTMENT', ex)
-    }
-    dispatch({ type: GET_GENERAL_LIST_DEPARTMENT, payload: dataSource })
-  }
-}
+// export function getDepartment() {
+//   return async dispatch => {
+//     let dataSource = []
+//     try {
+//       const res = await DepartmentApi.getAll({})
+//       if (res.status) {
+//         dataSource = _get(res, 'data', [])
+//       }
+//     } catch (ex) {
+//       console.log('GET_GENERAL_LIST_DEPARTMENT', ex)
+//     }
+//     dispatch({ type: GET_GENERAL_LIST_DEPARTMENT, payload: dataSource })
+//   }
+// }
 export function getListUser() {
   return async dispatch => {
     let dataSource = []

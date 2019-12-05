@@ -6,7 +6,7 @@ import Clearfix from 'src/components/elements/clearfix'
 import authApi from 'src/api/authApi'
 import { getInfoErrorfetch } from 'src/constant/funcAixos.js'
 import { connect } from 'react-redux'
-import Button from 'src/components/elements/button'
+import Button from 'src/components/elements/button/index'
 
 
 import { userLogin, userLogout } from 'src/redux/actions/authAction'
@@ -142,9 +142,9 @@ class Login extends React.Component {
                 marginBottom: 12
               }}
             >
-              PNRwork
+              Analytics Map
               {/* <Icon style={{ fontSize: '3rem', paddingLeft: 8 }} component={pathLogo.logo} /> */}
-              <Avatar src={'/static/images/logo.png'} size={64} />
+              <Avatar src={'/static/images/avatar_default.png'} size={48} />
             </Center>
             <Container>
               <Form.Item>
@@ -190,7 +190,7 @@ class Login extends React.Component {
                 </Button>
               </Form.Item>
             </Container>
-            <Footer style={{ textAlign: 'center' }}>PNRwork version 1.0.0</Footer>
+            <Footer style={{ textAlign: 'center' }}>Analytics Map version 1.0.0</Footer>
           </CardCenter>
         </Layout>
       </Form>
