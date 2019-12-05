@@ -34,18 +34,7 @@ class MyDocument extends Document {
         <Head>
           <link rel='shortcut icon' type='image/x-icon' href='/static/images/logo.png' />
           <link rel='stylesheet' href='/static/css/simplebar.min.css' />
-          <link
-            rel='stylesheet'
-            type='text/css'
-            href='https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.6.0/slick.min.css'
-          />
-          <link
-            rel='stylesheet'
-            type='text/css'
-            href='https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.6.0/slick-theme.min.css'
-          />
           <script src='/static/js/simplebar.min.js'></script>
-          <script src='/static/js/ckeditor.js'></script>
           <style>
             {`
             #__next {     

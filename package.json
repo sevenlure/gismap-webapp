@@ -5,15 +5,12 @@
     "dev": "isDev=true next",
     "dev2": "isDev=true webpack-dashboard next",
     "build": "next build",
-    "start": "NODE_ENV=production PORT=3300 node server.js",
-    "withPm2": "pm2 start --name NPRwork-ADMIN npm -- start",
+    "start": "NODE_ENV=production PORT=3400 node server.js",
+    "withPm2": "pm2 start --name GISMap-APP npm -- start",
     "deploy:setup:dev": "pm2 deploy ser_dev setup",
     "deploy:dev": "pm2 deploy ecosystem.config.js ser_dev"
   },
   "dependencies": {
-    "@ckeditor/ckeditor5-build-classic": "^15.0.0",
-    "@ckeditor/ckeditor5-react": "^1.1.3",
-    "@ckeditor/ckeditor5-upload": "^15.0.0",
     "@react-google-maps/api": "^1.7.5",
     "@svgr/webpack": "^4.3.2",
     "@zeit/next-css": "^1.0.1",

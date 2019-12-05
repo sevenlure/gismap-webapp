@@ -1,7 +1,7 @@
 module.exports = {
   apps: [
     {
-      name: 'NPRwork-ADMIN',
+      name: 'GISMap-APP',
       script: './server.js',
       env: {
         NODE_ENV: 'production',

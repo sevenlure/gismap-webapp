@@ -5,3 +5,4 @@ node_modules/
 shared/
 shared.diff
 yarn.lock
+package-lock.json
