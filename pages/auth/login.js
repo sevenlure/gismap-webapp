@@ -101,9 +101,11 @@ class Login extends React.Component {
               }, 500)
             })
             .catch(e => {
-              const { response } = e
-              // console.log('catch', response)
-              getInfoErrorfetch(response)
+              // const { response } = e
+              // // console.log('catch', response)
+              // getInfoErrorfetch(response)
+              console.log('day la loi', e)
+              message.error(e.message)
             })
             .finally(() => {
               this.setState({

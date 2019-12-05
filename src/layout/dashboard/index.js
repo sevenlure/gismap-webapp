@@ -12,17 +12,12 @@ import {
   getListUser,
   isLoadedDanhMuc
 } from 'src/redux/actions/generalAction'
-// import pathLogo from 'icons/index.js'
 import { get as _get, last as _last, isEqual as _isEqual } from 'lodash-es'
 import { withRouter } from 'next/router'
 import windowSize from 'react-window-size'
-// import AvatarUser from 'src/containers/auth/avatar-user'
 import Router from 'next/router'
 import slug from 'src/routes'
 import moment from 'moment'
-
-const { Header, Content, Footer, Sider } = Layout
-const { SubMenu } = Menu
 
 const LayoutWrapper = styled.div`
   display: flex;
@@ -84,10 +79,6 @@ class AppWithLayout extends React.Component {
     windowWidth: PropTypes.number,
     isAuthenticated: PropTypes.bool,
     token: PropTypes.string,
-    updateKeyPath: PropTypes.func,
-    updateSubMenu: PropTypes.func,
-    getDepartment: PropTypes.func,
-    getListUser: PropTypes.func,
     isLoadedDanhMuc: PropTypes.func,
     subMenu: PropTypes.array,
     keyPath: PropTypes.array,
@@ -108,7 +99,6 @@ class AppWithLayout extends React.Component {
   }
   componentDidMount = async () => {
     const { isAuthenticated } = this.props
-    console.log('isAuthenticated',isAuthenticated)
     if (!isAuthenticated) {
       Router.push(slug.login)
     } else {
@@ -124,35 +114,20 @@ class AppWithLayout extends React.Component {
 
   changePageName = () => {
     const item = _last(this.props.breadcrumb)
-    // console.log(item, '------item----')
     this.setState({
       pageName: item ? item.name : 'Trang chủ'
     })
   }
 
-  hanldeOnSelect = ({ keyPath }) => {
-    this.props.updateKeyPath(keyPath)
-    Router.push(keyPath[0])
-  }
-
-  handleOnOpenChange = openKeys => {
-    this.props.updateSubMenu(openKeys)
-  }
-
   render() {
-    const { children, windowWidth, isAuthenticated, subMenu, keyPath } = this.props
-    // console.log(keyPath, 'keyPath')
+    const { children, windowWidth, isAuthenticated } = this.props
     // NOTE  moible
-    const styleMobile = {
-      // position: 'absolute',
-      // display: 'block',
-      // height: '100%'
-    }
     return (
       <LayoutWrapper windowWidth={windowWidth}>
         <Head>
           <title>Bất động sản</title>
         </Head>
+        <div>{children}</div>
       </LayoutWrapper>
     )
   }

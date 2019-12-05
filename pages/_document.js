@@ -35,6 +35,7 @@ class MyDocument extends Document {
           <link rel='shortcut icon' type='image/x-icon' href='/static/images/logo.png' />
           <link rel='stylesheet' href='/static/css/simplebar.min.css' />
           <script src='/static/js/simplebar.min.js'></script>
+          <link rel="stylesheet" href="/static/leaflet.css"></link>
           <style>
             {`
             #__next {     
