@@ -20,15 +20,15 @@ const themeVariables = lessToJS(fs.readFileSync(path.resolve(__dirname, './asset
 const nextConfig = {
   webpack: (config, { isServer, dev }) => {
     if (dev) {
-      // config.module.rules.push({
-      //   test: /\.js$/,
-      //   exclude: ['/node_modules/', '/.next/'],
-      //   loader: 'eslint-loader',
-      //   options: {
-      //     emitWarning: true
-      //   }
-      // })
-      // config.plugins.push(new DashboardPlugin())
+      config.module.rules.push({
+        test: /\.js$/,
+        exclude: ['/node_modules/', '/.next/'],
+        loader: 'eslint-loader',
+        options: {
+          emitWarning: true
+        }
+      })
+      config.plugins.push(new DashboardPlugin())
     } else {
       config.module.rules.push({
         test: /\.js$/,

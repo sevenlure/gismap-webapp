@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-
+import {  Map, TileLayer, Popup, Marker } from 'react-leaflet'
 export default class SimpleExample extends Component {
   state = {
     lat: 51.505,
@@ -9,7 +9,7 @@ export default class SimpleExample extends Component {
   }
 
   componentDidMount() {
-    this.Leaflet = require('react-leaflet')
+    // this.Leaflet = require('react-leaflet')
     this.setState({ inBrowser: true })
   }
 
@@ -17,7 +17,7 @@ export default class SimpleExample extends Component {
     if (!this.state.inBrowser) {
       return null
     }
-    const { Map, TileLayer, Popup, Marker } = this.Leaflet
+    // const { Map, TileLayer, Popup, Marker } = this.Leaflet
     const position = [this.state.lat, this.state.lng]
     return (
       <Map
