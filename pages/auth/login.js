@@ -8,7 +8,6 @@ import { getInfoErrorfetch } from 'src/constant/funcAixos.js'
 import { connect } from 'react-redux'
 import Button from 'src/components/elements/button/index'
 
-
 import { userLogin, userLogout } from 'src/redux/actions/authAction'
 import { updateUserInfo } from 'src/redux/actions/generalAction.js'
 
@@ -47,10 +46,7 @@ const mapDispatchToProps = {
   userLogout
 }
 
-@connect(
-  mapStateToProps,
-  mapDispatchToProps
-)
+@connect(mapStateToProps, mapDispatchToProps)
 @Form.create()
 class Login extends React.Component {
   constructor(props) {
@@ -141,12 +137,13 @@ class Login extends React.Component {
               style={{
                 color: 'rgba(0,0,0,.45)',
                 fontSize: '1.5rem',
-                marginBottom: 12
+                marginBottom: 12,
+                lineHeight: 48
               }}
             >
-              Analytics Map
+              <span>Analytics Map</span>
               {/* <Icon style={{ fontSize: '3rem', paddingLeft: 8 }} component={pathLogo.logo} /> */}
-              <Avatar src={'/static/images/avatar_default.png'} size={48} />
+              <Avatar style={{ marginLeft: 8 }} src={'/static/images/avatar_default.png'} size={48} />
             </Center>
             <Container>
               <Form.Item>

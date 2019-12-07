@@ -18,9 +18,10 @@ import windowSize from 'react-window-size'
 import Router from 'next/router'
 import slug from 'src/routes'
 import moment from 'moment'
+import HeaderContainer from './header'
 
 const LayoutWrapper = styled.div`
-  display: flex;
+  /* display: flex;
   flex: 1;
 
   .sider-menu-logo {
@@ -61,7 +62,7 @@ const LayoutWrapper = styled.div`
         border-bottom: none;
       }
     }
-  }
+  } */
 `
 
 @connect(
@@ -127,7 +128,10 @@ class AppWithLayout extends React.Component {
         <Head>
           <title>Bất động sản</title>
         </Head>
-        <div>{children}</div>
+        <Layout.Header style={{ backgroundColor: 'white', padding: 0, height: 50 }}>
+          <HeaderContainer />
+        </Layout.Header>
+        <Layout.Content>{children}</Layout.Content>
       </LayoutWrapper>
     )
   }
