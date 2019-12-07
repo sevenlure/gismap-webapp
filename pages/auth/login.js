@@ -141,9 +141,9 @@ class Login extends React.Component {
                 lineHeight: 48
               }}
             >
-              <span>Analytics Map</span>
               {/* <Icon style={{ fontSize: '3rem', paddingLeft: 8 }} component={pathLogo.logo} /> */}
-              <Avatar style={{ marginLeft: 8 }} src={'/static/images/avatar_default.png'} size={48} />
+              <Avatar style={{ marginRight: 8 }} src={'/static/images/logo.jpg'} size={48} shape='square' />
+              <span>Location Analytics</span>
             </Center>
             <Container>
               <Form.Item>
@@ -189,7 +189,7 @@ class Login extends React.Component {
                 </Button>
               </Form.Item>
             </Container>
-            <Footer style={{ textAlign: 'center' }}>Analytics Map version 1.0.0</Footer>
+            <Footer style={{ textAlign: 'center' }}>Location Analytics version 1.0.0</Footer>
           </CardCenter>
         </Layout>
       </Form>

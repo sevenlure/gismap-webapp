@@ -1,8 +1,8 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import styled from 'styled-components'
-import { Input, Avatar } from 'antd'
-
+import { Input, Avatar, Divider } from 'antd'
+import SelectLang from './selectLang'
 const HeaderWrapper = styled.div`
   display: flex;
   justify-content: space-between;
@@ -27,6 +27,11 @@ export default class HeaderContainer extends React.Component {
           />
         </div>
         <div>
+          {/* <Flags name='US' format='svg' height={16} shiny={true} basePath='/static/flags' alt='Vn Flag' />
+          <span style={{ marginLeft: 8 }} />
+          <Flag name='VN' format='svg' height={16} shiny={true} basePath='/static/flags' alt='Eng Flag' /> */}
+          <SelectLang />
+          <Divider type='vertical' />
           <span>HapbeeGis</span>
           <Avatar style={{ marginLeft: 8 }} src={'/static/images/avatar_default.png'} size='default' />
         </div>

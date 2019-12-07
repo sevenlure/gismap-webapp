@@ -1,10 +1,10 @@
 import React, { Component } from 'react'
-import {  Map, TileLayer, Popup, Marker } from 'react-leaflet'
+import { Map, TileLayer, Popup, Marker } from 'react-leaflet'
 export default class SimpleExample extends Component {
   state = {
-    lat: 51.505,
-    lng: -0.09,
-    zoom: 13,
+    lat: 21.0228161,
+    lng: 105.801944,
+    zoom: 15,
     inBrowser: false
   }
 
