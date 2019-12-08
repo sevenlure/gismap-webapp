@@ -1,5 +1,8 @@
 import React, { Component } from 'react'
-import { Map, TileLayer, Popup, Marker } from 'react-leaflet'
+import { Map, TileLayer, Popup, Marker, GeoJSON } from 'react-leaflet'
+import ReactLeafletGoogleLayer from 'react-leaflet-google-layer'
+
+import data from './tamp.json'
 export default class SimpleExample extends Component {
   state = {
     lat: 21.0228161,
@@ -28,15 +31,20 @@ export default class SimpleExample extends Component {
         center={position}
         zoom={this.state.zoom}
       >
-        <TileLayer
+        {/* <TileLayer
           attribution='&amp;copy <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
           url='https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png'
+        /> */}
+        <ReactLeafletGoogleLayer
+          googleMapsLoaderConf={{ KEY: 'AIzaSyB8Lw-LWcdPxtz01j99UE44V9QUFw9vEO4' }}
+          type={'roadmap'}
         />
         <Marker position={position}>
           <Popup>
             A pretty CSS3 popup. <br /> Easily customizable.
           </Popup>
         </Marker>
+        <GeoJSON data={data} />
       </Map>
     )
   }

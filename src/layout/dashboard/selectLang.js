@@ -2,9 +2,6 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import styled from 'styled-components'
 import { Menu, Dropdown, Icon } from 'antd'
-import Flag from 'react-flags'
-
-import 'react-flags-select/css/react-flags-select.css'
 
 const FlagUS = ({ marginRight, height }) => (
   <img style={{ marginRight: marginRight || 8 }} height={height || 24} src='/static/flags/US.png' alt='US Flag' />
@@ -32,9 +29,6 @@ export default class componentName extends React.Component {
     </Menu>
   )
 
-  // <Flags name='US' format='svg' height={16} shiny={true} basePath='/static/flags' alt='Vn Flag' />
-  // <span style={{ marginLeft: 8 }} />
-  // <Flag name='VN' format='svg' height={16} shiny={true} basePath='/static/flags' alt='Eng Flag' />
   render() {
     return (
       <div style={{ display: 'inline-block' }}>
