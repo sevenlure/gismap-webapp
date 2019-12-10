@@ -63,7 +63,7 @@ const ContentWrapper = styled.div`
     border-radius: 2px 2px 0 0;
     /* box-shadow: 7px 0px 5px 0px rgba(0, 0, 0, 0.15), 7px 0px 5px 0px rgba(0, 0, 0, 0.12); */
     box-shadow: 6px 6px 5px 0px rgba(0, 0, 0, 0.45);
-    z-index: 999999;
+    z-index: 999;
   }
   .map-content {
     flex: 1;
