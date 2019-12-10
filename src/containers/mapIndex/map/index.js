@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { Map, TileLayer, Popup, Marker, GeoJSON } from 'react-leaflet'
 import ReactLeafletGoogleLayer from 'react-leaflet-google-layer'
+import Choropleth from 'react-leaflet-choropleth'
 
 import data from './tamp.json'
 export default class SimpleExample extends Component {
@@ -25,8 +26,8 @@ export default class SimpleExample extends Component {
     return (
       <Map
         style={{
-          minHeight: '100vh',
-          width: 'calc(100vw - 300px)'
+          height: '100%',
+          width: '100%'
         }}
         center={position}
         zoom={this.state.zoom}
@@ -44,7 +45,31 @@ export default class SimpleExample extends Component {
             A pretty CSS3 popup. <br /> Easily customizable.
           </Popup>
         </Marker>
-        <GeoJSON data={data} />
+        <Choropleth
+          data={{ type: 'FeatureCollection', features: data }}
+          valueProperty={feature => feature.properties.MatDo}
+          // visible={feature => feature.id !== active.id}
+          scale={['#52c41a', 'red']}
+          steps={20}
+          mode='e'
+          style={{
+            fillColor: '#F28F3B',
+            weight: 2,
+            opacity: 1,
+            color: 'white',
+            dashArray: '2',
+            fillOpacity: 0.7
+          }}
+          onEachFeature={(feature, layer) => layer.bindPopup(feature.properties.label)}
+          filter={geoJsonFeature => {
+            console.log('geoJsonFeature', geoJsonFeature)
+            // Quan: "Quận 5"
+            return (geoJsonFeature.properties.Quan && geoJsonFeature.properties.Quan == "Quận 7")
+            // return true
+          }}
+          // ref={el => (this.choropleth = el.leafletElement)}
+        />
+        {/* <GeoJSON data={data} /> */}
       </Map>
     )
   }

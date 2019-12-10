@@ -32,8 +32,8 @@ export default class HeaderContainer extends React.Component {
           <Flag name='VN' format='svg' height={16} shiny={true} basePath='/static/flags' alt='Eng Flag' /> */}
           <SelectLang />
           <Divider type='vertical' />
-          <span>HapbeeGis</span>
-          <Avatar style={{ marginLeft: 8 }} src={'/static/images/avatar_default.png'} size='default' />
+          {/* <span>HapbeeGis</span>
+          <Avatar style={{ marginLeft: 8 }} src={'/static/images/avatar_default.png'} size='default' /> */}
         </div>
       </HeaderWrapper>
     )
