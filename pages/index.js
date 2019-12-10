@@ -2,19 +2,19 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import styled from 'styled-components'
 import { connect } from 'react-redux'
-import { Button, Tabs, Radio } from 'antd'
+import { Tabs, Radio } from 'antd'
 import LayoutDashboard from 'src/layout/dashboard'
 import windowSize from 'react-window-size'
 import { setBreadCrumb, updateKeyPath, updateBackgroundColor } from 'src/redux/actions/generalAction'
 import slug, { breadcrumb } from 'src/routes/index'
 import dynamic from 'next/dynamic'
+import TabLayer from 'src/containers/tabIndex/tabLayout/index.js'
 // import MapComp from 'src/containers/mapIndex/map'
 
 const MapComp = dynamic(() => import('../src/containers/mapIndex/map/index'), { ssr: false })
 // import DashBoard from 'src/containers/dashboard'
 
 const { TabPane } = Tabs
-const ButtonGroup = Button.Group
 
 const TAB_KEY = {
   LAYER: 'LAYER',
@@ -121,7 +121,9 @@ class Index extends React.Component {
               return <div />
             }}
           >
-            <TabPane key={TAB_KEY.LAYER}>This is Component Tool Box Layers</TabPane>
+            <TabPane key={TAB_KEY.LAYER}>
+              <TabLayer />
+            </TabPane>
             <TabPane key={TAB_KEY.ANALYSIS}>This is Component Tool Box Analysis</TabPane>
           </Tabs>
 
