@@ -39,7 +39,7 @@ export default class LayerHanhChinh extends React.Component {
       <div>
         <Choropleth
           data={{ type: 'FeatureCollection', features: _data }}
-          valueProperty={feature => feature.properties.MatDo}
+          valueProperty={feature => feature.properties.MatDoDanSo}
           // visible={feature => feature.id !== active.id}
           scale={['#52c41a', 'red']}
           steps={20}
