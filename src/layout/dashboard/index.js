@@ -17,6 +17,8 @@ import {
   getListUser,
   isLoadedDanhMuc
 } from 'src/redux/actions/generalAction'
+import { hanhchinhUpdate } from 'src/redux/actions/layerAction'
+import { getAllHanhChinh } from 'src/api/layerApi'
 import { get as _get, last as _last, isEqual as _isEqual } from 'lodash-es'
 import slug from 'src/routes'
 import hocProtectLogin from 'src/hoc/is-authenticated'
@@ -77,7 +79,7 @@ const ContentWrapper = styled.div`
     isAuthenticated: _get(state, 'AuthStore.isAuthenticated', false),
     token: _get(state, 'AuthStore.token', null)
   }),
-  { updateKeyPath, updateSubMenu, getListUser, isLoadedDanhMuc }
+  { updateKeyPath, updateSubMenu, getListUser, isLoadedDanhMuc, hanhchinhUpdate }
 )
 @hocProtectLogin
 @windowSize
@@ -91,7 +93,8 @@ class AppWithLayout extends React.Component {
     subMenu: PropTypes.array,
     keyPath: PropTypes.array,
     breadcrumb: PropTypes.array,
-    backgroundColor: PropTypes.string
+    backgroundColor: PropTypes.string,
+    hanhchinhUpdate: PropTypes.func
   }
 
   state = {
@@ -105,7 +108,18 @@ class AppWithLayout extends React.Component {
     // console.log(collapsed)
     this.setState({ collapsed })
   }
+
   componentDidMount = async () => {
+    // fetch data hanh chinh
+    console.log('vo day')
+    getAllHanhChinh()
+      .then(response => {
+        const { data } = response
+        this.props.hanhchinhUpdate(data)
+      })
+      .catch(err => {
+        console.log('err', err)
+      })
     const { isAuthenticated } = this.props
     if (!isAuthenticated) {
       Router.push(slug.login)
