@@ -1,6 +1,6 @@
 import { get as _get } from 'lodash-es'
 // import DepartmentApi from 'src/api/DepartmentApi'
-import UserApi from 'src/api/userApi.js'
+// import UserApi from 'src/api/userApi.js'
 
 // NOTE  THEM
 export const UPDATE_THEM_BACKGROUND_COLOR = 'GENERAL/UPDATE_THEM_BACKGROUND_COLOR'

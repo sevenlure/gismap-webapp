@@ -1,5 +1,4 @@
 {
-  "HOST_API": "https://pnrwork-api.gishouse.tech/admin",
-  "HOST_MEDIA": "https://pnrwork-api.gishouse.tech",
+  "HOST_API": "http://35.226.214.82:3405",
   "GOOGLE_MAP_API_KEY": "AIzaSyDQn1ogJHYyC7Vu19E4GsxKjB-j-uLSD6I"
 }

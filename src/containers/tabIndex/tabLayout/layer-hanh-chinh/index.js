@@ -138,6 +138,13 @@ class LayerHanhChinh extends React.Component {
                 style={{
                   width: '100%'
                 }}
+                treeNodeFilterProp='title'
+                dropdownStyle={{
+                  maxHeight: 400
+                }}
+                dropdownPopupAlign={{
+                  overflow: { adjustX: false, adjustY: false }
+                }}
               />
             )}
           </Col>
