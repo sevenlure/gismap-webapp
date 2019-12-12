@@ -1,5 +1,10 @@
 import React, { Component } from 'react'
-import { Map, TileLayer, Popup, Marker, GeoJSON } from 'react-leaflet'
+import {
+  Map,
+  // , TileLayer , GeoJSON
+  Popup,
+  Marker
+} from 'react-leaflet'
 import ReactLeafletGoogleLayer from 'react-leaflet-google-layer'
 import Choropleth from 'react-leaflet-choropleth'
 
@@ -64,7 +69,7 @@ export default class SimpleExample extends Component {
           filter={geoJsonFeature => {
             console.log('geoJsonFeature', geoJsonFeature)
             // Quan: "Quận 5"
-            return (geoJsonFeature.properties.Quan && geoJsonFeature.properties.Quan == "Quận 7")
+            return geoJsonFeature.properties.Quan && geoJsonFeature.properties.Quan == 'Quận 7'
             // return true
           }}
           // ref={el => (this.choropleth = el.leafletElement)}

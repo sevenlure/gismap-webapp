@@ -2,8 +2,13 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import Head from 'next/head'
 import styled from 'styled-components'
-import { Layout, Menu, Icon, Avatar, Row, Button } from 'antd'
-import moment from 'moment'
+import {
+  Layout,
+  // , Menu, Icon,Row
+  Avatar,
+  Button
+} from 'antd'
+// import moment from 'moment'
 import Router from 'next/router'
 import { connect } from 'react-redux'
 import { withRouter } from 'next/router'
@@ -132,7 +137,7 @@ class AppWithLayout extends React.Component {
   }
 
   render() {
-    const { children, windowWidth, isAuthenticated } = this.props
+    const { children, windowWidth } = this.props
     // NOTE  moible
     return (
       <LayoutWrapper windowWidth={windowWidth}>

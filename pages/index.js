@@ -2,19 +2,22 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import styled from 'styled-components'
 import { connect } from 'react-redux'
-import { Tabs, Radio, Typography } from 'antd'
+import {
+  // Tabs,
+  Typography
+} from 'antd'
 import LayoutDashboard from 'src/layout/dashboard'
 import windowSize from 'react-window-size'
 import { setBreadCrumb, updateKeyPath, updateBackgroundColor } from 'src/redux/actions/generalAction'
 import slug, { breadcrumb } from 'src/routes/index'
-import dynamic from 'next/dynamic'
+// import dynamic from 'next/dynamic'
 import TabLayer from 'src/containers/tabIndex/tabLayout/index.js'
 // import MapComp from 'src/containers/mapIndex/map'
 
-const MapComp = dynamic(() => import('../src/containers/mapIndex/map/index'), { ssr: false })
+// const MapComp = dynamic(() => import('../src/containers/mapIndex/map/index'), { ssr: false })
 // import DashBoard from 'src/containers/dashboard'
 
-const { TabPane } = Tabs
+// const { TabPane } = Tabs
 
 const TAB_KEY = {
   LAYER: 'LAYER',

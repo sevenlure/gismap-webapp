@@ -3,7 +3,12 @@ import PropTypes from 'prop-types'
 import styled from 'styled-components'
 import Clearfix from 'src/components/elements/clearfix'
 import { Select, Row, Col, TreeSelect } from 'antd'
-import { map as _map, concat as _concat, pick as _pick } from 'lodash-es'
+import {
+  map as _map,
+  // , concat as _concat
+  // , pick as _pick
+  replace as _replace
+} from 'lodash-es'
 import { connect } from 'react-redux'
 import dataHanhChinh from './data-hanh-chinh.json'
 import { updateLevelHanhChinh, updateVungHanhChinh } from 'src/redux/actions/filterAction.js'
@@ -81,16 +86,22 @@ class LayerHanhChinh extends React.Component {
   }
   getTransferdata = (array, level) => {
     return _map(array, item => {
+      let title = _replace(item.title, 'Quận', 'Q.')
+      title = _replace(title, 'Phường', 'P.')
+      title = _replace(title, 'Huyện', 'H.')
       return {
         value: item.value,
         key: item.value,
-        title: item.title,
+        title: title,
         children: level === 0 ? [] : this.getTransferdata(item.children, level - 1)
       }
     })
   }
 
-  hanldeOnchangeLayerHanhChinh = (arrayValue, arrayLabel, extra) => {
+  hanldeOnchangeLayerHanhChinh = (
+    arrayValue
+    // , arrayLabel, extra
+  ) => {
     this.props.updateVungHanhChinh(arrayValue)
     // console.log(arrayValue, arrayLabel, extra)
   }
@@ -122,6 +133,7 @@ class LayerHanhChinh extends React.Component {
                 showCheckedStrategy={SHOW_PARENT}
                 onChange={this.hanldeOnchangeLayerHanhChinh}
                 treeCheckable={true}
+                maxTagTextLength={12}
                 searchPlaceholder='Lọc dữ liệu hiển thị'
                 style={{
                   width: '100%'

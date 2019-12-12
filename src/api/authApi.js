@@ -1,6 +1,6 @@
 import fetch from './fetch'
 
-const SLUG = '/auth'
+// const SLUG = '/auth'
 const SLUG_ME = '/me'
 // export function login(data) {
 //   // console.log(data, 'data')

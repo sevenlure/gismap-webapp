@@ -4,7 +4,7 @@ import { Form, Input, Icon, Layout, message, Avatar } from 'antd'
 import styled from 'styled-components'
 import Clearfix from 'src/components/elements/clearfix'
 import authApi from 'src/api/authApi'
-import { getInfoErrorfetch } from 'src/constant/funcAixos.js'
+// import { getInfoErrorfetch } from 'src/constant/funcAixos.js'
 import { connect } from 'react-redux'
 import Button from 'src/components/elements/button/index'
 
