@@ -43,7 +43,7 @@ const filterReducer = (state = InitialState, action) => {
 const generalPersistConfig = {
   key: 'FilterStore',
   storage: storage,
-  blacklist: ['layer']
+  blacklist: []
 }
 
 export default persistReducer(generalPersistConfig, filterReducer)
