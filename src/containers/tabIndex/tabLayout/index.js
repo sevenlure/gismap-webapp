@@ -3,10 +3,9 @@ import React from 'react'
 import styled from 'styled-components'
 // import Clearfix from 'src/components/elements/clearfix'
 // import { Select, Row, Col, TreeSelect } from 'antd'
-import { map as _map } from 'lodash-es'
+// import { map as _map } from 'lodash-es'
 import { connect } from 'react-redux'
 import LayerHanhChinh from './layer-hanh-chinh'
-
 
 const TabLayerWrapper = styled.div`
   flex: 1;

@@ -1,5 +1,10 @@
 import React, { Component } from 'react'
-import { Map, TileLayer, Popup, Marker, GeoJSON } from 'react-leaflet'
+import {
+  Map,
+  // , TileLayer , GeoJSON
+  Popup,
+  Marker
+} from 'react-leaflet'
 import ReactLeafletGoogleLayer from 'react-leaflet-google-layer'
 
 import data from './tamp.json'

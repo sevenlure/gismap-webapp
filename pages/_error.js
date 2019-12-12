@@ -1,10 +1,10 @@
 import React from 'react'
 import styled from 'styled-components'
-import { Button } from 'antd'
+// import { Button } from 'antd'
 import Clearfix from 'src/components/elements/clearfix'
 import EmptyLayout from 'src/layout/empty'
-import Router from 'next/router'
-import slug from 'src/routes'
+// import Router from 'next/router'
+// import slug from 'src/routes'
 // import Button from 'src/components/elements/button'
 
 const ErrorWrapper = styled.div`

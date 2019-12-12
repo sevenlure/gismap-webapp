@@ -1,14 +1,19 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import styled from 'styled-components'
+// import styled from 'styled-components'
 import { Menu, Dropdown, Icon } from 'antd'
 
-const FlagUS = ({ marginRight, height }) => (
-  <img style={{ marginRight: marginRight || 8 }} height={height || 24} src='/static/flags/US.png' alt='US Flag' />
-)
+// const FlagUS = ({ marginRight, height }) => (
+//   <img style={{ marginRight: marginRight || 8 }} height={height || 24} src='/static/flags/US.png' alt='US Flag' />
+// )
 const FlagUK = ({ marginRight, height }) => (
   <img style={{ marginRight: marginRight || 8 }} height={height || 24} src='/static/flags/UK.png' alt='UK Flag' />
 )
+FlagUK.propTypes = {
+  marginRight: PropTypes.number,
+  height: PropTypes.number
+}
+
 const FlagVN = ({ marginRight, height }) => (
   <img
     style={{ marginRight: marginRight || 2, marginLeft: -6 }}
@@ -17,6 +22,11 @@ const FlagVN = ({ marginRight, height }) => (
     alt='VN Flag'
   />
 )
+FlagVN.propTypes = {
+  marginRight: PropTypes.number,
+  height: PropTypes.number
+}
+
 export default class componentName extends React.Component {
   menu = (
     <Menu style={{ width: 200 }}>

@@ -1,7 +1,11 @@
 import React from 'react'
-import PropTypes from 'prop-types'
+// import PropTypes from 'prop-types'
 import styled from 'styled-components'
-import { Input, Avatar, Divider } from 'antd'
+import {
+  Input,
+  Divider
+  // , Avatar
+} from 'antd'
 import SelectLang from './selectLang'
 const HeaderWrapper = styled.div`
   display: flex;
