@@ -36,7 +36,7 @@ class Error extends React.Component {
           {/* <Button
             type='primary'
             onClick={() => {
-              Router.push(slug.basic)
+              Router.push(slug.home)
             }}
           >
             Về trang chủ

@@ -194,7 +194,7 @@ class AppWithLayout extends React.Component {
               onSelect={this.hanldeOnSelect}
               onOpenChange={this.handleOnOpenChange}
             >
-              <Menu.Item key={slug.basic}>
+              <Menu.Item key={slug.home}>
                 <Icon type='home' />
                 <span>Trang chủ</span>
                 <Ink

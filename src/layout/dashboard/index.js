@@ -116,7 +116,7 @@ class AppWithLayout extends React.Component {
 
   componentDidMount = async () => {
     // fetch data hanh chinh
-    console.log('vo day')
+    console.log('fetch data hanh chinh')
     getAllHanhChinh()
       .then(response => {
         const { data } = response

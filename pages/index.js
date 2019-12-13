@@ -69,7 +69,7 @@ class Index extends React.Component {
     tabKey: TAB_KEY.LAYER
   }
   componentDidMount = () => {
-    const pathPage = slug.basic
+    const pathPage = slug.home
     this.props.updateBackgroundColor('none')
     this.props.setBreadCrumb(breadcrumb[pathPage])
     this.props.updateKeyPath([pathPage])

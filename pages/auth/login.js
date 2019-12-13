@@ -65,7 +65,7 @@ class Login extends React.Component {
   }
 
   componentDidMount() {
-    // if (this.props.isAuthenticated) Router.push(slug.basic)
+    if (this.props.isAuthenticated) Router.push(slug.home)
   }
 
   hanldeSubmit = () => {
@@ -87,12 +87,12 @@ class Login extends React.Component {
               this.props.updateUserInfo(userInfo)
               message.success(`Welcome ${userInfo.FirstName} ${userInfo.LastName}`)
               const tamp = window.location.href
-              Router.push(slug.basic)
+              Router.push(slug.home)
               window.shouldLogout = false
               // check khi Router.push k0 lam viec
               setTimeout(() => {
                 if (tamp === window.location.href) {
-                  window.location.href = slug.basic
+                  window.location.href = slug.home
                 }
               }, 500)
             })

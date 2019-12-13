@@ -7,7 +7,7 @@ import { persistReducer } from 'redux-persist'
 const InitialState = {
   layer: {
     hanhChinh: {
-      level: '',
+      level: undefined,
       arrayIdSelected: []
     }
   }
@@ -43,7 +43,7 @@ const filterReducer = (state = InitialState, action) => {
 const generalPersistConfig = {
   key: 'FilterStore',
   storage: storage,
-  blacklist: []
+  blacklist: ['layer']
 }
 
 export default persistReducer(generalPersistConfig, filterReducer)
