@@ -5,6 +5,7 @@ import Clearfix from 'src/components/elements/clearfix'
 import { Select, Row, Col, TreeSelect } from 'antd'
 import {
   map as _map,
+  get as _get,
   // , concat as _concat
   // , pick as _pick
   replace as _replace
@@ -35,21 +36,28 @@ const DATA_LEVEL = [
   }
 ]
 
-const mapStateToProps = () => ({})
+const mapStateToProps = state => ({
+  filterHanhChinh: _get(state, 'FilterStore.layer.hanhChinh', {})
+})
 const mapDispatchToProps = { updateLevelHanhChinh, updateVungHanhChinh }
 @connect(mapStateToProps, mapDispatchToProps)
 class LayerHanhChinh extends React.Component {
   static propTypes = {
     updateLevelHanhChinh: PropTypes.func,
-    updateVungHanhChinh: PropTypes.func
+    updateVungHanhChinh: PropTypes.func,
+    filterHanhChinh: PropTypes.object
   }
 
   state = {
     dataHanhChinh: [],
-    isLoadingHanhChinh: true
+    isLoadingHanhChinh: false
   }
 
-  hanldeOnchangeCapHanhChinh = value => {
+  componentDidMount = () => {
+    this.getDataSourceHanhChinh(this.props.filterHanhChinh.level)
+  }
+
+  getDataSourceHanhChinh = value => {
     this.setState(
       {
         isLoadingHanhChinh: false
@@ -75,7 +83,6 @@ class LayerHanhChinh extends React.Component {
           }
         }
         this.props.updateLevelHanhChinh(value)
-        this.props.updateVungHanhChinh([])
 
         this.setState({
           dataHanhChinh: dataSource,
@@ -83,6 +90,11 @@ class LayerHanhChinh extends React.Component {
         })
       }
     )
+  }
+
+  hanldeOnchangeCapHanhChinh = value => {
+    this.getDataSourceHanhChinh(value)
+    this.props.updateVungHanhChinh([])
   }
   getTransferdata = (array, level) => {
     return _map(array, item => {
@@ -112,6 +124,7 @@ class LayerHanhChinh extends React.Component {
         <Row>
           <Col span='24'>
             <Select
+              value={this.props.filterHanhChinh.level}
               showSearch
               style={{ width: '100%' }}
               onChange={this.hanldeOnchangeCapHanhChinh}
@@ -128,6 +141,7 @@ class LayerHanhChinh extends React.Component {
           <Col span='24'>
             {this.state.isLoadingHanhChinh && (
               <TreeSelect
+                value={this.props.filterHanhChinh.arrayIdSelected}
                 maxTagCount={5}
                 treeData={this.state.dataHanhChinh}
                 showCheckedStrategy={SHOW_PARENT}

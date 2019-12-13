@@ -1,6 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import styled from 'styled-components'
+// import styled from 'styled-components'
 import Choropleth from 'react-leaflet-choropleth'
 import { connect } from 'react-redux'
 import { get as _get, isEqual } from 'lodash-es'
@@ -17,6 +17,14 @@ const mapDispatchToProps = {}
 
 @connect(mapStateToProps, mapDispatchToProps)
 export default class LayerHanhChinh extends React.Component {
+  static propTypes = {
+    filterLevel: PropTypes.string,
+    layer_hc_province: PropTypes.array,
+    layer_hc_district: PropTypes.array,
+    layer_hc_ward: PropTypes.array,
+    filterIdSelected: PropTypes.array
+  }
+
   UNSAFE_componentWillReceiveProps(nextProps) {
     if ((!isEqual(this.props.filterIdSelected), nextProps.filterIdSelected)) {
       this.setState({ isLoading: true }, () => {

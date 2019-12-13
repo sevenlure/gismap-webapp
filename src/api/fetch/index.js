@@ -1,5 +1,5 @@
 import axios from 'axios'
-import { Modal } from 'antd'
+// import { Modal } from 'antd'
 
 const fetch = axios.create({
   baseURL: process.env.HOST_API,
