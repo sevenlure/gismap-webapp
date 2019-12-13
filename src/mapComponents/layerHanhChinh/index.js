@@ -3,38 +3,54 @@ import PropTypes from 'prop-types'
 import styled from 'styled-components'
 import Choropleth from 'react-leaflet-choropleth'
 import { connect } from 'react-redux'
-import { get as _get } from 'lodash-es'
+import { get as _get, isEqual } from 'lodash-es'
 
 const mapStateToProps = state => ({
   layer_hc_province: _get(state, 'LayerReducer.hanhChinh.province'),
   layer_hc_district: _get(state, 'LayerReducer.hanhChinh.district'),
   layer_hc_ward: _get(state, 'LayerReducer.hanhChinh.ward'),
 
-  filterLevel: _get(state, 'FilterStore.layer.hanhChinh.level')
+  filterLevel: _get(state, 'FilterStore.layer.hanhChinh.level'),
+  filterIdSelected: _get(state, 'FilterStore.layer.hanhChinh.arrayIdSelected')
 })
 const mapDispatchToProps = {}
 
 @connect(mapStateToProps, mapDispatchToProps)
 export default class LayerHanhChinh extends React.Component {
+  UNSAFE_componentWillReceiveProps(nextProps) {
+    if ((!isEqual(this.props.filterIdSelected), nextProps.filterIdSelected)) {
+      this.setState({ isLoading: true }, () => {
+        this.setState({ isLoading: false })
+      })
+    }
+  }
+  state = {
+    isLoading: false
+  }
   render() {
-    const { filterLevel } = this.props
+    const { filterLevel, filterIdSelected } = this.props
     const { layer_hc_province, layer_hc_district, layer_hc_ward } = this.props
     let _data = []
     switch (filterLevel) {
       case 'tinhThanhPho': {
         _data = layer_hc_province
+
         break
       }
       case 'quanHuyen': {
         _data = layer_hc_district
+
         break
       }
       case 'phuongXa': {
         _data = layer_hc_ward
+
         break
       }
     }
     if (_data.length === 0) return null
+    if (this.state.isLoading) return null
+
     return (
       <div>
         <Choropleth
@@ -53,12 +69,13 @@ export default class LayerHanhChinh extends React.Component {
             fillOpacity: 0.7
           }}
           onEachFeature={(feature, layer) => layer.bindPopup(feature.properties.Ten)}
-          // filter={geoJsonFeature => {
-          //   console.log('geoJsonFeature', geoJsonFeature)
-          //   // Quan: "Quận 5"
-          //   return geoJsonFeature.properties.Quan && geoJsonFeature.properties.Quan == 'Quận 7'
-          //   // return true
-          // }}
+          filter={geoJsonFeature => {
+            return (
+              filterIdSelected.includes(geoJsonFeature.properties.MaTP) ||
+              filterIdSelected.includes(geoJsonFeature.properties.MaQH) ||
+              filterIdSelected.includes(geoJsonFeature.properties.Ma)
+            )
+          }}
           // ref={el => (this.choropleth = el.leafletElement)}
         />
       </div>
