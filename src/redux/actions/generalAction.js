@@ -1,4 +1,4 @@
-import { get as _get } from 'lodash-es'
+// import { get as _get } from 'lodash-es'
 // import DepartmentApi from 'src/api/DepartmentApi'
 // import UserApi from 'src/api/userApi.js'
 
@@ -35,20 +35,20 @@ export function isLoadedDanhMuc(isLoaded) {
 //     dispatch({ type: GET_GENERAL_LIST_DEPARTMENT, payload: dataSource })
 //   }
 // }
-export function getListUser() {
-  return async dispatch => {
-    let dataSource = []
-    try {
-      const res = await UserApi.getAll()
-      if (res.status) {
-        dataSource = _get(res, 'data', [])
-      }
-    } catch (ex) {
-      console.log('GET_GENERAL_LIST_USER', ex)
-    }
-    dispatch({ type: GET_GENERAL_LIST_USER, payload: dataSource })
-  }
-}
+// export function getListUser() {
+//   return async dispatch => {
+//     let dataSource = []
+//     try {
+//       const res = await UserApi.getAll()
+//       if (res.status) {
+//         dataSource = _get(res, 'data', [])
+//       }
+//     } catch (ex) {
+//       console.log('GET_GENERAL_LIST_USER', ex)
+//     }
+//     dispatch({ type: GET_GENERAL_LIST_USER, payload: dataSource })
+//   }
+// }
 
 //  NOTE  AUTH
 export const UPDATE_GENERAL_USER_INFO = 'GENERAL/UPDATE_GENERAL_USER_INFO'

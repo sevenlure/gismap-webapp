@@ -2520,6 +2520,1445 @@
 		],
 		"_id": "5dee5c9ca346f80e8c60b0f2",
 		"value": "01",
-			"title": "Thành phố Hà Nội"
+		"title": "Thành phố Hà Nội"
+	},
+	{
+		"children": [
+			{
+				"value": "760",
+				"title": "Quận 1",
+				"children": [
+					{
+						"value": "26734",
+						"title": "Phường Tân Định"
+					},
+					{
+						"value": "26737",
+						"title": "Phường Đa Kao"
+					},
+					{
+						"value": "26740",
+						"title": "Phường Bến Nghé"
+					},
+					{
+						"value": "26743",
+						"title": "Phường Bến Thành"
+					},
+					{
+						"value": "26746",
+						"title": "Phường Nguyễn Thái Bình"
+					},
+					{
+						"value": "26749",
+						"title": "Phường Phạm Ngũ Lão"
+					},
+					{
+						"value": "26752",
+						"title": "Phường Cầu Ông Lãnh"
+					},
+					{
+						"value": "26755",
+						"title": "Phường Cô Giang"
+					},
+					{
+						"value": "26758",
+						"title": "Phường Nguyễn Cư Trinh"
+					},
+					{
+						"value": "26761",
+						"title": "Phường Cầu Kho"
+					}
+				]
+			},
+			{
+				"value": "761",
+				"title": "Quận 12",
+				"children": [
+					{
+						"value": "26764",
+						"title": "Phường Thạnh Xuân"
+					},
+					{
+						"value": "26767",
+						"title": "Phường Thạnh Lộc"
+					},
+					{
+						"value": "26770",
+						"title": "Phường Hiệp Thành"
+					},
+					{
+						"value": "26773",
+						"title": "Phường Thới An"
+					},
+					{
+						"value": "26776",
+						"title": "Phường Tân Chánh Hiệp"
+					},
+					{
+						"value": "26779",
+						"title": "Phường An Phú Đông"
+					},
+					{
+						"value": "26782",
+						"title": "Phường Tân Thới Hiệp"
+					},
+					{
+						"value": "26785",
+						"title": "Phường Trung Mỹ Tây"
+					},
+					{
+						"value": "26787",
+						"title": "Phường Tân Hưng Thuận"
+					},
+					{
+						"value": "26788",
+						"title": "Phường Đông Hưng Thuận"
+					},
+					{
+						"value": "26791",
+						"title": "Phường Tân Thới Nhất"
+					}
+				]
+			},
+			{
+				"value": "762",
+				"title": "Quận Thủ Đức",
+				"children": [
+					{
+						"value": "26794",
+						"title": "Phường Linh Xuân"
+					},
+					{
+						"value": "26797",
+						"title": "Phường Bình Chiểu"
+					},
+					{
+						"value": "26800",
+						"title": "Phường Linh Trung"
+					},
+					{
+						"value": "26803",
+						"title": "Phường Tam Bình"
+					},
+					{
+						"value": "26806",
+						"title": "Phường Tam Phú"
+					},
+					{
+						"value": "26809",
+						"title": "Phường Hiệp Bình Phước"
+					},
+					{
+						"value": "26812",
+						"title": "Phường Hiệp Bình Chánh"
+					},
+					{
+						"value": "26815",
+						"title": "Phường Linh Chiểu"
+					},
+					{
+						"value": "26818",
+						"title": "Phường Linh Tây"
+					},
+					{
+						"value": "26821",
+						"title": "Phường Linh Đông"
+					},
+					{
+						"value": "26824",
+						"title": "Phường Bình Thọ"
+					},
+					{
+						"value": "26827",
+						"title": "Phường Trường Thọ"
+					}
+				]
+			},
+			{
+				"value": "763",
+				"title": "Quận 9",
+				"children": [
+					{
+						"value": "26830",
+						"title": "Phường Long Bình"
+					},
+					{
+						"value": "26833",
+						"title": "Phường Long Thạnh Mỹ"
+					},
+					{
+						"value": "26836",
+						"title": "Phường Tân Phú"
+					},
+					{
+						"value": "26839",
+						"title": "Phường Hiệp Phú"
+					},
+					{
+						"value": "26842",
+						"title": "Phường Tăng Nhơn Phú A"
+					},
+					{
+						"value": "26845",
+						"title": "Phường Tăng Nhơn Phú B"
+					},
+					{
+						"value": "26848",
+						"title": "Phường Phước Long B"
+					},
+					{
+						"value": "26851",
+						"title": "Phường Phước Long A"
+					},
+					{
+						"value": "26854",
+						"title": "Phường Trường Thạnh"
+					},
+					{
+						"value": "26857",
+						"title": "Phường Long Phước"
+					},
+					{
+						"value": "26860",
+						"title": "Phường Long Trường"
+					},
+					{
+						"value": "26863",
+						"title": "Phường Phước Bình"
+					},
+					{
+						"value": "26866",
+						"title": "Phường Phú Hữu"
+					}
+				]
+			},
+			{
+				"value": "764",
+				"title": "Quận Gò Vấp",
+				"children": [
+					{
+						"value": "26869",
+						"title": "Phường 15"
+					},
+					{
+						"value": "26872",
+						"title": "Phường 13"
+					},
+					{
+						"value": "26875",
+						"title": "Phường 17"
+					},
+					{
+						"value": "26876",
+						"title": "Phường 6"
+					},
+					{
+						"value": "26878",
+						"title": "Phường 16"
+					},
+					{
+						"value": "26881",
+						"title": "Phường 12"
+					},
+					{
+						"value": "26882",
+						"title": "Phường 14"
+					},
+					{
+						"value": "26884",
+						"title": "Phường 10"
+					},
+					{
+						"value": "26887",
+						"title": "Phường 05"
+					},
+					{
+						"value": "26890",
+						"title": "Phường 07"
+					},
+					{
+						"value": "26893",
+						"title": "Phường 04"
+					},
+					{
+						"value": "26896",
+						"title": "Phường 01"
+					},
+					{
+						"value": "26897",
+						"title": "Phường 9"
+					},
+					{
+						"value": "26898",
+						"title": "Phường 8"
+					},
+					{
+						"value": "26899",
+						"title": "Phường 11"
+					},
+					{
+						"value": "26902",
+						"title": "Phường 03"
+					}
+				]
+			},
+			{
+				"value": "765",
+				"title": "Quận Bình Thạnh",
+				"children": [
+					{
+						"value": "26905",
+						"title": "Phường 13"
+					},
+					{
+						"value": "26908",
+						"title": "Phường 11"
+					},
+					{
+						"value": "26911",
+						"title": "Phường 27"
+					},
+					{
+						"value": "26914",
+						"title": "Phường 26"
+					},
+					{
+						"value": "26917",
+						"title": "Phường 12"
+					},
+					{
+						"value": "26920",
+						"title": "Phường 25"
+					},
+					{
+						"value": "26923",
+						"title": "Phường 05"
+					},
+					{
+						"value": "26926",
+						"title": "Phường 07"
+					},
+					{
+						"value": "26929",
+						"title": "Phường 24"
+					},
+					{
+						"value": "26932",
+						"title": "Phường 06"
+					},
+					{
+						"value": "26935",
+						"title": "Phường 14"
+					},
+					{
+						"value": "26938",
+						"title": "Phường 15"
+					},
+					{
+						"value": "26941",
+						"title": "Phường 02"
+					},
+					{
+						"value": "26944",
+						"title": "Phường 01"
+					},
+					{
+						"value": "26947",
+						"title": "Phường 03"
+					},
+					{
+						"value": "26950",
+						"title": "Phường 17"
+					},
+					{
+						"value": "26953",
+						"title": "Phường 21"
+					},
+					{
+						"value": "26956",
+						"title": "Phường 22"
+					},
+					{
+						"value": "26959",
+						"title": "Phường 19"
+					},
+					{
+						"value": "26962",
+						"title": "Phường 28"
+					}
+				]
+			},
+			{
+				"value": "766",
+				"title": "Quận Tân Bình",
+				"children": [
+					{
+						"value": "26965",
+						"title": "Phường 02"
+					},
+					{
+						"value": "26968",
+						"title": "Phường 04"
+					},
+					{
+						"value": "26971",
+						"title": "Phường 12"
+					},
+					{
+						"value": "26974",
+						"title": "Phường 13"
+					},
+					{
+						"value": "26977",
+						"title": "Phường 01"
+					},
+					{
+						"value": "26980",
+						"title": "Phường 03"
+					},
+					{
+						"value": "26983",
+						"title": "Phường 11"
+					},
+					{
+						"value": "26986",
+						"title": "Phường 07"
+					},
+					{
+						"value": "26989",
+						"title": "Phường 05"
+					},
+					{
+						"value": "26992",
+						"title": "Phường 10"
+					},
+					{
+						"value": "26995",
+						"title": "Phường 06"
+					},
+					{
+						"value": "26998",
+						"title": "Phường 08"
+					},
+					{
+						"value": "27001",
+						"title": "Phường 09"
+					},
+					{
+						"value": "27004",
+						"title": "Phường 14"
+					},
+					{
+						"value": "27007",
+						"title": "Phường 15"
+					}
+				]
+			},
+			{
+				"value": "767",
+				"title": "Quận Tân Phú",
+				"children": [
+					{
+						"value": "27010",
+						"title": "Phường Tân Sơn Nhì"
+					},
+					{
+						"value": "27013",
+						"title": "Phường Tây Thạnh"
+					},
+					{
+						"value": "27016",
+						"title": "Phường Sơn Kỳ"
+					},
+					{
+						"value": "27019",
+						"title": "Phường Tân Quý"
+					},
+					{
+						"value": "27022",
+						"title": "Phường Tân Thành"
+					},
+					{
+						"value": "27025",
+						"title": "Phường Phú Thọ Hòa"
+					},
+					{
+						"value": "27028",
+						"title": "Phường Phú Thạnh"
+					},
+					{
+						"value": "27031",
+						"title": "Phường Phú Trung"
+					},
+					{
+						"value": "27034",
+						"title": "Phường Hòa Thạnh"
+					},
+					{
+						"value": "27037",
+						"title": "Phường Hiệp Tân"
+					},
+					{
+						"value": "27040",
+						"title": "Phường Tân Thới Hòa"
+					}
+				]
+			},
+			{
+				"value": "768",
+				"title": "Quận Phú Nhuận",
+				"children": [
+					{
+						"value": "27043",
+						"title": "Phường 04"
+					},
+					{
+						"value": "27046",
+						"title": "Phường 05"
+					},
+					{
+						"value": "27049",
+						"title": "Phường 09"
+					},
+					{
+						"value": "27052",
+						"title": "Phường 07"
+					},
+					{
+						"value": "27055",
+						"title": "Phường 03"
+					},
+					{
+						"value": "27058",
+						"title": "Phường 01"
+					},
+					{
+						"value": "27061",
+						"title": "Phường 02"
+					},
+					{
+						"value": "27064",
+						"title": "Phường 08"
+					},
+					{
+						"value": "27067",
+						"title": "Phường 15"
+					},
+					{
+						"value": "27070",
+						"title": "Phường 10"
+					},
+					{
+						"value": "27073",
+						"title": "Phường 11"
+					},
+					{
+						"value": "27076",
+						"title": "Phường 17"
+					},
+					{
+						"value": "27079",
+						"title": "Phường 14"
+					},
+					{
+						"value": "27082",
+						"title": "Phường 12"
+					},
+					{
+						"value": "27085",
+						"title": "Phường 13"
+					}
+				]
+			},
+			{
+				"value": "769",
+				"title": "Quận 2",
+				"children": [
+					{
+						"value": "27088",
+						"title": "Phường Thảo Điền"
+					},
+					{
+						"value": "27091",
+						"title": "Phường An Phú"
+					},
+					{
+						"value": "27094",
+						"title": "Phường Bình An"
+					},
+					{
+						"value": "27097",
+						"title": "Phường Bình Trưng Đông"
+					},
+					{
+						"value": "27100",
+						"title": "Phường Bình Trưng Tây"
+					},
+					{
+						"value": "27103",
+						"title": "Phường Bình Khánh"
+					},
+					{
+						"value": "27106",
+						"title": "Phường An Khánh"
+					},
+					{
+						"value": "27109",
+						"title": "Phường Cát Lái"
+					},
+					{
+						"value": "27112",
+						"title": "Phường Thạnh Mỹ Lợi"
+					},
+					{
+						"value": "27115",
+						"title": "Phường An Lợi Đông"
+					},
+					{
+						"value": "27118",
+						"title": "Phường Thủ Thiêm"
+					}
+				]
+			},
+			{
+				"value": "770",
+				"title": "Quận 3",
+				"children": [
+					{
+						"value": "27121",
+						"title": "Phường 08"
+					},
+					{
+						"value": "27124",
+						"title": "Phường 07"
+					},
+					{
+						"value": "27127",
+						"title": "Phường 14"
+					},
+					{
+						"value": "27130",
+						"title": "Phường 12"
+					},
+					{
+						"value": "27133",
+						"title": "Phường 11"
+					},
+					{
+						"value": "27136",
+						"title": "Phường 13"
+					},
+					{
+						"value": "27139",
+						"title": "Phường 06"
+					},
+					{
+						"value": "27142",
+						"title": "Phường 09"
+					},
+					{
+						"value": "27145",
+						"title": "Phường 10"
+					},
+					{
+						"value": "27148",
+						"title": "Phường 04"
+					},
+					{
+						"value": "27151",
+						"title": "Phường 05"
+					},
+					{
+						"value": "27154",
+						"title": "Phường 03"
+					},
+					{
+						"value": "27157",
+						"title": "Phường 02"
+					},
+					{
+						"value": "27160",
+						"title": "Phường 01"
+					}
+				]
+			},
+			{
+				"value": "771",
+				"title": "Quận 10",
+				"children": [
+					{
+						"value": "27163",
+						"title": "Phường 15"
+					},
+					{
+						"value": "27166",
+						"title": "Phường 13"
+					},
+					{
+						"value": "27169",
+						"title": "Phường 14"
+					},
+					{
+						"value": "27172",
+						"title": "Phường 12"
+					},
+					{
+						"value": "27175",
+						"title": "Phường 11"
+					},
+					{
+						"value": "27178",
+						"title": "Phường 10"
+					},
+					{
+						"value": "27181",
+						"title": "Phường 09"
+					},
+					{
+						"value": "27184",
+						"title": "Phường 01"
+					},
+					{
+						"value": "27187",
+						"title": "Phường 08"
+					},
+					{
+						"value": "27190",
+						"title": "Phường 02"
+					},
+					{
+						"value": "27193",
+						"title": "Phường 04"
+					},
+					{
+						"value": "27196",
+						"title": "Phường 07"
+					},
+					{
+						"value": "27199",
+						"title": "Phường 05"
+					},
+					{
+						"value": "27202",
+						"title": "Phường 06"
+					},
+					{
+						"value": "27205",
+						"title": "Phường 03"
+					}
+				]
+			},
+			{
+				"value": "772",
+				"title": "Quận 11",
+				"children": [
+					{
+						"value": "27208",
+						"title": "Phường 15"
+					},
+					{
+						"value": "27211",
+						"title": "Phường 05"
+					},
+					{
+						"value": "27214",
+						"title": "Phường 14"
+					},
+					{
+						"value": "27217",
+						"title": "Phường 11"
+					},
+					{
+						"value": "27220",
+						"title": "Phường 03"
+					},
+					{
+						"value": "27223",
+						"title": "Phường 10"
+					},
+					{
+						"value": "27226",
+						"title": "Phường 13"
+					},
+					{
+						"value": "27229",
+						"title": "Phường 08"
+					},
+					{
+						"value": "27232",
+						"title": "Phường 09"
+					},
+					{
+						"value": "27235",
+						"title": "Phường 12"
+					},
+					{
+						"value": "27238",
+						"title": "Phường 07"
+					},
+					{
+						"value": "27241",
+						"title": "Phường 06"
+					},
+					{
+						"value": "27244",
+						"title": "Phường 04"
+					},
+					{
+						"value": "27247",
+						"title": "Phường 01"
+					},
+					{
+						"value": "27250",
+						"title": "Phường 02"
+					},
+					{
+						"value": "27253",
+						"title": "Phường 16"
+					}
+				]
+			},
+			{
+				"value": "773",
+				"title": "Quận 4",
+				"children": [
+					{
+						"value": "27256",
+						"title": "Phường 12"
+					},
+					{
+						"value": "27259",
+						"title": "Phường 13"
+					},
+					{
+						"value": "27262",
+						"title": "Phường 09"
+					},
+					{
+						"value": "27265",
+						"title": "Phường 06"
+					},
+					{
+						"value": "27268",
+						"title": "Phường 08"
+					},
+					{
+						"value": "27271",
+						"title": "Phường 10"
+					},
+					{
+						"value": "27274",
+						"title": "Phường 05"
+					},
+					{
+						"value": "27277",
+						"title": "Phường 18"
+					},
+					{
+						"value": "27280",
+						"title": "Phường 14"
+					},
+					{
+						"value": "27283",
+						"title": "Phường 04"
+					},
+					{
+						"value": "27286",
+						"title": "Phường 03"
+					},
+					{
+						"value": "27289",
+						"title": "Phường 16"
+					},
+					{
+						"value": "27292",
+						"title": "Phường 02"
+					},
+					{
+						"value": "27295",
+						"title": "Phường 15"
+					},
+					{
+						"value": "27298",
+						"title": "Phường 01"
+					}
+				]
+			},
+			{
+				"value": "774",
+				"title": "Quận 5",
+				"children": [
+					{
+						"value": "27301",
+						"title": "Phường 04"
+					},
+					{
+						"value": "27304",
+						"title": "Phường 09"
+					},
+					{
+						"value": "27307",
+						"title": "Phường 03"
+					},
+					{
+						"value": "27310",
+						"title": "Phường 12"
+					},
+					{
+						"value": "27313",
+						"title": "Phường 02"
+					},
+					{
+						"value": "27316",
+						"title": "Phường 08"
+					},
+					{
+						"value": "27319",
+						"title": "Phường 15"
+					},
+					{
+						"value": "27322",
+						"title": "Phường 07"
+					},
+					{
+						"value": "27325",
+						"title": "Phường 01"
+					},
+					{
+						"value": "27328",
+						"title": "Phường 11"
+					},
+					{
+						"value": "27331",
+						"title": "Phường 14"
+					},
+					{
+						"value": "27334",
+						"title": "Phường 05"
+					},
+					{
+						"value": "27337",
+						"title": "Phường 06"
+					},
+					{
+						"value": "27340",
+						"title": "Phường 10"
+					},
+					{
+						"value": "27343",
+						"title": "Phường 13"
+					}
+				]
+			},
+			{
+				"value": "775",
+				"title": "Quận 6",
+				"children": [
+					{
+						"value": "27346",
+						"title": "Phường 14"
+					},
+					{
+						"value": "27349",
+						"title": "Phường 13"
+					},
+					{
+						"value": "27352",
+						"title": "Phường 09"
+					},
+					{
+						"value": "27355",
+						"title": "Phường 06"
+					},
+					{
+						"value": "27358",
+						"title": "Phường 12"
+					},
+					{
+						"value": "27361",
+						"title": "Phường 05"
+					},
+					{
+						"value": "27364",
+						"title": "Phường 11"
+					},
+					{
+						"value": "27367",
+						"title": "Phường 02"
+					},
+					{
+						"value": "27370",
+						"title": "Phường 01"
+					},
+					{
+						"value": "27373",
+						"title": "Phường 04"
+					},
+					{
+						"value": "27376",
+						"title": "Phường 08"
+					},
+					{
+						"value": "27379",
+						"title": "Phường 03"
+					},
+					{
+						"value": "27382",
+						"title": "Phường 07"
+					},
+					{
+						"value": "27385",
+						"title": "Phường 10"
+					}
+				]
+			},
+			{
+				"value": "776",
+				"title": "Quận 8",
+				"children": [
+					{
+						"value": "27388",
+						"title": "Phường 08"
+					},
+					{
+						"value": "27391",
+						"title": "Phường 02"
+					},
+					{
+						"value": "27394",
+						"title": "Phường 01"
+					},
+					{
+						"value": "27397",
+						"title": "Phường 03"
+					},
+					{
+						"value": "27400",
+						"title": "Phường 11"
+					},
+					{
+						"value": "27403",
+						"title": "Phường 09"
+					},
+					{
+						"value": "27406",
+						"title": "Phường 10"
+					},
+					{
+						"value": "27409",
+						"title": "Phường 04"
+					},
+					{
+						"value": "27412",
+						"title": "Phường 13"
+					},
+					{
+						"value": "27415",
+						"title": "Phường 12"
+					},
+					{
+						"value": "27418",
+						"title": "Phường 05"
+					},
+					{
+						"value": "27421",
+						"title": "Phường 14"
+					},
+					{
+						"value": "27424",
+						"title": "Phường 06"
+					},
+					{
+						"value": "27427",
+						"title": "Phường 15"
+					},
+					{
+						"value": "27430",
+						"title": "Phường 16"
+					},
+					{
+						"value": "27433",
+						"title": "Phường 07"
+					}
+				]
+			},
+			{
+				"value": "777",
+				"title": "Quận Bình Tân",
+				"children": [
+					{
+						"value": "27436",
+						"title": "Phường Bình Hưng Hòa"
+					},
+					{
+						"value": "27439",
+						"title": "Phường Bình Hưng Hoà A"
+					},
+					{
+						"value": "27442",
+						"title": "Phường Bình Hưng Hoà B"
+					},
+					{
+						"value": "27445",
+						"title": "Phường Bình Trị Đông"
+					},
+					{
+						"value": "27448",
+						"title": "Phường Bình Trị Đông A"
+					},
+					{
+						"value": "27451",
+						"title": "Phường Bình Trị Đông B"
+					},
+					{
+						"value": "27454",
+						"title": "Phường Tân Tạo"
+					},
+					{
+						"value": "27457",
+						"title": "Phường Tân Tạo A"
+					},
+					{
+						"value": "27460",
+						"title": "Phường  An Lạc"
+					},
+					{
+						"value": "27463",
+						"title": "Phường An Lạc A"
+					}
+				]
+			},
+			{
+				"value": "778",
+				"title": "Quận 7",
+				"children": [
+					{
+						"value": "27466",
+						"title": "Phường Tân Thuận Đông"
+					},
+					{
+						"value": "27469",
+						"title": "Phường Tân Thuận Tây"
+					},
+					{
+						"value": "27472",
+						"title": "Phường Tân Kiểng"
+					},
+					{
+						"value": "27475",
+						"title": "Phường Tân Hưng"
+					},
+					{
+						"value": "27478",
+						"title": "Phường Bình Thuận"
+					},
+					{
+						"value": "27481",
+						"title": "Phường Tân Quy"
+					},
+					{
+						"value": "27484",
+						"title": "Phường Phú Thuận"
+					},
+					{
+						"value": "27487",
+						"title": "Phường Tân Phú"
+					},
+					{
+						"value": "27490",
+						"title": "Phường Tân Phong"
+					},
+					{
+						"value": "27493",
+						"title": "Phường Phú Mỹ"
+					}
+				]
+			},
+			{
+				"value": "783",
+				"title": "Huyện Củ Chi",
+				"children": [
+					{
+						"value": "27496",
+						"title": "Thị trấn Củ Chi"
+					},
+					{
+						"value": "27499",
+						"title": "Xã Phú Mỹ Hưng"
+					},
+					{
+						"value": "27502",
+						"title": "Xã An Phú"
+					},
+					{
+						"value": "27505",
+						"title": "Xã Trung Lập Thượng"
+					},
+					{
+						"value": "27508",
+						"title": "Xã An Nhơn Tây"
+					},
+					{
+						"value": "27511",
+						"title": "Xã Nhuận Đức"
+					},
+					{
+						"value": "27514",
+						"title": "Xã Phạm Văn Cội"
+					},
+					{
+						"value": "27517",
+						"title": "Xã Phú Hòa Đông"
+					},
+					{
+						"value": "27520",
+						"title": "Xã Trung Lập Hạ"
+					},
+					{
+						"value": "27523",
+						"title": "Xã Trung An"
+					},
+					{
+						"value": "27526",
+						"title": "Xã Phước Thạnh"
+					},
+					{
+						"value": "27529",
+						"title": "Xã Phước Hiệp"
+					},
+					{
+						"value": "27532",
+						"title": "Xã Tân An Hội"
+					},
+					{
+						"value": "27535",
+						"title": "Xã Phước Vĩnh An"
+					},
+					{
+						"value": "27538",
+						"title": "Xã Thái Mỹ"
+					},
+					{
+						"value": "27541",
+						"title": "Xã Tân Thạnh Tây"
+					},
+					{
+						"value": "27544",
+						"title": "Xã Hòa Phú"
+					},
+					{
+						"value": "27547",
+						"title": "Xã Tân Thạnh Đông"
+					},
+					{
+						"value": "27550",
+						"title": "Xã Bình Mỹ"
+					},
+					{
+						"value": "27553",
+						"title": "Xã Tân Phú Trung"
+					},
+					{
+						"value": "27556",
+						"title": "Xã Tân Thông Hội"
+					}
+				]
+			},
+			{
+				"value": "784",
+				"title": "Huyện Hóc Môn",
+				"children": [
+					{
+						"value": "27559",
+						"title": "Thị trấn Hóc Môn"
+					},
+					{
+						"value": "27562",
+						"title": "Xã Tân Hiệp"
+					},
+					{
+						"value": "27565",
+						"title": "Xã Nhị Bình"
+					},
+					{
+						"value": "27568",
+						"title": "Xã Đông Thạnh"
+					},
+					{
+						"value": "27571",
+						"title": "Xã Tân Thới Nhì"
+					},
+					{
+						"value": "27574",
+						"title": "Xã Thới Tam Thôn"
+					},
+					{
+						"value": "27577",
+						"title": "Xã Xuân Thới Sơn"
+					},
+					{
+						"value": "27580",
+						"title": "Xã Tân Xuân"
+					},
+					{
+						"value": "27583",
+						"title": "Xã Xuân Thới Đông"
+					},
+					{
+						"value": "27586",
+						"title": "Xã Trung Chánh"
+					},
+					{
+						"value": "27589",
+						"title": "Xã Xuân Thới Thượng"
+					},
+					{
+						"value": "27592",
+						"title": "Xã Bà Điểm"
+					}
+				]
+			},
+			{
+				"value": "785",
+				"title": "Huyện Bình Chánh",
+				"children": [
+					{
+						"value": "27595",
+						"title": "Thị trấn Tân Túc"
+					},
+					{
+						"value": "27598",
+						"title": "Xã Phạm Văn Hai"
+					},
+					{
+						"value": "27601",
+						"title": "Xã Vĩnh Lộc A"
+					},
+					{
+						"value": "27604",
+						"title": "Xã Vĩnh Lộc B"
+					},
+					{
+						"value": "27607",
+						"title": "Xã Bình Lợi"
+					},
+					{
+						"value": "27610",
+						"title": "Xã Lê Minh Xuân"
+					},
+					{
+						"value": "27613",
+						"title": "Xã Tân Nhựt"
+					},
+					{
+						"value": "27616",
+						"title": "Xã Tân Kiên"
+					},
+					{
+						"value": "27619",
+						"title": "Xã Bình Hưng"
+					},
+					{
+						"value": "27622",
+						"title": "Xã Phong Phú"
+					},
+					{
+						"value": "27625",
+						"title": "Xã An Phú Tây"
+					},
+					{
+						"value": "27628",
+						"title": "Xã Hưng Long"
+					},
+					{
+						"value": "27631",
+						"title": "Xã Đa Phước"
+					},
+					{
+						"value": "27634",
+						"title": "Xã Tân Quý Tây"
+					},
+					{
+						"value": "27637",
+						"title": "Xã Bình Chánh"
+					},
+					{
+						"value": "27640",
+						"title": "Xã Quy Đức"
+					}
+				]
+			},
+			{
+				"value": "786",
+				"title": "Huyện Nhà Bè",
+				"children": [
+					{
+						"value": "27643",
+						"title": "Thị trấn Nhà Bè"
+					},
+					{
+						"value": "27646",
+						"title": "Xã Phước Kiển"
+					},
+					{
+						"value": "27649",
+						"title": "Xã Phước Lộc"
+					},
+					{
+						"value": "27652",
+						"title": "Xã Nhơn Đức"
+					},
+					{
+						"value": "27655",
+						"title": "Xã Phú Xuân"
+					},
+					{
+						"value": "27658",
+						"title": "Xã Long Thới"
+					},
+					{
+						"value": "27661",
+						"title": "Xã Hiệp Phước"
+					}
+				]
+			},
+			{
+				"value": "787",
+				"title": "Huyện Cần Giờ",
+				"children": [
+					{
+						"value": "27664",
+						"title": "Thị trấn Cần Thạnh"
+					},
+					{
+						"value": "27667",
+						"title": "Xã Bình Khánh"
+					},
+					{
+						"value": "27670",
+						"title": "Xã Tam Thôn Hiệp"
+					},
+					{
+						"value": "27673",
+						"title": "Xã An Thới Đông"
+					},
+					{
+						"value": "27676",
+						"title": "Xã Thạnh An"
+					},
+					{
+						"value": "27679",
+						"title": "Xã Long Hòa"
+					},
+					{
+						"value": "27682",
+						"title": "Xã Lý Nhơn"
+					}
+				]
+			}
+		],
+		"_id": "5dee5c9da346f80e8c60b123",
+		"value": "79",
+		"title": "Thành phố Hồ Chí Minh"
 	}
 ]

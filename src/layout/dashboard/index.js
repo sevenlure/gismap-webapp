@@ -19,7 +19,7 @@ import {
   updateKeyPath,
   updateSubMenu,
   // getDepartment,
-  getListUser,
+  // getListUser,
   isLoadedDanhMuc
 } from 'src/redux/actions/generalAction'
 import { hanhchinhUpdate } from 'src/redux/actions/layerAction'
@@ -84,7 +84,7 @@ const ContentWrapper = styled.div`
     isAuthenticated: _get(state, 'AuthStore.isAuthenticated', false),
     token: _get(state, 'AuthStore.token', null)
   }),
-  { updateKeyPath, updateSubMenu, getListUser, isLoadedDanhMuc, hanhchinhUpdate }
+  { updateKeyPath, updateSubMenu, isLoadedDanhMuc, hanhchinhUpdate }
 )
 @hocProtectLogin
 @windowSize

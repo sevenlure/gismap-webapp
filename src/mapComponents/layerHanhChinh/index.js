@@ -1,6 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import styled from 'styled-components'
+// import styled from 'styled-components'
 import Choropleth from 'react-leaflet-choropleth'
 import { connect } from 'react-redux'
 import { get as _get } from 'lodash-es'
@@ -16,6 +16,12 @@ const mapDispatchToProps = {}
 
 @connect(mapStateToProps, mapDispatchToProps)
 export default class LayerHanhChinh extends React.Component {
+  static propTypes = {
+    filterLevel: PropTypes.any,
+    layer_hc_province: PropTypes.any,
+    layer_hc_district: PropTypes.any,
+    layer_hc_ward: PropTypes.any
+  }
   render() {
     const { filterLevel } = this.props
     const { layer_hc_province, layer_hc_district, layer_hc_ward } = this.props

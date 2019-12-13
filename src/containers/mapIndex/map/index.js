@@ -7,7 +7,7 @@ import {
 } from 'react-leaflet'
 import ReactLeafletGoogleLayer from 'react-leaflet-google-layer'
 
-import data from './tamp.json'
+// import data from './tamp.json'
 import LayerHanhChinhComp from 'src/mapComponents/layerHanhChinh'
 export default class SimpleExample extends Component {
   state = {
