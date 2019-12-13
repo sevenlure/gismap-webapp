@@ -19,8 +19,8 @@ export default class HeaderContainer extends React.Component {
   render() {
     return (
       <HeaderWrapper>
-        <div>
-          <img height={42} src='/static/images/logo_withName.jpg' />
+        <div style={{}}>
+          <img height={40} src='/static/images/logo_withName.jpg' />
         </div>
         <div style={{ height: '100%', minWidth: 300 }}>
           <Input.Search

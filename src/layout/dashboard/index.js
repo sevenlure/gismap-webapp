@@ -31,13 +31,14 @@ import HeaderContainer from './header'
 import IconSvg from 'icons'
 
 const MapComp = dynamic(() => import('src/containers/mapIndex/map/index'), { ssr: false })
+// import MapComp from 'src/containers/mapIndex/map/index'
 
 const LayoutWrapper = styled.div``
 const ContentWrapper = styled.div`
   display: flex;
   height: calc(100vh - 50px);
   .icon-bar {
-    width: 64px;
+    width: 46px;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
@@ -51,7 +52,8 @@ const ContentWrapper = styled.div`
       .icon-bar-item {
         width: 40px;
         height: 40px;
-        margin-top: 16px;
+        margin-top: 12px;
+        zoom: 0.9;
       }
     }
     .bottom {
@@ -60,7 +62,8 @@ const ContentWrapper = styled.div`
       .icon-bar-item {
         width: 40px;
         height: 40px;
-        margin-bottom: 16px;
+        margin-bottom: 12px;
+        zoom: 0.9;
       }
     }
   }
@@ -106,7 +109,8 @@ class AppWithLayout extends React.Component {
     isLoaded: false,
     collapsed: false,
     broken: false,
-    pageName: ''
+    pageName: '',
+    mount: false
   }
 
   onCollapse = collapsed => {
@@ -129,22 +133,27 @@ class AppWithLayout extends React.Component {
     if (!isAuthenticated) {
       Router.push(slug.login)
     } else {
-      this.changePageName()
+      // this.changePageName()
     }
+    this.MapComp = require('../../containers/mapIndex/map/index')
+    console.log('this.MapComp', this.MapComp)
+    this.setState({ mount: true })
+
+    // import MapComp from 'src/containers/mapIndex/map/index'
   }
 
   componentDidUpdate = prevProps => {
-    if (!_isEqual(prevProps.breadcrumb, this.props.breadcrumb)) {
-      this.changePageName()
-    }
+    // if (!_isEqual(prevProps.breadcrumb, this.props.breadcrumb)) {
+    //   this.changePageName()
+    // }
   }
 
-  changePageName = () => {
-    const item = _last(this.props.breadcrumb)
-    this.setState({
-      pageName: item ? item.name : 'Trang chủ'
-    })
-  }
+  // changePageName = () => {
+  //   const item = _last(this.props.breadcrumb)
+  //   this.setState({
+  //     pageName: item ? item.name : 'Trang chủ'
+  //   })
+  // }
 
   changePage = slugPage => {
     Router.push(slugPage)
@@ -197,7 +206,9 @@ class AppWithLayout extends React.Component {
             </div>
             <div className='page-content'> {children}</div>
             <div className='map-content'>
-              <MapComp />
+              {/* <MapComp /> */}
+              {this.state.mount && <MapComp />}
+              {/* <this.MapComp /> */}
             </div>
           </ContentWrapper>
         </Layout.Content>
