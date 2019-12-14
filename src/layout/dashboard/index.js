@@ -6,7 +6,8 @@ import {
   Layout,
   // , Menu, Icon,Row
   Avatar,
-  Button
+  Button,
+  Icon
 } from 'antd'
 // import moment from 'moment'
 import Router from 'next/router'
@@ -32,6 +33,8 @@ import IconSvg from 'icons'
 
 const MapComp = dynamic(() => import('src/containers/mapIndex/map/index'), { ssr: false })
 // import MapComp from 'src/containers/mapIndex/map/index'
+
+const WIDTH_EXPANDED = 'calc((100vw - 346px)*2/5)'
 
 const LayoutWrapper = styled.div``
 const ContentWrapper = styled.div`
@@ -99,8 +102,12 @@ const ContentWrapper = styled.div`
       .button-expand {
         border-bottom-left-radius: 30px;
         border-bottom-right-radius: 30px;
+        /* border-bottom-left-radius: 60px;
+        border-bottom-right-radius: 60px; */
         width: 40px;
         height: 20px;
+        /* width: 100px;
+        height: 50px; */
         display: flex;
         justify-content: center;
       }
@@ -238,7 +245,7 @@ class AppWithLayout extends React.Component {
               {/* <this.MapComp /> */}
             </div>
             <div className='dashboard-content'>
-              <div className='dashboard-content-tab' style={{ width: this.state.isExpand ? 200 : 0 }}>
+              <div className='dashboard-content-tab' style={{ width: this.state.isExpand ? WIDTH_EXPANDED : 0 }}>
                 <div className='dashboard-content-button-container'>
                   <div style={{ transform: 'rotate(90deg)' }}>
                     <Button
