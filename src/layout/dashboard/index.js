@@ -7,7 +7,6 @@ import {
   // , Menu, Icon,Row
   Avatar,
   Button,
-  Icon
 } from 'antd'
 // import moment from 'moment'
 import Router from 'next/router'
@@ -77,6 +76,7 @@ const ContentWrapper = styled.div`
     /* box-shadow: 7px 0px 5px 0px rgba(0, 0, 0, 0.15), 7px 0px 5px 0px rgba(0, 0, 0, 0.12); */
     box-shadow: 6px 6px 5px 0px rgba(0, 0, 0, 0.45);
     z-index: 999;
+    overflow-y: auto;
   }
   .map-content {
     flex: 1;
@@ -224,6 +224,11 @@ class AppWithLayout extends React.Component {
                   </Button>
                 </div>
                 <div className='icon-bar-item'>
+                  <Button shape='circle' size='large'>
+                    <IconSvg.folder style={{ fontSize: 28 }} />
+                  </Button>
+                </div>
+                <div className='icon-bar-item'>
                   <Button shape='circle' size='large' onClick={this.changePage.bind(this, slug.analytics)}>
                     <IconSvg.analytics style={{ fontSize: 28 }} />
                   </Button>
@@ -235,6 +240,11 @@ class AppWithLayout extends React.Component {
                 </div>
                 <div className='icon-bar-item'>
                   <Button shape='circle' style={{ fontSize: 24, color: '#1185E0' }} icon='question' size='large' />
+                </div>
+                <div className='icon-bar-item'>
+                  <Button shape='circle' size='large'>
+                    <IconSvg.notification style={{ fontSize: 28 }} />
+                  </Button>
                 </div>
               </div>
             </div>
