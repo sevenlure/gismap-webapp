@@ -40,6 +40,9 @@ export default class PanelGeneralComp extends React.Component {
         <div>
           <Checkbox>Shopping Centres</Checkbox>
         </div>
+        <div>
+          <Checkbox>Uncategorized markers</Checkbox>
+        </div>
       </div>
     )
   }
