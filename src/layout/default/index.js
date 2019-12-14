@@ -164,7 +164,7 @@ class AppWithLayout extends React.Component {
     return (
       <LayoutWrapper windowWidth={windowWidth}>
         <Head>
-          <title>Bất động sản</title>
+          <title>Location Analytics</title>
         </Head>
 
         <Layout>

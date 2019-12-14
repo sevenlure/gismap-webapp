@@ -199,7 +199,7 @@ class AppWithLayout extends React.Component {
     return (
       <LayoutWrapper windowWidth={windowWidth}>
         <Head>
-          <title>Bất động sản</title>
+          <title>Location Analytics</title>
         </Head>
         <Layout.Header style={{ backgroundColor: 'white', padding: 0, height: 50 }}>
           <HeaderContainer />
