@@ -6,7 +6,7 @@ import {
   Layout,
   // , Menu, Icon,Row
   Avatar,
-  Button,
+  Button
 } from 'antd'
 // import moment from 'moment'
 import Router from 'next/router'
