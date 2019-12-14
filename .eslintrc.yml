@@ -1,6 +1,6 @@
 root: true
 
-parser: "babel-eslint"
+parser: 'babel-eslint'
 
 env: # https://eslint.org/docs/user-guide/configuring#specifying-environments
   es6: true
@@ -19,6 +19,7 @@ extends:
 
 rules:
   react/display-name: [0]
+  no-unused-vars: ['warn', {}]
 
 ###--------------------------------------------
 

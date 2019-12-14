@@ -84,6 +84,7 @@ export default class LayerHanhChinh extends React.Component {
               filterIdSelected.includes(geoJsonFeature.properties.Ma)
             )
           }}
+          // smoothFactor={3}
           // ref={el => (this.choropleth = el.leafletElement)}
         />
       </div>
