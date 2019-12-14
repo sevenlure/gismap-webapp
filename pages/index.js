@@ -11,7 +11,7 @@ import windowSize from 'react-window-size'
 import { setBreadCrumb, updateKeyPath, updateBackgroundColor } from 'src/redux/actions/generalAction'
 import slug, { breadcrumb } from 'src/routes/index'
 // import dynamic from 'next/dynamic'
-import TabLayer from 'src/containers/tabIndex/tabLayout/index.js'
+import LayerControl from 'src/containers/layerControl/tabLayout/index.js'
 // import MapComp from 'src/containers/mapIndex/map'
 
 // const MapComp = dynamic(() => import('../src/containers/mapIndex/map/index'), { ssr: false })
@@ -88,7 +88,7 @@ class Index extends React.Component {
           <Typography.Title level={3}>Layer Control</Typography.Title>
         </div>
         <div>
-          <TabLayer />
+          <LayerControl />
         </div>
         {/* <div className='left-content'>
           <Radio.Group defaultValue={TAB_KEY.LAYER} buttonStyle='solid' onChange={this.setTabActive.bind(this)}>

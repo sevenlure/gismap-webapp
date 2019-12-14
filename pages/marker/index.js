@@ -2,12 +2,11 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import styled from 'styled-components'
 import { connect } from 'react-redux'
-import { Tabs, Radio, Typography } from 'antd'
-import LayoutDashboard from 'src/layout/dashboard'
+import { Typography } from 'antd'
 import windowSize from 'react-window-size'
-import { setBreadCrumb, updateKeyPath, updateBackgroundColor } from 'src/redux/actions/generalAction'
-import slug, { breadcrumb } from 'src/routes/index'
-import dynamic from 'next/dynamic'
+
+import LayoutDashboard from 'src/layout/dashboard'
+import MarkerControl from 'src/containers/markerControl'
 
 const WrapperIndex = styled.div``
 
@@ -30,7 +29,9 @@ class MakerPage extends React.Component {
         <div style={{ padding: 4, paddingLeft: 8 }}>
           <Typography.Title level={3}>Marker Control</Typography.Title>
         </div>
-        <div></div>
+        <div>
+          <MarkerControl />
+        </div>
       </WrapperIndex>
     )
   }

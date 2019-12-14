@@ -14,7 +14,7 @@ const TabLayerWrapper = styled.div`
 const mapStateToProps = () => ({})
 const mapDispatchToProps = {}
 @connect(mapStateToProps, mapDispatchToProps)
-class TabLayer extends React.Component {
+class LayerControl extends React.Component {
   static propTypes = {}
 
   state = {
@@ -34,4 +34,4 @@ class TabLayer extends React.Component {
   }
 }
 
-export default TabLayer
+export default LayerControl
