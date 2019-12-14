@@ -77,8 +77,34 @@ const ContentWrapper = styled.div`
   }
   .map-content {
     flex: 1;
-    width: calc(100vw - 364px);
+    width: calc(100vw - 346px);
     min-height: calc(100vh - 50px);
+  }
+  .dashboard-content {
+    position: absolute;
+    .dashboard-content-tab {
+      z-index: 9999;
+      width: 200px;
+      height: 100%;
+      background: white;
+      position: fixed;
+      right: 0px;
+      transition: width 0.3s;
+    }
+    .dashboard-content-button-container {
+      z-index: 999999999;
+      position: absolute;
+      left: -30px;
+      top: 50%;
+      .button-expand {
+        border-bottom-left-radius: 30px;
+        border-bottom-right-radius: 30px;
+        width: 40px;
+        height: 20px;
+        display: flex;
+        justify-content: center;
+      }
+    }
   }
 `
 
@@ -110,7 +136,8 @@ class AppWithLayout extends React.Component {
     collapsed: false,
     broken: false,
     pageName: '',
-    mount: false
+    mount: false,
+    isExpand: false
   }
 
   onCollapse = collapsed => {
@@ -209,6 +236,23 @@ class AppWithLayout extends React.Component {
               {/* <MapComp /> */}
               {this.state.mount && <MapComp />}
               {/* <this.MapComp /> */}
+            </div>
+            <div className='dashboard-content'>
+              <div className='dashboard-content-tab' style={{ width: this.state.isExpand ? 200 : 0 }}>
+                <div className='dashboard-content-button-container'>
+                  <div style={{ transform: 'rotate(90deg)' }}>
+                    <Button
+                      type='primary'
+                      className='button-expand'
+                      icon='down'
+                      onClick={() => {
+                        this.setState({ isExpand: !this.state.isExpand })
+                      }}
+                    ></Button>
+                  </div>
+                </div>
+                <div style={{ minWidth: 200 }}>day la dashboard</div>
+              </div>
             </div>
           </ContentWrapper>
         </Layout.Content>
