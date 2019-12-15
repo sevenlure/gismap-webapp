@@ -250,11 +250,13 @@ class AppWithLayout extends React.Component {
               </div>
             </div>
             <div className='page-content'> {children}</div>
+
             <div className='map-content'>
               {/* <MapComp /> */}
               {this.state.mount && <MapComp />}
               {/* <this.MapComp /> */}
             </div>
+
             <div className='dashboard-content'>
               <div className='dashboard-content-tab' style={{ width: this.state.isExpand ? WIDTH_EXPANDED : 0 }}>
                 <div className='dashboard-content-button-container'>

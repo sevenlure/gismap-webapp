@@ -2,11 +2,13 @@ import update from 'react-addons-update'
 import storage from 'redux-persist/lib/storage'
 import { persistReducer } from 'redux-persist'
 
+import { LAYER_LOADING, LAYER_LOADED } from '../actions/layerAction'
 import { HANHCHINH_UPDATE, HANHCHINH_LOADED } from '../actions/layerAction'
 import { UPDATE_MARKER_GENERAL_COUNT_LOADED, UPDATE_MARKER_GENERAL_COUNT } from '../actions/layerAction'
 import { UPDATE_MARKER_GENERAL_BY_KEY, UPDATE_MARKER_GENERAL_BY_KEY_LOADING } from '../actions/layerAction'
 
 const InitialState = {
+  isLoadingLayer: false,
   hanhChinhIsLoaded: false,
   hanhChinh: {
     province: [],
@@ -21,6 +23,22 @@ const InitialState = {
 // REDUCERS
 const layerReducer = (state = InitialState, action) => {
   switch (action.type) {
+    /* #region  chung */
+    case LAYER_LOADING: {
+      return update(state, {
+        isLoadingLayer: {
+          $set: true
+        }
+      })
+    }
+    case LAYER_LOADED: {
+      return update(state, {
+        isLoadingLayer: {
+          $set: false
+        }
+      })
+    }
+    /* #endregion */
     /* #region  Hanh chinh */
     case HANHCHINH_LOADED: {
       return update(state, {
