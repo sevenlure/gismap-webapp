@@ -8,5 +8,5 @@ export default combineReducers({
   AuthStore: authReducer,
   // GeneralStore: gereralReducer,
   FilterStore: filterReducer,
-  LayerReducer: layerReducer
+  LayerStore: layerReducer
 })

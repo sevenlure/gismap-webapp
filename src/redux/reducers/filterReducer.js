@@ -64,10 +64,13 @@ const filterReducer = (state = InitialState, action) => {
   }
 }
 
-const generalPersistConfig = {
-  key: 'FilterStore',
-  storage: storage,
-  blacklist: ['layer', 'marker', 'markerActivePanel']
-}
+// MARK  Mở đoạn code này khi cần persist deep
+// const filterPersistConfig = {
+//   key: 'FilterStore',
+//   storage: storage,
+//   blacklist: ['layer', 'marker', 'markerActivePanel']
+// }
 
-export default persistReducer(generalPersistConfig, filterReducer)
+// export default persistReducer(filterPersistConfig, filterReducer)
+
+export default filterReducer

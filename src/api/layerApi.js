@@ -15,6 +15,11 @@ export function getAllHanhChinh() {
   return fetch.get(`${SLUG}/getAllHanhChinh`)
 }
 
+export function getMarkerGeneralCountAll() {
+  return fetch.get(`${SLUG}/marker-general/countAll`)
+}
+
 export default {
-  getAllHanhChinh
+  getAllHanhChinh,
+  getMarkerGeneralCountAll
 }

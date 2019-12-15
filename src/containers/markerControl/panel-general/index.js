@@ -2,7 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 // import styled from 'styled-components'
 import { connect } from 'react-redux'
-import { Checkbox } from 'antd'
+import { Checkbox, Icon } from 'antd'
 import { get } from 'lodash-es'
 
 import { updateMarkerWithKey } from 'src/redux/actions/filterAction'
@@ -23,7 +23,9 @@ const GENERAL_KEY = {
 }
 
 const mapStateToProps = state => ({
-  filterMarker: get(state, 'FilterStore.marker')
+  filterMarker: get(state, 'FilterStore.marker'),
+  markerGeneralCountIsLoaded: get(state, 'LayerStore.markerGeneralCountIsLoaded'),
+  markerGeneralCount: get(state, 'LayerStore.markerGeneralCount')
 })
 const mapDispatchToProps = { updateMarkerWithKey }
 
@@ -31,7 +33,8 @@ const mapDispatchToProps = { updateMarkerWithKey }
 export default class PanelGeneralComp extends React.Component {
   static propTypes = {
     updateMarkerWithKey: PropTypes.func.isRequired,
-    filterMarker: PropTypes.object.isRequired
+    filterMarker: PropTypes.object.isRequired,
+    markerGeneralCount: PropTypes.object.isRequired
   }
 
   onChangeMarker = e => {
@@ -39,118 +42,80 @@ export default class PanelGeneralComp extends React.Component {
     this.props.updateMarkerWithKey(GENERAL_KEY, checked)
   }
   render() {
-    const { filterMarker } = this.props
+    const { filterMarker, markerGeneralCount } = this.props
+
     return (
       <div>
         <div>
-          <Checkbox
-            GENERAL_KEY={GENERAL_KEY.ACADEMIES}
-            checked={filterMarker[GENERAL_KEY.ACADEMIES]}
-            onChange={this.onChangeMarker}
-          >
-            Academies
-          </Checkbox>
+          <CheckboxGeneral targetKey={GENERAL_KEY.ACADEMIES} label='Academies'></CheckboxGeneral>
         </div>
         <div>
-          <Checkbox
-            GENERAL_KEY={GENERAL_KEY.ACCOMMODATION}
-            checked={filterMarker[GENERAL_KEY.ACCOMMODATION]}
-            onChange={this.onChangeMarker}
-          >
-            Accommodation
-          </Checkbox>
+          <CheckboxGeneral targetKey={GENERAL_KEY.ACCOMMODATION} label='Accommodation'></CheckboxGeneral>
         </div>
         <div>
-          <Checkbox
-            GENERAL_KEY={GENERAL_KEY.AUTOMOTIVE}
-            checked={filterMarker[GENERAL_KEY.AUTOMOTIVE]}
-            onChange={this.onChangeMarker}
-          >
-            Automotive
-          </Checkbox>
+          <CheckboxGeneral targetKey={GENERAL_KEY.AUTOMOTIVE} label='Automotive'></CheckboxGeneral>
         </div>
         <div>
-          <Checkbox
-            GENERAL_KEY={GENERAL_KEY.BARS_AND_RESTAURANTS}
-            checked={filterMarker[GENERAL_KEY.BARS_AND_RESTAURANTS]}
-            onChange={this.onChangeMarker}
-          >
-            Bars and restaurants
-          </Checkbox>
+          <CheckboxGeneral targetKey={GENERAL_KEY.BARS_AND_RESTAURANTS} label='Bars and restaurants'></CheckboxGeneral>
         </div>
         <div>
-          <Checkbox
-            GENERAL_KEY={GENERAL_KEY.FASHION}
-            checked={filterMarker[GENERAL_KEY.FASHION]}
-            onChange={this.onChangeMarker}
-          >
-            Fashion
-          </Checkbox>
+          <CheckboxGeneral targetKey={GENERAL_KEY.FASHION} label='Fashion'></CheckboxGeneral>
         </div>
         <div>
-          <Checkbox
-            GENERAL_KEY={GENERAL_KEY.GENERAL_SERVICES}
-            checked={filterMarker[GENERAL_KEY.GENERAL_SERVICES]}
-            onChange={this.onChangeMarker}
-          >
-            General services
-          </Checkbox>
+          <CheckboxGeneral targetKey={GENERAL_KEY.GENERAL_SERVICES} label='General services'></CheckboxGeneral>
         </div>
         <div>
-          <Checkbox
-            GENERAL_KEY={GENERAL_KEY.HEALTH_BEAUTY}
-            checked={filterMarker[GENERAL_KEY.HEALTH_BEAUTY]}
-            onChange={this.onChangeMarker}
-          >
-            Health {'&'} Beauty
-          </Checkbox>
+          <CheckboxGeneral targetKey={GENERAL_KEY.HEALTH_BEAUTY} label={'Health & Beauty'}></CheckboxGeneral>
         </div>
         <div>
-          <Checkbox
-            GENERAL_KEY={GENERAL_KEY.HOME_OFFICE}
-            checked={filterMarker[GENERAL_KEY.HOME_OFFICE]}
-            onChange={this.onChangeMarker}
-          >
-            Home {'&'} Office
-          </Checkbox>
+          <CheckboxGeneral targetKey={GENERAL_KEY.HOME_OFFICE} label={'Home & Office'}></CheckboxGeneral>
         </div>
         <div>
-          <Checkbox
-            GENERAL_KEY={GENERAL_KEY.LEISURE}
-            checked={filterMarker[GENERAL_KEY.LEISURE]}
-            onChange={this.onChangeMarker}
-          >
-            Leisure
-          </Checkbox>
+          <CheckboxGeneral targetKey={GENERAL_KEY.LEISURE} label={'Leisure'}></CheckboxGeneral>
         </div>
         <div>
-          <Checkbox
-            GENERAL_KEY={GENERAL_KEY.SERVICES}
-            checked={filterMarker[GENERAL_KEY.SERVICES]}
-            onChange={this.onChangeMarker}
-          >
-            Services
-          </Checkbox>
+          <CheckboxGeneral targetKey={GENERAL_KEY.SERVICES} label={'Services'}></CheckboxGeneral>
         </div>
         <div>
-          <Checkbox
-            GENERAL_KEY={GENERAL_KEY.SHOPPING_CENTRES}
-            checked={filterMarker[GENERAL_KEY.SHOPPING_CENTRES]}
-            onChange={this.onChangeMarker}
-          >
-            Shopping Centres
-          </Checkbox>
+          <CheckboxGeneral targetKey={GENERAL_KEY.SHOPPING_CENTRES} label={'Shopping Centres'}></CheckboxGeneral>
         </div>
         <div>
-          <Checkbox
-            GENERAL_KEY={GENERAL_KEY.UNCATEGORIZED_MARKERS}
-            checked={filterMarker[GENERAL_KEY.UNCATEGORIZED_MARKERS]}
-            onChange={this.onChangeMarker}
-          >
-            Uncategorized markers
-          </Checkbox>
+          <CheckboxGeneral
+            targetKey={GENERAL_KEY.UNCATEGORIZED_MARKERS}
+            label={'Uncategorized markers'}
+          ></CheckboxGeneral>
         </div>
       </div>
+    )
+  }
+}
+
+@connect(mapStateToProps, mapDispatchToProps)
+class CheckboxGeneral extends React.Component {
+  static propTypes = {
+    updateMarkerWithKey: PropTypes.func.isRequired,
+    targetKey: PropTypes.string.isRequired,
+    filterMarker: PropTypes.object.isRequired,
+    label: PropTypes.string.isRequired,
+    markerGeneralCountIsLoaded: PropTypes.bool.isRequired,
+    markerGeneralCount: PropTypes.object.isRequired
+  }
+
+  onChangeMarker = e => {
+    console.log('CheckboxGeneral', this.props)
+    const { GENERAL_KEY, checked } = e.target
+    this.props.updateMarkerWithKey(GENERAL_KEY, checked)
+  }
+
+  render() {
+    const { targetKey, filterMarker, label, markerGeneralCountIsLoaded, markerGeneralCount } = this.props
+    return (
+      <Checkbox GENERAL_KEY={targetKey} checked={filterMarker[targetKey]} onChange={this.onChangeMarker}>
+        {label}
+        <span style={{ marginLeft: 4, color: '#bfbfbf' }}>
+          {markerGeneralCountIsLoaded ? `(${get(markerGeneralCount, targetKey, 0)})` : <Icon type='loading' />}
+        </span>
+      </Checkbox>
     )
   }
 }

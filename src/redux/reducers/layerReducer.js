@@ -3,6 +3,7 @@ import storage from 'redux-persist/lib/storage'
 import { persistReducer } from 'redux-persist'
 
 import { HANHCHINH_UPDATE, HANHCHINH_LOADED } from '../actions/layerAction'
+import { UPDATE_MARKER_GENERAL_COUNT_LOADED, UPDATE_MARKER_GENERAL_COUNT } from '../actions/layerAction'
 
 const InitialState = {
   hanhChinhIsLoaded: false,
@@ -10,12 +11,15 @@ const InitialState = {
     province: [],
     district: [],
     ward: []
-  }
+  },
+  markerGeneralCountIsLoaded: false,
+  markerGeneralCount: {}
 }
 
 // REDUCERS
 const layerReducer = (state = InitialState, action) => {
   switch (action.type) {
+    /* #region  Hanh chinh */
     case HANHCHINH_LOADED: {
       return update(state, {
         hanhChinhIsLoaded: {
@@ -35,16 +39,34 @@ const layerReducer = (state = InitialState, action) => {
         }
       })
     }
-
+    /* #endregion */
+    /* #region  marker general */
+    case UPDATE_MARKER_GENERAL_COUNT_LOADED: {
+      return update(state, {
+        markerGeneralCountIsLoaded: {
+          $set: true
+        }
+      })
+    }
+    case UPDATE_MARKER_GENERAL_COUNT: {
+      return update(state, {
+        markerGeneralCount: {
+          $merge: action.payload
+        }
+      })
+    }
+    /* #endregion */
     default:
       return state
   }
 }
 
-const layerPersistConfig = {
-  key: 'LayerStore',
-  storage: storage,
-  blacklist: ['hanhChinh', 'hanhChinhIsLoaded']
-}
+// MARK  Mở đoạn code này khi cần persist deep
+// const layerPersistConfig = {
+//   key: 'LayerStore',
+//   storage: storage
+//   // blacklist: ['hanhChinh', 'hanhChinhIsLoaded', 'markerGeneralCountIsLoaded', 'markerGeneralCount']
+// }
+// export default persistReducer(layerPersistConfig, layerReducer)
 
-export default persistReducer(layerPersistConfig, layerReducer)
+export default layerReducer
