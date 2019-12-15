@@ -6,9 +6,9 @@ import { connect } from 'react-redux'
 import { get as _get, isEqual } from 'lodash-es'
 
 const mapStateToProps = state => ({
-  layer_hc_province: _get(state, 'LayerReducer.hanhChinh.province'),
-  layer_hc_district: _get(state, 'LayerReducer.hanhChinh.district'),
-  layer_hc_ward: _get(state, 'LayerReducer.hanhChinh.ward'),
+  layer_hc_province: _get(state, 'LayerStore.hanhChinh.province'),
+  layer_hc_district: _get(state, 'LayerStore.hanhChinh.district'),
+  layer_hc_ward: _get(state, 'LayerStore.hanhChinh.ward'),
 
   filterLevel: _get(state, 'FilterStore.layer.hanhChinh.level'),
   filterIdSelected: _get(state, 'FilterStore.layer.hanhChinh.arrayIdSelected')
@@ -56,7 +56,7 @@ export default class LayerHanhChinh extends React.Component {
         break
       }
     }
-    if (_data.length === 0) return null
+    if (!_data || _data.length === 0) return null
     if (this.state.isLoading) return null
 
     return (
