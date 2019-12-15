@@ -1,14 +1,19 @@
 import React, { Component } from 'react'
 import {
   Map,
+  TileLayer,
   // , TileLayer , GeoJSON
   Popup,
   Marker
 } from 'react-leaflet'
 import ReactLeafletGoogleLayer from 'react-leaflet-google-layer'
+import dynamic from 'next/dynamic'
 
 // import data from './tamp.json'
+import SpinComp from 'src/mapComponents/elements/spin'
 import LayerHanhChinhComp from 'src/mapComponents/layerHanhChinh'
+import LayerMarkerComp from 'src/mapComponents/layerMarker'
+
 export default class SimpleExample extends Component {
   state = {
     lat: 21.0228161,
@@ -42,12 +47,14 @@ export default class SimpleExample extends Component {
           url='https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png'
         /> */}
         <ReactLeafletGoogleLayer googleMapsLoaderConf={{ KEY: process.env.GOOGLE_MAP_API_KEY }} type={'roadmap'} />
+        <SpinComp />
         <Marker position={position}>
           <Popup>
             A pretty CSS3 popup. <br /> Easily customizable.
           </Popup>
         </Marker>
         <LayerHanhChinhComp />
+        <LayerMarkerComp />
         {/* <GeoJSON data={data} /> */}
       </Map>
     )

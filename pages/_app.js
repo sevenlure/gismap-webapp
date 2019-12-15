@@ -11,6 +11,7 @@ import Loader from 'src/components/loading-screen'
 // import 'src/less/font.less'
 import 'src/less/app.less'
 import 'src/less/responsive.less'
+import 'react-leaflet-markercluster/dist/styles.min.css'
 
 const reduxStore = getOrCreateStore()
 

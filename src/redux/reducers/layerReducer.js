@@ -4,6 +4,7 @@ import { persistReducer } from 'redux-persist'
 
 import { HANHCHINH_UPDATE, HANHCHINH_LOADED } from '../actions/layerAction'
 import { UPDATE_MARKER_GENERAL_COUNT_LOADED, UPDATE_MARKER_GENERAL_COUNT } from '../actions/layerAction'
+import { UPDATE_MARKER_GENERAL_BY_KEY, UPDATE_MARKER_GENERAL_BY_KEY_LOADING } from '../actions/layerAction'
 
 const InitialState = {
   hanhChinhIsLoaded: false,
@@ -13,7 +14,8 @@ const InitialState = {
     ward: []
   },
   markerGeneralCountIsLoaded: false,
-  markerGeneralCount: {}
+  markerGeneralCount: {},
+  markerGeneral: {}
 }
 
 // REDUCERS
@@ -52,6 +54,32 @@ const layerReducer = (state = InitialState, action) => {
       return update(state, {
         markerGeneralCount: {
           $merge: action.payload
+        }
+      })
+    }
+    // MARK  markerGeneral
+    case UPDATE_MARKER_GENERAL_BY_KEY_LOADING: {
+      const { key } = action.payload
+      return update(state, {
+        markerGeneral: {
+          $merge: {
+            [key]: {
+              isLoading: true
+            }
+          }
+        }
+      })
+    }
+    case UPDATE_MARKER_GENERAL_BY_KEY: {
+      const { key, list } = action.payload
+      return update(state, {
+        markerGeneral: {
+          $merge: {
+            [key]: {
+              isLoading: false,
+              list
+            }
+          }
         }
       })
     }
