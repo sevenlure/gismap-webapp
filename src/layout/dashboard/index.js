@@ -247,6 +247,11 @@ class AppWithLayout extends React.Component {
                     <IconSvg.notification style={{ fontSize: 28 }} />
                   </Button>
                 </div>
+                <div className='icon-bar-item'>
+                  <Button shape='circle' size='large'>
+                    <IconSvg.marketplace style={{ fontSize: 28 }} />
+                  </Button>
+                </div>
               </div>
             </div>
             <div className='page-content'> {children}</div>

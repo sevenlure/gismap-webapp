@@ -4,6 +4,7 @@ import AnalyticsIcon from 'static/images/icon/analytics.svg'
 import QuestionIcon from 'static/images/icon/question.svg'
 import FolderIcon from 'static/images/icon/folder.svg'
 import NotificationIcon from 'static/images/icon/notification.svg'
+import MarketplaceIcon from 'static/images/icon/marketplace.svg'
 
 export default {
   layers: LayersIcon,
@@ -11,5 +12,6 @@ export default {
   analytics: AnalyticsIcon,
   question: QuestionIcon,
   folder: FolderIcon,
-  notification: NotificationIcon
+  notification: NotificationIcon,
+  marketplace: MarketplaceIcon
 }

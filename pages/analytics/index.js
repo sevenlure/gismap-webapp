@@ -9,6 +9,7 @@ import dynamic from 'next/dynamic'
 
 import { setBreadCrumb, updateKeyPath, updateBackgroundColor } from 'src/redux/actions/generalAction'
 import slug, { breadcrumb } from 'src/routes/index'
+import AnalyticsControlComp from 'src/containers/analyticsControl'
 
 const WrapperIndex = styled.div``
 
@@ -31,7 +32,9 @@ class AnalyticsPage extends React.Component {
         <div style={{ padding: 4, paddingLeft: 8 }}>
           <Typography.Title level={3}>Analytics Control</Typography.Title>
         </div>
-        <div></div>
+        <div>
+          <AnalyticsControlComp />
+        </div>
       </WrapperIndex>
     )
   }
