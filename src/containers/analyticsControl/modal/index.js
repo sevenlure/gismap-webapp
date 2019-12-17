@@ -1,8 +1,9 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import styled from 'styled-components'
-
 import { Tag, Modal, Radio, Tabs } from 'antd'
+
+import TabInfo from './tabInfo'
 
 const { TabPane } = Tabs
 
@@ -58,7 +59,7 @@ export default class ModalTag extends React.Component {
             </Radio.Group>
             <Tabs defaultActiveKey='1' renderTabBar={() => <div />}>
               <TabPane tab='Tab 1' key='1'>
-                Content of Tab Info
+                <TabInfo />
               </TabPane>
               <TabPane tab='Tab 2' key='2'>
                 Content of Tab Pane 2
