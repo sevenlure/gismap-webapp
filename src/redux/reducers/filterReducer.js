@@ -1,6 +1,6 @@
 import update from 'react-addons-update'
-import storage from 'redux-persist/lib/storage'
-import { persistReducer } from 'redux-persist'
+// import storage from 'redux-persist/lib/storage'
+// import { persistReducer } from 'redux-persist'
 
 // MARK  Layer
 import { UPDATE_LAYER_CAP_HANH_CHINH, UPDATE_LAYER_VUNG_HANH_CHINH } from '../actions/filterAction'

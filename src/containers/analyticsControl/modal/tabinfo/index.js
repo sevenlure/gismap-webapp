@@ -3,6 +3,10 @@ import PropTypes from 'prop-types'
 import styled from 'styled-components'
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd'
 import { Tag, Card, Input, Icon } from 'antd'
+import { pull as _pull } from 'lodash-es'
+
+import ItemAttribute from './itemAttribute'
+import ItemVisibleAttribute from './itemVisibleAttribute'
 
 const Wrapper = styled.div`
   display: flex;
@@ -28,6 +32,14 @@ const ContainerColumn = styled.div`
 `
 const Title = styled.h3`
   padding: 8px;
+`
+
+const TaskList = styled.div`
+  padding: 8px;
+  transition: background-color 0.2s ease;
+  background-color: ${props => (props.isDraggingOver ? 'skyblue' : '#e8e8e8')};
+  flex-grow: 1;
+  min-height: 100px;
 `
 
 const initialData = {
@@ -120,6 +132,27 @@ export default class TabInfo extends React.Component {
     this.setState(newState)
   }
 
+  backtoSource = (column, taskIdBack) => {
+    let newColumnRemove = {
+      ...column
+    }
+    _pull(newColumnRemove.taskIds, taskIdBack)
+    const columnSource = this.state.columns['column-source-attribute']
+    let newColumnSource = {
+      ...columnSource,
+      taskIds: [...columnSource.taskIds, taskIdBack]
+    }
+    const newState = {
+      ...this.state,
+      columns: {
+        ...this.state.columns,
+        ['column-source-attribute']: newColumnSource,
+        [newColumnRemove.id]: newColumnRemove
+      }
+    }
+    this.setState(newState)
+  }
+
   render() {
     const columnSourceAttribute = this.state.columns['column-source-attribute']
     const tasksSourceAttribute = columnSourceAttribute.taskIds.map(taskId => this.state.tasks[taskId])
@@ -149,7 +182,7 @@ export default class TabInfo extends React.Component {
                     style={{ backgroundColor: 'white' }}
                   >
                     {tasksSourceAttribute.map((task, index) => (
-                      <Task key={task.id} task={task} index={index} />
+                      <ItemAttribute key={task.id} task={task} index={index} />
                     ))}
                     {provided.placeholder}
                   </TaskList>
@@ -166,7 +199,13 @@ export default class TabInfo extends React.Component {
                     isDraggingOver={snapshot.isDraggingOver}
                   >
                     {tasksVisibleAttribute.map((task, index) => (
-                      <Task key={task.id} task={task} index={index} />
+                      <ItemVisibleAttribute
+                        key={task.id}
+                        task={task}
+                        column={columnVisibleAttribute}
+                        index={index}
+                        backtoSource={this.backtoSource}
+                      />
                     ))}
                     {provided.placeholder}
                   </TaskList>
@@ -183,7 +222,7 @@ export default class TabInfo extends React.Component {
                     isDraggingOver={snapshot.isDraggingOver}
                   >
                     {tasksChartAttribute.map((task, index) => (
-                      <Task key={task.id} task={task} index={index} />
+                      <ItemAttribute key={task.id} task={task} index={index} />
                     ))}
                     {provided.placeholder}
                   </TaskList>
@@ -193,45 +232,6 @@ export default class TabInfo extends React.Component {
           </ContainerTop>
         </DragDropContext>
       </Wrapper>
-    )
-  }
-}
-
-const TaskList = styled.div`
-  padding: 8px;
-  transition: background-color 0.2s ease;
-  background-color: ${props => (props.isDraggingOver ? 'skyblue' : '#e8e8e8')};
-  flex-grow: 1;
-  min-height: 100px;
-`
-
-const Container3 = styled.div`
-  padding: 8px;
-  /* border: 1px solid lightgrey; */
-  border: 1px solid #d9d9d9;
-  border-radius: 2px;
-  margin-bottom: 8px;
-  background-color: ${props => (props.isDragging ? 'lightgreen' : '#fafafa')};
-
-  display: flex;
-`
-
-class Task extends React.Component {
-  render() {
-    return (
-      <Draggable draggableId={this.props.task.id} index={this.props.index}>
-        {(provided, snapshot) => (
-          <Container3
-            {...provided.draggableProps}
-            {...provided.dragHandleProps}
-            ref={provided.innerRef}
-            isDragging={snapshot.isDragging}
-          >
-            {/* <Handle {...provided.dragHandleProps} /> */}
-            {this.props.task.content}
-          </Container3>
-        )}
-      </Draggable>
     )
   }
 }

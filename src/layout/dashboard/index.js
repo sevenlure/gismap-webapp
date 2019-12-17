@@ -83,6 +83,7 @@ const ContentWrapper = styled.div`
     flex: 1;
     width: calc(100vw - 346px);
     min-height: calc(100vh - 50px);
+    z-index: 1;
   }
   .dashboard-content {
     position: absolute;

@@ -1,6 +1,6 @@
 import update from 'react-addons-update'
-import storage from 'redux-persist/lib/storage'
-import { persistReducer } from 'redux-persist'
+// import storage from 'redux-persist/lib/storage'
+// import { persistReducer } from 'redux-persist'
 
 import { LAYER_LOADING, LAYER_LOADED } from '../actions/layerAction'
 import { HANHCHINH_UPDATE, HANHCHINH_LOADED } from '../actions/layerAction'
