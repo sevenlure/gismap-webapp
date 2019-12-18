@@ -12,6 +12,8 @@ const { Text } = Typography
 const ComponentWrapper = styled.div`
   flex: 1;
   .card {
+    border-radius: 5px;
+    border: 1px solid #eee;
     background: #fff;
     width: 100%;
     overflow: hidden;
@@ -174,7 +176,8 @@ class ComponentRnd extends React.Component {
           >
             <div className='card'>
               <div className='card--close' onClick={this.props.onClose}>
-                <Icon type='close-circle' theme='filled' twoToneColor='#fff' />
+                {/* <Icon type='close-circle' theme='filled' twoToneColor='#fff' /> */}
+                <Icon type='close' style={{ color: '#fff' }} />
               </div>
               <div className='card--header'>
                 <span>{this.props.title}</span>
