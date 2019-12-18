@@ -81,7 +81,12 @@ class CheckboxIndustry extends React.Component {
   render() {
     const { targetKey, filterMarker, label, markerGeneralCountIsLoaded, markerGeneralCount } = this.props
     return (
-      <Checkbox INDUSTRY_KEY={targetKey} label={label} checked={filterMarker[targetKey]} onChange={this.onChangeMarker}>
+      <Checkbox
+        INDUSTRY_KEY={targetKey}
+        label={label}
+        checked={filterMarker[targetKey] ? true : false}
+        onChange={this.onChangeMarker}
+      >
         {label}
         <span style={{ marginLeft: 4, color: '#bfbfbf' }}>
           {markerGeneralCountIsLoaded ? `(${get(markerGeneralCount, targetKey, 0)})` : <Icon type='loading' />}

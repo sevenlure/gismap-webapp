@@ -2,9 +2,12 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import styled from 'styled-components'
 import { Tag, Modal, Radio, Tabs } from 'antd'
+import { connect } from 'react-redux'
+import { get } from 'lodash-es'
 
 // import TabInfo from './tabInfo/index2'
 import TabInfo from './tabinfo'
+import { updateTabInfo } from 'src/redux/actions/analyticsAction'
 
 const { TabPane } = Tabs
 
@@ -28,23 +31,48 @@ const ModalWrapperContainer = styled.div`
   }
 `
 
+const mapStateToProps = state => ({
+  AnalyticsStore: get(state, 'AnalyticsStore')
+})
+const mapDispatchToProps = { updateTabInfo }
+
+@connect(mapStateToProps, mapDispatchToProps)
 export default class ModalTag extends React.Component {
+  static propTypes = {
+    getRef: PropTypes.func.isRequired,
+    updateTabInfo: PropTypes.func.isRequired,
+    AnalyticsStore: PropTypes.object.isRequired
+  }
+
   state = { isVisible: false }
 
   componentDidMount = () => {
     if (this.props.getRef) this.props.getRef(this)
   }
   openModal = () => {
+    // NOTE  check trong store đã có data chưa, có thì phải set cho Tab
+    // const { AnalyticsStore } = this.props
+    // const targetKey = get(AnalyticsStore, '__target.key')
+    // console.log('AnalyticsStore[targetKey]', AnalyticsStore[targetKey])
+    // if (targetKey && AnalyticsStore[targetKey]) this.TabInfo.setData(AnalyticsStore[targetKey])
+
     this.setState({ isVisible: true })
   }
+  handleTabInfoUpdate = val => {
+    const { AnalyticsStore } = this.props
+    this.props.updateTabInfo(AnalyticsStore.__target.key, val)
+  }
   render() {
+    const { AnalyticsStore } = this.props
+    const { __target } = AnalyticsStore
     return (
       <div>
         <ModalWrapperContainer id='ModalWrapperContainer'></ModalWrapperContainer>
         <Modal
+          destroyOnClose={true}
           width={window.outerWidth * 0.6}
           getContainer={document.getElementById('ModalWrapperContainer')}
-          title='MY STORES'
+          title={__target ? __target.label : 'UNKNOWN'}
           visible={this.state.isVisible}
           onCancel={() => {
             this.setState({ isVisible: false })
@@ -60,7 +88,7 @@ export default class ModalTag extends React.Component {
             </Radio.Group>
             <Tabs defaultActiveKey='1' renderTabBar={() => <div />}>
               <TabPane tab='Tab 1' key='1'>
-                <TabInfo />
+                <TabInfo cbTabInfoVal={this.handleTabInfoUpdate} getRef={ref => (this.TabInfo = ref)} />
               </TabPane>
               <TabPane tab='Tab 2' key='2'>
                 Content of Tab Pane 2

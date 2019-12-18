@@ -9,7 +9,7 @@ const persistConfig = {
   key: 'root',
   storage,
   whitelist: ['AuthStore'],
-  blacklist: ['FilterStore', 'LayerStore'] //PaymentStore
+  blacklist: ['FilterStore', 'LayerStore', 'AnalyticsStore']
 }
 const persistedReducer = persistReducer(persistConfig, rootReducer)
 

@@ -6,7 +6,8 @@ import ItemAttribute from './itemAttribute'
 import ItemVisibleAttribute from './itemVisibleAttribute'
 import ItemChartAttribute from './itemChartAttribute'
 import { Tag, Card, Input, Icon } from 'antd'
-import { pull as _pull } from 'lodash-es'
+import { pull as _pull, get } from 'lodash-es'
+import { connect } from 'react-redux'
 
 const Wrapper = styled.div`
   display: flex;
@@ -70,8 +71,26 @@ const initialData = {
   columnOrder: ['column-source-attribute', 'column-visible-attribute', 'column-chart-attribute']
 }
 
+const mapStateToProps = state => ({
+  AnalyticsStore: get(state, 'AnalyticsStore')
+})
+const mapDispatchToProps = {}
+
+@connect(mapStateToProps, mapDispatchToProps)
 export default class TabInfo extends React.Component {
-  state = initialData
+  static propTypes = {
+    AnalyticsStore: PropTypes.object.isRequired,
+    cbTabInfoVal: PropTypes.func.isRequired,
+    getRef: PropTypes.func.isRequired
+  }
+
+  constructor(props) {
+    super(props)
+    const { AnalyticsStore } = props
+    const targetKey = get(AnalyticsStore, '__target.key')
+    const payload = get(AnalyticsStore, `${targetKey}.tabInfo`, initialData)
+    this.state = payload
+  }
 
   onDragEnd = result => {
     // console.log('result', result)
@@ -130,6 +149,7 @@ export default class TabInfo extends React.Component {
       }
     }
     this.setState(newState)
+    if (this.props.cbTabInfoVal) this.props.cbTabInfoVal(newState)
   }
 
   backtoSource = (column, taskIdBack) => {
@@ -151,6 +171,15 @@ export default class TabInfo extends React.Component {
       }
     }
     this.setState(newState)
+  }
+
+  setData = data => {
+    console.log('setData', data)
+    this.setData({ data })
+  }
+
+  componentDidMount() {
+    if (this.props.getRef) this.props.getRef(this)
   }
 
   render() {
