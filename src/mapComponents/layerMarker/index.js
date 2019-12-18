@@ -36,8 +36,8 @@ export default class LayerMarker extends React.Component {
             if (!data) return
             // NOTE save data vao state
             const tamp = (
-              <FeatureGroup>
-                <MarkerClusterGroup key={key}>
+              <FeatureGroup key={key}>
+                <MarkerClusterGroup>
                   {data.map(point => {
                     const position = _get(point, 'geometry.coordinates')
                     if (!position) return null

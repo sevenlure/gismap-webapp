@@ -33,7 +33,7 @@ const DEUFALT_ACTIVE_KEY = [PANELS_KEY.INDUSTRY]
 export default class MarkerControl extends React.Component {
   static propTypes = {
     updateMarkerPanel: PropTypes.func.isRequired,
-    markerActivePanel: PropTypes.object.isRequired
+    markerActivePanel: PropTypes.array
   }
 
   render() {

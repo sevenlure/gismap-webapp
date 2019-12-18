@@ -33,17 +33,10 @@ const mapDispatchToProps = { updateMarkerWithKey }
 export default class PanelGeneralComp extends React.Component {
   static propTypes = {
     updateMarkerWithKey: PropTypes.func.isRequired,
-    filterMarker: PropTypes.object.isRequired,
-    markerGeneralCount: PropTypes.object.isRequired
+    filterMarker: PropTypes.object.isRequired
   }
 
-  onChangeMarker = e => {
-    const { GENERAL_KEY, checked } = e.target
-    this.props.updateMarkerWithKey(GENERAL_KEY, checked)
-  }
   render() {
-    const { filterMarker, markerGeneralCount } = this.props
-
     return (
       <div>
         <div>
@@ -102,15 +95,24 @@ class CheckboxGeneral extends React.Component {
   }
 
   onChangeMarker = e => {
-    console.log('CheckboxGeneral', this.props)
-    const { GENERAL_KEY, checked } = e.target
-    this.props.updateMarkerWithKey(GENERAL_KEY, checked)
+    const { GENERAL_KEY, label, checked } = e.target
+    if (checked) {
+      this.props.updateMarkerWithKey(GENERAL_KEY, {
+        key: GENERAL_KEY,
+        label
+      })
+    } else this.props.updateMarkerWithKey(GENERAL_KEY, checked)
   }
 
   render() {
     const { targetKey, filterMarker, label, markerGeneralCountIsLoaded, markerGeneralCount } = this.props
     return (
-      <Checkbox GENERAL_KEY={targetKey} checked={filterMarker[targetKey]} onChange={this.onChangeMarker}>
+      <Checkbox
+        GENERAL_KEY={targetKey}
+        label={label}
+        checked={filterMarker[targetKey] ? true : false}
+        onChange={this.onChangeMarker}
+      >
         {label}
         <span style={{ marginLeft: 4, color: '#bfbfbf' }}>
           {markerGeneralCountIsLoaded ? `(${get(markerGeneralCount, targetKey, 0)})` : <Icon type='loading' />}
