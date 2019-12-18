@@ -28,7 +28,7 @@ const nextConfig = {
       //     emitWarning: true
       //   }
       // })
-      // config.plugins.push(new DashboardPlugin())
+      config.plugins.push(new DashboardPlugin())
     } else {
       config.module.rules.push({
         test: /\.js$/,
@@ -101,13 +101,16 @@ const nextConfig = {
 module.exports = withPlugins(
   // MARK  multi plugin nextjs
   [
-    [withCSS, {
-      cssModules: false, // setting to false to prevent any extra stuff added to the class name apart of localIdentName
-      cssLoaderOptions: {
-        importLoaders: 1,
-        localIdentName: "[name]__[local]___[hash:base64:5]", // this was taken from amplify ui webpack config
+    [
+      withCSS,
+      {
+        cssModules: false, // setting to false to prevent any extra stuff added to the class name apart of localIdentName
+        cssLoaderOptions: {
+          importLoaders: 1,
+          localIdentName: '[name]__[local]___[hash:base64:5]' // this was taken from amplify ui webpack config
+        }
       }
-    }],
+    ],
     [
       withLess,
       {
@@ -121,5 +124,3 @@ module.exports = withPlugins(
   ],
   nextConfig
 )
-
-

@@ -3,7 +3,8 @@ import PropTypes from 'prop-types'
 import styled from 'styled-components'
 import { Tag, Modal, Radio, Tabs } from 'antd'
 
-import TabInfo from './tabInfo'
+// import TabInfo from './tabInfo/index2'
+import TabInfo from './tabinfo'
 
 const { TabPane } = Tabs
 

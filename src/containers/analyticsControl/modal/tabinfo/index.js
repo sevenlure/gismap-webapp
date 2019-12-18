@@ -2,11 +2,11 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import styled from 'styled-components'
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd'
-import { Tag, Card, Input, Icon } from 'antd'
-import { pull as _pull } from 'lodash-es'
-
 import ItemAttribute from './itemAttribute'
 import ItemVisibleAttribute from './itemVisibleAttribute'
+import ItemChartAttribute from './itemChartAttribute'
+import { Tag, Card, Input, Icon } from 'antd'
+import { pull as _pull } from 'lodash-es'
 
 const Wrapper = styled.div`
   display: flex;
@@ -171,6 +171,7 @@ export default class TabInfo extends React.Component {
               <Title>{columnSourceAttribute.title}</Title>
               <Input
                 style={{ padding: '0px 8px' }}
+                placeholder='Search...'
                 prefix={<Icon type='search' style={{ color: 'rgba(0,0,0,.25)', marginLeft: 4 }} />}
               />
               <Droppable droppableId={columnSourceAttribute.id}>
@@ -222,7 +223,13 @@ export default class TabInfo extends React.Component {
                     isDraggingOver={snapshot.isDraggingOver}
                   >
                     {tasksChartAttribute.map((task, index) => (
-                      <ItemAttribute key={task.id} task={task} index={index} />
+                      <ItemChartAttribute
+                        key={task.id}
+                        task={task}
+                        column={columnChartAttribute}
+                        index={index}
+                        backtoSource={this.backtoSource}
+                      />
                     ))}
                     {provided.placeholder}
                   </TaskList>
