@@ -37,9 +37,10 @@ export default class LayerMarker extends React.Component {
         if (value && key.includes('GENERAL/') && _get(nextProps, `markerGeneralData.${key}.list`, []).length == 0) {
           this.props.fetchMarkerGeneralBykey(key).then(data => {
             if (!data) return
+
             const firstProperties = _get(data, '[0].properties')
+            // console.log('firstProperties', firstProperties)
             if (firstProperties) {
-              console.log('firstProperties', firstProperties)
               let fieldArr = []
               _mapKeys(firstProperties, (val, keyField) => {
                 if (fieldConvert[keyField]) fieldArr.push(fieldConvert[keyField])

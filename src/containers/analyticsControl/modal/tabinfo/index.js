@@ -71,6 +71,37 @@ const initialData = {
   columnOrder: ['column-source-attribute', 'column-visible-attribute', 'column-chart-attribute']
 }
 
+function getInitialData(fieldArr) {
+  const taskIdsTamp = []
+  const tasksTamp = fieldArr.reduce((acc, cur) => {
+    taskIdsTamp.push(cur.key)
+    acc[cur.key] = { ...cur, id: cur.key, content: cur.label }
+    return acc
+  }, {})
+
+  return {
+    tasks: tasksTamp,
+    columns: {
+      'column-source-attribute': {
+        id: 'column-source-attribute',
+        title: 'Attributes',
+        taskIds: taskIdsTamp
+      },
+      'column-visible-attribute': {
+        id: 'column-visible-attribute',
+        title: 'Visible attributes',
+        taskIds: []
+      },
+      'column-chart-attribute': {
+        id: 'column-chart-attribute',
+        title: 'Chart',
+        taskIds: []
+      }
+    },
+    columnOrder: ['column-source-attribute', 'column-visible-attribute', 'column-chart-attribute']
+  }
+}
+
 const mapStateToProps = state => ({
   AnalyticsStore: get(state, 'AnalyticsStore')
 })
@@ -88,7 +119,11 @@ export default class TabInfo extends React.Component {
     super(props)
     const { AnalyticsStore } = props
     const targetKey = get(AnalyticsStore, '__target.key')
-    const payload = get(AnalyticsStore, `${targetKey}.tabInfo`, initialData)
+
+    const fieldArr = get(AnalyticsStore, `${targetKey}.fieldArr`, [])
+    const initia = getInitialData(fieldArr)
+
+    const payload = get(AnalyticsStore, `${targetKey}.tabInfo`, initia)
     this.state = payload
   }
 

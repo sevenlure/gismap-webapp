@@ -8,19 +8,22 @@ import { FeatureGroup, Marker } from 'react-leaflet'
 import MarkerClusterGroup from 'react-leaflet-markercluster'
 
 import { fetchMarkerOwnBykey } from 'src/redux/actions/layerAction'
+import { updateFieldArr } from 'src/redux/actions/analyticsAction'
+import fieldConvert from './fieldConvert'
 
 const mapStateToProps = state => ({
   markerSelectedObj: _get(state, 'FilterStore.marker'),
   markerOwnData: _get(state, 'LayerStore.markerOwn')
 })
-const mapDispatchToProps = { fetchMarkerOwnBykey }
+const mapDispatchToProps = { fetchMarkerOwnBykey, updateFieldArr }
 
 @connect(mapStateToProps, mapDispatchToProps)
 export default class LayerMarker extends React.Component {
   static propTypes = {
     fetchMarkerOwnBykey: PropTypes.func.isRequired,
     markerSelectedObj: PropTypes.object.isRequired,
-    markerOwnData: PropTypes.object.isRequired
+    markerOwnData: PropTypes.object.isRequired,
+    updateFieldArr: PropTypes.func.isRequired
   }
 
   state = {
@@ -34,6 +37,16 @@ export default class LayerMarker extends React.Component {
         if (value && key.includes('OWN/') && _get(nextProps, `markerOwnData.${key}.list`, []).length == 0) {
           this.props.fetchMarkerOwnBykey(key).then(data => {
             if (!data) return
+
+            const firstProperties = _get(data, '[0].properties')
+            console.log('firstProperties', firstProperties)
+            if (firstProperties) {
+              let fieldArr = []
+              _mapKeys(firstProperties, (val, keyField) => {
+                if (fieldConvert[keyField]) fieldArr.push(fieldConvert[keyField])
+              })
+              this.props.updateFieldArr(key, fieldArr)
+            }
             // NOTE save data vao state
             const tamp = (
               <FeatureGroup key={key}>
