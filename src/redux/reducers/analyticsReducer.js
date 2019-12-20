@@ -1,5 +1,5 @@
 import update from 'react-addons-update'
-import { UPDATE_TARGET, UPDATE_TABINFO } from '../actions/analyticsAction'
+import { UPDATE_TARGET, UPDATE_FIELD_ARR, UPDATE_TABINFO } from '../actions/analyticsAction'
 
 const InitialState = {
   __target: undefined
@@ -12,6 +12,16 @@ const analyticsReducer = (state = InitialState, action) => {
       return update(state, {
         __target: {
           $set: action.payload
+        }
+      })
+    }
+    case UPDATE_FIELD_ARR: {
+      const { key, fieldArr } = action.payload
+      return update(state, {
+        $merge: {
+          [key]: {
+            fieldArr: fieldArr
+          }
         }
       })
     }
