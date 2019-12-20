@@ -6,6 +6,8 @@ import { LAYER_LOADING, LAYER_LOADED } from '../actions/layerAction'
 import { HANHCHINH_UPDATE, HANHCHINH_LOADED } from '../actions/layerAction'
 import { UPDATE_MARKER_GENERAL_COUNT_LOADED, UPDATE_MARKER_GENERAL_COUNT } from '../actions/layerAction'
 import { UPDATE_MARKER_GENERAL_BY_KEY, UPDATE_MARKER_GENERAL_BY_KEY_LOADING } from '../actions/layerAction'
+import { UPDATE_MARKER_OWN_COUNT_LOADED, UPDATE_MARKER_OWN_COUNT } from '../actions/layerAction'
+import { UPDATE_MARKER_OWN_BY_KEY, UPDATE_MARKER_OWN_BY_KEY_LOADING } from '../actions/layerAction'
 
 const InitialState = {
   isLoadingLayer: false,
@@ -15,9 +17,14 @@ const InitialState = {
     district: [],
     ward: []
   },
+
   markerGeneralCountIsLoaded: false,
   markerGeneralCount: {},
-  markerGeneral: {}
+  markerGeneral: {},
+
+  markerOwnCountIsLoaded: false,
+  markerOwnCount: {},
+  markerOwn: {}
 }
 
 // REDUCERS
@@ -102,6 +109,49 @@ const layerReducer = (state = InitialState, action) => {
       })
     }
     /* #endregion */
+    /* #region  marker own */
+    case UPDATE_MARKER_OWN_COUNT_LOADED: {
+      return update(state, {
+        markerOwnCountIsLoaded: {
+          $set: true
+        }
+      })
+    }
+    case UPDATE_MARKER_OWN_COUNT: {
+      return update(state, {
+        markerOwnCount: {
+          $merge: action.payload
+        }
+      })
+    }
+    // MARK  markerOwn
+    case UPDATE_MARKER_OWN_BY_KEY_LOADING: {
+      const { key } = action.payload
+      return update(state, {
+        markerOwn: {
+          $merge: {
+            [key]: {
+              isLoading: true
+            }
+          }
+        }
+      })
+    }
+    case UPDATE_MARKER_OWN_BY_KEY: {
+      const { key, list } = action.payload
+      return update(state, {
+        markerOwn: {
+          $merge: {
+            [key]: {
+              isLoading: false,
+              list
+            }
+          }
+        }
+      })
+    }
+    /* #endregion */
+
     default:
       return state
   }

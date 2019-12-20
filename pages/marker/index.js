@@ -8,14 +8,15 @@ import { get as _get } from 'lodash-es'
 
 import LayoutDashboard from 'src/layout/dashboard'
 import MarkerControl from 'src/containers/markerControl'
-import { fetchMarkerGeneralCount } from 'src/redux/actions/layerAction'
+import { fetchMarkerGeneralCount, fetchMarkerOwnCount } from 'src/redux/actions/layerAction'
 
 const WrapperIndex = styled.div``
 
 const mapStateToProps = state => ({
-  markerGeneralCountIsLoaded: _get(state, 'LayerStore.markerGeneralCountIsLoaded')
+  markerGeneralCountIsLoaded: _get(state, 'LayerStore.markerGeneralCountIsLoaded'),
+  markerOwnCountIsLoaded: _get(state, 'LayerStore.markerOwnCountIsLoaded')
 })
-const mapDispatchToProps = { fetchMarkerGeneralCount }
+const mapDispatchToProps = { fetchMarkerGeneralCount, fetchMarkerOwnCount }
 
 @connect(mapStateToProps, mapDispatchToProps)
 @windowSize
@@ -31,6 +32,10 @@ class MakerPage extends React.Component {
     const { markerGeneralCountIsLoaded, fetchMarkerGeneralCount } = this.props
     if (!markerGeneralCountIsLoaded) {
       fetchMarkerGeneralCount()
+    }
+    const { markerOwnCountIsLoaded, fetchMarkerOwnCount } = this.props
+    if (!markerOwnCountIsLoaded) {
+      fetchMarkerOwnCount()
     }
   }
 

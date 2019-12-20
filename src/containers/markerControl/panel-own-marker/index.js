@@ -15,8 +15,8 @@ const OWN_KEY = {
 
 const mapStateToProps = state => ({
   filterMarker: get(state, 'FilterStore.marker'),
-  markerGeneralCountIsLoaded: get(state, 'LayerStore.markerGeneralCountIsLoaded'),
-  markerGeneralCount: get(state, 'LayerStore.markerGeneralCount')
+  markerOwnCountIsLoaded: get(state, 'LayerStore.markerOwnCountIsLoaded'),
+  markerOwnCount: get(state, 'LayerStore.markerOwnCount')
 })
 const mapDispatchToProps = { updateMarkerWithKey }
 
@@ -53,8 +53,8 @@ class CheckboxOwn extends React.Component {
     targetKey: PropTypes.string.isRequired,
     filterMarker: PropTypes.object.isRequired,
     label: PropTypes.string.isRequired,
-    markerGeneralCountIsLoaded: PropTypes.bool.isRequired,
-    markerGeneralCount: PropTypes.object.isRequired
+    markerOwnCountIsLoaded: PropTypes.bool.isRequired,
+    markerOwnCount: PropTypes.object.isRequired
   }
 
   onChangeMarker = e => {
@@ -68,7 +68,7 @@ class CheckboxOwn extends React.Component {
   }
 
   render() {
-    const { targetKey, filterMarker, label, markerGeneralCountIsLoaded, markerGeneralCount } = this.props
+    const { targetKey, filterMarker, label, markerOwnCountIsLoaded, markerOwnCount } = this.props
     return (
       <Checkbox
         OWN_KEY={targetKey}
@@ -78,7 +78,7 @@ class CheckboxOwn extends React.Component {
       >
         {label}
         <span style={{ marginLeft: 4, color: '#bfbfbf' }}>
-          {markerGeneralCountIsLoaded ? `(${get(markerGeneralCount, targetKey, 0)})` : <Icon type='loading' />}
+          {markerOwnCountIsLoaded ? `(${get(markerOwnCount, targetKey, 0)})` : <Icon type='loading' />}
         </span>
       </Checkbox>
     )
