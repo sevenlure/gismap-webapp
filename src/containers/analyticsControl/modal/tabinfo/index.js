@@ -6,7 +6,7 @@ import ItemAttribute from './itemAttribute'
 import ItemVisibleAttribute from './itemVisibleAttribute'
 import ItemChartAttribute from './itemChartAttribute'
 import { getColorByIndex } from 'src/utils/color'
-import { Tag, Card, Input, Icon } from 'antd'
+import { Tag, Card, Input, Icon, message } from 'antd'
 import { pull as _pull, get } from 'lodash-es'
 import { connect } from 'react-redux'
 
@@ -138,6 +138,14 @@ export default class TabInfo extends React.Component {
     }
     if (destination.droppableId === source.droppableId && destination.index === source.index) {
       return
+    }
+    // MARK  check field kéo vào chart thì phải là Number
+    if (destination.droppableId === 'column-chart-attribute') {
+      const typeTamp = get(this.state.tasks, `${draggableId}.type`)
+      if (typeTamp !== Number) {
+        message.warning('Only Numeric fields are allowed')
+        return
+      }
     }
 
     const start = this.state.columns[source.droppableId]

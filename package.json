@@ -13,6 +13,7 @@
   "dependencies": {
     "@react-google-maps/api": "^1.7.5",
     "@svgr/webpack": "^4.3.2",
+    "@types/react-leaflet": "^2.5.0",
     "@zeit/next-css": "^1.0.1",
     "@zeit/next-less": "^1.0.1",
     "antd": "^3.23.2",

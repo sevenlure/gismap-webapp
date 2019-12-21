@@ -14,7 +14,8 @@ import PoupContent from '../common/popupContent'
 
 const mapStateToProps = state => ({
   markerSelectedObj: _get(state, 'FilterStore.marker'),
-  markerGeneralData: _get(state, 'LayerStore.markerGeneral')
+  markerGeneralData: _get(state, 'LayerStore.markerGeneral'),
+  analyticsStore: _get(state, 'AnalyticsStore')
 })
 const mapDispatchToProps = { fetchMarkerGeneralBykey, updateFieldArr }
 
@@ -29,6 +30,27 @@ export default class LayerMarker extends React.Component {
 
   state = {
     cache: []
+  }
+
+  transformDataToPopContent = (key, properties) => {
+    const fieldDataObj = _get(this.props, `analyticsStore.${key}.tabInfo.tasks`, {})
+    const visibleAtts = _get(this.props, `analyticsStore.${key}.tabInfo.columns.column-visible-attribute.taskIds`, [])
+    const chartAtts = _get(this.props, `analyticsStore.${key}.tabInfo.columns.column-chart-attribute.taskIds`, [])
+
+    let dataSourceProperties = []
+    visibleAtts.map(attKey => {
+      const attribute = fieldDataObj[attKey]
+      dataSourceProperties.push({ name: attribute.label, value: _get(properties, attKey) })
+    })
+    let dataSourceChartProperties = []
+    chartAtts.map(attKey => {
+      const attribute = fieldDataObj[attKey]
+      dataSourceChartProperties.push({ name: attribute.label, value: _get(properties, attKey), color: attribute.color })
+    })
+    return {
+      dataSourceProperties,
+      dataSourceChartProperties
+    }
   }
 
   UNSAFE_componentWillReceiveProps(nextProps) {
@@ -55,6 +77,10 @@ export default class LayerMarker extends React.Component {
                   {data.map(point => {
                     const position = _get(point, 'geometry.coordinates')
                     if (!position) return null
+                    // NOTE  transform data cho vao PopContent
+                    const properties = _get(point, 'properties', {})
+                    const transformed = this.transformDataToPopContent(key, properties)
+                    // console.log('transformed', transformed)
                     return (
                       <Marker key={point._id} position={[position[1], position[0]]}>
                         <Popup>
