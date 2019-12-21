@@ -1,5 +1,6 @@
 import update from 'react-addons-update'
-import { UPDATE_TARGET, UPDATE_FIELD_ARR, UPDATE_TABINFO } from '../actions/analyticsAction'
+import { get as _get } from 'lodash-es'
+import { UPDATE_TARGET, UPDATE_FIELD_ARR, UPDATE_TABINFO, UPDATE_COUNT_APPLY } from '../actions/analyticsAction'
 
 const InitialState = {
   __target: undefined
@@ -33,6 +34,18 @@ const analyticsReducer = (state = InitialState, action) => {
           [key]: {
             ...state[key],
             tabInfo: value
+          }
+        }
+      })
+    }
+    case UPDATE_COUNT_APPLY: {
+      const { key } = action.payload
+      const countValue = _get(state, `${key}.countApply`, 0)
+      return update(state, {
+        $merge: {
+          [key]: {
+            ...state[key],
+            countApply: countValue + 1
           }
         }
       })

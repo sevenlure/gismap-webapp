@@ -1,6 +1,7 @@
 export const UPDATE_TARGET = 'ANALYTICS/UPDATE_TARGET'
 export const UPDATE_FIELD_ARR = 'ANALYTICS/UPDATE_FIELD_ARR'
 export const UPDATE_TABINFO = 'ANALYTICS/UPDATE_TABINFO'
+export const UPDATE_COUNT_APPLY = 'ANALYTICS/UPDATE_COUNT_APPLY'
 // export const LOGOUT_USER_INFO = 'AUTH/LOGOUT_USER_INFO'
 
 // ACTIONS
@@ -36,6 +37,18 @@ export function updateTabInfo(key, value) {
     })
   }
 }
+
+export function updateCountApply(key) {
+  return dispatch => {
+    dispatch({
+      type: UPDATE_COUNT_APPLY,
+      payload: {
+        key
+      }
+    })
+  }
+}
+
 // export function userLogout() {
 //   return dispatch => {
 //     dispatch({ type: LOGOUT_USER_INFO })

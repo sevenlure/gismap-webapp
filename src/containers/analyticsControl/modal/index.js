@@ -7,7 +7,7 @@ import { get } from 'lodash-es'
 
 // import TabInfo from './tabInfo/index2'
 import TabInfo from './tabinfo'
-import { updateTabInfo } from 'src/redux/actions/analyticsAction'
+import { updateTabInfo, updateCountApply } from 'src/redux/actions/analyticsAction'
 
 const { TabPane } = Tabs
 
@@ -34,14 +34,15 @@ const ModalWrapperContainer = styled.div`
 const mapStateToProps = state => ({
   AnalyticsStore: get(state, 'AnalyticsStore')
 })
-const mapDispatchToProps = { updateTabInfo }
+const mapDispatchToProps = { updateTabInfo, updateCountApply }
 
 @connect(mapStateToProps, mapDispatchToProps)
 export default class ModalTag extends React.Component {
   static propTypes = {
     getRef: PropTypes.func.isRequired,
     updateTabInfo: PropTypes.func.isRequired,
-    AnalyticsStore: PropTypes.object.isRequired
+    AnalyticsStore: PropTypes.object.isRequired,
+    updateCountApply: PropTypes.func.isRequired
   }
 
   state = { isVisible: false }
@@ -75,6 +76,11 @@ export default class ModalTag extends React.Component {
           title={__target ? __target.label : 'UNKNOWN'}
           visible={this.state.isVisible}
           onCancel={() => {
+            this.setState({ isVisible: false })
+          }}
+          okText='Apply'
+          onOk={() => {
+            this.props.updateCountApply(__target ? __target.key : 'UNKNOWN')
             this.setState({ isVisible: false })
           }}
         >

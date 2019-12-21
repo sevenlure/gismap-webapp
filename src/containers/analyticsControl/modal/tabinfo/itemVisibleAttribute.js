@@ -18,7 +18,6 @@ const ContainerItem = styled.div`
 export default class ItemVisibleAttribute extends React.Component {
   static propTypes = {
     backtoSource: PropTypes.func.isRequired,
-    color: PropTypes.string.isRequired,
     column: PropTypes.object.isRequired,
     index: PropTypes.number.isRequired,
     task: PropTypes.object.isRequired

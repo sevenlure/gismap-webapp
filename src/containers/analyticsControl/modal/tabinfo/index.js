@@ -7,7 +7,7 @@ import ItemVisibleAttribute from './itemVisibleAttribute'
 import ItemChartAttribute from './itemChartAttribute'
 import { getColorByIndex } from 'src/utils/color'
 import { Tag, Card, Input, Icon, message } from 'antd'
-import { pull as _pull, get } from 'lodash-es'
+import { pull as _pull, get, debounce } from 'lodash-es'
 import { connect } from 'react-redux'
 
 const Wrapper = styled.div`
@@ -128,6 +128,7 @@ export default class TabInfo extends React.Component {
 
     const payload = get(AnalyticsStore, `${targetKey}.tabInfo`, initia)
     this.state = payload
+    this.debounceCbTabInfoVal = debounce(this.props.cbTabInfoVal, 300)
   }
 
   onDragEnd = result => {
@@ -316,7 +317,7 @@ export default class TabInfo extends React.Component {
                               }
                             },
                             () => {
-                              if (this.props.cbTabInfoVal) this.props.cbTabInfoVal(this.state)
+                              this.debounceCbTabInfoVal(this.state)
                             }
                           )
                         }}

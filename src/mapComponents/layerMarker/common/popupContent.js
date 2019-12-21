@@ -138,9 +138,23 @@ class ComponentRnd extends React.Component {
     }
   }
 
+  // shouldComponentUpdate(nextProps, nextState) {
+  //   console.log('shouldComponentUpdate')
+  //   const preCountApply = _get(this.props, `analyticsStore.${this.props.markerTypeKey}.countApply`)
+  //   const nextCountApply = _get(nextProps, `analyticsStore.${this.props.markerTypeKey}.countApply`)
+  //   if (preCountApply !== nextCountApply) {
+  //     this.transformDataToPopContent(this.props.markerTypeKey, this.props.properties)
+  //     return true
+  //   }
+
+  //   return false
+  // }
+
   componentDidUpdate = (prevProps, prevState) => {
+    const preCountApply = _get(prevProps, `analyticsStore.${this.props.markerTypeKey}.countApply`)
+    const nextCountApply = _get(this.props, `analyticsStore.${this.props.markerTypeKey}.countApply`)
     // console.log("-componentDidMount-", this.state.height,prevState.height )
-    if (this.props.analyticsStore !== prevProps.analyticsStore) {
+    if (this.props.analyticsStore !== prevProps.analyticsStore && preCountApply !== nextCountApply) {
       this.transformDataToPopContent(this.props.markerTypeKey, this.props.properties)
     }
     // if (this.state.height !== prevState.height || this.state.width !== prevState.width) {
