@@ -83,8 +83,42 @@ export default class LayerMarker extends React.Component {
                     // console.log('transformed', transformed)
                     return (
                       <Marker key={point._id} position={[position[1], position[0]]}>
-                        <Popup>
-                          <PoupContent />
+                        <Popup className={'leaflet-custom-popup'}>
+                          <PoupContent
+                            title={'properties'}
+                            // minHeight={100}
+                            dataSourceChart={[
+                              {
+                                name: 'Thuoc tinh 1',
+                                value: 23.989,
+                                color: '#50B432'
+                              },
+                              {
+                                name: 'Thuoc tinh 2',
+                                value: 13.989,
+                                color: '#ED561B'
+                              },
+                              {
+                                name: 'Thuoc tinh 3',
+                                value: 31.989,
+                                color: '#DDDF00'
+                              }
+                            ]}
+                            dataSourceProperties={[
+                              {
+                                name: 'Name',
+                                value: 'Beja'
+                              },
+                              {
+                                name: 'Persons',
+                                value: '35,000'
+                              },
+                              {
+                                name: 'ABC',
+                                value: '3,000'
+                              }
+                            ]}
+                          />
                         </Popup>
                       </Marker>
                     )

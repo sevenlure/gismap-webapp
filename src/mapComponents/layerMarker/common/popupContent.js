@@ -2,7 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import styled from 'styled-components'
 import ReactHighcharts from 'react-highcharts'
-import { get as _get, map as _map } from 'lodash-es'
+import { get as _get, map as _map, isEmpty as _isEmpty } from 'lodash-es'
 import { Row, Col, Typography, Icon } from 'antd'
 const { Text } = Typography
 
@@ -11,11 +11,10 @@ const { Text } = Typography
 const ComponentWrapper = styled.div`
   flex: 1;
   min-width: 250px;
-  min-height: 300px;
-  max-height: 400px;
+  // min-height: 300px;
+  // max-height: 400px;
   .card {
-    border-radius: 5px;
-    border: 1px solid #eee;
+    border-radius: 4px;
     background: #fff;
     width: 100%;
     overflow: hidden;
@@ -30,10 +29,11 @@ const ComponentWrapper = styled.div`
       cursor: pointer;
     }
     .card--header {
+      min-height: 32px;
       font-size: 1.2rem;
       color: #fff;
       background: linear-gradient(to right, #3880ff, #5f98fd);
-      padding: 4px;
+      padding: 8px;
       span {
         white-space: normal;
         -webkit-line-clamp: 1;
@@ -52,27 +52,44 @@ const ComponentWrapper = styled.div`
   }
 `
 
-const dataProperties = [
-  {
-    name: 'Name',
-    value: 'Beja'
-  },
-  {
-    name: 'Persons',
-    value: '35,000'
-  },
-  {
-    name: 'ABC',
-    value: '3,000'
-  }
-]
-const colors = ['#f2c94c', '#50B432', '#ED561B', '#DDDF00', '#24CBE5', '#64E572', '#FF9655', '#FFF263', '#6AF9C4']
+// const dataProperties = [
+//   {
+//     name: 'Name',
+//     value: 'Beja'
+//   },
+//   {
+//     name: 'Persons',
+//     value: '35,000'
+//   },
+//   {
+//     name: 'ABC',
+//     value: '3,000'
+//   }
+// ]
+
+// const dataSourceChart = [
+//   {
+//     name: 'Thuoc tinh 1',
+//     value: 23.989
+//   },
+//   {
+//     name: 'Thuoc tinh 2',
+//     value: 13.989
+//   },
+//   {
+//     name: 'Thuoc tinh 3',
+//     value: 31.989
+//   }
+// ]
+// const colors = ['#f2c94c', '#50B432', '#ED561B', '#DDDF00', '#24CBE5', '#64E572', '#FF9655', '#FFF263', '#6AF9C4']
 
 class ComponentRnd extends React.Component {
   static propTypes = {
-    title: PropTypes.string,
-    minWidth: PropTypes.number.isRequired,
-    minHeight: PropTypes.number.isRequired,
+    dataSourceChart: PropTypes.array,
+    dataSourceProperties: PropTypes.array,
+    title: PropTypes.string.isRequired,
+    minWidth: PropTypes.number,
+    minHeight: PropTypes.number,
     x: PropTypes.number,
     y: PropTypes.number,
     visible: PropTypes.bool,
@@ -84,34 +101,23 @@ class ComponentRnd extends React.Component {
   }
 
   state = {
-    width: this.props.minWidth,
-    height: this.props.minHeight,
+    width: !this.props.minWidth || this.props.minWidth > 300 ? 300 : this.props.minWidth,
+    height: !this.props.minHeight || this.props.minHeight > 400 ? 400 : this.props.minHeight,
 
     x: this.props.x ? this.props.x : 0,
     y: this.props.y ? this.props.y : 0,
     isLoadingChart: false
   }
 
-  getConfigColumns = () => {
-    const dataSourceChart = [
-      {
-        name: 'Thuoc tinh 1',
-        value: 23.989
-      },
-      {
-        name: 'Thuoc tinh 2',
-        value: 13.989
-      },
-      {
-        name: 'Thuoc tinh 3',
-        value: 31.989
-      }
-    ]
-    const seriesData = _map(dataSourceChart, item => {
+  getConfigColumns = dataSource => {
+    // const dataSourceChart = dataSourceChart
+    let colors = []
+    const seriesData = _map(dataSource, item => {
       return {
         showInLegend: false,
         name: _get(item, 'name'),
         type: 'column',
+        color: _get(item, 'color'),
         data: [_get(item, 'value')]
       }
     })
@@ -121,11 +127,12 @@ class ComponentRnd extends React.Component {
     //   dataProperties.length / 10,
     //   'this.state.height * 0.4'
     // )
+    const heightChart = this.state.height > 300 ? 300 : this.state.height
     return {
       chart: {
-        height: this.state.height - dataProperties.length * 30
+        height: heightChart - this.props.dataSourceProperties.length * 30
       },
-      colors: colors,
+      // colors: colors,
       title: {
         text: null
       },
@@ -160,39 +167,56 @@ class ComponentRnd extends React.Component {
     })
   }
 
+  checkDataSourceEmpty = () => {
+    const { dataSourceProperties, dataSourceChart } = this.props
+    if (_isEmpty(dataSourceProperties) || _isEmpty(dataSourceChart)) {
+      return <div>NOT EMPTY</div>
+    } else {
+      return null
+    }
+  }
+
   render() {
+    const { dataSourceProperties, dataSourceChart, title } = this.props
     return (
       <ComponentWrapper>
         <div className='card'>
           <div className='card--close' onClick={this.props.onClose}>
             {/* <Icon type='close-circle' theme='filled' twoToneColor='#fff' /> */}
-            <Icon type='close' style={{ color: '#fff' }} />
+            {/* <Icon type='close' style={{ color: '#fff' }} /> */}
           </div>
           <div className='card--header'>
-            <span>{this.props.title}</span>
+            <span>{title ? title : ''}</span>
           </div>
           <div className='card--content'>
-            {_map(dataProperties, (item, index) => {
-              return (
-                <div
-                  key={index}
-                  style={{ borderBottom: 'solid 1px #d9d9d9', marginBottom: '4px', paddingBottom: '4px' }}
-                >
-                  <Row>
-                    <Col span={12}>
-                      <Text strong>{item.name}</Text>
-                    </Col>
-                    <Col span={12}>
-                      <Text>{item.value}</Text>
-                    </Col>
-                  </Row>
-                </div>
-              )
-            })}
+            {dataSourceProperties && dataSourceProperties.length > 0 && (
+              <div className='card--content--properties'>
+                {_map(dataSourceProperties, (item, index) => {
+                  return (
+                    <div
+                      key={index}
+                      style={{ borderBottom: 'solid 1px #d9d9d9', marginBottom: '4px', paddingBottom: '4px' }}
+                    >
+                      <Row>
+                        <Col span={12}>
+                          <Text strong>{item.name}</Text>
+                        </Col>
+                        <Col span={12}>
+                          <Text>{item.value}</Text>
+                        </Col>
+                      </Row>
+                    </div>
+                  )
+                })}
+              </div>
+            )}
 
-            <div className='card--content--chart'>
-              {!this.state.isLoadingChart && <ReactHighcharts config={this.getConfigColumns()} />}
-            </div>
+            {dataSourceChart && dataSourceChart.length > 0 && (
+              <div className='card--content--chart'>
+                {!this.state.isLoadingChart && <ReactHighcharts config={this.getConfigColumns(dataSourceChart)} />}
+              </div>
+            )}
+            {this.checkDataSourceEmpty()}
           </div>
         </div>
       </ComponentWrapper>
