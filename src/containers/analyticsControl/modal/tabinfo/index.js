@@ -217,6 +217,7 @@ export default class TabInfo extends React.Component {
       }
     }
     this.setState(newState)
+    if (this.props.cbTabInfoVal) this.props.cbTabInfoVal(newState)
   }
 
   setData = data => {
@@ -307,12 +308,17 @@ export default class TabInfo extends React.Component {
                         onChangeColor={val => {
                           let newTask = this.state.tasks[task.id]
                           newTask.color = val
-                          this.setState({
-                            tasks: {
-                              ...this.state.tasks,
-                              [task.id]: newTask
+                          this.setState(
+                            {
+                              tasks: {
+                                ...this.state.tasks,
+                                [task.id]: newTask
+                              }
+                            },
+                            () => {
+                              if (this.props.cbTabInfoVal) this.props.cbTabInfoVal(this.state)
                             }
-                          })
+                          )
                         }}
                       />
                     ))}
