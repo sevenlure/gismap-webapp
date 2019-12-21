@@ -36,7 +36,7 @@ class LayerControl extends React.Component {
         <div className='Search--layer'>
           <LayerHanhChinh />
           <Clearfix height={8} />
-          <Button
+          {/* <Button
             type='primary'
             onClick={() => {
               this.setState({
@@ -45,8 +45,8 @@ class LayerControl extends React.Component {
             }}
           >
             hien thi componenet keo tha
-          </Button>
-          <ComponentRnd
+          </Button> */}
+          {/* <ComponentRnd
             onClose={this.hanldeOnClose}
             visible={this.state.isVisibleRnd}
             title='Municipalities - Properties'
@@ -54,7 +54,7 @@ class LayerControl extends React.Component {
             minHeight={300}
             x={10}
             y={10}
-          />
+          /> */}
         </div>
       </TabLayerWrapper>
     )
