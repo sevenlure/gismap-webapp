@@ -20,6 +20,7 @@ const analyticsReducer = (state = InitialState, action) => {
       return update(state, {
         $merge: {
           [key]: {
+            ...state[key],
             fieldArr: fieldArr
           }
         }
@@ -30,6 +31,7 @@ const analyticsReducer = (state = InitialState, action) => {
       return update(state, {
         $merge: {
           [key]: {
+            ...state[key],
             tabInfo: value
           }
         }

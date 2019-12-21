@@ -5,6 +5,7 @@ import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd'
 import ItemAttribute from './itemAttribute'
 import ItemVisibleAttribute from './itemVisibleAttribute'
 import ItemChartAttribute from './itemChartAttribute'
+import { getColorByIndex } from 'src/utils/color'
 import { Tag, Card, Input, Icon } from 'antd'
 import { pull as _pull, get } from 'lodash-es'
 import { connect } from 'react-redux'
@@ -41,6 +42,8 @@ const TaskList = styled.div`
   background-color: ${props => (props.isDraggingOver ? 'skyblue' : '#e8e8e8')};
   flex-grow: 1;
   min-height: 100px;
+  max-height: 300px;
+  overflow-y: auto;
 `
 
 const initialData = {
@@ -209,7 +212,6 @@ export default class TabInfo extends React.Component {
   }
 
   setData = data => {
-    console.log('setData', data)
     this.setData({ data })
   }
 
@@ -293,6 +295,17 @@ export default class TabInfo extends React.Component {
                         column={columnChartAttribute}
                         index={index}
                         backtoSource={this.backtoSource}
+                        color={task.color || getColorByIndex(index)}
+                        onChangeColor={val => {
+                          let newTask = this.state.tasks[task.id]
+                          newTask.color = val
+                          this.setState({
+                            tasks: {
+                              ...this.state.tasks,
+                              [task.id]: newTask
+                            }
+                          })
+                        }}
                       />
                     ))}
                     {provided.placeholder}

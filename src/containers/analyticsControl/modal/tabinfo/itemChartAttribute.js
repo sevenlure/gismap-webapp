@@ -18,8 +18,16 @@ const ContainerItem = styled.div`
 `
 
 export default class ItemChartAttribute extends React.Component {
-  state = {
-    color: '#3880ff'
+  static propTypes = {
+    backtoSource: PropTypes.func.isRequired,
+    color: PropTypes.string.isRequired,
+    column: PropTypes.object.isRequired,
+    index: PropTypes.number.isRequired,
+    onChangeColor: PropTypes.func.isRequired,
+    task: PropTypes.object.isRequired
+  }
+  componentDidMount() {
+    this.props.onChangeColor(this.props.color)
   }
   render() {
     return (
@@ -33,7 +41,7 @@ export default class ItemChartAttribute extends React.Component {
           >
             {/* <Handle {...provided.dragHandleProps} /> */}
             <div style={{ display: 'flex', width: '100%', alignItems: 'center' }}>
-              <input type='color' value={this.state.color} onChange={e => this.setState({ color: e.target.value })} />
+              <input type='color' value={this.props.color} onChange={e => this.props.onChangeColor(e.target.value)} />
               <div style={{ flex: 1, marginLeft: 8 }}>{this.props.task.content}</div>
               <Icon
                 type='close-circle'
