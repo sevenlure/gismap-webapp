@@ -79,7 +79,7 @@ export default class LayerMarker extends React.Component {
                     if (!position) return null
                     // NOTE  transform data cho vao PopContent
                     const properties = _get(point, 'properties', {})
-                    const transformed = this.transformDataToPopContent(key, properties)
+                    // const transformed = this.transformDataToPopContent(key, properties)
                     // console.log('transformed', transformed)
                     return (
                       <Marker key={point._id} position={[position[1], position[0]]}>
@@ -87,6 +87,8 @@ export default class LayerMarker extends React.Component {
                           <PoupContent
                             title={'properties'}
                             // minHeight={100}
+                            marketTypeKey={key}
+                            properties={properties}
                             dataSourceChart={[
                               {
                                 name: 'Thuoc tinh 1',

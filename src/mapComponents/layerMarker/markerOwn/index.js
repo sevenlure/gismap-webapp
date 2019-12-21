@@ -4,16 +4,18 @@ import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { get as _get, isEqual as _isEqual, mapKeys as _mapKeys } from 'lodash-es'
 import { diff } from 'deep-object-diff'
-import { FeatureGroup, Marker } from 'react-leaflet'
+import { FeatureGroup, Marker, Popup } from 'react-leaflet'
 import MarkerClusterGroup from 'react-leaflet-markercluster'
 
 import { fetchMarkerOwnBykey } from 'src/redux/actions/layerAction'
 import { updateFieldArr } from 'src/redux/actions/analyticsAction'
 import fieldConvert from './fieldConvert'
+import PoupContent from '../common/popupContent'
 
 const mapStateToProps = state => ({
   markerSelectedObj: _get(state, 'FilterStore.marker'),
-  markerOwnData: _get(state, 'LayerStore.markerOwn')
+  markerOwnData: _get(state, 'LayerStore.markerOwn'),
+  analyticsStore: _get(state, 'AnalyticsStore')
 })
 const mapDispatchToProps = { fetchMarkerOwnBykey, updateFieldArr }
 
@@ -54,7 +56,50 @@ export default class LayerMarker extends React.Component {
                   {data.map(point => {
                     const position = _get(point, 'geometry.coordinates')
                     if (!position) return null
-                    return <Marker key={point._id} position={[position[1], position[0]]}></Marker>
+                    const properties = _get(point, 'properties', {})
+                    return (
+                      <Marker key={point._id} position={[position[1], position[0]]}>
+                        <Popup className={'leaflet-custom-popup'}>
+                          <PoupContent
+                            title={'properties'}
+                            // minHeight={100}
+                            marketTypeKey={key}
+                            properties={properties}
+                            dataSourceChart={[
+                              {
+                                name: 'Thuoc tinh 1',
+                                value: 23.989,
+                                color: '#50B432'
+                              },
+                              {
+                                name: 'Thuoc tinh 2',
+                                value: 13.989,
+                                color: '#ED561B'
+                              },
+                              {
+                                name: 'Thuoc tinh 3',
+                                value: 31.989,
+                                color: '#DDDF00'
+                              }
+                            ]}
+                            dataSourceProperties={[
+                              {
+                                name: 'Name',
+                                value: 'Beja'
+                              },
+                              {
+                                name: 'Persons',
+                                value: '35,000'
+                              },
+                              {
+                                name: 'ABC',
+                                value: '3,000'
+                              }
+                            ]}
+                          />
+                        </Popup>
+                      </Marker>
+                    )
                   })}
                 </MarkerClusterGroup>
               </FeatureGroup>
