@@ -9,6 +9,7 @@ import { PersistGate } from 'redux-persist/integration/react'
 import Loader from 'src/components/loading-screen'
 
 // import 'src/less/font.less'
+import 'antd/dist/antd.css'
 import 'src/less/app.less'
 import 'src/less/responsive.less'
 import 'react-leaflet-markercluster/dist/styles.min.css'

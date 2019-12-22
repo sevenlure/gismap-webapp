@@ -9,6 +9,7 @@ import { getColorByIndex } from 'src/utils/color'
 import { Tag, Card, Input, Icon, message } from 'antd'
 import { pull as _pull, get, debounce } from 'lodash-es'
 import { connect } from 'react-redux'
+import QueryBuilder from './querybuilder/index'
 
 const Wrapper = styled.div`
   display: flex;
@@ -268,6 +269,7 @@ export default class TabFilter extends React.Component {
             </ContainerColumn>
             <ContainerColumn style={{ flex: 2 }}>
               <Title>{columnVisibleAttribute.title}</Title>
+              <QueryBuilder />
             </ContainerColumn>
           </ContainerTop>
         </DragDropContext>
