@@ -3,6 +3,9 @@ import PropTypes from 'prop-types'
 import styled from 'styled-components'
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd'
 import { Tag, Card, Input, Icon } from 'antd'
+import { DragSource } from 'react-dnd'
+
+const TYPE_ATTRIBUTE = 'TYPE_ATTRIBUTE'
 
 const ContainerItem = styled.div`
   padding: 8px;
@@ -15,22 +18,35 @@ const ContainerItem = styled.div`
   display: flex;
 `
 
+@DragSource(
+  TYPE_ATTRIBUTE,
+  {
+    beginDrag: props => ({ name: props.task.content, task: props.task }),
+    endDrag(props, monitor) {
+      // const item = monitor.getItem()
+      // console.log('item', item)
+      // const dropResult = monitor.getDropResult()
+      // console.log('dropResult',dropResult)
+      // if (dropResult) {
+      //   props.cbHandleDrop(props.task)
+      //   // alert(`You dropped ${item.name} into ${dropResult.name}!`)
+      // }
+    }
+  },
+  (connect, monitor) => ({
+    connectDragSource: connect.dragSource(),
+    isDragging: monitor.isDragging()
+  })
+)
 export default class ItemAttribute extends React.Component {
   render() {
+    const { name, isDragging, connectDragSource } = this.props
+    const opacity = isDragging ? 0.4 : 1
     return (
-      <Draggable draggableId={this.props.task.id} index={this.props.index}>
-        {(provided, snapshot) => (
-          <ContainerItem
-            {...provided.draggableProps}
-            {...provided.dragHandleProps}
-            ref={provided.innerRef}
-            isDragging={snapshot.isDragging}
-          >
-            {/* <Handle {...provided.dragHandleProps} /> */}
-            {this.props.task.content}
-          </ContainerItem>
-        )}
-      </Draggable>
+      <ContainerItem ref={connectDragSource} style={{ opacity }}>
+        {/* <Handle {...provided.dragHandleProps} /> */}
+        {this.props.task.content}
+      </ContainerItem>
     )
   }
 }

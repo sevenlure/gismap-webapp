@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import ReactDOM from 'react-dom'
 import { merge } from 'lodash-es'
 import {
   Widgets,
@@ -16,6 +17,9 @@ import {
 } from 'react-awesome-query-builder'
 import en_US from 'antd/lib/locale-provider/en_US'
 import ru_RU from 'antd/lib/locale-provider/ru_RU'
+import $ from 'jquery'
+import { get as _get } from 'lodash-es'
+import PlaceHolderDropGroup from './placeHolderDropGroup'
 const { FieldSelect, FieldDropdown, FieldCascader, VanillaFieldSelect } = Widgets
 
 const conjunctions = {
@@ -174,7 +178,11 @@ const settings = {
   maxNesting: 3,
   canLeaveEmptyGroup: true, //after deletion
 
-  renderField: props => <FieldSelect {...props} />,
+  renderField: props => {
+    // console.log('renderField', props)
+    return <NodeTamp {...props} />
+  },
+  // renderField: props => <FieldSelect {...props} />,
   // renderField: props => <span>hahah</span>,
   renderOperator: props => <FieldDropdown {...props} />,
   renderFunc: props => <FieldSelect {...props} />
@@ -339,3 +347,34 @@ const config = {
 }
 
 export default config
+
+class NodeTamp extends React.Component {
+  state = {
+    parent: undefined
+  }
+  componentDidMount() {
+    console.log('dismound', this.props)
+    let parent = $(ReactDOM.findDOMNode(this)).closest('[data-id]')[0]
+    this.setState({
+      mounted: true,
+      parent: parent,
+      dataId: $(parent).attr('data-id')
+    })
+  }
+  render() {
+    return (
+      <span>
+        {_get(this.props, 'selectedOpts.label')}
+        {this.state.parent &&
+          ReactDOM.createPortal(
+            <PlaceHolderDropGroup
+              dataId={this.state.dataId}
+              cbHandleDropIntoRule={_get(this.props, 'selectedOpts.cbHandleDropIntoRule')}
+            />,
+            this.state.parent
+          )}
+      </span>
+    )
+    // <FieldSelect {...this.props} />
+  }
+}

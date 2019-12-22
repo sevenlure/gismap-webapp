@@ -10,6 +10,8 @@ import { Tag, Card, Input, Icon, message } from 'antd'
 import { pull as _pull, get, debounce } from 'lodash-es'
 import { connect } from 'react-redux'
 import QueryBuilder from './querybuilder/index'
+import { DndProvider } from 'react-dnd'
+import Backend from 'react-dnd-html5-backend'
 
 const Wrapper = styled.div`
   display: flex;
@@ -47,33 +49,6 @@ const TaskList = styled.div`
   overflow-y: auto;
 `
 
-const initialData = {
-  tasks: {
-    'task-1': { id: 'task-1', content: 'Name' },
-    'task-2': { id: 'task-2', content: 'Code' },
-    'task-3': { id: 'task-3', content: 'District Code' },
-    'task-4': { id: 'task-4', content: 'Sales Area' },
-    'task-5': { id: 'task-5', content: 'Persons' }
-  },
-  columns: {
-    'column-source-attribute': {
-      id: 'column-source-attribute',
-      title: 'Attributes',
-      taskIds: ['task-1', 'task-2', 'task-3', 'task-4']
-    },
-    'column-visible-attribute': {
-      id: 'column-visible-attribute',
-      title: 'Visible attributes',
-      taskIds: []
-    },
-    'column-chart-attribute': {
-      id: 'column-chart-attribute',
-      title: 'Chart',
-      taskIds: []
-    }
-  },
-  columnOrder: ['column-source-attribute', 'column-visible-attribute', 'column-chart-attribute']
-}
 
 function getInitialData(fieldArr) {
   const taskIdsTamp = []
@@ -132,96 +107,6 @@ export default class TabFilter extends React.Component {
     this.debounceCbTabInfoVal = debounce(this.props.cbTabInfoVal, 300)
   }
 
-  onDragEnd = result => {
-    // console.log('result', result)
-    const { destination, source, draggableId } = result
-    if (!destination) {
-      return
-    }
-    if (destination.droppableId === source.droppableId && destination.index === source.index) {
-      return
-    }
-    // MARK  check field kéo vào chart thì phải là Number
-    if (destination.droppableId === 'column-chart-attribute') {
-      const typeTamp = get(this.state.tasks, `${draggableId}.type`)
-      if (typeTamp !== Number) {
-        message.warning('Only Numeric fields are allowed')
-        return
-      }
-    }
-
-    const start = this.state.columns[source.droppableId]
-    const finish = this.state.columns[destination.droppableId]
-
-    // NOTE  change vitri trong column
-    if (start === finish) {
-      const newTaskIds = Array.from(start.taskIds)
-      newTaskIds.splice(source.index, 1)
-      newTaskIds.splice(destination.index, 0, draggableId)
-
-      const newColumn = {
-        ...start,
-        taskIds: newTaskIds
-      }
-
-      const newState = {
-        ...this.state,
-        columns: {
-          ...this.state.columns,
-          [newColumn.id]: newColumn
-        }
-      }
-
-      this.setState(newState)
-      return
-    }
-    // Moving from 1 list sang another
-    const startTaskIds = Array.from(start.taskIds)
-    startTaskIds.splice(source.index, 1)
-    const newStart = {
-      ...start,
-      taskIds: startTaskIds
-    }
-    const finishTaskIds = Array.from(finish.taskIds)
-    finishTaskIds.splice(destination.index, 0, draggableId)
-    const newFinish = {
-      ...finish,
-      taskIds: finishTaskIds
-    }
-    const newState = {
-      ...this.state,
-      columns: {
-        ...this.state.columns,
-        [newStart.id]: newStart,
-        [newFinish.id]: newFinish
-      }
-    }
-    this.setState(newState)
-    if (this.props.cbTabInfoVal) this.props.cbTabInfoVal(newState)
-  }
-
-  backtoSource = (column, taskIdBack) => {
-    let newColumnRemove = {
-      ...column
-    }
-    _pull(newColumnRemove.taskIds, taskIdBack)
-    const columnSource = this.state.columns['column-source-attribute']
-    let newColumnSource = {
-      ...columnSource,
-      taskIds: [...columnSource.taskIds, taskIdBack]
-    }
-    const newState = {
-      ...this.state,
-      columns: {
-        ...this.state.columns,
-        ['column-source-attribute']: newColumnSource,
-        [newColumnRemove.id]: newColumnRemove
-      }
-    }
-    this.setState(newState)
-    if (this.props.cbTabInfoVal) this.props.cbTabInfoVal(newState)
-  }
-
   setData = data => {
     this.setData({ data })
   }
@@ -230,19 +115,20 @@ export default class TabFilter extends React.Component {
     if (this.props.getRef) this.props.getRef(this)
   }
 
+  cbHandleDrop = task => {
+    this.QueryBuilder.addTheLastRule(task)
+  }
+  
+
   render() {
     const columnSourceAttribute = this.state.columns['column-source-attribute']
     const tasksSourceAttribute = columnSourceAttribute.taskIds.map(taskId => this.state.tasks[taskId])
 
     const columnVisibleAttribute = this.state.columns['column-visible-attribute']
-    const tasksVisibleAttribute = columnVisibleAttribute.taskIds.map(taskId => this.state.tasks[taskId])
-
-    const columnChartAttribute = this.state.columns['column-chart-attribute']
-    const tasksChartAttribute = columnChartAttribute.taskIds.map(taskId => this.state.tasks[taskId])
 
     return (
       <Wrapper>
-        <DragDropContext onDragStart={this.onDragStart} onDragUpdate={this.onDragUpdate} onDragEnd={this.onDragEnd}>
+        <DndProvider backend={Backend}>
           <ContainerTop>
             <ContainerColumn style={{ marginLeft: 0, border: 'none' }}>
               <Title>{columnSourceAttribute.title}</Title>
@@ -251,28 +137,19 @@ export default class TabFilter extends React.Component {
                 placeholder='Search...'
                 prefix={<Icon type='search' style={{ color: 'rgba(0,0,0,.25)', marginLeft: 4 }} />}
               />
-              <Droppable droppableId={columnSourceAttribute.id}>
-                {(provided, snapshot) => (
-                  <TaskList
-                    ref={provided.innerRef}
-                    {...provided.droppableProps}
-                    isDraggingOver={snapshot.isDraggingOver}
-                    style={{ backgroundColor: 'white' }}
-                  >
-                    {tasksSourceAttribute.map((task, index) => (
-                      <ItemAttribute key={task.id} task={task} index={index} />
-                    ))}
-                    {provided.placeholder}
-                  </TaskList>
-                )}
-              </Droppable>
+              <TaskList style={{ backgroundColor: 'white' }}>
+                {tasksSourceAttribute.map((task, index) => (
+                  <ItemAttribute key={task.id} task={task} index={index} cbHandleDrop={this.cbHandleDrop} />
+                ))}
+                {/* {provided.placeholder} */}
+              </TaskList>
             </ContainerColumn>
             <ContainerColumn style={{ flex: 2 }}>
               <Title>{columnVisibleAttribute.title}</Title>
-              <QueryBuilder />
+              <QueryBuilder getRef={ref => (this.QueryBuilder = ref)} />
             </ContainerColumn>
           </ContainerTop>
-        </DragDropContext>
+        </DndProvider>
       </Wrapper>
     )
   }
