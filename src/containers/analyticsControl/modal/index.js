@@ -7,9 +7,18 @@ import { get } from 'lodash-es'
 
 // import TabInfo from './tabInfo/index2'
 import TabInfo from './tabinfo'
+import TabFilter from './tabfilter'
 import { updateTabInfo, updateCountApply } from 'src/redux/actions/analyticsAction'
 
 const { TabPane } = Tabs
+
+const TAB_KEY = {
+  TAB_INFO: 'TAB_INFO',
+  TAB_FILTER: 'TAB_FILTER',
+  TAB_CALC: 'TAB_CALC',
+  TAB_BUFFER: 'TAB_BUFFER',
+  TAB_MAP: 'TAB_MAP'
+}
 
 const ModalWrapperContainer = styled.div`
   .ant-modal-close-x {
@@ -45,18 +54,12 @@ export default class ModalTag extends React.Component {
     updateCountApply: PropTypes.func.isRequired
   }
 
-  state = { isVisible: false }
+  state = { isVisible: false, tabKeyActive: TAB_KEY.TAB_INFO }
 
   componentDidMount = () => {
     if (this.props.getRef) this.props.getRef(this)
   }
   openModal = () => {
-    // NOTE  check trong store đã có data chưa, có thì phải set cho Tab
-    // const { AnalyticsStore } = this.props
-    // const targetKey = get(AnalyticsStore, '__target.key')
-    // console.log('AnalyticsStore[targetKey]', AnalyticsStore[targetKey])
-    // if (targetKey && AnalyticsStore[targetKey]) this.TabInfo.setData(AnalyticsStore[targetKey])
-
     this.setState({ isVisible: true })
   }
   handleTabInfoUpdate = val => {
@@ -85,22 +88,32 @@ export default class ModalTag extends React.Component {
           }}
         >
           <div>
-            <Radio.Group defaultValue='a' buttonStyle='solid'>
-              <Radio.Button value='a'>Info Tool</Radio.Button>
-              <Radio.Button value='b'>Filter</Radio.Button>
-              <Radio.Button value='c'>Calc</Radio.Button>
-              <Radio.Button value='d'>Buffer</Radio.Button>
-              <Radio.Button value='e'>Map</Radio.Button>
+            <Radio.Group
+              defaultValue={TAB_KEY.TAB_INFO}
+              buttonStyle='solid'
+              onChange={e => this.setState({ tabKeyActive: e.target.value })}
+            >
+              <Radio.Button value={TAB_KEY.TAB_INFO}>Info Tool</Radio.Button>
+              <Radio.Button value={TAB_KEY.TAB_FILTER}>Filter</Radio.Button>
+              <Radio.Button value={TAB_KEY.TAB_CALC}>Calc</Radio.Button>
+              <Radio.Button value={TAB_KEY.TAB_BUFFER}>Buffer</Radio.Button>
+              <Radio.Button value={TAB_KEY.TAB_MAP}>Map</Radio.Button>
             </Radio.Group>
-            <Tabs defaultActiveKey='1' renderTabBar={() => <div />}>
-              <TabPane tab='Tab 1' key='1'>
+            <Tabs activeKey={this.state.tabKeyActive} renderTabBar={() => <div />}>
+              <TabPane tab='Tab 1' key={TAB_KEY.TAB_INFO}>
                 <TabInfo cbTabInfoVal={this.handleTabInfoUpdate} getRef={ref => (this.TabInfo = ref)} />
               </TabPane>
-              <TabPane tab='Tab 2' key='2'>
-                Content of Tab Pane 2
+              <TabPane tab='Tab 2' key={TAB_KEY.TAB_FILTER}>
+                <TabFilter cbTabInfoVal={this.handleTabInfoUpdate} getRef={ref => (this.TabFilter = ref)} />
               </TabPane>
-              <TabPane tab='Tab 3' key='3'>
-                Content of Tab Pane 3
+              <TabPane tab='Tab 3' key={TAB_KEY.TAB_CALC}>
+                Tab Calc
+              </TabPane>
+              <TabPane tab='Tab 3' key={TAB_KEY.TAB_BUFFER}>
+                Tab Buffer
+              </TabPane>
+              <TabPane tab='Tab 4' key={TAB_KEY.TAB_MAP}>
+                Tab Map
               </TabPane>
             </Tabs>
           </div>
