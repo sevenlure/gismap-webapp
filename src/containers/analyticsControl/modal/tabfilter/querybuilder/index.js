@@ -15,7 +15,7 @@ import loadedConfig from './config'
 import loadedInitValue from './init_value'
 import PlaceHolderDrop from '../placeHolderDrop'
 import { connect } from 'react-redux'
-import { get, debounce } from 'lodash-es'
+import { get, debounce, isEqual } from 'lodash-es'
 import { updateTabFilter } from 'src/redux/actions/analyticsAction'
 
 import 'assets/styles.css'
@@ -86,17 +86,19 @@ export default class DemoQueryBuilder extends Component {
 
   constructor(props) {
     super(props)
-    const { AnalyticsStore } = props
+    const { AnalyticsStore, updateTabFilter } = props
     const targetKey = get(AnalyticsStore, '__target.key')
 
     const fieldArr = get(AnalyticsStore, `${targetKey}.fieldArr`, [])
     const fields = this.convertFieldsToConfig(fieldArr)
+    const payload = get(AnalyticsStore, `${targetKey}.tabFilter`, initValue)
 
+    // console.log('payload', payload)
     this.state = {
-      tree: checkTree(loadTree(initValue), loadedConfig),
+      tree: checkTree(loadTree(payload), { ...loadedConfig, fields }),
       config: { ...loadedConfig, fields }
     }
-    console.log('fields', fields)
+    // console.log('fields', fields)
   }
 
   componentDidMount() {
@@ -148,13 +150,27 @@ export default class DemoQueryBuilder extends Component {
         }
       }
     }
-    console.log('jsonTree', jsonTree)
-    const tamp = loadTree(jsonTree)
-    this.setState({
-      tree: tamp
-    })
+    this.immutableTree = loadTree(jsonTree)
+    this.updateResult()
   }
 
+  addTheLastRule = task => {
+    const jsonTree = getTree(this.state.tree)
+    jsonTree.children1[uuid()] = {
+      type: 'rule',
+      properties: {
+        field: task.key,
+        operator: 'equal',
+        value: [''],
+        valueSrc: ['value'],
+        valueType: ['text']
+      }
+    }
+
+    this.immutableTree = loadTree(jsonTree)
+
+    this.updateResult()
+  }
   render = () => (
     <div>
       <Query
@@ -169,24 +185,6 @@ export default class DemoQueryBuilder extends Component {
     </div>
   )
 
-  addTheLastRule = task => {
-    const jsonTree = getTree(this.state.tree)
-    jsonTree.children1[uuid()] = {
-      type: 'rule',
-      properties: {
-        field: task.key,
-        operator: 'equal',
-        value: [''],
-        valueSrc: ['value'],
-        valueType: ['text']
-      }
-    }
-    const tamp = loadTree(jsonTree)
-    this.setState({
-      tree: tamp
-    })
-  }
-
   renderBuilder = props => (
     <Wrapper className='query-builder-container'>
       <div className='query-builder qb-lite' style={{ marginBottom: 0 }}>
@@ -199,7 +197,6 @@ export default class DemoQueryBuilder extends Component {
     this.immutableTree = immutableTree
     this.config = config
     let jsonTree = getTree(immutableTree)
-    this.jsonTree = jsonTree
     DeleteObjectChildren(jsonTree.children1)
 
     if (Object.size(jsonTree.children1) === 1) {
@@ -211,16 +208,19 @@ export default class DemoQueryBuilder extends Component {
     }
 
     this.immutableTree = loadTree(jsonTree)
+    this.jsonTree = jsonTree
+
     this.updateResult()
   }
 
   updateResult = throttle(() => {
-    this.setState({ tree: this.immutableTree, config: this.config }, () => {
-      const { AnalyticsStore, updateTabFilter } = this.props
-      const targetKey = get(AnalyticsStore, '__target.key')
+    const { AnalyticsStore, updateTabFilter } = this.props
+    const targetKey = get(AnalyticsStore, '__target.key')
+    setTimeout(() => {
       updateTabFilter(targetKey, this.jsonTree)
-    })
-  }, 300)
+    }, 300)
+    this.setState({ tree: this.immutableTree, config: this.config })
+  }, 150)
 
   renderResult = ({ tree, config }) => (
     <div>

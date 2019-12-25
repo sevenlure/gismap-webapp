@@ -79,7 +79,7 @@ export default class ModalTag extends React.Component {
           title={__target ? __target.label : 'UNKNOWN'}
           visible={this.state.isVisible}
           onCancel={() => {
-            this.setState({ isVisible: false })
+            this.setState({ isVisible: false, tabKeyActive: TAB_KEY.TAB_INFO })
           }}
           okText='Apply'
           onOk={() => {
@@ -99,7 +99,12 @@ export default class ModalTag extends React.Component {
               <Radio.Button value={TAB_KEY.TAB_BUFFER}>Buffer</Radio.Button>
               <Radio.Button value={TAB_KEY.TAB_MAP}>Map</Radio.Button>
             </Radio.Group>
-            <Tabs activeKey={this.state.tabKeyActive} renderTabBar={() => <div />}>
+            <Tabs
+              ref={ref => (this.Tabs = ref)}
+              defaultActiveKey={TAB_KEY.TAB_INFO}
+              activeKey={this.state.tabKeyActive}
+              renderTabBar={() => <div />}
+            >
               <TabPane tab='Tab 1' key={TAB_KEY.TAB_INFO}>
                 <TabInfo cbTabInfoVal={this.handleTabInfoUpdate} getRef={ref => (this.TabInfo = ref)} />
               </TabPane>
