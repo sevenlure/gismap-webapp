@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import PropTypes from 'prop-types'
 import {
   Query,
   Builder,
@@ -14,9 +15,9 @@ import loadedConfig from './config'
 import loadedInitValue from './init_value'
 import PlaceHolderDrop from '../placeHolderDrop'
 import { connect } from 'react-redux'
-import { pull as _pull, get, debounce } from 'lodash-es'
+import { get, debounce } from 'lodash-es'
+import { updateTabFilter } from 'src/redux/actions/analyticsAction'
 
-// import 'antd/dist/antd.css'
 import 'assets/styles.css'
 import styled from 'styled-components'
 
@@ -33,11 +34,6 @@ const preStyle = { backgroundColor: 'darkgrey', margin: '10px', padding: '10px' 
 
 const emptyInitValue = { id: uuid(), type: 'group' }
 const initValue = loadedInitValue && Object.keys(loadedInitValue).length > 0 ? loadedInitValue : emptyInitValue
-
-const mapStateToProps = state => ({
-  AnalyticsStore: get(state, 'AnalyticsStore')
-})
-const mapDispatchToProps = {}
 
 function findObject(obj, id) {
   for (let k in obj) {
@@ -59,6 +55,7 @@ Object.size = function(obj) {
   var size = 0,
     key
   for (key in obj) {
+    // eslint-disable-next-line no-prototype-builtins
     if (obj.hasOwnProperty(key)) size++
   }
   return size
@@ -74,8 +71,19 @@ function DeleteObjectChildren(obj) {
   }
 }
 
+const mapStateToProps = state => ({
+  AnalyticsStore: get(state, 'AnalyticsStore')
+})
+const mapDispatchToProps = { updateTabFilter }
+
 @connect(mapStateToProps, mapDispatchToProps)
 export default class DemoQueryBuilder extends Component {
+  static propTypes = {
+    AnalyticsStore: PropTypes.object.isRequired,
+    updateTabFilter: PropTypes.func.isRequired,
+    getRef: PropTypes.func
+  }
+
   constructor(props) {
     super(props)
     const { AnalyticsStore } = props
@@ -88,7 +96,6 @@ export default class DemoQueryBuilder extends Component {
       tree: checkTree(loadTree(initValue), loadedConfig),
       config: { ...loadedConfig, fields }
     }
-    console.log('tree first', loadTree(initValue))
     console.log('fields', fields)
   }
 
@@ -163,7 +170,6 @@ export default class DemoQueryBuilder extends Component {
   )
 
   addTheLastRule = task => {
-    // console.log('addTheLastRule', task)
     const jsonTree = getTree(this.state.tree)
     jsonTree.children1[uuid()] = {
       type: 'rule',
@@ -193,6 +199,7 @@ export default class DemoQueryBuilder extends Component {
     this.immutableTree = immutableTree
     this.config = config
     let jsonTree = getTree(immutableTree)
+    this.jsonTree = jsonTree
     DeleteObjectChildren(jsonTree.children1)
 
     if (Object.size(jsonTree.children1) === 1) {
@@ -208,7 +215,11 @@ export default class DemoQueryBuilder extends Component {
   }
 
   updateResult = throttle(() => {
-    this.setState({ tree: this.immutableTree, config: this.config })
+    this.setState({ tree: this.immutableTree, config: this.config }, () => {
+      const { AnalyticsStore, updateTabFilter } = this.props
+      const targetKey = get(AnalyticsStore, '__target.key')
+      updateTabFilter(targetKey, this.jsonTree)
+    })
   }, 300)
 
   renderResult = ({ tree, config }) => (

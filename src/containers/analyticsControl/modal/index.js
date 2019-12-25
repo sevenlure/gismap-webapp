@@ -104,7 +104,7 @@ export default class ModalTag extends React.Component {
                 <TabInfo cbTabInfoVal={this.handleTabInfoUpdate} getRef={ref => (this.TabInfo = ref)} />
               </TabPane>
               <TabPane tab='Tab 2' key={TAB_KEY.TAB_FILTER}>
-                <TabFilter cbTabInfoVal={this.handleTabInfoUpdate} getRef={ref => (this.TabFilter = ref)} />
+                <TabFilter getRef={ref => (this.TabFilter = ref)} />
               </TabPane>
               <TabPane tab='Tab 3' key={TAB_KEY.TAB_CALC}>
                 Tab Calc

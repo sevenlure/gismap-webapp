@@ -1,13 +1,9 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import styled from 'styled-components'
-import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd'
 import ItemAttribute from './itemAttribute'
-import ItemVisibleAttribute from './itemVisibleAttribute'
-import ItemChartAttribute from './itemChartAttribute'
-import { getColorByIndex } from 'src/utils/color'
-import { Tag, Card, Input, Icon, message } from 'antd'
-import { pull as _pull, get, debounce } from 'lodash-es'
+import { Input, Icon } from 'antd'
+import { get, debounce } from 'lodash-es'
 import { connect } from 'react-redux'
 import QueryBuilder from './querybuilder/index'
 import { DndProvider } from 'react-dnd'
@@ -24,12 +20,8 @@ const ContainerTop = styled.div`
 `
 
 const ContainerColumn = styled.div`
-  /* margin: 8px; */
   margin-left: 8px;
-  /* border: 1px solid lightgrey;
-  border-radius: 2px; */
   background-color: white;
-  /* width: 220px; */
   flex: 1;
 
   display: flex;
@@ -64,19 +56,8 @@ function getInitialData(fieldArr) {
         id: 'column-source-attribute',
         title: 'Attributes',
         taskIds: taskIdsTamp
-      },
-      'column-visible-attribute': {
-        id: 'column-visible-attribute',
-        title: 'Visible attributes',
-        taskIds: []
-      },
-      'column-chart-attribute': {
-        id: 'column-chart-attribute',
-        title: 'Chart',
-        taskIds: []
       }
-    },
-    columnOrder: ['column-source-attribute', 'column-visible-attribute', 'column-chart-attribute']
+    }
   }
 }
 
@@ -89,7 +70,6 @@ const mapDispatchToProps = {}
 export default class TabFilter extends React.Component {
   static propTypes = {
     AnalyticsStore: PropTypes.object.isRequired,
-    cbTabInfoVal: PropTypes.func.isRequired,
     getRef: PropTypes.func.isRequired
   }
 
@@ -106,7 +86,6 @@ export default class TabFilter extends React.Component {
       ...payload,
       search: ''
     }
-    this.debounceCbTabInfoVal = debounce(this.props.cbTabInfoVal, 300)
   }
 
   setData = data => {
@@ -123,16 +102,16 @@ export default class TabFilter extends React.Component {
 
   render() {
     const columnSourceAttribute = this.state.columns['column-source-attribute']
-    const tasksSourceAttribute = columnSourceAttribute.taskIds.map(taskId => this.state.tasks[taskId])
-
-    const columnVisibleAttribute = this.state.columns['column-visible-attribute']
+    const tasksSourceAttribute = columnSourceAttribute.taskIds
+      .map(taskId => this.state.tasks[taskId])
+      .filter(task => task.content.toLocaleLowerCase().includes(this.state.search.toLocaleLowerCase()))
 
     return (
       <Wrapper>
         <DndProvider backend={Backend}>
           <ContainerTop>
             <ContainerColumn style={{ marginLeft: 0, border: 'none' }}>
-              <Title>{columnSourceAttribute.title}</Title>
+              <Title>Attributes</Title>
               <Input
                 value={this.state.search}
                 onChange={e => this.setState({ search: e.target.value })}
@@ -144,11 +123,10 @@ export default class TabFilter extends React.Component {
                 {tasksSourceAttribute.map((task, index) => (
                   <ItemAttribute key={task.id} task={task} index={index} cbHandleDrop={this.cbHandleDrop} />
                 ))}
-                {/* {provided.placeholder} */}
               </TaskList>
             </ContainerColumn>
             <ContainerColumn style={{ flex: 2 }}>
-              <Title>{columnVisibleAttribute.title}</Title>
+              <Title>Query Builder</Title>
               <QueryBuilder getRef={ref => (this.QueryBuilder = ref)} />
             </ContainerColumn>
           </ContainerTop>
