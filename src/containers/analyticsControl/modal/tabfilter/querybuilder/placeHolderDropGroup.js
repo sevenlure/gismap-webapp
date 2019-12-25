@@ -7,6 +7,7 @@ const TYPE_ATTRIBUTE = 'TYPE_ATTRIBUTE'
 
 const style = {
   // height: '12rem',
+  borderRadius: 5,
   height: '100%',
   width: '100%',
   textAlign: 'center',
@@ -39,7 +40,7 @@ export default class PlaceHolderDropGroup extends React.Component {
     let border = ''
     let display = 'none'
     if (isActive) {
-      backgroundColor = 'red'
+      backgroundColor = 'skyblue'
       border = '1px dashed gray'
       display = ''
     } else if (canDrop) {

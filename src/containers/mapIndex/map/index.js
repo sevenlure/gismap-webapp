@@ -41,6 +41,7 @@ export default class SimpleExample extends Component {
         }}
         center={position}
         zoom={this.state.zoom}
+        preferCanvas
       >
         {/* <TileLayer
           attribution='&amp;copy <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'

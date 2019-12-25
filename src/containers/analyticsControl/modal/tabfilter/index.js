@@ -49,7 +49,6 @@ const TaskList = styled.div`
   overflow-y: auto;
 `
 
-
 function getInitialData(fieldArr) {
   const taskIdsTamp = []
   const tasksTamp = fieldArr.reduce((acc, cur) => {
@@ -103,7 +102,10 @@ export default class TabFilter extends React.Component {
     const initia = getInitialData(fieldArr)
 
     const payload = get(AnalyticsStore, `${targetKey}.tabInfo`, initia)
-    this.state = payload
+    this.state = {
+      ...payload,
+      search: ''
+    }
     this.debounceCbTabInfoVal = debounce(this.props.cbTabInfoVal, 300)
   }
 
@@ -118,7 +120,6 @@ export default class TabFilter extends React.Component {
   cbHandleDrop = task => {
     this.QueryBuilder.addTheLastRule(task)
   }
-  
 
   render() {
     const columnSourceAttribute = this.state.columns['column-source-attribute']
@@ -133,6 +134,8 @@ export default class TabFilter extends React.Component {
             <ContainerColumn style={{ marginLeft: 0, border: 'none' }}>
               <Title>{columnSourceAttribute.title}</Title>
               <Input
+                value={this.state.search}
+                onChange={e => this.setState({ search: e.target.value })}
                 style={{ padding: '0px 8px' }}
                 placeholder='Search...'
                 prefix={<Icon type='search' style={{ color: 'rgba(0,0,0,.25)', marginLeft: 4 }} />}

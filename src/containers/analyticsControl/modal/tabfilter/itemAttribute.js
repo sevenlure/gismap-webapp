@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import styled from 'styled-components'
-import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd'
+import { DragDropContext, Droppable, Draggable, DragSour } from 'react-beautiful-dnd'
 import { Tag, Card, Input, Icon } from 'antd'
 import { DragSource } from 'react-dnd'
 
@@ -14,7 +14,6 @@ const ContainerItem = styled.div`
   border-radius: 2px;
   margin-bottom: 8px;
   background-color: ${props => (props.isDragging ? 'lightgreen' : '#fafafa')};
-
   display: flex;
 `
 
@@ -42,8 +41,9 @@ export default class ItemAttribute extends React.Component {
   render() {
     const { name, isDragging, connectDragSource } = this.props
     const opacity = isDragging ? 0.4 : 1
+    const cursor = isDragging ? 'grabbing' : 'grab'
     return (
-      <ContainerItem ref={connectDragSource} style={{ opacity }}>
+      <ContainerItem ref={connectDragSource} style={{ opacity, cursor }}>
         {/* <Handle {...provided.dragHandleProps} /> */}
         {this.props.task.content}
       </ContainerItem>

@@ -292,3 +292,9 @@ div.tooltip-inner {
   overflow: hidden !important;
   opacity: 0 !important;
 }
+
+.my-div-icon {
+  width: 20px;
+  height: 20px;
+  background-image: url('http://localhost:3000/static/images/marker-icon-2x.png');
+}

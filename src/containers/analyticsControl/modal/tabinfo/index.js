@@ -127,7 +127,11 @@ export default class TabInfo extends React.Component {
     const initia = getInitialData(fieldArr)
 
     const payload = get(AnalyticsStore, `${targetKey}.tabInfo`, initia)
-    this.state = payload
+    this.state = {
+      ...payload,
+      search: ''
+    }
+
     this.debounceCbTabInfoVal = debounce(this.props.cbTabInfoVal, 300)
   }
 
@@ -231,7 +235,9 @@ export default class TabInfo extends React.Component {
 
   render() {
     const columnSourceAttribute = this.state.columns['column-source-attribute']
-    const tasksSourceAttribute = columnSourceAttribute.taskIds.map(taskId => this.state.tasks[taskId])
+    const tasksSourceAttribute = columnSourceAttribute.taskIds
+      .map(taskId => this.state.tasks[taskId])
+      .filter(task => task.content.toLocaleLowerCase().includes(this.state.search.toLocaleLowerCase()))
 
     const columnVisibleAttribute = this.state.columns['column-visible-attribute']
     const tasksVisibleAttribute = columnVisibleAttribute.taskIds.map(taskId => this.state.tasks[taskId])
@@ -246,6 +252,8 @@ export default class TabInfo extends React.Component {
             <ContainerColumn style={{ marginLeft: 0, border: 'none' }}>
               <Title>{columnSourceAttribute.title}</Title>
               <Input
+                value={this.state.search}
+                onChange={e => this.setState({ search: e.target.value })}
                 style={{ padding: '0px 8px' }}
                 placeholder='Search...'
                 prefix={<Icon type='search' style={{ color: 'rgba(0,0,0,.25)', marginLeft: 4 }} />}

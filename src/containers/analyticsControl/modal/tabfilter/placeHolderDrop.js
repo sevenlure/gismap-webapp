@@ -7,7 +7,8 @@ const TYPE_ATTRIBUTE = 'TYPE_ATTRIBUTE'
 
 const style = {
   // height: '12rem',
-  height: 60,
+  borderRadius: 5,
+  height: 40,
   width: '100%',
   textAlign: 'center',
   fontSize: '1rem',
@@ -38,14 +39,15 @@ export default class PlaceHolderDrop extends React.Component {
     let backgroundColor = ''
     let border = ''
     if (isActive) {
-      // backgroundColor = 'darkgreen'
+      backgroundColor = 'skyblue'
       border = '1px dashed gray'
     } else if (canDrop) {
       // backgroundColor = 'darkkhaki'
       border = '1px dashed gray'
     }
+
     return (
-      <div style={{ margin: '0px 32px 0px 24px' }}>
+      <div style={{ margin: '0px 24px 0px 16px' }}>
         <div ref={connectDropTarget} style={{ ...style, backgroundColor, border }}>
           {/* {isActive ? 'Release to drop' : 'Drag a box here'} */}
           {this.props.children}

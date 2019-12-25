@@ -45,6 +45,7 @@ function findObject(obj, id) {
   }
   let result
   for (let k in obj) {
+    // eslint-disable-next-line no-prototype-builtins
     if (obj.hasOwnProperty(k) && typeof obj[k].children1 === 'object') {
       result = findObject(obj[k].children1, id)
       if (result) {
@@ -53,10 +54,28 @@ function findObject(obj, id) {
     }
   }
 }
+
+Object.size = function(obj) {
+  var size = 0,
+    key
+  for (key in obj) {
+    if (obj.hasOwnProperty(key)) size++
+  }
+  return size
+}
+
+function DeleteObjectChildren(obj) {
+  for (let k in obj) {
+    if (obj[k].type === 'group' && Object.size(obj[k].children1) === 0) {
+      delete obj[k]
+    } else {
+      DeleteObjectChildren(obj[k].children1)
+    }
+  }
+}
+
 @connect(mapStateToProps, mapDispatchToProps)
 export default class DemoQueryBuilder extends Component {
-  immutableTree
-  config
   constructor(props) {
     super(props)
     const { AnalyticsStore } = props
@@ -69,6 +88,7 @@ export default class DemoQueryBuilder extends Component {
       tree: checkTree(loadTree(initValue), loadedConfig),
       config: { ...loadedConfig, fields }
     }
+    console.log('tree first', loadTree(initValue))
     console.log('fields', fields)
   }
 
@@ -79,43 +99,17 @@ export default class DemoQueryBuilder extends Component {
   convertFieldsToConfig = fieldArr => {
     const fieldsTamp = fieldArr.reduce((acc, cur) => {
       let type = 'text'
-      if (cur.type === Number) type = 'number'
+      let operators = ['equal', 'not_equal', 'like', 'not_like']
+      if (cur.type === Number) {
+        type = 'number'
+        operators = ['equal', 'not_equal', 'less', 'less_or_equal', 'greater', 'greater_or_equal']
+      }
       acc[cur.key] = {
         ...cur,
         type,
-        operators: ['equal', 'not_equal'],
+        operators,
         valueSources: ['value'],
-        cbHandleDropIntoRule: (task, dataId) => {
-          console.log('cbHandleDropIntoRule', task)
-          const jsonTree = getTree(this.state.tree)
-          const objFinded = findObject(jsonTree.children1, dataId)
-          const cache = {
-            ...objFinded
-          }
-          objFinded.type = 'group'
-          objFinded.properties = {
-            conjunction: 'AND'
-          }
-          objFinded.children1 = {
-            [uuid()]: cache,
-            [uuid()]: {
-              type: 'rule',
-              properties: {
-                field: task.key,
-                operator: 'equal',
-                value: ['p'],
-                valueSrc: ['value'],
-                valueType: ['text']
-              }
-            }
-          }
-          console.log('jsonTree', jsonTree)
-          const tamp = loadTree(jsonTree)
-          this.setState({
-            tree: tamp
-          })
-          console.log('objFinded', objFinded, 'dataId', dataId)
-        }
+        cbHandleDropIntoRule: this.cbHandleDropIntoRule
       }
       return acc
     }, {})
@@ -123,9 +117,36 @@ export default class DemoQueryBuilder extends Component {
     return fieldsTamp
   }
 
-  // cbHandleDropIntoRule = (task, dataId) => {
-  //   console.log('cbHandleDropIntoRule', cbHandleDropIntoRule)
-  // }
+  cbHandleDropIntoRule = (task, dataId) => {
+    // console.log('cbHandleDropIntoRule', cbHandleDropIntoRule)
+    const jsonTree = getTree(this.state.tree)
+    const objFinded = findObject(jsonTree.children1, dataId)
+    const cache = {
+      ...objFinded
+    }
+    objFinded.type = 'group'
+    objFinded.properties = {
+      conjunction: 'AND'
+    }
+    objFinded.children1 = {
+      [uuid()]: cache,
+      [uuid()]: {
+        type: 'rule',
+        properties: {
+          field: task.key,
+          operator: 'equal',
+          value: [''],
+          valueSrc: ['value'],
+          valueType: ['text']
+        }
+      }
+    }
+    console.log('jsonTree', jsonTree)
+    const tamp = loadTree(jsonTree)
+    this.setState({
+      tree: tamp
+    })
+  }
 
   render = () => (
     <div>
@@ -142,14 +163,14 @@ export default class DemoQueryBuilder extends Component {
   )
 
   addTheLastRule = task => {
-    console.log('addTheLastRule', task)
+    // console.log('addTheLastRule', task)
     const jsonTree = getTree(this.state.tree)
     jsonTree.children1[uuid()] = {
       type: 'rule',
       properties: {
         field: task.key,
         operator: 'equal',
-        value: ['p'],
+        value: [''],
         valueSrc: ['value'],
         valueType: ['text']
       }
@@ -162,7 +183,7 @@ export default class DemoQueryBuilder extends Component {
 
   renderBuilder = props => (
     <Wrapper className='query-builder-container'>
-      <div className='query-builder qb-lite'>
+      <div className='query-builder qb-lite' style={{ marginBottom: 0 }}>
         <Builder {...props} />
       </div>
     </Wrapper>
@@ -171,10 +192,19 @@ export default class DemoQueryBuilder extends Component {
   onChange = (immutableTree, config) => {
     this.immutableTree = immutableTree
     this.config = config
+    let jsonTree = getTree(immutableTree)
+    DeleteObjectChildren(jsonTree.children1)
+
+    if (Object.size(jsonTree.children1) === 1) {
+      for (let k in jsonTree.children1) {
+        if (!jsonTree.children1[k].properties.field) {
+          delete jsonTree.children1[k]
+        }
+      }
+    }
+
+    this.immutableTree = loadTree(jsonTree)
     this.updateResult()
-    // console.log('this.immutableTree', this.immutableTree)
-    const jsonTree = getTree(immutableTree) //can be saved to backend
-    // console.log('jsonTree', jsonTree)
   }
 
   updateResult = throttle(() => {
