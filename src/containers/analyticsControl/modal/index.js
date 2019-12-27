@@ -69,6 +69,7 @@ export default class ModalTag extends React.Component {
   render() {
     const { AnalyticsStore } = this.props
     const { __target } = AnalyticsStore
+
     return (
       <div>
         <ModalWrapperContainer id='ModalWrapperContainer'></ModalWrapperContainer>
@@ -84,7 +85,7 @@ export default class ModalTag extends React.Component {
           okText='Apply'
           onOk={() => {
             this.props.updateCountApply(__target ? __target.key : 'UNKNOWN')
-            this.setState({ isVisible: false })
+            this.setState({ isVisible: false, tabKeyActive: TAB_KEY.TAB_INFO })
           }}
         >
           <div>

@@ -58,7 +58,26 @@ const operators = {
     valueLabels: ['Value from', 'Value to'],
     textSeparators: ['from', 'to']
   },
-  proximity
+  proximity,
+  like: {
+    ...BasicConfig.operators.like,
+    label: 'Like',
+    labelForFormat: 'includes',
+    cardinality: 1,
+    isUnary: false,
+    // formatOp: (field, _op, value, _valueSrc, _valueType, opDef) => `indexOf(${value},__${field}) != -1`
+    // formatOp: (field, _op, value, _valueSrc, _valueType, opDef) => `${value}.indexOf(__${field}) != -1`
+    formatOp: (field, _op, value, _valueSrc, _valueType, opDef) => `__${field}.includes(${value})`
+  },
+  not_like: {
+    ...BasicConfig.operators.not_like,
+    label: 'Not like',
+    labelForFormat: 'includes',
+    cardinality: 1,
+    isUnary: false,
+    // formatOp: (field, _op, value, _valueSrc, _valueType, opDef) => `indexOf(${value},__${field}) == -1`
+    formatOp: (field, _op, value, _valueSrc, _valueType, opDef) => `!__${field}.includes(${value})`
+  }
 }
 
 const widgets = {

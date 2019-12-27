@@ -81,7 +81,7 @@ export default class TabFilter extends React.Component {
     const fieldArr = get(AnalyticsStore, `${targetKey}.fieldArr`, [])
     const initia = getInitialData(fieldArr)
 
-    const payload = get(AnalyticsStore, `${targetKey}.tabInfo`, initia)
+    const payload = initia //get(AnalyticsStore, `${targetKey}.tabInfo`, initia)
     this.state = {
       ...payload,
       search: ''

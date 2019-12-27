@@ -91,7 +91,7 @@ export default class DemoQueryBuilder extends Component {
 
     const fieldArr = get(AnalyticsStore, `${targetKey}.fieldArr`, [])
     const fields = this.convertFieldsToConfig(fieldArr)
-    const payload = get(AnalyticsStore, `${targetKey}.tabFilter`, initValue)
+    const payload = get(AnalyticsStore, `${targetKey}.tabFilter.jsonTree`, initValue)
 
     // console.log('payload', payload)
     this.state = {
@@ -217,7 +217,10 @@ export default class DemoQueryBuilder extends Component {
     const { AnalyticsStore, updateTabFilter } = this.props
     const targetKey = get(AnalyticsStore, '__target.key')
     setTimeout(() => {
-      updateTabFilter(targetKey, this.jsonTree)
+      updateTabFilter(targetKey, {
+        jsonTree: this.jsonTree,
+        queryString: queryString(this.immutableTree, this.config)
+      })
     }, 300)
     this.setState({ tree: this.immutableTree, config: this.config })
   }, 150)
