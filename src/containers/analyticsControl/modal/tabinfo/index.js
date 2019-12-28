@@ -125,9 +125,9 @@ export default class TabInfo extends React.Component {
 
     const fieldArr = get(AnalyticsStore, `${targetKey}.fieldArr`, [])
     const initia = getInitialData(fieldArr)
-   
+
     let payload = get(AnalyticsStore, `${targetKey}.tabInfo`, initia)
-    
+
     this.state = {
       ...payload,
       search: ''

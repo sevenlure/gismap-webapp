@@ -57,8 +57,8 @@ export default class LayerMarker extends React.Component {
   UNSAFE_componentWillReceiveProps(nextProps) {
     if (!_isEqual(this.props.markerSelectedObj, nextProps.markerSelectedObj)) {
       const updatedObj = diff(this.props.markerSelectedObj, nextProps.markerSelectedObj)
-      _mapKeys(updatedObj, (value, key) => {
-        if (value && key.includes('GENERAL/') && _get(nextProps, `markerGeneralData.${key}.list`, []).length == 0) {
+      _mapKeys(updatedObj, (_target, key) => {
+        if (_target && key.includes('GENERAL/') && _get(nextProps, `markerGeneralData.${key}.list`, []).length == 0) {
           this.props.fetchMarkerGeneralBykey(key).then(data => {
             if (!data) return
 
@@ -86,7 +86,7 @@ export default class LayerMarker extends React.Component {
                   <Marker key={point._id} position={[position[1], position[0]]}>
                     <Popup className={'leaflet-custom-popup'}>
                       <PoupContent
-                        title={'properties'}
+                        title={_target.label}
                         // minHeight={100}
                         markerTypeKey={key}
                         properties={properties}
