@@ -1,3 +1,4 @@
+import uuid from 'uuid/v1'
 import update from 'react-addons-update'
 import { get as _get } from 'lodash-es'
 import {
@@ -50,7 +51,8 @@ const analyticsReducer = (state = InitialState, action) => {
         $merge: {
           [key]: {
             ...state[key],
-            tabFilter: value
+            tabFilter: value,
+            countApply: uuid()
           }
         }
       })
@@ -62,7 +64,7 @@ const analyticsReducer = (state = InitialState, action) => {
         $merge: {
           [key]: {
             ...state[key],
-            countApply: countValue + 1
+            countApply: uuid()
           }
         }
       })

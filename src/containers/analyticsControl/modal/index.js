@@ -8,7 +8,7 @@ import { get } from 'lodash-es'
 // import TabInfo from './tabInfo/index2'
 import TabInfo from './tabinfo'
 import TabFilter from './tabfilter'
-import { updateTabInfo, updateCountApply } from 'src/redux/actions/analyticsAction'
+import { updateTabInfo, updateCountApply, updateTabFilter } from 'src/redux/actions/analyticsAction'
 
 const { TabPane } = Tabs
 
@@ -43,7 +43,7 @@ const ModalWrapperContainer = styled.div`
 const mapStateToProps = state => ({
   AnalyticsStore: get(state, 'AnalyticsStore')
 })
-const mapDispatchToProps = { updateTabInfo, updateCountApply }
+const mapDispatchToProps = { updateTabInfo, updateCountApply, updateTabFilter }
 
 @connect(mapStateToProps, mapDispatchToProps)
 export default class ModalTag extends React.Component {
@@ -51,7 +51,8 @@ export default class ModalTag extends React.Component {
     getRef: PropTypes.func.isRequired,
     updateTabInfo: PropTypes.func.isRequired,
     AnalyticsStore: PropTypes.object.isRequired,
-    updateCountApply: PropTypes.func.isRequired
+    updateCountApply: PropTypes.func.isRequired,
+    updateTabFilter: PropTypes.func.isRequired
   }
 
   state = { isVisible: false, tabKeyActive: TAB_KEY.TAB_INFO }
@@ -62,10 +63,7 @@ export default class ModalTag extends React.Component {
   openModal = () => {
     this.setState({ isVisible: true })
   }
-  handleTabInfoUpdate = val => {
-    const { AnalyticsStore } = this.props
-    this.props.updateTabInfo(AnalyticsStore.__target.key, val)
-  }
+
   render() {
     const { AnalyticsStore } = this.props
     const { __target } = AnalyticsStore
@@ -84,7 +82,18 @@ export default class ModalTag extends React.Component {
           }}
           okText='Apply'
           onOk={() => {
-            this.props.updateCountApply(__target ? __target.key : 'UNKNOWN')
+            const key = __target ? __target.key : 'UNKNOWN'
+            // this.props.updateCountApply(key)
+            switch (this.state.tabKeyActive) {
+              case TAB_KEY.TAB_INFO: {
+                this.props.updateTabInfo(key, this.TabInfo.getDataTabInfo())
+                break
+              }
+              case TAB_KEY.TAB_FILTER: {
+                this.props.updateTabFilter(key, this.TabFilter.getDataTabFilter())
+                break
+              }
+            }
             this.setState({ isVisible: false, tabKeyActive: TAB_KEY.TAB_INFO })
           }}
         >
@@ -107,7 +116,7 @@ export default class ModalTag extends React.Component {
               renderTabBar={() => <div />}
             >
               <TabPane tab='Tab 1' key={TAB_KEY.TAB_INFO}>
-                <TabInfo cbTabInfoVal={this.handleTabInfoUpdate} getRef={ref => (this.TabInfo = ref)} />
+                <TabInfo getRef={ref => (this.TabInfo = ref)} />
               </TabPane>
               <TabPane tab='Tab 2' key={TAB_KEY.TAB_FILTER}>
                 <TabFilter getRef={ref => (this.TabFilter = ref)} />

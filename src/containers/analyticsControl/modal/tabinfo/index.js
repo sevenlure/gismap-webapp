@@ -7,7 +7,7 @@ import ItemVisibleAttribute from './itemVisibleAttribute'
 import ItemChartAttribute from './itemChartAttribute'
 import { getColorByIndex } from 'src/utils/color'
 import { Tag, Card, Input, Icon, message } from 'antd'
-import { pull as _pull, get, debounce } from 'lodash-es'
+import { pull as _pull, get, debounce, cloneDeep as _cloneDeep } from 'lodash-es'
 import { connect } from 'react-redux'
 
 const Wrapper = styled.div`
@@ -114,25 +114,26 @@ const mapDispatchToProps = {}
 export default class TabInfo extends React.Component {
   static propTypes = {
     AnalyticsStore: PropTypes.object.isRequired,
-    cbTabInfoVal: PropTypes.func.isRequired,
     getRef: PropTypes.func.isRequired
   }
 
   constructor(props) {
     super(props)
     const { AnalyticsStore } = props
+
     const targetKey = get(AnalyticsStore, '__target.key')
 
     const fieldArr = get(AnalyticsStore, `${targetKey}.fieldArr`, [])
     const initia = getInitialData(fieldArr)
-
-    const payload = get(AnalyticsStore, `${targetKey}.tabInfo`, initia)
+   
+    let payload = get(AnalyticsStore, `${targetKey}.tabInfo`, initia)
+    
     this.state = {
       ...payload,
       search: ''
     }
 
-    this.debounceCbTabInfoVal = debounce(this.props.cbTabInfoVal, 300)
+    // this.debounceCbTabInfoVal = debounce(this.props.cbTabInfoVal, 300)
   }
 
   onDragEnd = result => {
@@ -200,15 +201,13 @@ export default class TabInfo extends React.Component {
       }
     }
     this.setState(newState)
-    if (this.props.cbTabInfoVal) this.props.cbTabInfoVal(newState)
+    // if (this.props.cbTabInfoVal) this.props.cbTabInfoVal(newState)
   }
 
   backtoSource = (column, taskIdBack) => {
-    let newColumnRemove = {
-      ...column
-    }
+    let newColumnRemove = _cloneDeep(column)
     _pull(newColumnRemove.taskIds, taskIdBack)
-    const columnSource = this.state.columns['column-source-attribute']
+    const columnSource = _cloneDeep(this.state.columns['column-source-attribute'])
     let newColumnSource = {
       ...columnSource,
       taskIds: [...columnSource.taskIds, taskIdBack]
@@ -222,11 +221,11 @@ export default class TabInfo extends React.Component {
       }
     }
     this.setState(newState)
-    if (this.props.cbTabInfoVal) this.props.cbTabInfoVal(newState)
+    // if (this.props.cbTabInfoVal) this.props.cbTabInfoVal(newState)
   }
 
-  setData = data => {
-    this.setData({ data })
+  getDataTabInfo() {
+    return this.state
   }
 
   componentDidMount() {
@@ -317,17 +316,12 @@ export default class TabInfo extends React.Component {
                         onChangeColor={val => {
                           let newTask = this.state.tasks[task.id]
                           newTask.color = val
-                          this.setState(
-                            {
-                              tasks: {
-                                ...this.state.tasks,
-                                [task.id]: newTask
-                              }
-                            },
-                            () => {
-                              this.debounceCbTabInfoVal(this.state)
+                          this.setState({
+                            tasks: {
+                              ...this.state.tasks,
+                              [task.id]: newTask
                             }
-                          )
+                          })
                         }}
                       />
                     ))}

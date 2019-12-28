@@ -34,7 +34,7 @@ export default class SpinComponent extends MapControl {
   }
   componentDidUpdate() {
     const { map } = this.props.leaflet
-    if (this.props.isLoadingLayer) {
+    if (this.props.isLoadingLayer.length > 0) {
       map.spin(true)
       map._container.style.opacity = 0.5
     } else {

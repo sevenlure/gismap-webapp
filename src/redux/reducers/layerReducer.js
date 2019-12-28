@@ -10,7 +10,7 @@ import { UPDATE_MARKER_OWN_COUNT_LOADED, UPDATE_MARKER_OWN_COUNT } from '../acti
 import { UPDATE_MARKER_OWN_BY_KEY, UPDATE_MARKER_OWN_BY_KEY_LOADING } from '../actions/layerAction'
 
 const InitialState = {
-  isLoadingLayer: false,
+  isLoadingLayer: [],
   hanhChinhIsLoaded: false,
   hanhChinh: {
     province: [],
@@ -34,14 +34,14 @@ const layerReducer = (state = InitialState, action) => {
     case LAYER_LOADING: {
       return update(state, {
         isLoadingLayer: {
-          $set: true
+          $push: [action.payload]
         }
       })
     }
     case LAYER_LOADED: {
       return update(state, {
         isLoadingLayer: {
-          $set: false
+          $set: state.isLoadingLayer.filter(ele => ele != action.payload)
         }
       })
     }

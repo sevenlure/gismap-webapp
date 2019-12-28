@@ -100,6 +100,10 @@ export default class TabFilter extends React.Component {
     this.QueryBuilder.addTheLastRule(task)
   }
 
+  getDataTabFilter() {
+    return this.QueryBuilder.getDataForStore()
+  }
+
   render() {
     const columnSourceAttribute = this.state.columns['column-source-attribute']
     const tasksSourceAttribute = columnSourceAttribute.taskIds

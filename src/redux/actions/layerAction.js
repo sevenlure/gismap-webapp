@@ -1,3 +1,4 @@
+import uuid from 'uuid/v1'
 import { getMarkerGeneralCountAll, getMarkerGeneralByKey } from 'src/api/layerApi'
 import { getMarkerOwnCountAll, getMarkerOwnByKey } from 'src/api/layerApi'
 
@@ -77,17 +78,18 @@ export function fetchMarkerOwnCount() {
 
 export function fetchMarkerOwnBykey(key) {
   return async dispatch => {
-    dispatch({ type: LAYER_LOADING })
+    const idTimetamp = uuid()
+    dispatch({ type: LAYER_LOADING, payload: idTimetamp })
     dispatch({ type: UPDATE_MARKER_OWN_BY_KEY_LOADING, payload: { key } })
     try {
       const response = await getMarkerOwnByKey(key)
       const { data } = response
       dispatch({ type: UPDATE_MARKER_OWN_BY_KEY, payload: { key, list: data } })
-      dispatch({ type: LAYER_LOADED })
+      dispatch({ type: LAYER_LOADED, payload: idTimetamp })
       return data
     } catch {
       dispatch({ type: UPDATE_MARKER_OWN_BY_KEY, payload: { key, list: [] } })
-      dispatch({ type: LAYER_LOADED })
+      dispatch({ type: LAYER_LOADED, payload: idTimetamp })
     }
   }
 }

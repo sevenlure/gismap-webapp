@@ -15,6 +15,18 @@ const Wrapper = styled.div`
   }
 `
 
+const ContainerItem = styled.div`
+  padding: 8px;
+  /* border: 1px solid lightgrey; */
+  border: 1px solid #d9d9d9;
+  border-radius: 2px;
+  margin: 0px 8px 8px;
+  cursor: pointer;
+  background-color: ${props => (props.isDragging ? 'lightgreen' : '#fafafa')};
+
+  display: flex;
+`
+
 const mapStateToProps = state => ({
   filterMarker: get(state, 'FilterStore.marker'),
   markerGeneralCountIsLoaded: get(state, 'LayerStore.markerGeneralCountIsLoaded')
@@ -45,7 +57,7 @@ export default class AnalyticsControl extends React.Component {
         {filterMarkerArr.length === 0 && 'Vui lòng chọn layer'}
         {filterMarkerArr.map(item => (
           <div key={item.key}>
-            <Tag onClick={this.showModal.bind(this, item)}>{item.label}</Tag>
+            <ContainerItem onClick={this.showModal.bind(this, item)}>{item.label}</ContainerItem>
           </div>
         ))}
 
