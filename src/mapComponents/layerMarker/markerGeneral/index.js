@@ -11,7 +11,7 @@ import expr from 'expression-eval'
 import { fetchMarkerGeneralBykey } from 'src/redux/actions/layerAction'
 import { updateFieldArr } from 'src/redux/actions/analyticsAction'
 import fieldConvert from './fieldConvert'
-import PoupContent from '../common/popupContent'
+import MapPopup from 'src/components/elements/map/popup'
 
 const mapStateToProps = state => ({
   markerSelectedObj: _get(state, 'FilterStore.marker'),
@@ -85,12 +85,7 @@ export default class LayerMarker extends React.Component {
                 rendered: (
                   <Marker key={point._id} position={[position[1], position[0]]}>
                     <Popup className={'leaflet-custom-popup'}>
-                      <PoupContent
-                        title={_target.label}
-                        // minHeight={100}
-                        markerTypeKey={key}
-                        properties={properties}
-                      />
+                      <MapPopup title={_target.label} markerTypeKey={key} properties={properties} />
                     </Popup>
                   </Marker>
                 )
