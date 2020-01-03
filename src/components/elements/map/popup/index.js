@@ -6,7 +6,7 @@ import PoupContent from './popupContent'
 
 const MapPopup = ({ title, markerTypeKey, properties }) => {
   return (
-    <Popup>
+    <Popup className='leaflet-custom-popup'>
       <PoupContent title={title} markerTypeKey={markerTypeKey} properties={properties} />
     </Popup>
   )

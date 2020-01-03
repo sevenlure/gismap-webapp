@@ -84,9 +84,7 @@ export default class LayerMarker extends React.Component {
                 point,
                 rendered: (
                   <Marker key={point._id} position={[position[1], position[0]]}>
-                    <Popup className={'leaflet-custom-popup'}>
-                      <MapPopup title={_target.label} markerTypeKey={key} properties={properties} />
-                    </Popup>
+                    <MapPopup title={_target.label} markerTypeKey={key} properties={properties} />
                   </Marker>
                 )
               }
