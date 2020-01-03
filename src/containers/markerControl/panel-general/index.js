@@ -5,6 +5,7 @@ import { connect } from 'react-redux'
 import { Checkbox, Icon } from 'antd'
 import { get } from 'lodash-es'
 
+import { _keyObjArr as _keyObjGeneralArr } from 'src/constant/layer/general'
 import { updateMarkerWithKey } from 'src/redux/actions/filterAction'
 
 const GENERAL_KEY = {
@@ -39,45 +40,11 @@ export default class PanelGeneralComp extends React.Component {
   render() {
     return (
       <div>
-        <div>
-          <CheckboxGeneral targetKey={GENERAL_KEY.ACADEMIES} label='Academies'></CheckboxGeneral>
-        </div>
-        <div>
-          <CheckboxGeneral targetKey={GENERAL_KEY.ACCOMMODATION} label='Accommodation'></CheckboxGeneral>
-        </div>
-        <div>
-          <CheckboxGeneral targetKey={GENERAL_KEY.AUTOMOTIVE} label='Automotive'></CheckboxGeneral>
-        </div>
-        <div>
-          <CheckboxGeneral targetKey={GENERAL_KEY.BARS_AND_RESTAURANTS} label='Bars and restaurants'></CheckboxGeneral>
-        </div>
-        <div>
-          <CheckboxGeneral targetKey={GENERAL_KEY.FASHION} label='Fashion'></CheckboxGeneral>
-        </div>
-        <div>
-          <CheckboxGeneral targetKey={GENERAL_KEY.GENERAL_SERVICES} label='General services'></CheckboxGeneral>
-        </div>
-        <div>
-          <CheckboxGeneral targetKey={GENERAL_KEY.HEALTH_BEAUTY} label={'Health & Beauty'}></CheckboxGeneral>
-        </div>
-        <div>
-          <CheckboxGeneral targetKey={GENERAL_KEY.HOME_OFFICE} label={'Home & Office'}></CheckboxGeneral>
-        </div>
-        <div>
-          <CheckboxGeneral targetKey={GENERAL_KEY.LEISURE} label={'Leisure'}></CheckboxGeneral>
-        </div>
-        <div>
-          <CheckboxGeneral targetKey={GENERAL_KEY.SERVICES} label={'Services'}></CheckboxGeneral>
-        </div>
-        <div>
-          <CheckboxGeneral targetKey={GENERAL_KEY.SHOPPING_CENTRES} label={'Shopping Centres'}></CheckboxGeneral>
-        </div>
-        <div>
-          <CheckboxGeneral
-            targetKey={GENERAL_KEY.UNCATEGORIZED_MARKERS}
-            label={'Uncategorized markers'}
-          ></CheckboxGeneral>
-        </div>
+        {_keyObjGeneralArr.map(item => (
+          <div key={item.key}>
+            <CheckboxGeneral targetKey={item.key} label={item.name}></CheckboxGeneral>
+          </div>
+        ))}
       </div>
     )
   }
@@ -114,9 +81,9 @@ class CheckboxGeneral extends React.Component {
         onChange={this.onChangeMarker}
       >
         {label}
-        <span style={{ marginLeft: 4, color: '#bfbfbf' }}>
+        {/* <span style={{ marginLeft: 4, color: '#bfbfbf' }}>
           {markerGeneralCountIsLoaded ? `(${get(markerGeneralCount, targetKey, 0)})` : <Icon type='loading' />}
-        </span>
+        </span> */}
       </Checkbox>
     )
   }

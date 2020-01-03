@@ -91,6 +91,13 @@ const nextConfig = {
     HOST_API: env.HOST_API,
     HOST_MEDIA: env.HOST_MEDIA,
     GOOGLE_MAP_API_KEY: env.GOOGLE_MAP_API_KEY
+  },
+  webpackDevMiddleware: config => {
+    config.watchOptions = {
+      poll: 1000,
+      aggregateTimeout: 300
+    }
+    return config
   }
 }
 // module.exports = withCSS({
