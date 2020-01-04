@@ -2,18 +2,25 @@ import React from 'react'
 import PropTypes from 'prop-types'
 // import styled from 'styled-components'
 import { connect } from 'react-redux'
-import { get as _get, isEqual as _isEqual, mapKeys as _mapKeys, values as _values } from 'lodash-es'
+import { get as _get, isEqual as _isEqual, mapKeys as _mapKeys, values as _values, cloneDeep } from 'lodash-es'
 import { diff } from 'deep-object-diff'
 import { FeatureGroup, Marker, Popup } from 'react-leaflet'
 import MarkerClusterGroup from 'react-leaflet-markercluster'
 import expr from 'expression-eval'
+import L from 'leaflet'
 
 import { fetchMarkerGeneralBykey } from 'src/redux/actions/layerAction'
 import { updateFieldArr } from 'src/redux/actions/analyticsAction'
 import fieldConvert from './fieldConvert'
 import MapPopup from 'src/components/elements/map/popup'
+import { ICON } from 'src/constant/layer/general'
+
+// const ICON = {
+
+// }
 
 const mapStateToProps = state => ({
+  filterLayerHanhChinhArrId: _get(state, 'FilterStore.layer.hanhChinh.arrayIdSelected'),
   markerSelectedObj: _get(state, 'FilterStore.marker'),
   markerGeneralData: _get(state, 'LayerStore.markerGeneral'),
   analyticsStore: _get(state, 'AnalyticsStore')
@@ -24,8 +31,9 @@ const mapDispatchToProps = { fetchMarkerGeneralBykey, updateFieldArr }
 export default class LayerMarker extends React.Component {
   static propTypes = {
     fetchMarkerGeneralBykey: PropTypes.func.isRequired,
-    markerSelectedObj: PropTypes.object.isRequired,
+    filterLayerHanhChinhArrId: PropTypes.array,
     markerGeneralData: PropTypes.object.isRequired,
+    markerSelectedObj: PropTypes.object.isRequired,
     updateFieldArr: PropTypes.func.isRequired
   }
 
@@ -54,54 +62,66 @@ export default class LayerMarker extends React.Component {
     }
   }
 
+  _loadDataToCache = (_target, key) => {
+    this.props.fetchMarkerGeneralBykey(key).then(data => {
+      if (!data) return
+
+      const firstProperties = _get(data, '[0].properties')
+      // console.log('firstProperties', firstProperties)
+      if (firstProperties) {
+        let fieldArr = []
+        _mapKeys(firstProperties, (val, keyField) => {
+          if (fieldConvert[keyField]) fieldArr.push(fieldConvert[keyField])
+        })
+        this.props.updateFieldArr(key, fieldArr)
+      }
+
+      // NOTE  render truớc cho tăng performance
+      const dataSourceRender = data.map(point => {
+        const position = _get(point, 'geometry.coordinates')
+        if (!position) return null
+        // NOTE  transform data cho vao PopContent
+        const properties = _get(point, 'properties', {})
+        // const transformed = this.transformDataToPopContent(key, properties)
+        // console.log('transformed', transformed)
+        return {
+          point,
+          rendered: (
+            <Marker icon={L.icon(ICON[key])} key={point._id} position={[position[1], position[0]]}>
+              <MapPopup title={_target.label} markerTypeKey={key} properties={properties} />
+            </Marker>
+          )
+        }
+      })
+      // NOTE save data vao state
+      const newState = cloneDeep({
+        cache: {
+          ...this.state.cache,
+          [key]: {
+            key,
+            dataSourceRender,
+            dataFilteredRender: dataSourceRender
+          }
+        }
+      })
+      this.setState(newState)
+    })
+  }
+
   UNSAFE_componentWillReceiveProps(nextProps) {
+    if (!_isEqual(this.props.filterLayerHanhChinhArrId, nextProps.filterLayerHanhChinhArrId)) {
+      _mapKeys(this.props.markerSelectedObj, (_target, key) => {
+        if (_target && key.includes('GENERAL/')) {
+          this._loadDataToCache(_target, key)
+        }
+      })
+    }
+
     if (!_isEqual(this.props.markerSelectedObj, nextProps.markerSelectedObj)) {
       const updatedObj = diff(this.props.markerSelectedObj, nextProps.markerSelectedObj)
       _mapKeys(updatedObj, (_target, key) => {
         if (_target && key.includes('GENERAL/') && _get(nextProps, `markerGeneralData.${key}.list`, []).length == 0) {
-          this.props.fetchMarkerGeneralBykey(key).then(data => {
-            if (!data) return
-
-            const firstProperties = _get(data, '[0].properties')
-            // console.log('firstProperties', firstProperties)
-            if (firstProperties) {
-              let fieldArr = []
-              _mapKeys(firstProperties, (val, keyField) => {
-                if (fieldConvert[keyField]) fieldArr.push(fieldConvert[keyField])
-              })
-              this.props.updateFieldArr(key, fieldArr)
-            }
-
-            // NOTE  render truớc cho tăng performance
-            const dataSourceRender = data.map(point => {
-              const position = _get(point, 'geometry.coordinates')
-              if (!position) return null
-              // NOTE  transform data cho vao PopContent
-              const properties = _get(point, 'properties', {})
-              // const transformed = this.transformDataToPopContent(key, properties)
-              // console.log('transformed', transformed)
-              return {
-                point,
-                rendered: (
-                  <Marker key={point._id} position={[position[1], position[0]]}>
-                    <MapPopup title={_target.label} markerTypeKey={key} properties={properties} />
-                  </Marker>
-                )
-              }
-            })
-            // NOTE save data vao state
-
-            this.setState({
-              cache: {
-                ...this.state.cache,
-                [key]: {
-                  key,
-                  dataSourceRender,
-                  dataFilteredRender: dataSourceRender
-                }
-              }
-            })
-          })
+          this._loadDataToCache(_target, key)
         }
       })
     }

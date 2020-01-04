@@ -75,9 +75,10 @@ class CheckboxGeneral extends React.Component {
     const { targetKey, filterMarker, label, markerGeneralCountIsLoaded, markerGeneralCount } = this.props
     return (
       <Checkbox
+        defaultChecked={filterMarker[targetKey] ? true : false}
         GENERAL_KEY={targetKey}
         label={label}
-        checked={filterMarker[targetKey] ? true : false}
+        // checked={filterMarker[targetKey] ? true : false}
         onChange={this.onChangeMarker}
       >
         {label}

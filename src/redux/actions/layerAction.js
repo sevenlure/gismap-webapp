@@ -1,4 +1,5 @@
 import uuid from 'uuid/v1'
+import { get as _get } from 'lodash-es'
 import { getMarkerGeneralCountAll, getMarkerGeneralByKey } from 'src/api/layerApi'
 import { getMarkerOwnCountAll, getMarkerOwnByKey } from 'src/api/layerApi'
 
@@ -44,18 +45,22 @@ export function fetchMarkerGeneralCount() {
 }
 
 export function fetchMarkerGeneralBykey(key) {
-  return async dispatch => {
-    dispatch({ type: LAYER_LOADING })
+  return async (dispatch, getState) => {
+    const idTimetamp = uuid()
+    const FilterStore = getState().FilterStore
+    const idsHanhChinh = _get(FilterStore, 'layer.hanhChinh.arrayIdSelected')
+
+    dispatch({ type: LAYER_LOADING, payload: idTimetamp })
     dispatch({ type: UPDATE_MARKER_GENERAL_BY_KEY_LOADING, payload: { key } })
     try {
-      const response = await getMarkerGeneralByKey(key)
+      const response = await getMarkerGeneralByKey(key, idsHanhChinh)
       const { data } = response
       dispatch({ type: UPDATE_MARKER_GENERAL_BY_KEY, payload: { key, list: data } })
-      dispatch({ type: LAYER_LOADED })
+      dispatch({ type: LAYER_LOADED, payload: idTimetamp })
       return data
     } catch {
       dispatch({ type: UPDATE_MARKER_GENERAL_BY_KEY, payload: { key, list: [] } })
-      dispatch({ type: LAYER_LOADED })
+      dispatch({ type: LAYER_LOADED, payload: idTimetamp })
     }
   }
 }

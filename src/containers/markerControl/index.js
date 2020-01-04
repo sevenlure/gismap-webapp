@@ -44,7 +44,7 @@ export default class MarkerControl extends React.Component {
 
     return (
       <div>
-        {/* {isHaveLayer ? (
+        {isHaveLayer ? (
           <Collapse
             // defaultActiveKey={[PANELS_KEY.INDUSTRY]}
             activeKey={this.props.markerActivePanel || DEUFALT_ACTIVE_KEY}
@@ -60,20 +60,7 @@ export default class MarkerControl extends React.Component {
           </Collapse>
         ) : (
           <span style={{ marginLeft: 8 }}>Vui lòng chọn layer địa lý</span>
-        )} */}
-        <Collapse
-          // defaultActiveKey={[PANELS_KEY.INDUSTRY]}
-          activeKey={this.props.markerActivePanel || DEUFALT_ACTIVE_KEY}
-          onChange={val => {
-            this.props.updateMarkerPanel(val)
-          }}
-        >
-          {PANELS.map(panel => (
-            <Collapse.Panel header={panel.label} key={panel.key}>
-              {panel.renderComp}
-            </Collapse.Panel>
-          ))}
-        </Collapse>
+        )}
       </div>
     )
   }

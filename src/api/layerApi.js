@@ -23,8 +23,8 @@ export function getMarkerGeneralCountAll() {
 }
 
 // MARK  params key, value nằm trong MARKER_GENERAL_KEY
-export function getMarkerGeneralByKey(key) {
-  return fetch.get(`${SLUG}/marker-general`, { params: { key } })
+export function getMarkerGeneralByKey(key, idsHanhChinh) {
+  return fetch.get(`${SLUG}/marker-general`, { params: { key, idsHanhChinh } })
 }
 /* #endregion */
 
