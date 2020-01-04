@@ -74,7 +74,7 @@ const nextConfig = {
     }
 
     if (!isServer && !dev) {
-      config.optimization.splitChunks.cacheGroups.commons.minChunks = 1
+      config.optimization.splitChunks.cacheGroups.commons.minChunks = 3
     }
 
     if (config.mode === 'production') {
