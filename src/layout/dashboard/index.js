@@ -30,6 +30,7 @@ import slug from 'src/routes'
 import hocProtectLogin from 'src/hoc/is-authenticated'
 import HeaderContainer from './header'
 import IconSvg from 'icons'
+import SpinComp from 'src/mapComponents/elements/spinAnt'
 
 const MapComp = dynamic(() => import('src/containers/mapIndex/map/index'), { ssr: false })
 // import MapComp from 'src/containers/mapIndex/map/index'
@@ -82,7 +83,8 @@ const ContentWrapper = styled.div`
   .map-content {
     flex: 1;
     width: calc(100vw - 346px);
-    min-height: calc(100vh - 50px);
+    /* min-height: calc(100vh - 50px); */
+    height: calc(100vh - 50px);
     z-index: 1;
   }
   .dashboard-content {
@@ -171,25 +173,9 @@ class AppWithLayout extends React.Component {
     } else {
       // this.changePageName()
     }
-    this.MapComp = require('../../containers/mapIndex/map/index')
-    console.log('this.MapComp', this.MapComp)
+
     this.setState({ mount: true })
-
-    // import MapComp from 'src/containers/mapIndex/map/index'
   }
-
-  componentDidUpdate = prevProps => {
-    // if (!_isEqual(prevProps.breadcrumb, this.props.breadcrumb)) {
-    //   this.changePageName()
-    // }
-  }
-
-  // changePageName = () => {
-  //   const item = _last(this.props.breadcrumb)
-  //   this.setState({
-  //     pageName: item ? item.name : 'Trang chủ'
-  //   })
-  // }
 
   changePage = slugPage => {
     Router.push(slugPage)
@@ -257,12 +243,13 @@ class AppWithLayout extends React.Component {
             </div>
             <div className='page-content'> {children}</div>
 
-            <div className='map-content'>
-              {/* <MapComp /> */}
-              {this.state.mount && <MapComp />}
-              {/* <this.MapComp /> */}
-            </div>
-
+            <SpinComp>
+              <div className='map-content'>
+                {/* <MapComp /> */}
+                {this.state.mount && <MapComp />}
+                {/* <this.MapComp /> */}
+              </div>
+            </SpinComp>
             <div className='dashboard-content'>
               <div className='dashboard-content-tab' style={{ width: this.state.isExpand ? WIDTH_EXPANDED : 0 }}>
                 <div className='dashboard-content-button-container'>

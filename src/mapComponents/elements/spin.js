@@ -31,10 +31,8 @@ export default class SpinComponent extends MapControl {
     // if (toProps.position !== fromProps.position) {
     //   this.leafletElement.setLatLng(toProps.position)
     // }
-  }
-  componentDidUpdate() {
     const { map } = this.props.leaflet
-    if (this.props.isLoadingLayer.length > 0) {
+    if (toProps.isLoadingLayer.length > 0) {
       map.spin(true)
       map._container.style.opacity = 0.5
     } else {
@@ -42,6 +40,16 @@ export default class SpinComponent extends MapControl {
       map._container.style.opacity = 1
     }
   }
+  // componentDidUpdate() {
+  //   const { map } = this.props.leaflet
+  //   if (this.props.isLoadingLayer.length > 0) {
+  //     map.spin(true)
+  //     map._container.style.opacity = 0.5
+  //   } else {
+  //     map.spin(false)
+  //     map._container.style.opacity = 1
+  //   }
+  // }
 
   componentDidMount() {
     const { map } = this.props.leaflet

@@ -122,7 +122,7 @@ class LayerHanhChinh extends React.Component {
     return (
       <LayerHanhChinhWrapper>
         <Row>
-          <Col span='24'>
+          <Col span={24}>
             <Select
               value={this.props.filterHanhChinh.level}
               showSearch
@@ -131,14 +131,18 @@ class LayerHanhChinh extends React.Component {
               placeholder='Cấp dữ liệu hành chính'
             >
               {_map(DATA_LEVEL, item => {
-                return <Option value={item.value}>{item.name}</Option>
+                return (
+                  <Option key={item.value} value={item.value}>
+                    {item.name}
+                  </Option>
+                )
               })}
             </Select>
           </Col>
         </Row>
         <Clearfix height={8} />
         <Row>
-          <Col span='24'>
+          <Col span={24}>
             {this.state.isLoadingHanhChinh && (
               <TreeSelect
                 value={this.props.filterHanhChinh.arrayIdSelected}

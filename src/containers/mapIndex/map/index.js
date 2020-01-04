@@ -10,7 +10,7 @@ import ReactLeafletGoogleLayer from 'react-leaflet-google-layer'
 import dynamic from 'next/dynamic'
 
 // import data from './tamp.json'
-import SpinComp from 'src/mapComponents/elements/spin'
+// import SpinComp from 'src/mapComponents/elements/spin'
 import LayerHanhChinhComp from 'src/mapComponents/layerHanhChinh'
 import LayerMarkerComp from 'src/mapComponents/layerMarker'
 
@@ -48,7 +48,7 @@ export default class SimpleExample extends Component {
           url='https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png'
         /> */}
         <ReactLeafletGoogleLayer googleMapsLoaderConf={{ KEY: process.env.GOOGLE_MAP_API_KEY }} type={'roadmap'} />
-        <SpinComp />
+        {/* <SpinComp /> */}
         <Marker position={position}>
           <Popup>
             A pretty CSS3 popup. <br /> Easily customizable.
@@ -56,6 +56,7 @@ export default class SimpleExample extends Component {
         </Marker>
         <LayerHanhChinhComp />
         <LayerMarkerComp />
+        {/* <LoadingComp /> */}
         {/* <GeoJSON data={data} /> */}
       </Map>
     )
