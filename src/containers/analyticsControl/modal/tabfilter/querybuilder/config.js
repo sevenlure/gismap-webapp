@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import ReactDOM from 'react-dom'
-import { merge } from 'lodash-es'
+import { merge, sortBy } from 'lodash-es'
 import { Icon, Tooltip } from 'antd'
 import {
   Widgets,
@@ -22,6 +22,23 @@ import $ from 'jquery'
 import { get as _get } from 'lodash-es'
 import PlaceHolderDropGroup from './placeHolderDropGroup'
 const { FieldSelect, FieldDropdown, FieldCascader, VanillaFieldSelect } = Widgets
+
+const reA = /[^a-zA-Z]/g
+const reN = /[^0-9]/g
+
+function sortAlphaNum(a, b) {
+  if (!a) return 1
+  if (!b) return -1
+  var aA = a.replace(reA, '')
+  var bA = b.replace(reA, '')
+  if (aA === bA) {
+    var aN = parseInt(a.replace(reN, ''), 10)
+    var bN = parseInt(b.replace(reN, ''), 10)
+    return aN === bN ? 0 : aN > bN ? 1 : -1
+  } else {
+    return aA > bA ? 1 : -1
+  }
+}
 
 const conjunctions = {
   ...BasicConfig.conjunctions
@@ -417,7 +434,7 @@ class NodeTamp extends React.Component {
     //
   }
   render() {
-    const noteData = _get(this.props, 'selectedOpts.noteData')
+    let noteData = _get(this.props, 'selectedOpts.noteData')
     return (
       <span>
         {_get(this.props, 'selectedOpts.label')}
@@ -434,7 +451,7 @@ class NodeTamp extends React.Component {
             <Tooltip
               title={
                 <div style={{ fontSize: 12 }}>
-                  {noteData.map((text, index) => {
+                  {noteData.sort(sortAlphaNum).map((text, index) => {
                     if (index < 10)
                       return (
                         <p style={{ marginBottom: 4 }} key={index}>
@@ -446,7 +463,7 @@ class NodeTamp extends React.Component {
                 </div>
               }
             >
-              <Icon style={{ marginLeft: 8 }} theme='twoTone' type='info-circle' />
+              <Icon style={{ marginLeft: 8, float: 'right', marginTop: 4 }} theme='twoTone' type='info-circle' />
             </Tooltip>,
             this.state.parentbody
           )}
