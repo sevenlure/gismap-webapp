@@ -458,7 +458,7 @@ class NodeTamp extends React.Component {
                           {text}
                         </p>
                       )
-                    else return <i style={{ opacity: 0.5 }}>(And More)</i>
+                    else return <i key={index} style={{ opacity: 0.5 }}>(And More)</i>
                   })}
                 </div>
               }
