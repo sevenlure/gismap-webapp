@@ -117,6 +117,9 @@ const ContentWrapper = styled.div`
       }
     }
   }
+  .ant-spin-nested-loading {
+    z-index: 1;
+  }
 `
 
 @connect(
