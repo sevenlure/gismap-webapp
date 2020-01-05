@@ -4,6 +4,7 @@ import { get as _get } from 'lodash-es'
 import {
   UPDATE_TARGET,
   UPDATE_FIELD_ARR,
+  UPDATE_FIELD_NOTE,
   UPDATE_TABINFO,
   UPDATE_FILTER,
   UPDATE_COUNT_APPLY
@@ -30,6 +31,17 @@ const analyticsReducer = (state = InitialState, action) => {
           [key]: {
             ...state[key],
             fieldArr: fieldArr
+          }
+        }
+      })
+    }
+    case UPDATE_FIELD_NOTE: {
+      const { key, fieldNote } = action.payload
+      return update(state, {
+        $merge: {
+          [key]: {
+            ...state[key],
+            fieldNote: fieldNote
           }
         }
       })

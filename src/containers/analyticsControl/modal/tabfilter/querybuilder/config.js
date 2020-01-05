@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import ReactDOM from 'react-dom'
 import { merge } from 'lodash-es'
+import { Icon, Tooltip } from 'antd'
 import {
   Widgets,
   BasicConfig,
@@ -59,9 +60,39 @@ const operators = {
     textSeparators: ['from', 'to']
   },
   proximity,
+  equal: {
+    ...BasicConfig.operators.equal,
+    label: 'Equal'
+  },
+  not_equal: {
+    ...BasicConfig.operators.not_equal,
+    label: 'Not equal'
+  },
+  equal_number: {
+    ...BasicConfig.operators.equal
+  },
+  not_equal_number: {
+    ...BasicConfig.operators.not_equal
+  },
+  less: {
+    ...BasicConfig.operators.less,
+    label: 'Less than'
+  },
+  less_or_equal: {
+    ...BasicConfig.operators.less_or_equal,
+    label: 'Less than or equal to'
+  },
+  greater: {
+    ...BasicConfig.operators.greater,
+    label: 'More than'
+  },
+  greater_or_equal: {
+    ...BasicConfig.operators.greater_or_equal,
+    label: 'More than or equal to'
+  },
   like: {
     ...BasicConfig.operators.like,
-    label: 'Like',
+    label: 'Includes',
     labelForFormat: 'includes',
     cardinality: 1,
     isUnary: false,
@@ -71,7 +102,7 @@ const operators = {
   },
   not_like: {
     ...BasicConfig.operators.not_like,
-    label: 'Not like',
+    label: 'Not includes',
     labelForFormat: 'includes',
     cardinality: 1,
     isUnary: false,
@@ -369,18 +400,24 @@ export default config
 
 class NodeTamp extends React.Component {
   state = {
-    parent: undefined
+    parent: undefined,
+    parentbody: undefined
   }
   componentDidMount() {
     console.log('dismound', this.props)
     let parent = $(ReactDOM.findDOMNode(this)).closest('[data-id]')[0]
+    let parentbody = $(ReactDOM.findDOMNode(this)).closest('.rule--body')[0]
+
     this.setState({
       mounted: true,
       parent: parent,
+      parentbody,
       dataId: $(parent).attr('data-id')
     })
+    //
   }
   render() {
+    const noteData = _get(this.props, 'selectedOpts.noteData')
     return (
       <span>
         {_get(this.props, 'selectedOpts.label')}
@@ -391,6 +428,27 @@ class NodeTamp extends React.Component {
               cbHandleDropIntoRule={_get(this.props, 'selectedOpts.cbHandleDropIntoRule')}
             />,
             this.state.parent
+          )}
+        {this.state.parentbody &&
+          ReactDOM.createPortal(
+            <Tooltip
+              title={
+                <div style={{ fontSize: 12 }}>
+                  {noteData.map((text, index) => {
+                    if (index < 10)
+                      return (
+                        <p style={{ marginBottom: 4 }} key={index}>
+                          {text}
+                        </p>
+                      )
+                    else return <i style={{ opacity: 0.5 }}>(And More)</i>
+                  })}
+                </div>
+              }
+            >
+              <Icon style={{ marginLeft: 8 }} theme='twoTone' type='info-circle' />
+            </Tooltip>,
+            this.state.parentbody
           )}
       </span>
     )

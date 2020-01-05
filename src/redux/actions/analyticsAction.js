@@ -1,5 +1,7 @@
 export const UPDATE_TARGET = 'ANALYTICS/UPDATE_TARGET'
 export const UPDATE_FIELD_ARR = 'ANALYTICS/UPDATE_FIELD_ARR'
+export const UPDATE_FIELD_NOTE = 'ANALYTICS/UPDATE_FIELD_NOTE'
+
 export const UPDATE_TABINFO = 'ANALYTICS/UPDATE_TABINFO'
 export const UPDATE_FILTER = 'ANALYTICS/UPDATE_FILTER'
 export const UPDATE_COUNT_APPLY = 'ANALYTICS/UPDATE_COUNT_APPLY'
@@ -22,6 +24,18 @@ export function updateFieldArr(key, fieldArr) {
       payload: {
         key,
         fieldArr
+      }
+    })
+  }
+}
+
+export function updateFieldNote(key, fieldNote) {
+  return dispatch => {
+    dispatch({
+      type: UPDATE_FIELD_NOTE,
+      payload: {
+        key,
+        fieldNote
       }
     })
   }

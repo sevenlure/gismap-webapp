@@ -10,7 +10,7 @@ import {
   BuilderProps,
   JsonTree
 } from 'react-awesome-query-builder'
-import { throttle } from 'lodash-es'
+import { throttle, map as _map } from 'lodash-es'
 import loadedConfig from './config'
 import loadedInitValue from './init_value'
 import PlaceHolderDrop from '../placeHolderDrop'
@@ -90,13 +90,15 @@ export default class DemoQueryBuilder extends Component {
     const targetKey = get(AnalyticsStore, '__target.key')
 
     const fieldArr = get(AnalyticsStore, `${targetKey}.fieldArr`, [])
-    const fields = this.convertFieldsToConfig(fieldArr)
+    const fieldNote = get(AnalyticsStore, `${targetKey}.fieldNote`, [])
+    const fields = this.convertFieldsToConfig(fieldArr, fieldNote)
     const payload = get(AnalyticsStore, `${targetKey}.tabFilter.jsonTree`, initValue)
 
     // console.log('payload', payload)
     this.state = {
       tree: checkTree(loadTree(payload), { ...loadedConfig, fields }),
-      config: { ...loadedConfig, fields }
+      config: { ...loadedConfig, fields },
+      fieldNote
     }
     // console.log('fields', fields)
   }
@@ -105,7 +107,7 @@ export default class DemoQueryBuilder extends Component {
     this.props.getRef(this)
   }
 
-  convertFieldsToConfig = fieldArr => {
+  convertFieldsToConfig = (fieldArr, fieldNote) => {
     const fieldsTamp = fieldArr.reduce((acc, cur) => {
       let type = 'text'
       let operators = ['equal', 'not_equal', 'like', 'not_like']
@@ -118,7 +120,8 @@ export default class DemoQueryBuilder extends Component {
         type,
         operators,
         valueSources: ['value'],
-        cbHandleDropIntoRule: this.cbHandleDropIntoRule
+        cbHandleDropIntoRule: this.cbHandleDropIntoRule,
+        noteData: fieldNote[cur.key]
       }
       return acc
     }, {})
@@ -127,7 +130,6 @@ export default class DemoQueryBuilder extends Component {
   }
 
   cbHandleDropIntoRule = (task, dataId) => {
-    // console.log('cbHandleDropIntoRule', cbHandleDropIntoRule)
     const jsonTree = getTree(this.state.tree)
     const objFinded = findObject(jsonTree.children1, dataId)
     const cache = {
