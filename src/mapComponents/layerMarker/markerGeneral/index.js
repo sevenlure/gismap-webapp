@@ -2,7 +2,15 @@ import React from 'react'
 import PropTypes from 'prop-types'
 // import styled from 'styled-components'
 import { connect } from 'react-redux'
-import { get as _get, isEqual as _isEqual, mapKeys as _mapKeys, values as _values, cloneDeep } from 'lodash-es'
+import {
+  get as _get,
+  isEqual as _isEqual,
+  mapKeys as _mapKeys,
+  values as _values,
+  cloneDeep,
+  take as _take,
+  map as _map
+} from 'lodash-es'
 import { diff } from 'deep-object-diff'
 import { FeatureGroup, Marker, Popup } from 'react-leaflet'
 import MarkerClusterGroup from 'react-leaflet-markercluster'
@@ -10,7 +18,7 @@ import expr from 'expression-eval'
 import L from 'leaflet'
 
 import { fetchMarkerGeneralBykey } from 'src/redux/actions/layerAction'
-import { updateFieldArr } from 'src/redux/actions/analyticsAction'
+import { updateFieldArr, updateFieldNote } from 'src/redux/actions/analyticsAction'
 import fieldConvert from './fieldConvert'
 import MapPopup from 'src/components/elements/map/popup'
 import { ICON } from 'src/constant/layer/general'
@@ -25,7 +33,7 @@ const mapStateToProps = state => ({
   markerGeneralData: _get(state, 'LayerStore.markerGeneral'),
   analyticsStore: _get(state, 'AnalyticsStore')
 })
-const mapDispatchToProps = { fetchMarkerGeneralBykey, updateFieldArr }
+const mapDispatchToProps = { fetchMarkerGeneralBykey, updateFieldArr, updateFieldNote }
 
 @connect(mapStateToProps, mapDispatchToProps)
 export default class LayerMarker extends React.Component {
@@ -34,7 +42,8 @@ export default class LayerMarker extends React.Component {
     filterLayerHanhChinhArrId: PropTypes.array,
     markerGeneralData: PropTypes.object.isRequired,
     markerSelectedObj: PropTypes.object.isRequired,
-    updateFieldArr: PropTypes.func.isRequired
+    updateFieldArr: PropTypes.func.isRequired,
+    updateFieldNote: PropTypes.func.isRequired
   }
 
   state = {
@@ -66,8 +75,15 @@ export default class LayerMarker extends React.Component {
     this.props.fetchMarkerGeneralBykey(key).then(data => {
       if (!data) return
 
+      // MARK  lấy 11 record đầu làm note
+      let fieldNote = {}
+      _mapKeys(fieldConvert, (field, keyField) => {
+        // MARK  dùng SET Javasrist lọc unique => lấy 10 record
+        fieldNote[keyField] = _take(Array.from(new Set(_map(data, `properties.${keyField}`))), 11)
+      })
+      this.props.updateFieldNote(key, fieldNote)
+
       const firstProperties = _get(data, '[0].properties')
-      // console.log('firstProperties', firstProperties)
       if (firstProperties) {
         let fieldArr = []
         _mapKeys(firstProperties, (val, keyField) => {
