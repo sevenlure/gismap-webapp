@@ -79,11 +79,15 @@ const operators = {
   proximity,
   equal: {
     ...BasicConfig.operators.equal,
-    label: 'Equal'
+    label: 'Equal',
+    labelForFormat: '==',
+    formatOp: (field, _op, value, _valueSrc, _valueType, opDef) => `__${field} == ${value}`
   },
   not_equal: {
     ...BasicConfig.operators.not_equal,
-    label: 'Not equal'
+    label: 'Not equal',
+    labelForFormat: '!=',
+    formatOp: (field, _op, value, _valueSrc, _valueType, opDef) => `__${field} != ${value}`
   },
   equal_number: {
     ...BasicConfig.operators.equal
@@ -93,19 +97,27 @@ const operators = {
   },
   less: {
     ...BasicConfig.operators.less,
-    label: 'Less than'
+    label: 'Less than',
+    labelForFormat: '<',
+    formatOp: (field, _op, value, _valueSrc, _valueType, opDef) => `__${field} < ${value}`
   },
   less_or_equal: {
     ...BasicConfig.operators.less_or_equal,
-    label: 'Less than or equal to'
+    label: 'Less than or equal to',
+    labelForFormat: '<=',
+    formatOp: (field, _op, value, _valueSrc, _valueType, opDef) => `__${field} <= ${value}`
   },
   greater: {
     ...BasicConfig.operators.greater,
-    label: 'More than'
+    label: 'More than',
+    labelForFormat: '>',
+    formatOp: (field, _op, value, _valueSrc, _valueType, opDef) => `__${field} > ${value}`
   },
   greater_or_equal: {
     ...BasicConfig.operators.greater_or_equal,
-    label: 'More than or equal to'
+    label: 'More than or equal to',
+    labelForFormat: '=>',
+    formatOp: (field, _op, value, _valueSrc, _valueType, opDef) => `__${field} >= ${value}`
   },
   like: {
     ...BasicConfig.operators.like,
@@ -434,7 +446,7 @@ class NodeTamp extends React.Component {
     //
   }
   render() {
-    let noteData = _get(this.props, 'selectedOpts.noteData')
+    let noteData = _get(this.props, 'selectedOpts.noteData', [])
     return (
       <span>
         {_get(this.props, 'selectedOpts.label')}
@@ -458,7 +470,12 @@ class NodeTamp extends React.Component {
                           {text}
                         </p>
                       )
-                    else return <i key={index} style={{ opacity: 0.5 }}>(And More)</i>
+                    else
+                      return (
+                        <i key={index} style={{ opacity: 0.5 }}>
+                          (And More)
+                        </i>
+                      )
                   })}
                 </div>
               }

@@ -109,7 +109,9 @@ export default class LayerMarker extends React.Component {
         const queryString = _get(nextProps, `analyticsStore.${key}.tabFilter.queryString`)
 
         if (cacheFinded && queryString) {
+          console.log('queryString',queryString)
           const ast = expr.parse(queryString)
+          console.log('ast', ast)
           const tamp = cacheFinded.dataSourceRender.filter(item => {
             const properties = _get(item.point, 'properties')
             _mapKeys(properties, function(value, key) {
