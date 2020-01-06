@@ -52,7 +52,8 @@ const analyticsReducer = (state = InitialState, action) => {
         $merge: {
           [key]: {
             ...state[key],
-            tabInfo: value
+            tabInfo: value,
+            countApply: uuid()
           }
         }
       })
