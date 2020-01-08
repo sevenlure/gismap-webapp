@@ -11,14 +11,11 @@ import {
   map as _map
 } from 'lodash-es'
 import { diff } from 'deep-object-diff'
-import { FeatureGroup, Marker, Popup } from 'react-leaflet'
-import MarkerClusterGroup from 'react-leaflet-markercluster'
-import expr from 'expression-eval'
 
 import { fetchMarkerOwnBykey } from 'src/redux/actions/layerAction'
 import { updateFieldArr, updateFieldNote } from 'src/redux/actions/analyticsAction'
 import fieldConvert from './fieldConvert'
-import MapPopup from 'src/components/elements/map/popup'
+import LayerComp from './layer.js'
 
 const mapStateToProps = state => ({
   markerSelectedObj: _get(state, 'FilterStore.marker'),
@@ -66,86 +63,22 @@ export default class LayerMarker extends React.Component {
               })
               this.props.updateFieldArr(key, fieldArr)
             }
-
-            // NOTE  render truớc cho tăng performance
-            const dataSourceRender = data.map(point => {
-              const position = _get(point, 'geometry.coordinates')
-              if (!position) return null
-              // NOTE  transform data cho vao PopContent
-              const properties = _get(point, 'properties', {})
-              // const transformed = this.transformDataToPopContent(key, properties)
-              // console.log('transformed', transformed)
-              return {
-                point,
-                rendered: (
-                  <Marker key={point._id} position={[position[1], position[0]]}>
-                    <MapPopup title={_target.label} markerTypeKey={key} properties={properties} />
-                  </Marker>
-                )
-              }
-            })
-            // NOTE save data vao state
-
-            this.setState({
-              cache: {
-                ...this.state.cache,
-                [key]: {
-                  key,
-                  dataSourceRender,
-                  dataFilteredRender: dataSourceRender
-                }
-              }
-            })
           })
         }
       })
     }
-    // MARK  handle filter analytic
-    _mapKeys(nextProps.markerSelectedObj, (value, key) => {
-      const preCountApply = _get(this.props, `analyticsStore.${key}.countApply`)
-      const nextCountApply = _get(nextProps, `analyticsStore.${key}.countApply`)
-      if (value && key.includes('OWN/') && preCountApply !== nextCountApply) {
-        const cacheFinded = this.state.cache[key]
-        const queryString = _get(nextProps, `analyticsStore.${key}.tabFilter.queryString`)
-
-        if (cacheFinded && queryString) {
-          console.log('queryString',queryString)
-          const ast = expr.parse(queryString)
-          console.log('ast', ast)
-          const tamp = cacheFinded.dataSourceRender.filter(item => {
-            const properties = _get(item.point, 'properties')
-            _mapKeys(properties, function(value, key) {
-              properties[`__${key}`] = value ? value : ''
-            })
-            console.log('expr.eval(ast, properties)', expr.eval(ast, properties))
-            return expr.eval(ast, properties) //Parser.evaluate(queryString, properties)
-          })
-          this.setState({
-            cache: {
-              ...this.state.cache,
-              [key]: {
-                ...cacheFinded,
-                dataFilteredRender: tamp
-              }
-            }
-          })
-        }
-      }
-    })
   }
 
   render() {
-    const { markerSelectedObj } = this.props
-    const transformed = _values(this.state.cache)
+    const { markerOwnData, markerSelectedObj } = this.props
+
+    const transformed = _values(markerOwnData)
     return (
       <div>
         {transformed.map(item => {
-          if (!markerSelectedObj[item.key]) return null
-          return (
-            <FeatureGroup key={item.key}>
-              <MarkerClusterGroup>{item.dataFilteredRender.map(itemRender => itemRender.rendered)}</MarkerClusterGroup>
-            </FeatureGroup>
-          )
+          const target = markerSelectedObj[item.key]
+          if (!target) return null
+          return <LayerComp key={target.key} keyFeature={target.key} title={target.label} />
         })}
       </div>
     )
