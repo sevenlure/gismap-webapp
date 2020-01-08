@@ -1,4 +1,5 @@
 import update from 'react-addons-update'
+import { cloneDeep } from 'lodash-es'
 // import storage from 'redux-persist/lib/storage'
 // import { persistReducer } from 'redux-persist'
 
@@ -96,13 +97,18 @@ const layerReducer = (state = InitialState, action) => {
       })
     }
     case UPDATE_MARKER_GENERAL_BY_KEY: {
-      const { key, list } = action.payload
+      const { key, list, filtered } = action.payload
+      let dataUpdate = cloneDeep(state.markerGeneral[key])
+      dataUpdate.key = key
+      dataUpdate.isLoading = false
+      if (list) dataUpdate.list = list
+      if (filtered) dataUpdate.filtered = filtered
+
       return update(state, {
         markerGeneral: {
           $merge: {
             [key]: {
-              isLoading: false,
-              list
+              ...dataUpdate
             }
           }
         }
@@ -138,13 +144,18 @@ const layerReducer = (state = InitialState, action) => {
       })
     }
     case UPDATE_MARKER_OWN_BY_KEY: {
-      const { key, list } = action.payload
+      const { key, list, filtered } = action.payload
+      let dataUpdate = cloneDeep(state.markerOwn[key])
+      dataUpdate.key = key
+      dataUpdate.isLoading = false
+      if (list) dataUpdate.list = list
+      if (filtered) dataUpdate.filtered = filtered
+
       return update(state, {
         markerOwn: {
           $merge: {
             [key]: {
-              isLoading: false,
-              list
+              ...dataUpdate
             }
           }
         }
