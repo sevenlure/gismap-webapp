@@ -4,6 +4,7 @@ export const UPDATE_FIELD_NOTE = 'ANALYTICS/UPDATE_FIELD_NOTE'
 
 export const UPDATE_TABINFO = 'ANALYTICS/UPDATE_TABINFO'
 export const UPDATE_FILTER = 'ANALYTICS/UPDATE_FILTER'
+export const UPDATE_BUFFER = 'ANALYTICS/UPDATE_BUFFER'
 export const UPDATE_COUNT_APPLY = 'ANALYTICS/UPDATE_COUNT_APPLY'
 // export const LOGOUT_USER_INFO = 'AUTH/LOGOUT_USER_INFO'
 
@@ -45,6 +46,18 @@ export function updateTabInfo(key, value) {
   return dispatch => {
     dispatch({
       type: UPDATE_TABINFO,
+      payload: {
+        key,
+        value
+      }
+    })
+  }
+}
+
+export function updateTabBuffer(key, value) {
+  return dispatch => {
+    dispatch({
+      type: UPDATE_BUFFER,
       payload: {
         key,
         value

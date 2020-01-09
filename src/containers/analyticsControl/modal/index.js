@@ -8,7 +8,8 @@ import { get } from 'lodash-es'
 // import TabInfo from './tabInfo/index2'
 import TabInfo from './tabinfo'
 import TabFilter from './tabfilter'
-import { updateTabInfo, updateCountApply, updateTabFilter } from 'src/redux/actions/analyticsAction'
+import TabBuffer from './tabBuffer'
+import { updateTabInfo, updateCountApply, updateTabFilter, updateTabBuffer } from 'src/redux/actions/analyticsAction'
 
 const { TabPane } = Tabs
 
@@ -43,7 +44,7 @@ const ModalWrapperContainer = styled.div`
 const mapStateToProps = state => ({
   AnalyticsStore: get(state, 'AnalyticsStore')
 })
-const mapDispatchToProps = { updateTabInfo, updateCountApply, updateTabFilter }
+const mapDispatchToProps = { updateTabInfo, updateCountApply, updateTabFilter, updateTabBuffer }
 
 @connect(mapStateToProps, mapDispatchToProps)
 export default class ModalTag extends React.Component {
@@ -52,7 +53,8 @@ export default class ModalTag extends React.Component {
     updateTabInfo: PropTypes.func.isRequired,
     AnalyticsStore: PropTypes.object.isRequired,
     updateCountApply: PropTypes.func.isRequired,
-    updateTabFilter: PropTypes.func.isRequired
+    updateTabFilter: PropTypes.func.isRequired,
+    updateTabBuffer: PropTypes.func.isRequired
   }
 
   state = { isVisible: false, tabKeyActive: TAB_KEY.TAB_INFO }
@@ -93,6 +95,10 @@ export default class ModalTag extends React.Component {
                 this.props.updateTabFilter(key, this.TabFilter.getDataTabFilter())
                 break
               }
+              case TAB_KEY.TAB_BUFFER: {
+                this.props.updateTabBuffer(key, this.TabBuffer.getDataTabBuffer())
+                break
+              }
             }
             this.setState({ isVisible: false, tabKeyActive: TAB_KEY.TAB_INFO })
           }}
@@ -125,7 +131,7 @@ export default class ModalTag extends React.Component {
                 Tab Calc
               </TabPane>
               <TabPane tab='Tab 3' key={TAB_KEY.TAB_BUFFER}>
-                Tab Buffer
+                <TabBuffer getRef={ref => (this.TabBuffer = ref)} />
               </TabPane>
               <TabPane tab='Tab 4' key={TAB_KEY.TAB_MAP}>
                 Tab Map
