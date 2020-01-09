@@ -6,6 +6,7 @@ import {
   UPDATE_FIELD_ARR,
   UPDATE_FIELD_NOTE,
   UPDATE_TABINFO,
+  UPDATE_BUFFER,
   UPDATE_FILTER,
   UPDATE_COUNT_APPLY
 } from '../actions/analyticsAction'
@@ -53,6 +54,18 @@ const analyticsReducer = (state = InitialState, action) => {
           [key]: {
             ...state[key],
             tabInfo: value,
+            countApply: uuid()
+          }
+        }
+      })
+    }
+    case UPDATE_BUFFER: {
+      const { key, value } = action.payload
+      return update(state, {
+        $merge: {
+          [key]: {
+            ...state[key],
+            tabBuffer: value,
             countApply: uuid()
           }
         }
