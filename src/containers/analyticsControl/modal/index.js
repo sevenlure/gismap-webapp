@@ -10,6 +10,7 @@ import TabInfo from './tabinfo'
 import TabFilter from './tabfilter'
 import TabBuffer from './tabBuffer'
 import { updateTabInfo, updateCountApply, updateTabFilter, updateTabBuffer } from 'src/redux/actions/analyticsAction'
+import { updateBufferSimpleBykey } from 'src/redux/actions/layerAction.js'
 
 const { TabPane } = Tabs
 
@@ -44,7 +45,13 @@ const ModalWrapperContainer = styled.div`
 const mapStateToProps = state => ({
   AnalyticsStore: get(state, 'AnalyticsStore')
 })
-const mapDispatchToProps = { updateTabInfo, updateCountApply, updateTabFilter, updateTabBuffer }
+const mapDispatchToProps = {
+  updateTabInfo,
+  updateCountApply,
+  updateTabFilter,
+  updateTabBuffer,
+  updateBufferSimpleBykey
+}
 
 @connect(mapStateToProps, mapDispatchToProps)
 export default class ModalTag extends React.Component {
@@ -54,7 +61,8 @@ export default class ModalTag extends React.Component {
     AnalyticsStore: PropTypes.object.isRequired,
     updateCountApply: PropTypes.func.isRequired,
     updateTabFilter: PropTypes.func.isRequired,
-    updateTabBuffer: PropTypes.func.isRequired
+    updateTabBuffer: PropTypes.func.isRequired,
+    updateBufferSimpleBykey: PropTypes.func.isRequired
   }
 
   state = { isVisible: false, tabKeyActive: TAB_KEY.TAB_INFO }
@@ -96,7 +104,40 @@ export default class ModalTag extends React.Component {
                 break
               }
               case TAB_KEY.TAB_BUFFER: {
-                this.props.updateTabBuffer(key, this.TabBuffer.getDataTabBuffer())
+                const result = this.TabBuffer.getDataTabBuffer()
+                // console.log('---dataBuffer--', result)
+
+                if (result) {
+                  if (!get(result, 'success', true)) {
+                    return
+                  }
+
+                  const keySlip = key.split('/')
+                  let parentKey
+                  switch (keySlip[0]) {
+                    case 'OWN': {
+                      parentKey = 'markerOwn'
+                      break
+                    }
+
+                    case 'GENERAL': {
+                      parentKey = 'markerGeneral'
+                      break
+                    }
+                    default: {
+                      break
+                    }
+                  }
+                  if (parentKey) {
+                    const dataBuffer = result.data
+                    const pathData = dataBuffer && dataBuffer.length > 0 ? `${parentKey}.${key}.filtered` : null
+                    // console.log(key, 'key')
+                    // console.log(pathData, 'pathData')
+                    this.props.updateTabBuffer(key, dataBuffer)
+                    this.props.updateBufferSimpleBykey(key, pathData)
+                  }
+                }
+
                 break
               }
             }

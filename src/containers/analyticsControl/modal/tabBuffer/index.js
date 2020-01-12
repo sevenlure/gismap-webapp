@@ -2,7 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import uuid from 'uuid/v1'
 import styled from 'styled-components'
-import { Row, Col, Icon, Button } from 'antd'
+import { Row, Col, Icon, Button, Form } from 'antd'
 import { connect } from 'react-redux'
 import {
   remove as _remove,
@@ -11,10 +11,12 @@ import {
   find as _find,
   get as _get,
   map as _map,
-  keyBy as _keyBy
+  keyBy as _keyBy,
+  maxBy as _maxBy,
+  values as _values
 } from 'lodash-es'
 
-import { getColorByIndex } from 'src/utils/color'
+import { getColorBufferByIndex } from 'src/utils/color'
 import ItemChartAttribute from './itemBufferAttribute'
 
 const TabBufferWrapper = styled.div`
@@ -38,15 +40,18 @@ const Title = styled.h3`
   padding: 8px;
 `
 
+const MAX_BUFFER = 4
+
 const mapStateToProps = state => ({
   AnalyticsStore: _get(state, 'AnalyticsStore')
 })
 const mapDispatchToProps = {}
 @connect(mapStateToProps, mapDispatchToProps)
-export default class TabBuffer extends React.Component {
+class TabBuffer extends React.Component {
   static propTypes = {
     getRef: PropTypes.func.isRequired,
-    AnalyticsStore: PropTypes.object.isRequired
+    AnalyticsStore: PropTypes.object.isRequired,
+    form: PropTypes.any
   }
   constructor(props) {
     super(props)
@@ -59,30 +64,65 @@ export default class TabBuffer extends React.Component {
     }
   }
   state = {
-    dataSource: []
+    dataSource: [],
+    radiusMax: 0,
+    isLoading: false,
+    dataResult: null
   }
   getDataTabBuffer = () => {
-    return this.state.dataSource
+    return this.state.dataResult
   }
   componentDidMount = () => {
     if (this.props.getRef) this.props.getRef(this)
+
+    if (this.state.dataSource.length === 0) {
+      this.addBuffer()
+    } else {
+      this.setState({
+        radiusMax: this.getRadiusMax()
+      })
+    }
+  }
+
+  getRadiusMax = () => {
+    if (!this.state.dataSource && this.state.dataSource.length === 0) {
+      return
+    }
+    const itemMax = _maxBy(this.state.dataSource, item => {
+      return item.radius
+    })
+    if (itemMax) {
+      return itemMax.radius
+    }
   }
 
   addBuffer = () => {
+    const index = this.state.dataSource ? this.state.dataSource.length : 0
+    const radiusMax = this.getRadiusMax()
+    const radiusDefault = radiusMax > 0 ? radiusMax + 500 : 500
     const Item = {
       id: uuid(),
-      radius: 500
+      color: getColorBufferByIndex(index),
+      radius: radiusDefault
     }
     this.setState({
-      dataSource: _concat(this.state.dataSource, Item)
+      dataSource: _concat(this.state.dataSource, Item),
+      radiusMax: radiusDefault
     })
   }
 
-  hanldeOnChangeBufferItem = (id, values) => {
+  hanldeOnChangeBufferItem = values => {
     let data = _map(this.state.dataSource, item => {
-      if (item.id === id) {
+      // console.log(values, 'hanldeOnChangeBufferItem')
+      // MARK cập nhật số radius lớn nhất của buffer
+      if (this.state.radiusMax < values.radius) {
+        this.setState({
+          radiusMax: values.radius
+        })
+      }
+      if (item.id === values.id) {
+        // console.log('hanldeOnChangeBufferItem', values)
         return {
-          id,
           ...values
         }
       } else {
@@ -90,58 +130,112 @@ export default class TabBuffer extends React.Component {
       }
     })
 
-    // _remove(data, item => {
-    //   return item.id === id
-    // })
     this.setState({
-      dataSource: data
+      dataSource: data,
+      isLoading: false
     })
   }
 
+  checkRadius = (rule, value, callback) => {
+    if (value.radius < value.radiusMin) {
+      callback(`Không được nhỏ hơn ${value.radiusMin}`)
+    }
+    return callback()
+  }
+
   render() {
+    const { getFieldDecorator } = this.props.form
+
+    // const dataSource = _keyBy(this.state.dataSource, 'id')
+    // console.log(dataSource, '---dataSource--')
     return (
       <TabBufferWrapper>
         <Title level={3}>Buffer setting</Title>
-        <TaskList>
-          {_map(this.state.dataSource, (task, index) => {
-            return (
-              <ItemChartAttribute
-                key={task.id}
-                defaultColor={task.color || getColorByIndex(index)}
-                defaultRadius={task.radius}
-                id={task.id}
-                onChange={this.hanldeOnChangeBufferItem}
-                close={id => {
-                  let data = this.state.dataSource
-                  _remove(data, item => {
-                    return item.id === id
-                  })
-                  // console.log(data, '---data---')
-                  this.setState({
-                    dataSource: data
-                  })
-                }}
-              />
-            )
-          })}
-          {/* {_map(this.state.dataSource, (task, index) => {
-            
-          })} */}
-          <Row lign='middle' type='flex' justify='space-between' style={{ justifyContent: 'flex-end' }}>
-            <Col>
-              <Button type='link' onClick={this.addBuffer}>
-                Add new ring
-                <Icon
-                  type='plus-circle'
-                  style={{ fontSize: 18 }}
-                  theme='twoTone'
-                  // onClick={this.props.close(this.props.task.id)}
-                />
-              </Button>
-            </Col>
-          </Row>
-        </TaskList>
+
+        <Form>
+          <TaskList>
+            {!this.state.isLoading && (
+              <div>
+                {_map(this.state.dataSource, (task, index) => {
+                  const valueMin = index > 0 ? this.state.dataSource[index - 1].radius + 500 : 500
+                  // console.log(valueMin, 'valueMin', index)
+                  return (
+                    <Form.Item key={task.id}>
+                      {getFieldDecorator(task.id, {
+                        initialValue: task,
+                        rules: [{ required: true, message: 'Vui lòng nhập số' }, { validator: this.checkRadius }]
+                      })(
+                        <ItemChartAttribute
+                          index={index}
+                          radiusMin={valueMin}
+                          defaultColor={task.color}
+                          defaultRadius={task.radius}
+                          id={task.id}
+                          onChange={this.hanldeOnChangeBufferItem}
+                          close={id => {
+                            let data = this.state.dataSource
+                            _remove(data, item => {
+                              return item.id === id
+                            })
+                            // console.log(data, '---data---')
+                            this.setState({
+                              dataSource: data
+                            })
+                          }}
+                        />
+                      )}
+                    </Form.Item>
+                  )
+                })}
+              </div>
+            )}
+            {this.state.dataSource.length < MAX_BUFFER && (
+              <Row lign='middle' type='flex' justify='space-between' style={{ justifyContent: 'flex-end' }}>
+                <Col>
+                  <Button type='link' onClick={this.addBuffer}>
+                    Add new ring
+                    <Icon
+                      type='plus-circle'
+                      style={{ fontSize: 18 }}
+                      theme='twoTone'
+                      // onClick={this.props.close(this.props.task.id)}
+                    />
+                  </Button>
+                </Col>
+              </Row>
+            )}
+          </TaskList>
+        </Form>
       </TabBufferWrapper>
     )
   }
+
+  componentDidUpdate = (prevProps, prevState) => {
+    // console.log('---componentDidUpdate---')
+    // console.log(prevState.dataSource, this.state.dataSource)
+    if (prevState.dataSource !== this.state.dataSource) {
+      const {
+        form: { validateFields }
+      } = this.props
+      validateFields((errors, values) => {
+        if (!errors) {
+          // console.log('Received values of form: ', _values(values))
+          // console.log('getDataTabBuffer', this.state.dataSource)
+          this.setState({
+            dataResult: {
+              success: true,
+              data: _values(values)
+            }
+          })
+        } else {
+          this.setState({
+            dataResult: {
+              success: false
+            }
+          })
+        }
+      })
+    }
+  }
 }
+export default Form.create({})(TabBuffer)

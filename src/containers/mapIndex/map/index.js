@@ -62,7 +62,7 @@ export default class SimpleExample extends Component {
           <Popup>Circle 5.000m</Popup>
         </Circle> */}
 
-        <LayerBuffersComp
+        {/* <LayerBuffersComp
           keyFeature='tamp'
           title='test thou'
           color='#3388ff'
@@ -70,10 +70,13 @@ export default class SimpleExample extends Component {
           bufferData={[
             {
               center: [this.state.lat, this.state.lng + 0.1]
+            },
+            {
+              center: [this.state.lat+0.2, this.state.lng + 0.1]
             }
           ]}
-        />
-        <LayerBufferRingsComp
+        /> */}
+        {/* <LayerBufferRingsComp
           keyFeature='tamp'
           title='test buffer ring thou'
           color='#fa8c16'
@@ -84,7 +87,7 @@ export default class SimpleExample extends Component {
               center: [this.state.lat, this.state.lng + 0.1]
             }
           ]}
-        />
+        /> */}
 
         <LayerHanhChinhComp />
         <LayerMarkerComp />

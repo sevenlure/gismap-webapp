@@ -10,6 +10,13 @@ const default_color = [
   '#f45b5b',
   '#91e8e1'
 ]
+
+const default_color_buffer = ['#3388ff', '#fadb14', '#fa8c16', '#fa541c']
+
 export function getColorByIndex(index) {
   return default_color[index % 10]
+}
+
+export function getColorBufferByIndex(index) {
+  return default_color_buffer[index]
 }
