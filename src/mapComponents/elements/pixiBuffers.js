@@ -16,7 +16,7 @@ const reduxStore = getOrCreateStore()
 
 export default class WrapperPixiBuffer extends React.Component {
   static propTypes = {
-    iconUrl: PropTypes.string.isRequired,
+    iconUrl: PropTypes.string,
     keyFeature: PropTypes.string.isRequired,
     title: PropTypes.string.isRequired,
     radius: PropTypes.number.isRequired,

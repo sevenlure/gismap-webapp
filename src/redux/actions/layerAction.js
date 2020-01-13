@@ -25,6 +25,10 @@ export const UPDATE_MARKER_OWN_COUNT_LOADED = 'LAYER/UPDATE_MARKER_OWN_COUNT_LOA
 export const UPDATE_MARKER_OWN_BY_KEY = 'LAYER/UPDATE_MARKER_OWN_BY_KEY'
 export const UPDATE_MARKER_OWN_BY_KEY_LOADING = 'LAYER/UPDATE_MARKER_OWN_BY_KEY_LOADING'
 
+// NOTE  Layer BufferSimple
+export const UPDATE_BUFFER_SIMPLE_BY_KEY = 'LAYER/UPDATE_BUFFER_SIMPLE_BY_KEY'
+export const UPDATE_BUFFER_SIMPLY_IS_RENDER = 'LAYER/UPDATE_BUFFER_SIMPLY_IS_RENDER'
+
 export function hanhchinhUpdate(payload) {
   return async dispatch => {
     dispatch({ type: HANHCHINH_LOADED })
@@ -143,6 +147,21 @@ export function fetchMarkerOwnBykey(key) {
 export function updateMarkerOwnFilteredBykey(key, filtered) {
   return async dispatch => {
     dispatch({ type: UPDATE_MARKER_OWN_BY_KEY, payload: { key, filtered } })
+  }
+}
+
+/* #endregion */
+
+/* #region  NOTE  Buffer-simple */
+export function updateBufferSimpleBykey(key, pathData) {
+  return async dispatch => {
+    dispatch({ type: UPDATE_BUFFER_SIMPLE_BY_KEY, payload: { key, pathData } })
+  }
+}
+
+export function updateBufferSimpleIsRender(isRender) {
+  return async dispatch => {
+    dispatch({ type: UPDATE_BUFFER_SIMPLY_IS_RENDER, payload: isRender })
   }
 }
 
