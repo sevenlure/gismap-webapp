@@ -157,7 +157,7 @@ class TabBuffer extends React.Component {
             {!this.state.isLoading && (
               <div>
                 {_map(this.state.dataSource, (task, index) => {
-                  const valueMin = index > 0 ? this.state.dataSource[index - 1].radius + 500 : 500
+                  const valueMin = index > 0 ? this.state.dataSource[index - 1].radius + 500 : 0
                   // console.log(valueMin, 'valueMin', index)
                   return (
                     <Form.Item key={task.id}>

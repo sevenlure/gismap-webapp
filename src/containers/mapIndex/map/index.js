@@ -5,7 +5,8 @@ import {
   // , TileLayer , GeoJSON
   Popup,
   Marker,
-  Circle
+  Circle,
+  Pane
 } from 'react-leaflet'
 import ReactLeafletGoogleLayer from 'react-leaflet-google-layer'
 import dynamic from 'next/dynamic'
@@ -14,6 +15,7 @@ import dynamic from 'next/dynamic'
 // import SpinComp from 'src/mapComponents/elements/spin'
 import LayerHanhChinhComp from 'src/mapComponents/layerHanhChinh'
 import LayerMarkerComp from 'src/mapComponents/layerMarker'
+import LayerBufferComp from 'src/mapComponents/layerBuffer'
 
 import LayerBuffersComp from 'src/mapComponents/elements/pixiBuffers'
 import LayerBufferRingsComp from 'src/mapComponents/elements/pixiBuffersRing'
@@ -52,6 +54,8 @@ export default class SimpleExample extends Component {
           url='https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png'
         /> */}
         <ReactLeafletGoogleLayer googleMapsLoaderConf={{ KEY: process.env.GOOGLE_MAP_API_KEY }} type={'roadmap'} />
+        <Pane name='bufferPane' style={{ zIndex: 450 }} />
+        <Pane name='bufferRingPane' style={{ zIndex: 440 }} />
         {/* <SpinComp /> */}
         <Marker position={position}>
           <Popup>
@@ -91,6 +95,7 @@ export default class SimpleExample extends Component {
 
         <LayerHanhChinhComp />
         <LayerMarkerComp />
+        <LayerBufferComp />
         {/* <LoadingComp /> */}
         {/* <GeoJSON data={data} /> */}
       </Map>

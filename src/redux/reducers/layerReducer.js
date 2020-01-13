@@ -9,7 +9,7 @@ import { UPDATE_MARKER_GENERAL_COUNT_LOADED, UPDATE_MARKER_GENERAL_COUNT } from 
 import { UPDATE_MARKER_GENERAL_BY_KEY, UPDATE_MARKER_GENERAL_BY_KEY_LOADING } from '../actions/layerAction'
 import { UPDATE_MARKER_OWN_COUNT_LOADED, UPDATE_MARKER_OWN_COUNT } from '../actions/layerAction'
 import { UPDATE_MARKER_OWN_BY_KEY, UPDATE_MARKER_OWN_BY_KEY_LOADING } from '../actions/layerAction'
-import { UPDATE_BUFFER_SIMPLE_BY_KEY, UPDATE_BUFFER_SIMPLY_IS_RENDER } from '../actions/layerAction'
+import { UPDATE_BUFFER_SIMPLE_BY_KEY } from '../actions/layerAction'
 
 const InitialState = {
   isLoadingLayer: [],
@@ -28,7 +28,6 @@ const InitialState = {
   markerOwnCount: {},
   markerOwn: {},
 
-  bufferSimpleIsRender: true,
   bufferSimple: {}
 }
 
@@ -170,30 +169,22 @@ const layerReducer = (state = InitialState, action) => {
 
     /* #region NOTE  buffer-simple */
     case UPDATE_BUFFER_SIMPLE_BY_KEY: {
-      const { key, pathData } = action.payload
-      console.log(action.payload)
+      const { key, pathData, color, radius, title } = action.payload
       let dataUpdate = cloneDeep(_get(state.bufferSimple, key, {}))
       dataUpdate.key = key
       dataUpdate.isUsed = pathData ? true : false
       if (pathData) dataUpdate.pathData = pathData
+      if (color) dataUpdate.color = color
+      if (radius) dataUpdate.radius = radius
+      if (title) dataUpdate.title = title
 
       return update(state, {
-        bufferSimpleIsRender: {
-          $set: false
-        },
         bufferSimple: {
           $merge: {
             [key]: {
               ...dataUpdate
             }
           }
-        }
-      })
-    }
-    case UPDATE_BUFFER_SIMPLY_IS_RENDER: {
-      return update(state, {
-        bufferSimpleIsRender: {
-          $set: action.payload
         }
       })
     }

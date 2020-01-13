@@ -27,7 +27,6 @@ export const UPDATE_MARKER_OWN_BY_KEY_LOADING = 'LAYER/UPDATE_MARKER_OWN_BY_KEY_
 
 // NOTE  Layer BufferSimple
 export const UPDATE_BUFFER_SIMPLE_BY_KEY = 'LAYER/UPDATE_BUFFER_SIMPLE_BY_KEY'
-export const UPDATE_BUFFER_SIMPLY_IS_RENDER = 'LAYER/UPDATE_BUFFER_SIMPLY_IS_RENDER'
 
 export function hanhchinhUpdate(payload) {
   return async dispatch => {
@@ -153,16 +152,48 @@ export function updateMarkerOwnFilteredBykey(key, filtered) {
 /* #endregion */
 
 /* #region  NOTE  Buffer-simple */
-export function updateBufferSimpleBykey(key, pathData) {
+export function updateBufferSimpleBykey(key, pathData, color, radius) {
   return async dispatch => {
-    dispatch({ type: UPDATE_BUFFER_SIMPLE_BY_KEY, payload: { key, pathData } })
+    dispatch({ type: UPDATE_BUFFER_SIMPLE_BY_KEY, payload: { key, pathData, color, radius } })
   }
 }
 
-export function updateBufferSimpleIsRender(isRender) {
-  return async dispatch => {
-    dispatch({ type: UPDATE_BUFFER_SIMPLY_IS_RENDER, payload: isRender })
+export function updateBuffer2LayerStore(key, dataBufferArr) {
+  return async (dispatch, getState) => {
+    const FilterStore = getState().FilterStore
+    const _targetKey = _get(FilterStore, `marker.${key}`)
+    const keySlip = key.split('/')
+    let parentKey
+    switch (keySlip[0]) {
+      case 'OWN': {
+        parentKey = 'markerOwn'
+        break
+      }
+
+      case 'GENERAL': {
+        parentKey = 'markerGeneral'
+        break
+      }
+      default: {
+        break
+      }
+    }
+    const dataTamp = [...dataBufferArr]
+    const bufferSimp = dataTamp.splice(0, 1)[0] // dataTamp => data từ index 1 trở đi
+    const pathData = `${parentKey}.${key}.filtered`
+
+    // MARK  handle data cho bufferSimple
+    dispatch({
+      type: UPDATE_BUFFER_SIMPLE_BY_KEY,
+      payload: {
+        key,
+        pathData,
+        color: bufferSimp.color,
+        radius: bufferSimp.radius,
+        title: _targetKey.label + ' Buffer'
+      }
+    })
+    // MARK  handle data cho buffer ring
   }
 }
-
 /* #endregion */

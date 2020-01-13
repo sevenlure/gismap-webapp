@@ -4,6 +4,7 @@ import PropTypes from 'prop-types'
 // import styled from 'styled-components'
 import { withLeaflet, MapLayer } from 'react-leaflet'
 import { Provider } from 'react-redux'
+import { isEqual as _isEqual } from 'lodash-es'
 
 import * as PIXI from 'pixi.js'
 import L from 'leaflet'
@@ -21,14 +22,31 @@ export default class WrapperPixiBuffer extends React.Component {
     title: PropTypes.string.isRequired,
     radiusFrom: PropTypes.number.isRequired,
     radiusTo: PropTypes.number.isRequired,
-    color: PropTypes.string
+    color: PropTypes.string,
+    bufferData: PropTypes.array.isRequired
   }
 
   static defaultProps = {
     color: '#3388ff'
   }
 
+  UNSAFE_componentWillReceiveProps(nextProps) {
+    if (!_isEqual(nextProps.bufferData, this.props.bufferData)) {
+      return this.setState({ isLoading: true })
+    }
+    if (!_isEqual(nextProps.radiusFrom, this.props.radiusFrom)) {
+      return this.setState({ isLoading: true })
+    }
+    if (!_isEqual(nextProps.radiusTo, this.props.radiusTo)) {
+      return this.setState({ isLoading: true })
+    }
+  }
+  componentDidUpdate = (prevProps, prevState) => {
+    if (this.state.isLoading) this.setState({ isLoading: false })
+  }
+
   render() {
+    if (this.state.isLoading) return null
     return <PixiOverlayBuffer {...this.props} />
   }
 }
@@ -137,7 +155,7 @@ class PixiOverlayBuffer extends MapLayer {
       {
         doubleBuffering: doubleBuffering,
         autoPreventDefault: false,
-        pane: 'markerPane'
+        pane: 'bufferRingPane'
       }
     )
     return pixiOverlay

@@ -4,6 +4,7 @@ import PropTypes from 'prop-types'
 // import styled from 'styled-components'
 import { withLeaflet, MapLayer } from 'react-leaflet'
 import { Provider } from 'react-redux'
+import { isEqual as _isEqual } from 'lodash-es'
 
 import * as PIXI from 'pixi.js'
 import L from 'leaflet'
@@ -20,14 +21,32 @@ export default class WrapperPixiBuffer extends React.Component {
     keyFeature: PropTypes.string.isRequired,
     title: PropTypes.string.isRequired,
     radius: PropTypes.number.isRequired,
-    color: PropTypes.string
+    color: PropTypes.string,
+    bufferData: PropTypes.array.isRequired
   }
 
   static defaultProps = {
     color: '#3388ff'
   }
 
+  state = {
+    isLoading: false
+  }
+
+  UNSAFE_componentWillReceiveProps(nextProps) {
+    if (!_isEqual(nextProps.bufferData, this.props.bufferData)) {
+      return this.setState({ isLoading: true })
+    }
+    if (!_isEqual(nextProps.radius, this.props.radius)) {
+      return this.setState({ isLoading: true })
+    }
+  }
+  componentDidUpdate = (prevProps, prevState) => {
+    if (this.state.isLoading) this.setState({ isLoading: false })
+  }
+
   render() {
+    if (this.state.isLoading) return null
     return <PixiOverlayBuffer {...this.props} />
   }
 }
@@ -110,7 +129,8 @@ class PixiOverlayBuffer extends MapLayer {
             buffer.x = projectedCenter.x
             buffer.y = projectedCenter.y
             buffer.clear()
-            buffer.lineStyle(3 / scale, PIXI.utils.string2hex(props.color), 1)
+            // buffer.lineStyle(3 / scale, PIXI.utils.string2hex(props.color), 1)
+            buffer.lineStyle(0.1 / scale, PIXI.utils.string2hex(props.color), 1)
             buffer.beginFill(PIXI.utils.string2hex(props.color), 0.35)
 
             const pixel = pixelValue(buffer.center[0], props.radius / scale, zoom)
@@ -133,7 +153,7 @@ class PixiOverlayBuffer extends MapLayer {
       {
         doubleBuffering: doubleBuffering,
         autoPreventDefault: false,
-        pane: 'markerPane'
+        pane: 'bufferPane'
       }
     )
     return pixiOverlay

@@ -10,7 +10,7 @@ import TabInfo from './tabinfo'
 import TabFilter from './tabfilter'
 import TabBuffer from './tabBuffer'
 import { updateTabInfo, updateCountApply, updateTabFilter, updateTabBuffer } from 'src/redux/actions/analyticsAction'
-import { updateBufferSimpleBykey } from 'src/redux/actions/layerAction.js'
+import { updateBuffer2LayerStore } from 'src/redux/actions/layerAction.js'
 
 const { TabPane } = Tabs
 
@@ -50,7 +50,7 @@ const mapDispatchToProps = {
   updateCountApply,
   updateTabFilter,
   updateTabBuffer,
-  updateBufferSimpleBykey
+  updateBuffer2LayerStore
 }
 
 @connect(mapStateToProps, mapDispatchToProps)
@@ -62,7 +62,7 @@ export default class ModalTag extends React.Component {
     updateCountApply: PropTypes.func.isRequired,
     updateTabFilter: PropTypes.func.isRequired,
     updateTabBuffer: PropTypes.func.isRequired,
-    updateBufferSimpleBykey: PropTypes.func.isRequired
+    updateBuffer2LayerStore: PropTypes.func.isRequired
   }
 
   state = { isVisible: false, tabKeyActive: TAB_KEY.TAB_INFO }
@@ -105,39 +105,16 @@ export default class ModalTag extends React.Component {
               }
               case TAB_KEY.TAB_BUFFER: {
                 const result = this.TabBuffer.getDataTabBuffer()
-                // console.log('---dataBuffer--', result)
+                console.log('---dataBuffer--', result)
 
                 if (result) {
                   if (!get(result, 'success', true)) {
                     return
                   }
-
-                  const keySlip = key.split('/')
-                  let parentKey
-                  switch (keySlip[0]) {
-                    case 'OWN': {
-                      parentKey = 'markerOwn'
-                      break
-                    }
-
-                    case 'GENERAL': {
-                      parentKey = 'markerGeneral'
-                      break
-                    }
-                    default: {
-                      break
-                    }
-                  }
-                  if (parentKey) {
-                    const dataBuffer = result.data
-                    const pathData = dataBuffer && dataBuffer.length > 0 ? `${parentKey}.${key}.filtered` : null
-                    // console.log(key, 'key')
-                    // console.log(pathData, 'pathData')
-                    this.props.updateTabBuffer(key, dataBuffer)
-                    this.props.updateBufferSimpleBykey(key, pathData)
-                  }
+                  const dataBuffer = result.data
+                  this.props.updateTabBuffer(key, dataBuffer)
+                  this.props.updateBuffer2LayerStore(key, dataBuffer)
                 }
-
                 break
               }
             }
