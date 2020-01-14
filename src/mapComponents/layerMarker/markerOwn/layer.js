@@ -2,7 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 // import styled from 'styled-components'
 import { connect } from 'react-redux'
-import { get as _get, mapKeys as _mapKeys } from 'lodash-es'
+import { get as _get, mapKeys as _mapKeys, isArray as _isArray } from 'lodash-es'
 import expr from 'expression-eval'
 import { FeatureGroup, Marker } from 'react-leaflet'
 import MarkerClusterGroup from 'react-leaflet-markercluster'
@@ -70,6 +70,12 @@ export default class LayerComp extends React.Component {
   render() {
     const { featureData, keyFeature } = this.props
     if (this.state.isLoading) return null
+
+    // console.log(featureData.filtered)
+    if (!_isArray(featureData.filtered)) {
+      return null
+    }
+
     return (
       <FeatureGroup key={keyFeature}>
         <MarkerClusterGroup>

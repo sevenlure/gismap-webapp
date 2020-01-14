@@ -1,5 +1,5 @@
 import uuid from 'uuid/v1'
-import { get as _get, mapKeys as _mapKeys } from 'lodash-es'
+import { get as _get, mapKeys as _mapKeys, pick as _pick, map as _map } from 'lodash-es'
 import expr from 'expression-eval'
 
 import { getMarkerGeneralCountAll, getMarkerGeneralByKey } from 'src/api/layerApi'
@@ -27,6 +27,7 @@ export const UPDATE_MARKER_OWN_BY_KEY_LOADING = 'LAYER/UPDATE_MARKER_OWN_BY_KEY_
 
 // NOTE  Layer BufferSimple
 export const UPDATE_BUFFER_SIMPLE_BY_KEY = 'LAYER/UPDATE_BUFFER_SIMPLE_BY_KEY'
+export const UPDATE_BUFFER_RING_BY_KEY = 'LAYER/UPDATE_BUFFER_RING_BY_KEY'
 
 export function hanhchinhUpdate(payload) {
   return async dispatch => {
@@ -178,8 +179,9 @@ export function updateBuffer2LayerStore(key, dataBufferArr) {
         break
       }
     }
-    const dataTamp = [...dataBufferArr]
-    const bufferSimp = dataTamp.splice(0, 1)[0] // dataTamp => data từ index 1 trở đi
+
+    const _dataTemp = [...dataBufferArr]
+    const bufferSimp = _dataTemp.splice(0, 1)[0] // dataTamp => data từ index 1 trở đi
     const pathData = `${parentKey}.${key}.filtered`
 
     // MARK  handle data cho bufferSimple
@@ -190,10 +192,30 @@ export function updateBuffer2LayerStore(key, dataBufferArr) {
         pathData,
         color: bufferSimp.color,
         radius: bufferSimp.radius,
-        title: _targetKey.label + ' Buffer'
+        title: _targetKey.label + ' buffer'
       }
     })
+
+    const _dataTempRing = [...dataBufferArr]
+    // console.log('---layerAction', [...dataBufferArr])
+
     // MARK  handle data cho buffer ring
+    let bufferRing = ''
+    if (_dataTempRing.length > 1) {
+      bufferRing = _dataTempRing.splice(1, _dataTempRing.length)
+      bufferRing = _map(bufferRing, item => {
+        return _pick(item, ['color', 'radiusFrom', 'radiusTo'])
+      })
+    }
+    dispatch({
+      type: UPDATE_BUFFER_RING_BY_KEY,
+      payload: {
+        key,
+        pathData: bufferRing.length > 0 ? pathData : null,
+        title: _targetKey.label + ' buffer Ring',
+        dataBufferRing: bufferRing
+      }
+    })
   }
 }
 /* #endregion */

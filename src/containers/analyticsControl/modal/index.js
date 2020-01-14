@@ -105,7 +105,7 @@ export default class ModalTag extends React.Component {
               }
               case TAB_KEY.TAB_BUFFER: {
                 const result = this.TabBuffer.getDataTabBuffer()
-                console.log('---dataBuffer--', result)
+                // console.log('---dataBuffer--', result)
 
                 if (result) {
                   if (!get(result, 'success', true)) {
