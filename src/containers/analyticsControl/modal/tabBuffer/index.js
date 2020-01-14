@@ -13,7 +13,8 @@ import {
   map as _map,
   keyBy as _keyBy,
   maxBy as _maxBy,
-  values as _values
+  values as _values,
+  cloneDeep as _cloneDeep
 } from 'lodash-es'
 
 import { getColorBufferByIndex } from 'src/utils/color'
@@ -55,13 +56,6 @@ class TabBuffer extends React.Component {
   }
   constructor(props) {
     super(props)
-    const { AnalyticsStore } = props
-    const targetKey = _get(AnalyticsStore, '__target.key')
-    let payload = _get(AnalyticsStore, `${targetKey}.tabBuffer`, [])
-
-    this.state = {
-      dataSource: payload
-    }
   }
   state = {
     dataSource: [],
@@ -70,12 +64,37 @@ class TabBuffer extends React.Component {
     dataResult: null
   }
   getDataTabBuffer = () => {
-    return this.state.dataResult
+    let dataResult = this.state.dataResult
+    // console.log('getDataTabBuffer', dataResult)
+
+    if (_get(dataResult, 'success', false)) {
+      dataResult.data = _map(dataResult.data, (item, index) => {
+        // console.log('-------item----')
+        // console.log(item)
+        const _temp = { ...item }
+        if (index > 0) {
+          _temp.radiusFrom = dataResult.data[index - 1].radius
+          _temp.radiusTo = item.radius
+        }
+        return _temp
+      })
+      return dataResult
+    } else {
+      return dataResult
+    }
   }
   componentDidMount = () => {
     if (this.props.getRef) this.props.getRef(this)
+    const { AnalyticsStore } = this.props
+    const targetKey = _get(AnalyticsStore, '__target.key')
+    let payload = _get(AnalyticsStore, `${targetKey}.tabBuffer`, [])
 
-    if (this.state.dataSource.length === 0) {
+    this.setState({
+      dataSource: payload
+    })
+
+    this.updateDataResult(true, payload)
+    if (payload.length === 0) {
       this.addBuffer()
     } else {
       this.setState({
@@ -147,7 +166,7 @@ class TabBuffer extends React.Component {
     const { getFieldDecorator } = this.props.form
 
     // const dataSource = _keyBy(this.state.dataSource, 'id')
-    // console.log(dataSource, '---dataSource--')
+    // console.log(this.state.dataResult, '---dataResult--')
     return (
       <TabBufferWrapper>
         <Title level={3}>Buffer setting</Title>
@@ -173,7 +192,7 @@ class TabBuffer extends React.Component {
                           id={task.id}
                           onChange={this.hanldeOnChangeBufferItem}
                           close={id => {
-                            let data = this.state.dataSource
+                            let data = _cloneDeep(this.state.dataSource)
                             _remove(data, item => {
                               return item.id === id
                             })
@@ -210,10 +229,21 @@ class TabBuffer extends React.Component {
     )
   }
 
+  updateDataResult = (success, data) => {
+    // console.log('updateDataResult', success, data)
+    this.setState({
+      dataResult: {
+        success: success,
+        data: data
+      }
+    })
+  }
   componentDidUpdate = (prevProps, prevState) => {
     // console.log('---componentDidUpdate---')
     // console.log(prevState.dataSource, this.state.dataSource)
+    // console.log(this.state.dataSource.length, prevState.dataSource.length, "----")
     if (prevState.dataSource !== this.state.dataSource) {
+      // console.log(this.state.dataSource.length, prevState.dataSource.length)
       const {
         form: { validateFields }
       } = this.props
@@ -221,18 +251,21 @@ class TabBuffer extends React.Component {
         if (!errors) {
           // console.log('Received values of form: ', _values(values))
           // console.log('getDataTabBuffer', this.state.dataSource)
-          this.setState({
-            dataResult: {
-              success: true,
-              data: _values(values)
-            }
-          })
+          this.updateDataResult(true, _values(values))
+          // this.setState({
+          //   dataResult: {
+          //     success: true,
+          //     data: _values(values)
+          //   }
+          // })
         } else {
-          this.setState({
-            dataResult: {
-              success: false
-            }
-          })
+          this.updateDataResult(false, [])
+
+          // this.setState({
+          //   dataResult: {
+          //     success: false
+          //   }
+          // })
         }
       })
     }

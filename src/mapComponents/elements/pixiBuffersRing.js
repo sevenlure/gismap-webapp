@@ -29,6 +29,9 @@ export default class WrapperPixiBuffer extends React.Component {
   static defaultProps = {
     color: '#3388ff'
   }
+  state = {
+    isLoading: false
+  }
 
   UNSAFE_componentWillReceiveProps(nextProps) {
     if (!_isEqual(nextProps.bufferData, this.props.bufferData)) {
