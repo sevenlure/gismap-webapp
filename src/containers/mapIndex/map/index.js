@@ -35,6 +35,43 @@ export default class SimpleExample extends Component {
     this.setState({ inBrowser: true })
   }
 
+  handleInterateClick = e => {
+    let pointerEvent = e.originalEvent
+    let pixiPoint = new PIXI.Point()
+    const { pixiMarkerContainer, pixiBufferContainer, pixiBufferRingContainer } = this.map
+    for (let i = pixiMarkerContainer.length - 1; i >= 0; i--) {
+      let item = pixiMarkerContainer[i]
+      item.interaction.mapPositionToPoint(pixiPoint, pointerEvent.clientX, pointerEvent.clientY)
+      let target = item.interaction.hitTest(pixiPoint, item.container)
+      if (target && target.popup) {
+        target.popup.openOn(this.map)
+        ReactDOM.render(target.popupContent, target.popupContainer)
+        return
+      }
+    }
+    for (let i = pixiBufferContainer.length - 1; i >= 0; i--) {
+      let item = pixiBufferContainer[i]
+      item.interaction.mapPositionToPoint(pixiPoint, pointerEvent.clientX, pointerEvent.clientY)
+      let target = item.interaction.hitTest(pixiPoint, item.container)
+      if (target && target.popup) {
+        target.popup.setLatLng(this.map.mouseEventToLatLng(pointerEvent)).openOn(this.map)
+        ReactDOM.render(target.popupContent, target.popupContainer)
+        return
+      }
+    }
+
+    for (let i = pixiBufferRingContainer.length - 1; i >= 0; i--) {
+      let item = pixiBufferRingContainer[i]
+      item.interaction.mapPositionToPoint(pixiPoint, pointerEvent.clientX, pointerEvent.clientY)
+      let target = item.interaction.hitTest(pixiPoint, item.container)
+      if (target && target.popup) {
+        target.popup.setLatLng(this.map.mouseEventToLatLng(pointerEvent)).openOn(this.map)
+        ReactDOM.render(target.popupContent, target.popupContainer)
+        return
+      }
+    }
+  }
+
   render() {
     if (!this.state.inBrowser) {
       return null
@@ -52,34 +89,11 @@ export default class SimpleExample extends Component {
             this.map = ref.leafletElement
             this.map.pixiMarkerContainer = []
             this.map.pixiBufferContainer = []
+            this.map.pixiBufferRingContainer = []
             window.map = this.map
           }
         }}
-        onClick={e => {
-          let pointerEvent = e.originalEvent
-          let pixiPoint = new PIXI.Point()
-          const { pixiMarkerContainer, pixiBufferContainer } = this.map
-          for (let i = pixiMarkerContainer.length - 1; i >= 0; i--) {
-            let item = pixiMarkerContainer[i]
-            item.interaction.mapPositionToPoint(pixiPoint, pointerEvent.clientX, pointerEvent.clientY)
-            let target = item.interaction.hitTest(pixiPoint, item.container)
-            if (target && target.popup) {
-              target.popup.openOn(this.map)
-              ReactDOM.render(target.popupContent, target.popupContainer)
-              return
-            }
-          }
-          for (let i = pixiBufferContainer.length - 1; i >= 0; i--) {
-            let item = pixiBufferContainer[i]
-            item.interaction.mapPositionToPoint(pixiPoint, pointerEvent.clientX, pointerEvent.clientY)
-            let target = item.interaction.hitTest(pixiPoint, item.container)
-            if (target && target.popup) {
-              target.popup.setLatLng(this.map.mouseEventToLatLng(pointerEvent)).openOn(this.map)
-              ReactDOM.render(target.popupContent, target.popupContainer)
-              return
-            }
-          }
-        }}
+        onClick={this.handleInterateClick}
         center={position}
         zoom={this.state.zoom}
         preferCanvas

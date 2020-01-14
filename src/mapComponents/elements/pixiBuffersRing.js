@@ -5,6 +5,8 @@ import PropTypes from 'prop-types'
 import { withLeaflet, MapLayer } from 'react-leaflet'
 import { Provider } from 'react-redux'
 import { isEqual as _isEqual } from 'lodash-es'
+import uuid from 'uuid/v1'
+import { remove } from 'lodash-es'
 
 import * as PIXI from 'pixi.js'
 import L from 'leaflet'
@@ -66,7 +68,7 @@ class PixiOverlayBuffer extends MapLayer {
   // }
   createLeafletElement(props) {
     const { map } = this.props.leaflet
-
+    this.uuid = uuid()
     let bufferData = props.bufferData
 
     var pixiContainer = new PIXI.Container()
@@ -81,7 +83,11 @@ class PixiOverlayBuffer extends MapLayer {
       buffer.popup = L.popup({ className: 'leaflet-custom-popup', minWidth: 250, maxWidth: 600 })
         .setLatLng(item.center)
         .setContent(buffer.popupContainer)
-
+      buffer.popupContent = (
+        <Provider store={reduxStore}>
+          <PopupContent markerTypeKey={props.keyFeature} title={props.title} {...buffer.payload} />
+        </Provider>
+      )
       buffer.interactive = true
 
       pixiContainer.addChild(buffer)
@@ -94,7 +100,7 @@ class PixiOverlayBuffer extends MapLayer {
     var prevZoom
 
     var pixiOverlay = L.pixiOverlay(
-      function(utils) {
+      utils => {
         var zoom = utils.getMap().getZoom()
         var container = utils.getContainer()
         var renderer = utils.getRenderer()
@@ -105,26 +111,31 @@ class PixiOverlayBuffer extends MapLayer {
         var scale = utils.getScale()
 
         if (firstDraw) {
-          utils.getMap().on('click', function(e) {
-            // not really nice but much better than before
-            // good starting point for improvements
-            var interaction = utils.getRenderer().plugins.interaction
-            var pointerEvent = e.originalEvent
-            var pixiPoint = new PIXI.Point()
-            // get global click position in pixiPoint:
-            interaction.mapPositionToPoint(pixiPoint, pointerEvent.clientX, pointerEvent.clientY)
-            // get what is below the click if any:
-            var target = interaction.hitTest(pixiPoint, container)
-            if (target && target.popup) {
-              // target.popup.setLatLng()
-              target.popup.setLatLng(map.mouseEventToLatLng(pointerEvent)).openOn(map)
-              ReactDOM.render(
-                <Provider store={reduxStore}>
-                  <PopupContent markerTypeKey={props.keyFeature} title={props.title} {...target.payload} />
-                </Provider>,
-                target.popupContainer
-              )
-            }
+          // utils.getMap().on('click', function(e) {
+          //   // not really nice but much better than before
+          //   // good starting point for improvements
+          //   var interaction = utils.getRenderer().plugins.interaction
+          //   var pointerEvent = e.originalEvent
+          //   var pixiPoint = new PIXI.Point()
+          //   // get global click position in pixiPoint:
+          //   interaction.mapPositionToPoint(pixiPoint, pointerEvent.clientX, pointerEvent.clientY)
+          //   // get what is below the click if any:
+          //   var target = interaction.hitTest(pixiPoint, container)
+          //   if (target && target.popup) {
+          //     // target.popup.setLatLng()
+          //     target.popup.setLatLng(map.mouseEventToLatLng(pointerEvent)).openOn(map)
+          //     ReactDOM.render(
+          //       <Provider store={reduxStore}>
+          //         <PopupContent markerTypeKey={props.keyFeature} title={props.title} {...target.payload} />
+          //       </Provider>,
+          //       target.popupContainer
+          //     )
+          //   }
+          // })
+          map.pixiBufferRingContainer.push({
+            id: this.uuid,
+            container,
+            interaction: utils.getRenderer().plugins.interaction
           })
 
           bufferData.forEach(item => {
@@ -137,10 +148,17 @@ class PixiOverlayBuffer extends MapLayer {
             buffer.clear()
 
             buffer.beginFill(PIXI.utils.string2hex(props.color), 0.6)
-            buffer.arc(0, 0, pixelFrom, Math.PI * 2, 0, true)
-            buffer.arc(0, 0, pixelTo, 0, Math.PI * 2, false)
-            buffer.closePath()
+            buffer.drawCircle(0, 0, pixelTo)
+            buffer.beginHole()
+            buffer.drawCircle(0, 0, pixelFrom)
+            buffer.endHole()
             buffer.endFill()
+
+            // buffer.beginFill(PIXI.utils.string2hex(props.color), 0.6)
+            // buffer.arc(0, 0, pixelFrom, Math.PI * 2, 0, true)
+            // buffer.arc(0, 0, pixelTo, 0, Math.PI * 2, false)
+            // buffer.closePath()
+            // buffer.endFill()
           })
         }
 
@@ -162,5 +180,11 @@ class PixiOverlayBuffer extends MapLayer {
       }
     )
     return pixiOverlay
+  }
+
+  componentWillUnmount() {
+    const { map } = this.props.leaflet
+    super.componentWillUnmount()
+    remove(map.pixiBufferContainer, item => item.id === this.uuid)
   }
 }
