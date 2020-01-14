@@ -4,6 +4,8 @@ import PropTypes from 'prop-types'
 // import styled from 'styled-components'
 import { withLeaflet, MapLayer } from 'react-leaflet'
 import { Provider } from 'react-redux'
+import uuid from 'uuid/v1'
+import { remove } from 'lodash-es'
 
 import { get as _get } from 'lodash-es'
 import * as PIXI from 'pixi.js'
@@ -49,6 +51,7 @@ class PixiOverlay extends MapLayer {
   // }
   createLeafletElement(props) {
     const { map } = this.props.leaflet
+    this.uuid = uuid()
 
     let markerData = props.markersData.map(item => {
       const coordinates = item.geometry.coordinates
@@ -75,6 +78,11 @@ class PixiOverlay extends MapLayer {
       marker.popup = L.popup({ className: 'leaflet-custom-popup', minWidth: 250, maxWidth: 600 })
         .setLatLng(markerLatLng)
         .setContent(marker.popupContainer)
+      marker.popupContent = (
+        <Provider store={reduxStore}>
+          <PopupContent markerTypeKey={props.keyFeature} {...marker.payload} />
+        </Provider>
+      )
 
       marker.interactive = true
       pixiContainer.addChild(marker)
@@ -88,7 +96,7 @@ class PixiOverlay extends MapLayer {
     var prevZoom
 
     var pixiOverlay = L.pixiOverlay(
-      function(utils) {
+      utils => {
         var zoom = utils.getMap().getZoom()
         var container = utils.getContainer()
         var renderer = utils.getRenderer()
@@ -98,28 +106,34 @@ class PixiOverlay extends MapLayer {
         // console.log('scale', scale)
 
         if (firstDraw) {
-          utils.getMap().on('click', function(e) {
-            // not really nice but much better than before
-            // good starting point for improvements
-            var interaction = utils.getRenderer().plugins.interaction
-            var pointerEvent = e.originalEvent
-            var pixiPoint = new PIXI.Point()
-            // get global click position in pixiPoint:
-            interaction.mapPositionToPoint(pixiPoint, pointerEvent.clientX, pointerEvent.clientY)
-            // get what is below the click if any:
-            var target = interaction.hitTest(pixiPoint, container)
-            if (target && target.popup) {
-              target.popup.openOn(map)
-              setTimeout(() => {
-                ReactDOM.render(
-                  <Provider store={reduxStore}>
-                    <PopupContent markerTypeKey={props.keyFeature} {...target.payload} />
-                  </Provider>,
-                  target.popupContainer
-                )
-              }, 100)
-            }
+          // utils.getMap().on('click', function(e) {
+          //   // not really nice but much better than before
+          //   // good starting point for improvements
+          //   var interaction = utils.getRenderer().plugins.interaction
+          //   var pointerEvent = e.originalEvent
+          //   var pixiPoint = new PIXI.Point()
+          //   // get global click position in pixiPoint:
+          //   interaction.mapPositionToPoint(pixiPoint, pointerEvent.clientX, pointerEvent.clientY)
+          //   // get what is below the click if any:
+          //   var target = interaction.hitTest(pixiPoint, container)
+          //   if (target && target.popup) {
+          //     target.popup.openOn(map)
+          //     setTimeout(() => {
+          //       ReactDOM.render(
+          //         <Provider store={reduxStore}>
+          //           <PopupContent markerTypeKey={props.keyFeature} {...target.payload} />
+          //         </Provider>,
+          //         target.popupContainer
+          //       )
+          //     }, 100)
+          //   }
+          // })
+          map.pixiMarkerContainer.push({
+            id: this.uuid,
+            container,
+            interaction: utils.getRenderer().plugins.interaction
           })
+
           markerData.forEach(item => {
             var markerCoords = project(item.toado)
             const marker = item.instance
@@ -179,5 +193,11 @@ class PixiOverlay extends MapLayer {
     )
     return pixiOverlay
     //pixiOverlay.addTo(map)
+  }
+
+  componentWillUnmount() {
+    const { map } = this.props.leaflet
+    super.componentWillUnmount()
+    remove(map.pixiMarkerContainer, item => item.id === this.uuid)
   }
 }

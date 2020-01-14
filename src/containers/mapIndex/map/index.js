@@ -10,6 +10,8 @@ import {
 } from 'react-leaflet'
 import ReactLeafletGoogleLayer from 'react-leaflet-google-layer'
 import dynamic from 'next/dynamic'
+import * as PIXI from 'pixi.js'
+import ReactDOM from 'react-dom'
 
 // import data from './tamp.json'
 // import SpinComp from 'src/mapComponents/elements/spin'
@@ -45,6 +47,39 @@ export default class SimpleExample extends Component {
           height: '100%',
           width: '100%'
         }}
+        ref={ref => {
+          if (ref && !this.map) {
+            this.map = ref.leafletElement
+            this.map.pixiMarkerContainer = []
+            this.map.pixiBufferContainer = []
+            window.map = this.map
+          }
+        }}
+        onClick={e => {
+          let pointerEvent = e.originalEvent
+          let pixiPoint = new PIXI.Point()
+          const { pixiMarkerContainer, pixiBufferContainer } = this.map
+          for (let i = pixiMarkerContainer.length - 1; i >= 0; i--) {
+            let item = pixiMarkerContainer[i]
+            item.interaction.mapPositionToPoint(pixiPoint, pointerEvent.clientX, pointerEvent.clientY)
+            let target = item.interaction.hitTest(pixiPoint, item.container)
+            if (target && target.popup) {
+              target.popup.openOn(this.map)
+              ReactDOM.render(target.popupContent, target.popupContainer)
+              return
+            }
+          }
+          for (let i = pixiBufferContainer.length - 1; i >= 0; i--) {
+            let item = pixiBufferContainer[i]
+            item.interaction.mapPositionToPoint(pixiPoint, pointerEvent.clientX, pointerEvent.clientY)
+            let target = item.interaction.hitTest(pixiPoint, item.container)
+            if (target && target.popup) {
+              target.popup.setLatLng(this.map.mouseEventToLatLng(pointerEvent)).openOn(this.map)
+              ReactDOM.render(target.popupContent, target.popupContainer)
+              return
+            }
+          }
+        }}
         center={position}
         zoom={this.state.zoom}
         preferCanvas
@@ -76,7 +111,7 @@ export default class SimpleExample extends Component {
               center: [this.state.lat, this.state.lng + 0.1]
             },
             {
-              center: [this.state.lat+0.2, this.state.lng + 0.1]
+              center: [this.state.lat + 0.2, this.state.lng + 0.1]
             }
           ]}
         /> */}
