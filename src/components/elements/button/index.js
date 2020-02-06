@@ -9,6 +9,7 @@ const ButtonWrapper = styled.div`
 `
 export default class ButtonCustom extends React.PureComponent {
   static propTypes = {
+    ...Button.propTypes,
     children: PropTypes.any,
     type: PropTypes.string,
     icon: PropTypes.string,
