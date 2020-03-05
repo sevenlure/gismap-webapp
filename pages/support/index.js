@@ -2,46 +2,39 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import styled from 'styled-components'
 import { connect } from 'react-redux'
-import { Tabs, Radio, Typography } from 'antd'
-import LayoutDashboard from 'src/layout/dashboard'
+import { Typography } from 'antd'
 import windowSize from 'react-window-size'
-import dynamic from 'next/dynamic'
+import { get as _get } from 'lodash-es'
 
-import { setBreadCrumb, updateKeyPath, updateBackgroundColor } from 'src/redux/actions/generalAction'
-import slug, { breadcrumb } from 'src/routes/index'
-import AnalyticsControlComp from 'src/containers/analyticsControl'
+import LayoutDashboard from 'src/layout/dashboard'
 
 const WrapperIndex = styled.div``
 
-const mapStateToProps = () => ({})
+const mapStateToProps = state => ({})
 const mapDispatchToProps = {}
 
 @connect(mapStateToProps, mapDispatchToProps)
 @windowSize
-class AnalyticsPage extends React.Component {
+class SupportPage extends React.Component {
   static propTypes = {
     windowWidth: PropTypes.number
   }
 
   state = {}
-  componentDidMount = () => {}
 
   render() {
     return (
       <WrapperIndex windowWidth={this.props.windowWidth}>
         <div style={{ padding: 4, paddingLeft: 8 }}>
           <Typography.Title style={{ fontWeight: 800 }} level={3}>
-            Analytics Control
+            Support
           </Typography.Title>
-        </div>
-        <div>
-          <AnalyticsControlComp />
         </div>
       </WrapperIndex>
     )
   }
 }
 
-AnalyticsPage.Layout = LayoutDashboard
+SupportPage.Layout = LayoutDashboard
 
-export default AnalyticsPage
+export default SupportPage

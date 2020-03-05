@@ -24,7 +24,7 @@ export default class HeaderContainer extends React.Component {
         </div>
         <div style={{ height: '100%', minWidth: 300 }}>
           <Input.Search
-            placeholder='Enter a location'
+            placeholder='Search a location'
             enterButton
             // size='large'
             onSearch={value => console.log(value)}

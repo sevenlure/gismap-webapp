@@ -4,7 +4,10 @@ const slug = {
   marker: '/marker',
   analytics: '/analytics',
   login: '/auth/login',
-  register: '/user/register'
+  register: '/user/register',
+  data_marketplace: '/data-marketplace',
+  notifications: '/notifications',
+  support: '/support'
 }
 
 // NOTE  cấu trúc item breadcrumb là 1 array object

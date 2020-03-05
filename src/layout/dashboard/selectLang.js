@@ -27,7 +27,7 @@ FlagVN.propTypes = {
   height: PropTypes.number
 }
 
-export default class componentName extends React.Component {
+export default class SelectLang extends React.Component {
   menu = (
     <Menu style={{ width: 200 }}>
       <Menu.Item key='0' style={{ display: 'flex', alignItems: 'center' }}>
@@ -47,7 +47,7 @@ export default class componentName extends React.Component {
             Click me <Icon type='down' />
           </a> */}
           <span>
-            <FlagVN marginRight={-1} height={30} /> <Icon type='down' />
+            <FlagUK marginRight={-1} height={30} /> <Icon type='down' />
           </span>
         </Dropdown>
       </div>

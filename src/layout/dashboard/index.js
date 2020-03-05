@@ -7,7 +7,9 @@ import {
   // , Menu, Icon,Row
   Avatar,
   Button,
-  Spin
+  Spin,
+  Dropdown,
+  Menu
 } from 'antd'
 // import moment from 'moment'
 import Router from 'next/router'
@@ -58,6 +60,7 @@ const ContentWrapper = styled.div`
         height: 40px;
         margin-top: 12px;
         zoom: 0.9;
+        cursor: pointer;
       }
     }
     .bottom {
@@ -101,15 +104,16 @@ const ContentWrapper = styled.div`
     .dashboard-content-button-container {
       z-index: 999999999;
       position: absolute;
-      left: -30px;
-      top: 50%;
+      left: -45px;
+      top: 40%;
       .button-expand {
-        border-bottom-left-radius: 30px;
-        border-bottom-right-radius: 30px;
+        /* border-bottom-left-radius: 30px;
+        border-bottom-right-radius: 30px; */
         /* border-bottom-left-radius: 60px;
         border-bottom-right-radius: 60px; */
-        width: 40px;
-        height: 20px;
+        width: 45px;
+        height: 165px;
+        border-radius: 12px;
         /* width: 100px;
         height: 50px; */
         display: flex;
@@ -121,6 +125,21 @@ const ContentWrapper = styled.div`
     z-index: 1;
   }
 `
+
+const menuAvatar = (
+  <Menu>
+    <Menu.Item>
+      <span target='_blank' rel='noopener noreferrer'>
+        View account profile
+      </span>
+    </Menu.Item>
+    <Menu.Item>
+      <span target='_blank' rel='noopener noreferrer'>
+        Logout
+      </span>
+    </Menu.Item>
+  </Menu>
+)
 
 @connect(
   state => ({
@@ -226,19 +245,25 @@ class AppWithLayout extends React.Component {
                 </div>
               </div>
               <div className='bottom'>
-                <div className='icon-bar-item'>
-                  <Avatar src={'/static/images/avatar_default.png'} size='large' />
+                <div className='icon-bar-item' style={{ marginBotton: 24 }}>
+                  <Dropdown
+                    placement='topLeft'
+                    getPopupContainer={() => document.querySelectorAll('.icon-bar-item')[4]}
+                    overlay={menuAvatar}
+                  >
+                    <Avatar src={'/static/images/avatar_default.png'} size='large' />
+                  </Dropdown>
                 </div>
-                <div className='icon-bar-item'>
+                <div className='icon-bar-item' onClick={this.changePage.bind(this, slug.support)}>
                   <Button shape='circle' style={{ fontSize: 24, color: '#1185E0' }} icon='question' size='large' />
                 </div>
                 <div className='icon-bar-item'>
-                  <Button shape='circle' size='large'>
+                  <Button shape='circle' size='large' onClick={this.changePage.bind(this, slug.notifications)}>
                     <IconSvg.notification style={{ fontSize: 28 }} />
                   </Button>
                 </div>
                 <div className='icon-bar-item'>
-                  <Button shape='circle' size='large'>
+                  <Button shape='circle' size='large' onClick={this.changePage.bind(this, slug.data_marketplace)}>
                     <IconSvg.marketplace style={{ fontSize: 28 }} />
                   </Button>
                 </div>
@@ -256,15 +281,28 @@ class AppWithLayout extends React.Component {
             <div className='dashboard-content'>
               <div className='dashboard-content-tab' style={{ width: this.state.isExpand ? WIDTH_EXPANDED : 0 }}>
                 <div className='dashboard-content-button-container'>
-                  <div style={{ transform: 'rotate(90deg)' }}>
+                  <div
+                  // style={{ transform: 'rotate(90deg)' }}
+                  >
                     <Button
+                      style={{ alignItems: 'center' }}
                       type='primary'
                       className='button-expand'
-                      icon='down'
+                      // icon='down'
                       onClick={() => {
                         this.setState({ isExpand: !this.state.isExpand })
                       }}
-                    ></Button>
+                    >
+                      <div style={{ position: 'absolute', left: 4 }}>{this.state.isExpand ? '>' : '<'}</div>
+                      <div
+                        style={{
+                          writingMode: 'vertical-rl',
+                          textOrientation: 'upright'
+                        }}
+                      >
+                        DASHBOARD
+                      </div>
+                    </Button>
                   </div>
                 </div>
                 <div style={{ minWidth: 200 }}>day la dashboard</div>

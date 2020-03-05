@@ -43,7 +43,9 @@ class MakerPage extends React.Component {
     return (
       <WrapperIndex windowWidth={this.props.windowWidth}>
         <div style={{ padding: 4, paddingLeft: 8 }}>
-          <Typography.Title level={3}>Marker Control</Typography.Title>
+          <Typography.Title style={{ fontWeight: 800 }} level={3}>
+            Marker Control
+          </Typography.Title>
         </div>
         <div>
           <MarkerControl />
