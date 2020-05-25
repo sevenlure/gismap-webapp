@@ -1,17 +1,7 @@
-# Ant Design example
+# Instruction 
+Location Analytics helps enterprise business users take advantage of location data and make better decisions.
 
-## How to use
-
-### Download manually
-
-Download the example:
-
-```bash
-git clone git@gitlab.com:qlnt-hcm/web-app.git
-cd web-ap
-```
-
-Install it and run:
+## Install it and run:
 
 ```bash
 npm install
@@ -21,12 +11,8 @@ yarn
 yarn dev
 ```
 
-Deploy it to the cloud with [now](https://zeit.co/now) ([download](https://zeit.co/download))
-
-```bash
-now
-```
-
-## The idea behind the example
-
-This example shows how to use Next.js along with [Ant Design of React](http://ant.design). This is intended to show the integration of this UI toolkit with the Framework.
+## Technical
+ - Leaflet
+ - React, Redux, Redux-thunk
+ - Nextjs
+ - WebGL
